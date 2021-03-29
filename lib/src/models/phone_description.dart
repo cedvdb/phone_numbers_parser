@@ -1,38 +1,19 @@
-class Country {
-  // English name of the country
-  final String name;
-
-  /// emoji flag
-  final String flag;
-  // short country code
-  final String isoCode;
-  // description of what the phone number should look like
-  final PhoneDescription phone;
-
-  String get dialCode => phone.dialCode;
-
-  const Country({
-    required this.name,
-    required this.flag,
-    required this.isoCode,
-    required this.phone,
-  });
-}
-
-class PhoneDescription {
+class CountryPhoneDescription {
   final String dialCode;
   final String internationalPrefix;
   final String? nationalPrefix;
   final String? nationalPrefixTransformRule;
-  final bool? isMainCountryForIsoCode;
+
+  /// there can be more than 1 country for the same isocode
+  final bool? isMainCountryForDialCode;
   final PhoneValidation validation;
 
-  const PhoneDescription({
+  const CountryPhoneDescription({
     required this.dialCode,
     required this.internationalPrefix,
-    this.nationalPrefix,
-    this.nationalPrefixTransformRule,
-    this.isMainCountryForIsoCode,
+    required this.nationalPrefix,
+    required this.nationalPrefixTransformRule,
+    required this.isMainCountryForDialCode,
     required this.validation,
   });
 }
@@ -50,7 +31,7 @@ class PhoneValidation {
 }
 
 class PhoneValidationRules {
-  final String? lengths;
+  final List<int>? lengths;
   final String pattern;
 
   const PhoneValidationRules({
