@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:xml/xml.dart';
 
-import '../country.dart';
+import '../src/country.dart';
 
 Future getDartDataFromXml() async {
   final doc = await readXml();
@@ -28,26 +28,6 @@ class CountriesData {
   Map<String, List<>> byDialCode;
 }
 
-// modifiable versions of country and mobile
-class ModifiableCountry {
-  String? isoCode;
-  String? dialCode;
-  Mobile? mobile;
-  String? internationalPrefix;
-  String? nationalPrefix;
-  bool? isMainCountryForIsoCode;
-
-  ModifiableCountry();
-
-  Country toCountry() => Country(
-        isoCode: isoCode!,
-        dialCode: dialCode!,
-        internationalPrefix: internationalPrefix!,
-        nationalPrefix: nationalPrefix,
-        isMainCountryForIsoCode: isMainCountryForIsoCode!,
-        mobile: mobile!,
-      );
-}
 
 Future<XmlDocument> readXml() async {
   final xmlString = await File('phone_number_metadata.xml').readAsString();
@@ -55,7 +35,7 @@ Future<XmlDocument> readXml() async {
 }
 
 /// from XML doc, we extract the territories that are relevant
-List<ModifiableCountry> toCountries(XmlDocument doc) {
+List<Country> toCountries(XmlDocument doc) {
   final territories =
       doc.getElement('phoneNumberMetadata')!.getElement('territories')!;
   // getting all the info we need in this library
@@ -72,15 +52,14 @@ List<ModifiableCountry> toCountries(XmlDocument doc) {
 }
 
 /// from each territory, we extract the relevant data
-ModifiableCountry _extractCountryData(XmlElement territory) {
+Country _extractCountryData(XmlElement territory) {
   try {
-    final country = ModifiableCountry();
-    country.isoCode = territory.getAttribute('id')!;
-    country.dialCode = territory.getAttribute('countryCode')!;
-    country.isMainCountryForIsoCode =
+    final isoCode = territory.getAttribute('id')!;
+    final dialCode = territory.getAttribute('countryCode')!;
+    final isMainCountryForIsoCode =
         territory.getAttribute('mainCountryForCode') == 'true';
-    country.internationalPrefix = territory.getAttribute('internationalPrefix');
-    country.nationalPrefix = territory.getAttribute('nationalPrefix');
+    final internationalPrefix = territory.getAttribute('internationalPrefix');
+    final nationalPrefix = territory.getAttribute('nationalPrefix');
 
     final mobileElem = territory.getElement('mobile');
     if (mobileElem == null) return country;
@@ -90,15 +69,39 @@ ModifiableCountry _extractCountryData(XmlElement territory) {
     final mobilePattern = mobileElem
         .getElement('nationalNumberPattern')!
         .text
-        .replaceAll(' ', '')
-        .replaceAll('\r', '')
-        .replaceAll('\n', '');
+        .replaceAll('\s', '');
     country.mobile = Mobile(lengths: mobileLengths, pattern: mobilePattern);
     return country;
   } catch (e) {
     print(territory);
     rethrow;
   }
+}
+
+ /// Parse lengths string into array of Int, e.g. "6,[8-10]" becomes [6,8,9,10]
+List<int> parsePossibleLengths(String lengths) {
+  final components = lengths.split(',');
+  final result = <int>[];
+  components.forEach((c) => result.addAll(parseLengthComponent(c)));
+
+  return result;
+}
+
+/// Parses numbers and ranges into array of Int
+List<int> parseLengthComponent(String component) {
+  final parsed = int.tryParse(component);
+  if (parsed != null) return [parsed];
+
+  final trimmedComponent = component.replaceAll('\[\]', '');
+  final rangeLimits = trimmedComponent.split('-').map((e) => int.parse(e));
+
+  if (rangeLimits.length != 2) throw 'possible length range is not what was expected';
+
+  final result = <int>[];
+  for (var i = rangeLimits.first; i <= rangeLimits.last; i++) {
+    result.add(i);
+  }
+  return result;
 }
 
 /// given a lit of countries we make a map to access them by isoCode
