@@ -1,7 +1,14 @@
 import 'package:phone_numbers_parser/src/exceptions.dart';
+import 'package:phone_numbers_parser/src/models/phone_description.dart';
+import 'package:phone_numbers_parser/src/validator.dart';
 
 import 'constants.dart';
+import 'models/country.dart';
 import 'phone_number.dart';
+
+///
+/// The terminology used throughout the parameters and the variable names:
+///
 
 abstract class PhoneNumberParserPublicAPI {
   /// Extracts phone numbers from string
@@ -34,10 +41,23 @@ abstract class PhoneNumberParserPublicAPI {
 }
 
 /// Parser helper to do various operations on Strings representing phone numbers
+///
+/// The terminology used throughout the parameters and the variable names:
+///
+/// {@macro string}
+///
+/// {@macro rawPhoneNumber}
+/// {@macro normalizedPhoneNumber}
+/// {@macro phoneNumber}
+/// {@macro internationalPrefix}
+/// {@macro dialCode}
+/// {@macro nationalPrefix}
+/// {@macro nationalNumber}
 class PhoneNumberParser implements PhoneNumberParserPublicAPI {
   /// Maximum length of input to prevents malicious input from overflowing the regexp engine.
   int maxInputLength = 250;
 
+  /// {@macro string}
   @override
   Iterable<Match> extractPotentialPhoneNumbers(String string) {
     if (string.length > maxInputLength) {
@@ -54,25 +74,63 @@ class PhoneNumberParser implements PhoneNumberParserPublicAPI {
     return _toPlusAndDigitsOnly(firstMatch);
   }
 
-  @override
-  PhoneNumber parse(
-    String phoneNumber, {
-    String? defaultIsoCode,
-    String? defaultCountryCode,
-  }) {
-    phoneNumber = normalize(phoneNumber);
+  /// Strips the international prefix of a phone number if present.
+  ///
+  /// This method expects a [normalizedPhoneNumber] that is already normalized.
+  ///
+  ///  - if [normalizedPhoneNumber] starts with + returns a List of one element [normalizedPhoneNumber]
+  ///  - else if a default country is given
+  ///    - if match strip and return [phoneNumber, prefix]
+  ///  - if starts with 00 or 011 strip
+  ///  - if no default country => not a valid phone number
+  List<String> stripInternationalPrefix(
+    String normalizedPhoneNumber,
+    Country? defaultCountry,
+  ) {
+    // todo add check here if it's part of the public API
+    if (normalizedPhoneNumber.startsWith('+')) {
+      return [normalizedPhoneNumber];
+    }
+    // extract to fn
+    if (defaultCountry != null) {
+      final match = RegExp(defaultCountry.phone.internationalPrefix)
+          .matchAsPrefix(normalizedPhoneNumber);
+      if (match != null) {
+        final prefix = normalizedPhoneNumber.substring(0, match.end);
 
-    // 1. get the region
-    // 2. validate for region
-
-    // 1. no params
-    // - check if the number starts with +
-    // - check if the number starts with 00 or 011
-    // find first match
-    // 2. iso code
-    //
-    // 3. dial code
+        if (normalizedPhoneNumber.length == prefix.length) {
+          throw PhoneNumberException(code: Code.INVALID);
+        }
+        final phoneNumberStriped =
+            normalizedPhoneNumber.substring(match.end + 1);
+        // check viability
+        if (Validator.isNationalNumber(nationalNumber, defaultCountry.phone)) {
+          return [nationalNumber, prefix];
+        }
+      }
+    }
+    throw PhoneNumberException(code: Code.INVALID);
   }
+
+  // @override
+  // PhoneNumber parse(
+  //   String phoneNumber, {
+  //   String? defaultIsoCode,
+  //   String? defaultCountryCode,
+  // }) {
+  //   phoneNumber = normalize(phoneNumber);
+
+  //   // 1. get the region
+  //   // 2. validate for region
+
+  //   // 1. no params
+  //   // - check if the number starts with +
+  //   // - check if the number starts with 00 or 011
+  //   // find first match
+  //   // 2. iso code
+  //   //
+  //   // 3. dial code
+  // }
 
   /// Keeps only digits, plus char '+' and change easthern arabic numbers into westhern arabic numbers
   String _toPlusAndDigitsOnly(String string) {
@@ -81,4 +139,6 @@ class PhoneNumberParser implements PhoneNumberParserPublicAPI {
         .map((char) => Patterns.allNormalizationMappings[char] ?? '')
         .join('');
   }
+
+  stripInternationalPrefix() {}
 }

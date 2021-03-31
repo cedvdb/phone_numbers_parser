@@ -16,6 +16,11 @@ class CountryPhoneDescription {
     required this.isMainCountryForDialCode,
     required this.validation,
   });
+
+  @override
+  String toString() {
+    return 'CountryPhoneDescription(dialCode: $dialCode, internationalPrefix: $internationalPrefix, nationalPrefix: $nationalPrefix, nationalPrefixTransformRule: $nationalPrefixTransformRule, isMainCountryForDialCode: $isMainCountryForDialCode, validation: $validation)';
+  }
 }
 
 class PhoneValidation {
@@ -28,6 +33,10 @@ class PhoneValidation {
     required this.mobile,
     required this.fixedLine,
   });
+
+  @override
+  String toString() =>
+      'PhoneValidation(general: $general, mobile: $mobile, fixedLine: $fixedLine)';
 }
 
 class PhoneValidationRules {
@@ -38,4 +47,8 @@ class PhoneValidationRules {
     this.lengths,
     required this.pattern,
   });
+
+  @override
+  String toString() =>
+      'PhoneValidationRules(lengths: $lengths, pattern: $pattern)';
 }

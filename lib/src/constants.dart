@@ -4,10 +4,14 @@ class Patterns {
   static final int MAX_LENGTH_COUNTRY_DIAL_CODE = 3;
 
   /// The minimum and maximum length of the national significant number.
-  static final int MIN_LENGTH_FOR_NSN = 2;
+  /// lib phone number uses 2 but ITU says it's 3
+  static final int MIN_LENGTH_FOR_NSN = 3;
 
   /// The ITU says the maximum length should be 15, but we have found longer numbers in Germany.
   static final int MAX_LENGTH_FOR_NSN = 17;
+
+  /// New Zealand can have 5 digits
+  static final int MIN_LENGTH_COUNTRY_PLUS_NSN = 5;
 
   /// accepted punctuation within a phone number
   static final String _PUNCTUATION = ' ()[\]\-\./\\';
