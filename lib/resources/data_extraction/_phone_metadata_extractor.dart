@@ -14,7 +14,8 @@ Future<Map<String, CountryPhoneDescription>> getPhoneDescriptionMap() async {
 }
 
 Future<XmlDocument> _readPhoneNumbersXml() async {
-  final xmlString = await File('phone_number_metadata.xml').readAsString();
+  final xmlString =
+      await File('../data_source/phone_number_metadata.xml').readAsString();
   return XmlDocument.parse(xmlString);
 }
 
@@ -28,14 +29,13 @@ Map<String, CountryPhoneDescription> _toPhoneDescriptions(XmlDocument doc) {
       .findAllElements('territory')
       // we remove territories that don't have international prefix as they
       // are not relevant to us
-      .where((territory) => territory.getElement('internationalPrefix') != null)
+      .where(
+          (territory) => territory.getAttribute('internationalPrefix') != null)
       // we remove territories that don't have mobile metadata as they are most likely not relevant
       // to most applications
       .where((territory) => territory.getElement('mobile') != null)
-      .forEach(
-        (territory) => result[territory.getAttribute('id')!] =
-            _extractCountryPhoneDescription(territory),
-      );
+        ..forEach((territory) => result[territory.getAttribute('id')!] =
+            _extractCountryPhoneDescription(territory));
 
   return result;
 }
@@ -88,7 +88,9 @@ PhoneValidationRules _extractPhoneValidationRules(XmlElement element) {
   final pattern = element
       .getElement('nationalNumberPattern')!
       .innerText
-      .replaceAll('\s', '');
+      .replaceAll(' ', '')
+      .replaceAll('\r', '')
+      .replaceAll('\n', '');
   final lengthsUnparsed =
       element.getElement('possibleLengths')?.getAttribute('national');
   final lengths =
@@ -110,7 +112,7 @@ List<int> _parseLengthComponent(String component) {
   final parsed = int.tryParse(component);
   if (parsed != null) return [parsed];
 
-  final trimmedComponent = component.replaceAll('\[\]', '');
+  final trimmedComponent = component.replaceAll('[', '').replaceAll(']', '');
   final rangeLimits = trimmedComponent.split('-').map((e) => int.parse(e));
 
   if (rangeLimits.length != 2) {
@@ -123,45 +125,3 @@ List<int> _parseLengthComponent(String component) {
   }
   return result;
 }
-
-// /// given a lit of countries we make a map to access them by isoCode
-// Map<String, ModifiableCountry> toIsoCodeMap(List<ModifiableCountry> countries) {
-//   final map = <String, ModifiableCountry>{};
-//   countries.forEach((element) {
-//     if (map[element.isoCode!] != null) {
-//       throw 'duplicated country code';
-//     }
-//     map[element.isoCode!] = element;
-//   });
-//   return map;
-// }
-
-// Map<String, List<ModifiableCountry>> toDialCodeMap(
-//     List<ModifiableCountry> countries) {
-//   final map = <String, List<ModifiableCountry>>{};
-//   countries.forEach((element) {
-//     if (map[element.dialCode] == null) {
-//       map[element.dialCode!] = [];
-//     }
-//     map[element.dialCode]!.add(element);
-//   });
-//   return map;
-// }
-
-// // adds the isMainCountryForDialCode that is implied
-// void addMainCountryData(Map<String, List<ModifiableCountry>> byDialCode) {
-//   byDialCode.values.forEach((oneDialCode) {
-//     if (oneDialCode.length == 1) {
-//       oneDialCode[0].isMainCountryForDialCode = true;
-//     } else {
-//       final mainCountryIndex = oneDialCode
-//           .indexWhere((country) => country.isMainCountryForDialCode == true);
-//       if (mainCountryIndex < 0) {
-//         throw 'No main country for dial code';
-//       }
-//       oneDialCode
-//           .forEach((country) => country.isMainCountryForDialCode = false);
-//       oneDialCode[mainCountryIndex].isMainCountryForDialCode = true;
-//     }
-//   });
-// }

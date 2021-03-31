@@ -23,4 +23,9 @@ class Country {
     required this.isoCode,
     required this.phone,
   });
+
+  @override
+  String toString() {
+    return 'Country(name: $name, flag: $flag, isoCode: $isoCode, phone: $phone)';
+  }
 }

@@ -6,14 +6,15 @@ import 'dart:io';
 /// returns a map of { countryCode: countryName }
 Future<Map<String, String>> getCountryNamesMap() async {
   final countryNames = await _readCountryNameJson();
-  return countryNames.fold<Map<String, String>>(
-    <String, String>{},
-    (prev, curr) => prev[curr['code']] = curr['name'],
-  );
+  final result = <String, String>{};
+  countryNames.forEach(
+      (countryName) => result[countryName['code']] = countryName['name']);
+  return result;
 }
 
 /// reads the json file of country names which is an array of country information
-Future<List<Map<String, dynamic>>> _readCountryNameJson() async {
-  final jsonString = await File('country_names.json').readAsString();
-  return jsonDecode(jsonString) as List<Map<String, dynamic>>;
+Future<List<dynamic>> _readCountryNameJson() async {
+  final jsonString =
+      await File('../data_source/country_names.json').readAsString();
+  return jsonDecode(jsonString);
 }
