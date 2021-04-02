@@ -15,6 +15,10 @@ enum Code {
   /// Invalid phone number
   INVALID,
 
+  //
+  INVALID_DIAL_CODE,
+  INVALID_ISO_CODE,
+
   /// Input has reached the maximum limit
   INPUT_IS_TOO_LONG
 }

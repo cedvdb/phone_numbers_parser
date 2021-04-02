@@ -1,7 +1,7 @@
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:phone_numbers_parser/src/constants.dart';
 
-import 'models/phone_description.dart';
+import 'models/country_phone_description.dart';
 
 class Validator {
   /// returns whether or not a national number is viable

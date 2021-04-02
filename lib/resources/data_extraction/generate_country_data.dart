@@ -4,7 +4,7 @@
 import 'package:phone_numbers_parser/resources/data_extraction/_country_names_extractor.dart';
 import 'package:phone_numbers_parser/resources/data_extraction/_phone_metadata_extractor.dart';
 import 'package:phone_numbers_parser/src/models/country.dart';
-import 'package:phone_numbers_parser/src/models/phone_description.dart';
+import 'package:phone_numbers_parser/src/models/country_phone_description.dart';
 
 class ExtractedCountryData {
   final List<Country> countries;

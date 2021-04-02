@@ -1,4 +1,8 @@
-import 'package:phone_numbers_parser/src/models/phone_description.dart';
+import 'package:phone_numbers_parser/resources/file_generation/base_country_by_dial_code.dart';
+import 'package:phone_numbers_parser/src/exceptions.dart';
+import 'package:phone_numbers_parser/src/generated/countries_by_iso_code_map.dart';
+import 'package:phone_numbers_parser/src/models/country_phone_description.dart';
+import 'package:phone_numbers_parser/src/parsers/country_parser.dart';
 
 /// Country regroup informations for displaying a list of countries
 class Country {
@@ -28,4 +32,10 @@ class Country {
   String toString() {
     return 'Country(name: $name, flag: $flag, isoCode: $isoCode, phone: $phone)';
   }
+
+  static Country fromIsoCode(String isoCode) =>
+      CountryParser.fromIsoCode(isoCode);
+
+  static Country fromDialCode(String dialCode) =>
+      CountryParser.fromDialCode(dialCode);
 }

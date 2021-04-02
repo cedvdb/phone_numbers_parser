@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:phone_numbers_parser/src/models/phone_description.dart';
+import 'package:phone_numbers_parser/src/models/country_phone_description.dart';
 import 'package:xml/xml.dart';
 
 // this file is responsible of extracting the data

@@ -6,7 +6,7 @@ import 'dart:io';
 
 import 'package:phone_numbers_parser/resources/data_extraction/generate_country_data.dart';
 import 'package:phone_numbers_parser/src/models/country.dart';
-import 'package:phone_numbers_parser/src/models/phone_description.dart';
+import 'package:phone_numbers_parser/src/models/country_phone_description.dart';
 
 const String DATA_TOKEN = '// data here';
 const String COMMENT_TOKEN = '// comment here';
