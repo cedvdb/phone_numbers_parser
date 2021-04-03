@@ -8,29 +8,24 @@ import 'package:xml/xml.dart';
 
 /// returns a map like { countryCode: CountryPhoneDescritpion }
 Future<Map<String, CountryPhoneDescription>> getPhoneDescriptionMap() async {
-  final territories = await _readTerritories();
+  final phoneNumbersDoc = await _readPhoneNumbersXml();
 
-  return _toPhoneDescriptions(territories);
+  return _toPhoneDescriptions(phoneNumbersDoc);
 }
 
-Future<Map<String, List<String>>> getExamplePhoneNumbers() async {
-  final territories = await _readTerritories();
-  final map = <String, Map<String, String>>{};
-  for (final territory in territories) {
-    map[territory.getAttribute('id')] = {
-      'mobile': '',
-      'fixedLine': '',
-    }
-  }
-}
-
-Future<List<XmlElement>> _readTerritories() async {
+Future<XmlDocument> _readPhoneNumbersXml() async {
   final xmlString =
       await File('../data_source/phone_number_metadata.xml').readAsString();
-  final doc = XmlDocument.parse(xmlString);
+  return XmlDocument.parse(xmlString);
+}
+
+/// from XML doc, we extract the territories that are relevant
+Map<String, CountryPhoneDescription> _toPhoneDescriptions(XmlDocument doc) {
   final territories =
       doc.getElement('phoneNumberMetadata')!.getElement('territories')!;
-  return territories
+  // getting all the info we need in this library
+  final result = <String, CountryPhoneDescription>{};
+  territories
       .findAllElements('territory')
       // we remove territories that don't have international prefix as they
       // are not relevant to us
@@ -39,16 +34,8 @@ Future<List<XmlElement>> _readTerritories() async {
       // we remove territories that don't have mobile metadata as they are most likely not relevant
       // to most applications
       .where((territory) => territory.getElement('mobile') != null)
-      .toList();
-}
-
-/// from XML doc, we extract the territories that are relevant
-Map<String, CountryPhoneDescription> _toPhoneDescriptions(
-    List<XmlElement> territories) {
-  // getting all the info we need in this library
-  final result = <String, CountryPhoneDescription>{};
-  territories.forEach((territory) => result[territory.getAttribute('id')!] =
-      _extractCountryPhoneDescription(territory));
+      .forEach((territory) => result[territory.getAttribute('id')!] =
+          _extractCountryPhoneDescription(territory));
 
   return result;
 }
