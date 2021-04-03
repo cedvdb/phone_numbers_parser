@@ -21,11 +21,11 @@ final String OUTPUT_BY_DIAL_CODE =
 final String OUTPUT_BY_ISO_CODE = '$OUTPUT_PATH/countries_by_iso_code_map.dart';
 
 void main() async {
-  final extractedData = await getExtractedCountryData();
-  print(extractedData.countries.length);
-  await createList(extractedData.countries);
-  await createByIsoCode(extractedData.countriesByIsoCode);
-  await createByDialCode(extractedData.countriesByDialCode);
+  // final extractedData = await getExtractedCountryData();
+  // print(extractedData.countries.length);
+  // await createList(extractedData.countries);
+  // await createByIsoCode(extractedData.countriesByIsoCode);
+  // await createByDialCode(extractedData.countriesByDialCode);
 }
 
 Future createList(List<Country> countries) async {

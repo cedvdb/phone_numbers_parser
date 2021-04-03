@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:path/path.dart' as path;
 // this file is responsible of extracting the data from the country_names.json
 
 /// returns a map of { countryCode: countryName }
@@ -14,7 +14,7 @@ Future<Map<String, String>> getCountryNamesMap() async {
 
 /// reads the json file of country names which is an array of country information
 Future<List<dynamic>> _readCountryNameJson() async {
-  final jsonString =
-      await File('../data_source/country_names.json').readAsString();
+  final filePath = path.join('lib/resources/data_source', 'country_names.json');
+  final jsonString = await File(filePath).readAsString();
   return jsonDecode(jsonString);
 }

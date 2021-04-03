@@ -1,10 +1,13 @@
 // This file is responsile of grouping up the data we got
 // from country_names.json and phone_number_metadata.xml
 
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:phone_numbers_parser/resources/data_extraction/_country_names_extractor.dart';
 import 'package:phone_numbers_parser/resources/data_extraction/_phone_metadata_extractor.dart';
 import 'package:phone_numbers_parser/src/models/country.dart';
-import 'package:phone_numbers_parser/src/models/country_phone_description.dart';
+import 'package:path/path.dart' as path;
 
 class ExtractedCountryData {
   final List<Country> countries;
@@ -18,22 +21,31 @@ class ExtractedCountryData {
   );
 }
 
-Future<ExtractedCountryData> getExtractedCountryData() async {
+void main() async {
   final names = await getCountryNamesMap();
   final phoneDescriptions = await getPhoneDescriptionMap();
   final countries = _generateCountries(names, phoneDescriptions);
-  final countriesByIsoCode = _toIsoCodeMap(countries);
-  final countriesByDialCode = _toDialCodeMap(countries);
-  return ExtractedCountryData(
-    countries,
-    countriesByIsoCode,
-    countriesByDialCode,
-  );
+  final filePath = path.join('lib/resources/data_source', 'countries.json');
+  final encoder = JsonEncoder.withIndent('  ');
+  await File(filePath).writeAsString(encoder.convert(countries));
 }
 
-List<Country> _generateCountries(
+// Future<ExtractedCountryData> getExtractedCountryData() async {
+//   final names = await getCountryNamesMap();
+//   final phoneDescriptions = await getPhoneDescriptionMap();
+//   final countries = _generateCountries(names, phoneDescriptions);
+//   final countriesByIsoCode = _toIsoCodeMap(countries);
+//   final countriesByDialCode = _toDialCodeMap(countries);
+//   return ExtractedCountryData(
+//     countries,
+//     countriesByIsoCode,
+//     countriesByDialCode,
+//   );
+// }
+
+List<Map> _generateCountries(
   Map<String, String> names,
-  Map<String, CountryPhoneDescription> phoneDescriptions,
+  Map<String, Map> phoneDescriptions,
 ) {
   return phoneDescriptions.entries
       // phone_metadata is (imo) overly precise by including territories
@@ -49,12 +61,12 @@ List<Country> _generateCountries(
         }
       })
       .map(
-        (entry) => Country(
-          name: names[entry.key]!,
-          flag: _generateFlagEmojiUnicode(entry.key),
-          isoCode: entry.key,
-          phone: entry.value,
-        ),
+        (entry) => {
+          'name': names[entry.key]!,
+          'flag': _generateFlagEmojiUnicode(entry.key),
+          'isoCode': entry.key,
+          'phone': entry.value,
+        },
       )
       .toList();
 }

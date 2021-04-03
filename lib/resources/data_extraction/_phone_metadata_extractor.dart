@@ -3,29 +3,30 @@ import 'dart:io';
 
 import 'package:phone_numbers_parser/src/models/country_phone_description.dart';
 import 'package:xml/xml.dart';
-
+import 'package:path/path.dart' as path;
 // this file is responsible of extracting the data
 // from the phone_number_metadata.xml
 
 /// returns a map like { countryCode: CountryPhoneDescritpion }
-Future<Map<String, CountryPhoneDescription>> getPhoneDescriptionMap() async {
+Future<Map<String, Map>> getPhoneDescriptionMap() async {
   final phoneNumbersDoc = await _readPhoneNumbersXml();
 
-  return _toPhoneDescriptions(phoneNumbersDoc);
+  return _toPhoneDescriptionsMap(phoneNumbersDoc);
 }
 
 Future<XmlDocument> _readPhoneNumbersXml() async {
-  final xmlString =
-      await File('../data_source/phone_number_metadata.xml').readAsString();
+  final filePath =
+      path.join('lib/resources/data_source', 'phone_number_metadata.xml');
+  final xmlString = await File(filePath).readAsString();
   return XmlDocument.parse(xmlString);
 }
 
 /// from XML doc, we extract the territories that are relevant
-Map<String, CountryPhoneDescription> _toPhoneDescriptions(XmlDocument doc) {
+Map<String, Map> _toPhoneDescriptionsMap(XmlDocument doc) {
   final territories =
       doc.getElement('phoneNumberMetadata')!.getElement('territories')!;
   // getting all the info we need in this library
-  final result = <String, CountryPhoneDescription>{};
+  final result = <String, Map>{};
   territories
       .findAllElements('territory')
       // we remove territories that don't have international prefix as they
@@ -42,7 +43,7 @@ Map<String, CountryPhoneDescription> _toPhoneDescriptions(XmlDocument doc) {
 }
 
 /// from each territory, we extract the relevant data
-CountryPhoneDescription _extractCountryPhoneDescription(XmlElement territory) {
+Map _extractCountryPhoneDescription(XmlElement territory) {
   try {
     // phone validation data
     final validation = _extractPhoneValidation(territory);
@@ -52,42 +53,43 @@ CountryPhoneDescription _extractCountryPhoneDescription(XmlElement territory) {
     final internationalPrefix = territory.getAttribute('internationalPrefix')!;
     final isMainCountryForDialCode =
         territory.getAttribute('mainCountryForCode') == 'true';
-    var nationalPrefix = territory.getAttribute('nationalPrefix');
-    nationalPrefix ??= territory.getAttribute('nationalPrefixForParsing');
+    // we will use the national prefix for parsing if there is any
+    var nationalPrefix = territory.getAttribute('nationalPrefixForParsing');
+    nationalPrefix ??= territory.getAttribute('nationalPrefix');
     final nationalPrefixTransformRule =
         territory.getAttribute('nationalPrefixTransformRule');
 
-    return CountryPhoneDescription(
-      dialCode: dialCode,
-      internationalPrefix: parsePattern(internationalPrefix),
-      validation: validation,
-      isMainCountryForDialCode: isMainCountryForDialCode,
-      nationalPrefix:
+    return {
+      'dialCode': dialCode,
+      'internationalPrefix': parsePattern(internationalPrefix),
+      'isMainCountryForDialCode': isMainCountryForDialCode,
+      'nationalPrefix':
           nationalPrefix == null ? null : parsePattern(nationalPrefix),
-      nationalPrefixTransformRule: nationalPrefixTransformRule == null
+      'nationalPrefixTransformRule': nationalPrefixTransformRule == null
           ? null
           : parsePattern(nationalPrefixTransformRule),
-    );
+      'validation': validation,
+    };
   } catch (e) {
     print(territory);
     rethrow;
   }
 }
 
-PhoneValidation _extractPhoneValidation(XmlElement territory) {
+Map _extractPhoneValidation(XmlElement territory) {
   final general =
       _extractPhoneValidationRules(territory.getElement('generalDesc')!);
   final mobile = _extractPhoneValidationRules(territory.getElement('mobile')!);
   final fixedLine =
       _extractPhoneValidationRules(territory.getElement('fixedLine')!);
-  return PhoneValidation(
-    general: general,
-    mobile: mobile,
-    fixedLine: fixedLine,
-  );
+  return {
+    'general': general,
+    'mobile': mobile,
+    'fixedLine': fixedLine,
+  };
 }
 
-PhoneValidationRules _extractPhoneValidationRules(XmlElement element) {
+Map _extractPhoneValidationRules(XmlElement element) {
   final patternUnparsed =
       element.getElement('nationalNumberPattern')!.innerText;
 
@@ -96,7 +98,7 @@ PhoneValidationRules _extractPhoneValidationRules(XmlElement element) {
       element.getElement('possibleLengths')?.getAttribute('national');
   final lengths =
       lengthsUnparsed != null ? _parsePossibleLengths(lengthsUnparsed) : null;
-  return PhoneValidationRules(pattern: pattern, lengths: lengths);
+  return {'pattern': pattern, 'lengths': lengths};
 }
 
 /// the patterns in the xml are weirdly formatted
