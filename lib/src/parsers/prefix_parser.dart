@@ -9,6 +9,7 @@ import 'package:phone_numbers_parser/src/validator.dart';
 import '../exceptions.dart';
 
 class PrefixParser {
+  ///
   static String extractCountryCode(
     String phoneNumber, [
     Country? country,

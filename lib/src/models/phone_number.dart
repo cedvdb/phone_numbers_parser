@@ -1,6 +1,4 @@
-import 'package:phone_numbers_parser/src/parsers/country_parser.dart';
-import 'package:phone_numbers_parser/src/parsers/parser2.dart';
-
+import '../parsers2/phone_number_parser.dart';
 import 'country.dart';
 
 class PhoneNumber {
@@ -11,19 +9,25 @@ class PhoneNumber {
 
   PhoneNumber._(this.country, this.nationalNumber);
 
-  static PhoneNumber fromRaw(String raw) => Parser.parse(raw);
+  static PhoneNumber fromRaw(String raw) => PhoneNumberParser.parse(raw);
 
-  // needs to check validity
-  // static PhoneNumber fromCountry(Country country, String nationalNumber);
-  // needs to get the country and call from country
-  PhoneNumber.fromIsoCode(String isoCode, String nationalNumber) {
-    country = Country.fromIsoCode(isoCode);
-    nationalNumber = Parser.parseNationalNumber(nationalNumber, country);
+  static PhoneNumber fromIsoCode(String isoCode, String nationalNumber) {
+    final country = Country.fromIsoCode(isoCode);
+    nationalNumber =
+        PhoneNumberParser.parseNationalNumber(nationalNumber, country);
+    return PhoneNumber._(country, nationalNumber);
   }
 
-  // needs to get the country and call from country
-  PhoneNumber.fromDialCode(String dialCode, String nationalNumber) {
-    country = Country.fromDialCode(dialCode);
-    nationalNumber = Parser.parseNationalNumber(nationalNumber);
+  static PhoneNumber fromDialCode(String dialCode, String nationalNumber) {
+    final country = Country.fromDialCode(dialCode);
+    nationalNumber =
+        PhoneNumberParser.parseNationalNumber(nationalNumber, country);
+    return PhoneNumber._(country, nationalNumber);
+  }
+
+  static PhoneNumber fromCountry(Country country, String nationalNumber) {
+    nationalNumber =
+        PhoneNumberParser.parseNationalNumber(nationalNumber, country);
+    return PhoneNumber._(country, nationalNumber);
   }
 }
