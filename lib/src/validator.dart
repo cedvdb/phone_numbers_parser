@@ -3,8 +3,9 @@ import 'package:phone_numbers_parser/src/constants.dart';
 
 import 'models/country_phone_description.dart';
 
+/// responsible of validating phone numbers
 class Validator {
-  /// returns whether or not a national number is viable
+  /// Returns whether or not a national number is viable
   ///
   /// [nationalNumber] national number without country code,
   /// international prefix, or national prefix
@@ -12,8 +13,8 @@ class Validator {
     String phoneNumber,
     CountryPhoneDescription desc,
   ) {
-    if (phoneNumber.length < Patterns.MIN_LENGTH_FOR_NSN) {
-      throw PhoneNumberException(code: Code.INVALID, description: 'too short');
+    if (phoneNumber.length < Constants.MIN_LENGTH_FOR_NSN) {
+      return false;
     }
     final pattern = desc.validation.general.pattern;
     return RegExp(pattern).hasMatch('^$pattern\$');

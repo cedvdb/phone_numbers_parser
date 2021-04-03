@@ -1,4 +1,4 @@
-class Patterns {
+class Constants {
   /// The minimum and maximum length of the country calling code.
   static final int MIN_LENGTH_COUNTRY_DIAL_CODE = 1;
   static final int MAX_LENGTH_COUNTRY_DIAL_CODE = 3;

@@ -31,7 +31,7 @@ class PrefixParser {
     if (phoneNumber.isNotEmpty || !phoneNumber.startsWith('0')) {
       String potentialCountryCode;
       final numberLength = phoneNumber.length;
-      final max = min(numberLength, Patterns.MAX_LENGTH_COUNTRY_DIAL_CODE);
+      final max = min(numberLength, Constants.MAX_LENGTH_COUNTRY_DIAL_CODE);
       for (var i = 1; i <= max; i++) {
         potentialCountryCode = phoneNumber.substring(0, i);
         if (countriesByDialCode.containsKey(potentialCountryCode)) {

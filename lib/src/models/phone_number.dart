@@ -1,13 +1,18 @@
+import 'package:phone_numbers_parser/src/validator.dart';
+
 import '../parsers/phone_number_parser.dart';
 import 'country.dart';
 
 class PhoneNumber {
   late final String nationalNumber;
   late final Country country;
+  late final bool valid;
 
   String get dialCode => country.dialCode;
 
-  PhoneNumber._(this.country, this.nationalNumber);
+  PhoneNumber._(this.country, this.nationalNumber) {
+    valid = Validator.isValidNationalNumber(nationalNumber, country.phone);
+  }
 
   static PhoneNumber fromRaw(String raw) => PhoneNumberParser.parse(raw);
 

@@ -9,7 +9,7 @@ import 'prefix_parser.dart';
 class PhoneNumberParser {
   /// Extracts phone numbers lazily from a [text].
   static Iterable<Match> extractPotentialPhoneNumbers(String text) {
-    return RegExp(Patterns.POSSIBLE_PHONE_NUMBER).allMatches(text);
+    return RegExp(Constants.POSSIBLE_PHONE_NUMBER).allMatches(text);
   }
 
   /// Normalize phone number so it's only digits and possible + sign.
@@ -22,7 +22,7 @@ class PhoneNumberParser {
   static String normalize(String unformatedPhoneNumber) {
     return unformatedPhoneNumber
         .split('')
-        .map((char) => Patterns.allNormalizationMappings[char] ?? '')
+        .map((char) => Constants.allNormalizationMappings[char] ?? '')
         .join('');
   }
 
