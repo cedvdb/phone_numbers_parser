@@ -13,6 +13,7 @@ class CountryParser {
   }
 
   static Country fromDialCode(String dialCode) {
+    // TODO normalize ?
     if (dialCode.startsWith('+')) {
       dialCode = dialCode.substring(1);
     }

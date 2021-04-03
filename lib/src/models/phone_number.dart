@@ -1,4 +1,4 @@
-import '../parsers2/phone_number_parser.dart';
+import '../parsers/phone_number_parser.dart';
 import 'country.dart';
 
 class PhoneNumber {
