@@ -7,8 +7,10 @@ import 'prefix_parser.dart';
 
 /// Parser to do various operations on Strings representing phone numbers.
 class PhoneNumberParser {
-  /// Extracts phone numbers lazily from a [text].
-  static Iterable<Match> extractPotentialPhoneNumbers(String text) {
+  /// Extracts phone numbers from a [text].
+  static Iterable<Match> findPotentialPhoneNumbers(String text) {
+    // we dont check if it is a valid phone number, a date or anything else.
+    // the user can parse the phone number to check validity
     return RegExp(Constants.POSSIBLE_PHONE_NUMBER).allMatches(text);
   }
 

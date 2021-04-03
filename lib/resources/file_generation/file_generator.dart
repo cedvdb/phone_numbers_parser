@@ -98,6 +98,7 @@ String phoneValidationRulesString(PhoneValidationRules r) {
 }
 
 String enc(v) {
-  if (v is! String && v != null) return jsonEncode(v);
-  return v == null ? 'null' : 'r${jsonEncode(v)}';
+  if (v is String) return 'r"$v"';
+  if (v == null) return 'null';
+  return jsonEncode(v);
 }

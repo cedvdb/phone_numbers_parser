@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:phone_numbers_parser/src/models/country_phone_description.dart';
@@ -51,19 +52,21 @@ CountryPhoneDescription _extractCountryPhoneDescription(XmlElement territory) {
     final internationalPrefix = territory.getAttribute('internationalPrefix')!;
     final isMainCountryForDialCode =
         territory.getAttribute('mainCountryForCode') == 'true';
-    final nationalPrefix = territory.getAttribute('nationalPrefix');
-    final nationalPrefixForParsing =
-        territory.getAttribute('nationalPrefixForParsing');
+    var nationalPrefix = territory.getAttribute('nationalPrefix');
+    nationalPrefix ??= territory.getAttribute('nationalPrefixForParsing');
     final nationalPrefixTransformRule =
         territory.getAttribute('nationalPrefixTransformRule');
 
     return CountryPhoneDescription(
       dialCode: dialCode,
-      internationalPrefix: internationalPrefix,
+      internationalPrefix: parsePattern(internationalPrefix),
       validation: validation,
       isMainCountryForDialCode: isMainCountryForDialCode,
-      nationalPrefix: nationalPrefixForParsing ?? nationalPrefix,
-      nationalPrefixTransformRule: nationalPrefixTransformRule,
+      nationalPrefix:
+          nationalPrefix == null ? null : parsePattern(nationalPrefix),
+      nationalPrefixTransformRule: nationalPrefixTransformRule == null
+          ? null
+          : parsePattern(nationalPrefixTransformRule),
     );
   } catch (e) {
     print(territory);
@@ -85,17 +88,20 @@ PhoneValidation _extractPhoneValidation(XmlElement territory) {
 }
 
 PhoneValidationRules _extractPhoneValidationRules(XmlElement element) {
-  final pattern = element
-      .getElement('nationalNumberPattern')!
-      .innerText
-      .replaceAll(' ', '')
-      .replaceAll('\r', '')
-      .replaceAll('\n', '');
+  final patternUnparsed =
+      element.getElement('nationalNumberPattern')!.innerText;
+
+  final pattern = parsePattern(patternUnparsed);
   final lengthsUnparsed =
       element.getElement('possibleLengths')?.getAttribute('national');
   final lengths =
       lengthsUnparsed != null ? _parsePossibleLengths(lengthsUnparsed) : null;
   return PhoneValidationRules(pattern: pattern, lengths: lengths);
+}
+
+/// the patterns in the xml are weirdly formatted
+String parsePattern(String pattern) {
+  return pattern.replaceAll(' ', '').replaceAll('\r', '').replaceAll('\n', '');
 }
 
 /// Parse lengths string into array of Int, e.g. "6,[8-10]" becomes [6,8,9,10]
