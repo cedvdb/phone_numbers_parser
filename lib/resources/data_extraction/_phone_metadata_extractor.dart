@@ -8,24 +8,29 @@ import 'package:xml/xml.dart';
 
 /// returns a map like { countryCode: CountryPhoneDescritpion }
 Future<Map<String, CountryPhoneDescription>> getPhoneDescriptionMap() async {
-  final phoneNumbersDoc = await _readPhoneNumbersXml();
+  final territories = await _readTerritories();
 
-  return _toPhoneDescriptions(phoneNumbersDoc);
+  return _toPhoneDescriptions(territories);
 }
 
-Future<XmlDocument> _readPhoneNumbersXml() async {
+Future<Map<String, List<String>>> getExamplePhoneNumbers() async {
+  final territories = await _readTerritories();
+  final map = <String, Map<String, String>>{};
+  for (final territory in territories) {
+    map[territory.getAttribute('id')] = {
+      'mobile': '',
+      'fixedLine': '',
+    }
+  }
+}
+
+Future<List<XmlElement>> _readTerritories() async {
   final xmlString =
       await File('../data_source/phone_number_metadata.xml').readAsString();
-  return XmlDocument.parse(xmlString);
-}
-
-/// from XML doc, we extract the territories that are relevant
-Map<String, CountryPhoneDescription> _toPhoneDescriptions(XmlDocument doc) {
+  final doc = XmlDocument.parse(xmlString);
   final territories =
       doc.getElement('phoneNumberMetadata')!.getElement('territories')!;
-  // getting all the info we need in this library
-  final result = <String, CountryPhoneDescription>{};
-  territories
+  return territories
       .findAllElements('territory')
       // we remove territories that don't have international prefix as they
       // are not relevant to us
@@ -34,8 +39,16 @@ Map<String, CountryPhoneDescription> _toPhoneDescriptions(XmlDocument doc) {
       // we remove territories that don't have mobile metadata as they are most likely not relevant
       // to most applications
       .where((territory) => territory.getElement('mobile') != null)
-        ..forEach((territory) => result[territory.getAttribute('id')!] =
-            _extractCountryPhoneDescription(territory));
+      .toList();
+}
+
+/// from XML doc, we extract the territories that are relevant
+Map<String, CountryPhoneDescription> _toPhoneDescriptions(
+    List<XmlElement> territories) {
+  // getting all the info we need in this library
+  final result = <String, CountryPhoneDescription>{};
+  territories.forEach((territory) => result[territory.getAttribute('id')!] =
+      _extractCountryPhoneDescription(territory));
 
   return result;
 }

@@ -1,22 +1,6 @@
 this is pseudo code to keep track of what libphonenumber does, because it does a lot
 
 
-# new algo
-
-## extract country code
-
-  1. check number starts with +
-    - yes: easy
-  2. if not stripInternationlPrefix:
-
-## strip international prefix
-
- - if number starts with + return ['+number']
- - else check default country 
-   - if match strip and return [number, prefix] and check next digit
- - if starts with 00 or 011 strip
- - if no default country => not a valid phone number
-
 # libphone number
 
 ## extract country code
@@ -70,7 +54,6 @@ replace national prefix
 
 # Phone number kit
 
-more succint code
 
 
 ## extract country code
