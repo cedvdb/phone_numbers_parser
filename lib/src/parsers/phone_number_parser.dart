@@ -30,19 +30,16 @@ class PhoneNumberParser {
 
   /// Extracts the necessary information from [rawPhoneNumber] to return [PhoneNumber].
   ///
-  /// A [defaultCountry] can be provided to help the parsing process in
-  /// the cases where the country dial code is not obvious in the rawPhoneNumber.
+  /// The [rawPhoneNumber] is expected to contain the country dial code
   ///
   /// Throws [PhoneNumberException].
-  static PhoneNumber parse(String rawPhoneNumber, [Country? defaultCountry]) {
+  static PhoneNumber parse(String rawPhoneNumber) {
     final normalized = normalize(rawPhoneNumber);
     final iddResult = PrefixParser.extractInternationalPrefix(
       normalized,
-      defaultCountry,
     );
     final dialCodeResult = PrefixParser.extractDialCode(
       iddResult.phoneNumber,
-      defaultCountry,
     );
 
     if (dialCodeResult.prefix == null) {
@@ -64,5 +61,16 @@ class PhoneNumberParser {
     final extractedPrefix =
         PrefixParser.extractNationalPrefix(normalized, country);
     return extractedPrefix.phoneNumber;
+  }
+
+  static Country getCountry(String phoneNumber) {
+    final normalized = normalize(phoneNumber);
+    final iddResult = PrefixParser.extractInternationalPrefix(
+      phoneNumber,
+    );
+    final dialCodeResult = PrefixParser.extractDialCode(
+      iddResult.phoneNumber,
+    );
+    throw 'unimplemented';
   }
 }

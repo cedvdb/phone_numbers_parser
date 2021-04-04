@@ -22,11 +22,8 @@ class PrefixParser {
   ///
   /// It expects a normalized [phoneNumber] starting
   /// with the country code and without the +.
-  static ExtractionResult extractDialCode(
-    String phoneNumber, [
-    Country? country,
-  ]) {
-    var dialCode = country?.dialCode;
+  static ExtractionResult extractDialCode(String phoneNumber) {
+    var dialCode = '';
     // Country dial codes do not begin with a '0'.
     if (phoneNumber.isNotEmpty || !phoneNumber.startsWith('0')) {
       String potentialCountryCode;
@@ -36,11 +33,12 @@ class PrefixParser {
         potentialCountryCode = phoneNumber.substring(0, i);
         if (countriesByDialCode.containsKey(potentialCountryCode)) {
           dialCode = potentialCountryCode;
+          break;
         }
       }
     }
     return ExtractionResult(
-      phoneNumber: phoneNumber.substring(dialCode!.length),
+      phoneNumber: phoneNumber.substring(dialCode.length),
       prefix: dialCode,
     );
   }
@@ -50,14 +48,13 @@ class PrefixParser {
   /// It expects a normalized [phoneNumber].
   ///
   ///  - if [phoneNumber] starts with +, there is no prefix
-  ///  - else if a [defaultCountry] is given the prefix is from defaultCountry
   ///  - else if starts with 00 or 011
   ///    we consider those as internationalPrefix as
   ///    they cover 4/5 of the international prefix
   static ExtractionResult extractInternationalPrefix(
-    String phoneNumber,
+    String phoneNumber, [
     Country? country,
-  ) {
+  ]) {
     if (phoneNumber.startsWith('+')) {
       return ExtractionResult(
         phoneNumber: phoneNumber.substring(1),

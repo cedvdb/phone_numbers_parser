@@ -1,7 +1,6 @@
-import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:phone_numbers_parser/src/constants.dart';
 
-import 'models/country_phone_description.dart';
+import '../models/country_phone_description.dart';
 
 /// responsible of validating phone numbers
 class Validator {
