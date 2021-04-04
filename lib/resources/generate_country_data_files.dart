@@ -82,6 +82,7 @@ String phoneDescriptionString(CountryPhoneDescription desc) {
       leadingDigits: ${enc(desc.leadingDigits)},
       internationalPrefix: ${enc(desc.internationalPrefix)}, 
       nationalPrefix: ${enc(desc.nationalPrefix)},
+      nationalPrefixForParsing: ${enc(desc.nationalPrefixForParsing)},
       nationalPrefixTransformRule: ${enc(desc.nationalPrefixTransformRule)},
       isMainCountryForDialCode: ${enc(desc.isMainCountryForDialCode)},
       validation: ${phoneValidationString(desc.validation)},

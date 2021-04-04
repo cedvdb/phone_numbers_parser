@@ -1,8 +1,11 @@
+enum PhoneNumberType { mobile, fixedLine }
+
 class CountryPhoneDescription {
   final String dialCode;
   final String internationalPrefix;
   final String? leadingDigits;
   final String? nationalPrefix;
+  final String? nationalPrefixForParsing;
   final String? nationalPrefixTransformRule;
 
   /// there can be more than 1 country for the same isocode
@@ -14,17 +17,24 @@ class CountryPhoneDescription {
     required this.leadingDigits,
     required this.internationalPrefix,
     required this.nationalPrefix,
+    required this.nationalPrefixForParsing,
     required this.nationalPrefixTransformRule,
     required this.isMainCountryForDialCode,
     required this.validation,
   });
 
+  @override
+  String toString() {
+    return 'CountryPhoneDescription(dialCode: $dialCode, internationalPrefix: $internationalPrefix, leadingDigits: $leadingDigits, nationalPrefix: $nationalPrefix, nationalPrefixForParsing: $nationalPrefixForParsing, nationalPrefixTransformRule: $nationalPrefixTransformRule, isMainCountryForDialCode: $isMainCountryForDialCode, validation: $validation)';
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'dialCode': dialCode,
-      'leadingDigits': leadingDigits,
       'internationalPrefix': internationalPrefix,
+      'leadingDigits': leadingDigits,
       'nationalPrefix': nationalPrefix,
+      'nationalPrefixForParsing': nationalPrefixForParsing,
       'nationalPrefixTransformRule': nationalPrefixTransformRule,
       'isMainCountryForDialCode': isMainCountryForDialCode,
       'validation': validation.toMap(),
@@ -34,18 +44,14 @@ class CountryPhoneDescription {
   factory CountryPhoneDescription.fromMap(Map<String, dynamic> map) {
     return CountryPhoneDescription(
       dialCode: map['dialCode'],
-      leadingDigits: map['leadingDigits'],
       internationalPrefix: map['internationalPrefix'],
+      leadingDigits: map['leadingDigits'],
       nationalPrefix: map['nationalPrefix'],
+      nationalPrefixForParsing: map['nationalPrefixForParsing'],
       nationalPrefixTransformRule: map['nationalPrefixTransformRule'],
       isMainCountryForDialCode: map['isMainCountryForDialCode'],
       validation: PhoneValidation.fromMap(map['validation']),
     );
-  }
-
-  @override
-  String toString() {
-    return 'CountryPhoneDescription(dialCode: $dialCode, internationalPrefix: $internationalPrefix, leadingDigits: $leadingDigits, nationalPrefix: $nationalPrefix, nationalPrefixTransformRule: $nationalPrefixTransformRule, isMainCountryForDialCode: $isMainCountryForDialCode, validation: $validation)';
   }
 }
 

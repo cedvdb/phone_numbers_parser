@@ -1,6 +1,7 @@
 import 'package:phone_numbers_parser/src/constants.dart';
 
 import '../models/country_phone_description.dart';
+import '../regexp_fix.dart';
 
 /// responsible of validating phone numbers
 class Validator {
@@ -16,6 +17,6 @@ class Validator {
       return false;
     }
     final pattern = desc.validation.general.pattern;
-    return RegExp(pattern).hasMatch('^$pattern\$');
+    return RegExp(pattern).matchEntirely(pattern) != null;
   }
 }

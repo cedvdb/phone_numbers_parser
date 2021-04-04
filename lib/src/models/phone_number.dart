@@ -9,12 +9,14 @@ class PhoneNumber {
   late final bool valid;
 
   String get dialCode => country.dialCode;
+  String get value => '+' + dialCode + nationalNumber;
 
   PhoneNumber._(this.country, this.nationalNumber) {
     valid = Validator.isValidNationalNumber(nationalNumber, country.phone);
   }
 
-  static PhoneNumber fromRaw(String raw) => PhoneNumberParser.parse(raw);
+  static PhoneNumber fromRaw(String raw) =>
+      PhoneNumberParser.parseAsPhoneNumber(raw);
 
   static PhoneNumber fromIsoCode(String isoCode, String nationalNumber) {
     final country = Country.fromIsoCode(isoCode);
@@ -34,5 +36,9 @@ class PhoneNumber {
     nationalNumber =
         PhoneNumberParser.parseNationalNumber(nationalNumber, country);
     return PhoneNumber._(country, nationalNumber);
+  }
+
+  bool validate() {
+    return Validator.isValidNationalNumber(value, country.phone);
   }
 }

@@ -53,14 +53,15 @@ CountryPhoneDescription _extractCountryPhoneDescription(XmlElement territory) {
       return value == null ? null : parsePattern(value);
     };
     return CountryPhoneDescription(
-        dialCode: attr('countryCode')!,
-        internationalPrefix: maybeParseAttr('internationalPrefix')!,
-        isMainCountryForDialCode: attr('mainCountryForCode') == 'true',
-        leadingDigits: attr('leadingDigits'),
-        nationalPrefix: maybeParseAttr('nationalPrefixForParsing') ??
-            maybeParseAttr('nationalPrefix'),
-        nationalPrefixTransformRule: attr('nationalPrefixTransformRule'),
-        validation: _extractPhoneValidation(territory));
+      dialCode: attr('countryCode')!,
+      internationalPrefix: maybeParseAttr('internationalPrefix')!,
+      isMainCountryForDialCode: attr('mainCountryForCode') == 'true',
+      leadingDigits: attr('leadingDigits'),
+      nationalPrefix: maybeParseAttr('nationalPrefix'),
+      nationalPrefixForParsing: maybeParseAttr('nationalPrefixForParsing'),
+      nationalPrefixTransformRule: attr('nationalPrefixTransformRule'),
+      validation: _extractPhoneValidation(territory),
+    );
   } catch (e) {
     print(territory);
     rethrow;

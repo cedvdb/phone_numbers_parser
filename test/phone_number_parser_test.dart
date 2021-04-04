@@ -29,12 +29,12 @@ void main() {
     });
 
     test('should parse raw phone number', () {
-      final french = PhoneNumberParser.parse('+33 0466 46 46 46');
-      final us = PhoneNumberParser.parse('+1-202-555-0183');
-      final us2 = PhoneNumberParser.parse('011 1-202-555-0183');
+      final french = PhoneNumberParser.parseAsPhoneNumber('+33 0466 46 46 46');
+      final us = PhoneNumberParser.parseAsPhoneNumber('+1-202-555-0183');
+      final us2 = PhoneNumberParser.parseAsPhoneNumber('011 1-202-555-0183');
       // not the main country for dial code
-      final canada =
-          PhoneNumberParser.parse('+1-613-555-0180', Country.fromIsoCode('CA'));
+      final canada = PhoneNumberParser.parseAsPhoneNumber(
+          '+1-613-555-0180', Country.fromIsoCode('CA'));
       expect(french.country.isoCode, equals('FR'));
       expect(french.nationalNumber, equals('466464646'));
       expect(french.dialCode, equals('33'));

@@ -108,7 +108,7 @@ class PrefixParser {
     String nationalNumber,
     Country country,
   ) {
-    final pattern = country.phone.nationalPrefix;
+    final pattern = country.phone.nationalPrefixForParsing;
     if (pattern == null) {
       return ExtractionResult(phoneNumber: nationalNumber);
     }

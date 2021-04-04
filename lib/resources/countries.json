@@ -5,9 +5,10 @@
     "isoCode": "AD",
     "phone": {
       "dialCode": "376",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -37,9 +38,10 @@
     "isoCode": "AE",
     "phone": {
       "dialCode": "971",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -68,9 +70,10 @@
     "isoCode": "AF",
     "phone": {
       "dialCode": "93",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -99,9 +102,10 @@
     "isoCode": "AG",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "268",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([457]\\d{6})$",
+      "leadingDigits": "268",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([457]\\d{6})$",
       "nationalPrefixTransformRule": "268$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -130,9 +134,10 @@
     "isoCode": "AI",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "264",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([2457]\\d{6})$",
+      "leadingDigits": "264",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([2457]\\d{6})$",
       "nationalPrefixTransformRule": "264$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -161,9 +166,10 @@
     "isoCode": "AL",
     "phone": {
       "dialCode": "355",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -192,9 +198,10 @@
     "isoCode": "AM",
     "phone": {
       "dialCode": "374",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -223,9 +230,10 @@
     "isoCode": "AO",
     "phone": {
       "dialCode": "244",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -254,9 +262,10 @@
     "isoCode": "AR",
     "phone": {
       "dialCode": "54",
-      "leadingDigits": null,
       "internationalPrefix": "00",
-      "nationalPrefix": "\r\n                 0?(?:\r\n                   (\r\n                     11|\r\n                     2(?:\r\n                       2(?:\r\n                         02?|\r\n                         [13]|\r\n                         2[13-79]|\r\n                         4[1-6]|\r\n                         5[2457]|\r\n                         6[124-8]|\r\n                         7[1-4]|\r\n                         8[13-6]|\r\n                         9[1267]\r\n                       )|\r\n                       3(?:\r\n                         02?|\r\n                         1[467]|\r\n                         2[03-6]|\r\n                         3[13-8]|\r\n                         [49][2-6]|\r\n                         5[2-8]|\r\n                         [67]\r\n                       )|\r\n                       4(?:\r\n                         7[3-578]|\r\n                         9\r\n                       )|\r\n                       6(?:\r\n                         [0136]|\r\n                         2[24-6]|\r\n                         4[6-8]?|\r\n                         5[15-8]\r\n                       )|\r\n                       80|\r\n                       9(?:\r\n                         0[1-3]|\r\n                         [19]|\r\n                         2\\d|\r\n                         3[1-6]|\r\n                         4[02568]?|\r\n                         5[2-4]|\r\n                         6[2-46]|\r\n                         72?|\r\n                         8[23]?\r\n                       )\r\n                     )|\r\n                     3(?:\r\n                       3(?:\r\n                         2[79]|\r\n                         6|\r\n                         8[2578]\r\n                       )|\r\n                       4(?:\r\n                         0[0-24-9]|\r\n                         [12]|\r\n                         3[5-8]?|\r\n                         4[24-7]|\r\n                         5[4-68]?|\r\n                         6[02-9]|\r\n                         7[126]|\r\n                         8[2379]?|\r\n                         9[1-36-8]\r\n                       )|\r\n                       5(?:\r\n                         1|\r\n                         2[1245]|\r\n                         3[237]?|\r\n                         4[1-46-9]|\r\n                         6[2-4]|\r\n                         7[1-6]|\r\n                         8[2-5]?\r\n                       )|\r\n                       6[24]|\r\n                       7(?:\r\n                         [069]|\r\n                         1[1568]|\r\n                         2[15]|\r\n                         3[145]|\r\n                         4[13]|\r\n                         5[14-8]|\r\n                         7[2-57]|\r\n                         8[126]\r\n                       )|\r\n                       8(?:\r\n                         [01]|\r\n                         2[15-7]|\r\n                         3[2578]?|\r\n                         4[13-6]|\r\n                         5[4-8]?|\r\n                         6[1-357-9]|\r\n                         7[36-8]?|\r\n                         8[5-8]?|\r\n                         9[124]\r\n                       )\r\n                     )\r\n                   )15\r\n                 )?",
+      "leadingDigits": null,
+      "nationalPrefix": "0",
+      "nationalPrefixForParsing": "0?(?:(11|2(?:2(?:02?|[13]|2[13-79]|4[1-6]|5[2457]|6[124-8]|7[1-4]|8[13-6]|9[1267])|3(?:02?|1[467]|2[03-6]|3[13-8]|[49][2-6]|5[2-8]|[67])|4(?:7[3-578]|9)|6(?:[0136]|2[24-6]|4[6-8]?|5[15-8])|80|9(?:0[1-3]|[19]|2\\d|3[1-6]|4[02568]?|5[2-4]|6[2-46]|72?|8[23]?))|3(?:3(?:2[79]|6|8[2578])|4(?:0[0-24-9]|[12]|3[5-8]?|4[24-7]|5[4-68]?|6[02-9]|7[126]|8[2379]?|9[1-36-8])|5(?:1|2[1245]|3[237]?|4[1-46-9]|6[2-4]|7[1-6]|8[2-5]?)|6[24]|7(?:[069]|1[1568]|2[15]|3[145]|4[13]|5[14-8]|7[2-57]|8[126])|8(?:[01]|2[15-7]|3[2578]?|4[13-6]|5[4-8]?|6[1-357-9]|7[36-8]?|8[5-8]?|9[124])))15)?",
       "nationalPrefixTransformRule": "9$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -286,9 +295,10 @@
     "isoCode": "AS",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "684",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([267]\\d{6})$",
+      "leadingDigits": "684",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([267]\\d{6})$",
       "nationalPrefixTransformRule": "684$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -317,9 +327,10 @@
     "isoCode": "AT",
     "phone": {
       "dialCode": "43",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -363,9 +374,10 @@
     "isoCode": "AU",
     "phone": {
       "dialCode": "61",
-      "leadingDigits": null,
       "internationalPrefix": "001[14-689]|14(?:1[14]|34|4[17]|[56]6|7[47]|88)0011",
-      "nationalPrefix": "0|(183[12])",
+      "leadingDigits": null,
+      "nationalPrefix": "0",
+      "nationalPrefixForParsing": "0|(183[12])",
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": true,
       "validation": {
@@ -394,9 +406,10 @@
     "isoCode": "AW",
     "phone": {
       "dialCode": "297",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -425,9 +438,10 @@
     "isoCode": "AX",
     "phone": {
       "dialCode": "358",
-      "leadingDigits": "18",
       "internationalPrefix": "00|99(?:[01469]|5(?:[14]1|3[23]|5[59]|77|88|9[09]))",
+      "leadingDigits": "18",
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -463,9 +477,10 @@
     "isoCode": "AZ",
     "phone": {
       "dialCode": "994",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -494,9 +509,10 @@
     "isoCode": "BA",
     "phone": {
       "dialCode": "387",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -526,9 +542,10 @@
     "isoCode": "BB",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "246",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([2-9]\\d{6})$",
+      "leadingDigits": "246",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([2-9]\\d{6})$",
       "nationalPrefixTransformRule": "246$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -557,9 +574,10 @@
     "isoCode": "BD",
     "phone": {
       "dialCode": "880",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -592,9 +610,10 @@
     "isoCode": "BE",
     "phone": {
       "dialCode": "32",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -623,9 +642,10 @@
     "isoCode": "BF",
     "phone": {
       "dialCode": "226",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -654,9 +674,10 @@
     "isoCode": "BG",
     "phone": {
       "dialCode": "359",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -688,9 +709,10 @@
     "isoCode": "BH",
     "phone": {
       "dialCode": "973",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -719,9 +741,10 @@
     "isoCode": "BI",
     "phone": {
       "dialCode": "257",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -750,9 +773,10 @@
     "isoCode": "BJ",
     "phone": {
       "dialCode": "229",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -781,9 +805,10 @@
     "isoCode": "BL",
     "phone": {
       "dialCode": "590",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -812,9 +837,10 @@
     "isoCode": "BM",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "441",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([2-8]\\d{6})$",
+      "leadingDigits": "441",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([2-8]\\d{6})$",
       "nationalPrefixTransformRule": "441$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -843,9 +869,10 @@
     "isoCode": "BN",
     "phone": {
       "dialCode": "673",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -874,9 +901,10 @@
     "isoCode": "BO",
     "phone": {
       "dialCode": "591",
-      "leadingDigits": null,
       "internationalPrefix": "00(?:1\\d)?",
-      "nationalPrefix": "0(1\\d)?",
+      "leadingDigits": null,
+      "nationalPrefix": "0",
+      "nationalPrefixForParsing": "0(1\\d)?",
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -905,9 +933,10 @@
     "isoCode": "BR",
     "phone": {
       "dialCode": "55",
-      "leadingDigits": null,
       "internationalPrefix": "00(?:1[245]|2[1-35]|31|4[13]|[56]5|99)",
-      "nationalPrefix": "\r\n                 (?:\r\n                   0|\r\n                   90\r\n                 )(?:\r\n                   (\r\n                     1[245]|\r\n                     2[1-35]|\r\n                     31|\r\n                     4[13]|\r\n                     [56]5|\r\n                     99\r\n                   )(\r\n                     \\d{10,11}\r\n                   )\r\n                 )?",
+      "leadingDigits": null,
+      "nationalPrefix": "0",
+      "nationalPrefixForParsing": "(?:0|90)(?:(1[245]|2[1-35]|31|4[13]|[56]5|99)(\\d{10,11}))?",
       "nationalPrefixTransformRule": "$2",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -937,9 +966,10 @@
     "isoCode": "BS",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "242",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([3-8]\\d{6})$",
+      "leadingDigits": "242",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([3-8]\\d{6})$",
       "nationalPrefixTransformRule": "242$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -968,9 +998,10 @@
     "isoCode": "BT",
     "phone": {
       "dialCode": "975",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -999,9 +1030,10 @@
     "isoCode": "BW",
     "phone": {
       "dialCode": "267",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1030,9 +1062,10 @@
     "isoCode": "BY",
     "phone": {
       "dialCode": "375",
-      "leadingDigits": null,
       "internationalPrefix": "810",
-      "nationalPrefix": "0|80?",
+      "leadingDigits": null,
+      "nationalPrefix": "8",
+      "nationalPrefixForParsing": "0|80?",
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1061,9 +1094,10 @@
     "isoCode": "BZ",
     "phone": {
       "dialCode": "501",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1092,9 +1126,10 @@
     "isoCode": "CA",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": null,
       "internationalPrefix": "011",
+      "leadingDigits": null,
       "nationalPrefix": "1",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1123,9 +1158,10 @@
     "isoCode": "CC",
     "phone": {
       "dialCode": "61",
-      "leadingDigits": null,
       "internationalPrefix": "001[14-689]|14(?:1[14]|34|4[17]|[56]6|7[47]|88)0011",
-      "nationalPrefix": "0|([59]\\d{7})$",
+      "leadingDigits": null,
+      "nationalPrefix": "0",
+      "nationalPrefixForParsing": "0|([59]\\d{7})$",
       "nationalPrefixTransformRule": "8$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1154,9 +1190,10 @@
     "isoCode": "CD",
     "phone": {
       "dialCode": "243",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1187,9 +1224,10 @@
     "isoCode": "CF",
     "phone": {
       "dialCode": "236",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1218,9 +1256,10 @@
     "isoCode": "CG",
     "phone": {
       "dialCode": "242",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1249,9 +1288,10 @@
     "isoCode": "CH",
     "phone": {
       "dialCode": "41",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1280,9 +1320,10 @@
     "isoCode": "CI",
     "phone": {
       "dialCode": "225",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1313,9 +1354,10 @@
     "isoCode": "CK",
     "phone": {
       "dialCode": "682",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1344,9 +1386,10 @@
     "isoCode": "CL",
     "phone": {
       "dialCode": "56",
-      "leadingDigits": null,
       "internationalPrefix": "(?:0|1(?:1[0-69]|2[02-5]|5[13-58]|69|7[0167]|8[018]))0",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1375,9 +1418,10 @@
     "isoCode": "CM",
     "phone": {
       "dialCode": "237",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1406,9 +1450,10 @@
     "isoCode": "CN",
     "phone": {
       "dialCode": "86",
-      "leadingDigits": null,
       "internationalPrefix": "00|1(?:[12]\\d|79)\\d\\d00",
-      "nationalPrefix": "0|(1(?:[12]\\d|79)\\d\\d)",
+      "leadingDigits": null,
+      "nationalPrefix": "0",
+      "nationalPrefixForParsing": "0|(1(?:[12]\\d|79)\\d\\d)",
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1441,9 +1486,10 @@
     "isoCode": "CO",
     "phone": {
       "dialCode": "57",
-      "leadingDigits": null,
       "internationalPrefix": "00(?:4(?:[14]4|56)|[579])",
-      "nationalPrefix": "0([3579]|4(?:[14]4|56))?",
+      "leadingDigits": null,
+      "nationalPrefix": "0",
+      "nationalPrefixForParsing": "0([3579]|4(?:[14]4|56))?",
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1472,9 +1518,10 @@
     "isoCode": "CR",
     "phone": {
       "dialCode": "506",
-      "leadingDigits": null,
       "internationalPrefix": "00",
-      "nationalPrefix": "(19(?:0[0-2468]|1[09]|20|66|77|99))",
+      "leadingDigits": null,
+      "nationalPrefix": null,
+      "nationalPrefixForParsing": "(19(?:0[0-2468]|1[09]|20|66|77|99))",
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1503,9 +1550,10 @@
     "isoCode": "CU",
     "phone": {
       "dialCode": "53",
-      "leadingDigits": null,
       "internationalPrefix": "119",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1537,9 +1585,10 @@
     "isoCode": "CV",
     "phone": {
       "dialCode": "238",
-      "leadingDigits": null,
       "internationalPrefix": "0",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1568,9 +1617,10 @@
     "isoCode": "CX",
     "phone": {
       "dialCode": "61",
-      "leadingDigits": null,
       "internationalPrefix": "001[14-689]|14(?:1[14]|34|4[17]|[56]6|7[47]|88)0011",
-      "nationalPrefix": "0|([59]\\d{7})$",
+      "leadingDigits": null,
+      "nationalPrefix": "0",
+      "nationalPrefixForParsing": "0|([59]\\d{7})$",
       "nationalPrefixTransformRule": "8$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1599,9 +1649,10 @@
     "isoCode": "CY",
     "phone": {
       "dialCode": "357",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1630,9 +1681,10 @@
     "isoCode": "CZ",
     "phone": {
       "dialCode": "420",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1661,9 +1713,10 @@
     "isoCode": "DE",
     "phone": {
       "dialCode": "49",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1703,9 +1756,10 @@
     "isoCode": "DJ",
     "phone": {
       "dialCode": "253",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1734,9 +1788,10 @@
     "isoCode": "DK",
     "phone": {
       "dialCode": "45",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1765,9 +1820,10 @@
     "isoCode": "DM",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "767",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([2-7]\\d{6})$",
+      "leadingDigits": "767",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([2-7]\\d{6})$",
       "nationalPrefixTransformRule": "767$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1796,9 +1852,10 @@
     "isoCode": "DO",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "8001|8[024]9",
       "internationalPrefix": "011",
+      "leadingDigits": "8001|8[024]9",
       "nationalPrefix": "1",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1827,9 +1884,10 @@
     "isoCode": "DZ",
     "phone": {
       "dialCode": "213",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1859,9 +1917,10 @@
     "isoCode": "EC",
     "phone": {
       "dialCode": "593",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1890,9 +1949,10 @@
     "isoCode": "EE",
     "phone": {
       "dialCode": "372",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1922,9 +1982,10 @@
     "isoCode": "EG",
     "phone": {
       "dialCode": "20",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1954,9 +2015,10 @@
     "isoCode": "ER",
     "phone": {
       "dialCode": "291",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -1985,9 +2047,10 @@
     "isoCode": "ES",
     "phone": {
       "dialCode": "34",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2016,9 +2079,10 @@
     "isoCode": "ET",
     "phone": {
       "dialCode": "251",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2047,9 +2111,10 @@
     "isoCode": "FI",
     "phone": {
       "dialCode": "358",
-      "leadingDigits": "1[03-79]|[2-9]",
       "internationalPrefix": "00|99(?:[01469]|5(?:[14]1|3[23]|5[59]|77|88|9[09]))",
+      "leadingDigits": "1[03-79]|[2-9]",
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": true,
       "validation": {
@@ -2086,9 +2151,10 @@
     "isoCode": "FJ",
     "phone": {
       "dialCode": "679",
-      "leadingDigits": null,
       "internationalPrefix": "0(?:0|52)",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2117,9 +2183,10 @@
     "isoCode": "FK",
     "phone": {
       "dialCode": "500",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2148,9 +2215,10 @@
     "isoCode": "FM",
     "phone": {
       "dialCode": "691",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2179,9 +2247,10 @@
     "isoCode": "FO",
     "phone": {
       "dialCode": "298",
-      "leadingDigits": null,
       "internationalPrefix": "00",
-      "nationalPrefix": "(10(?:01|[12]0|88))",
+      "leadingDigits": null,
+      "nationalPrefix": null,
+      "nationalPrefixForParsing": "(10(?:01|[12]0|88))",
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2210,9 +2279,10 @@
     "isoCode": "FR",
     "phone": {
       "dialCode": "33",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2241,9 +2311,10 @@
     "isoCode": "GA",
     "phone": {
       "dialCode": "241",
-      "leadingDigits": null,
       "internationalPrefix": "00",
-      "nationalPrefix": "0(11\\d{6}|6[256]\\d{6}|7[47]\\d{6})",
+      "leadingDigits": null,
+      "nationalPrefix": null,
+      "nationalPrefixForParsing": "0(11\\d{6}|6[256]\\d{6}|7[47]\\d{6})",
       "nationalPrefixTransformRule": "$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2273,9 +2344,10 @@
     "isoCode": "GB",
     "phone": {
       "dialCode": "44",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": true,
       "validation": {
@@ -2305,9 +2377,10 @@
     "isoCode": "GD",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "473",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([2-9]\\d{6})$",
+      "leadingDigits": "473",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([2-9]\\d{6})$",
       "nationalPrefixTransformRule": "473$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2336,9 +2409,10 @@
     "isoCode": "GE",
     "phone": {
       "dialCode": "995",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2367,9 +2441,10 @@
     "isoCode": "GF",
     "phone": {
       "dialCode": "594",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2398,9 +2473,10 @@
     "isoCode": "GG",
     "phone": {
       "dialCode": "44",
-      "leadingDigits": null,
       "internationalPrefix": "00",
-      "nationalPrefix": "0|([25-9]\\d{5})$",
+      "leadingDigits": null,
+      "nationalPrefix": "0",
+      "nationalPrefixForParsing": "0|([25-9]\\d{5})$",
       "nationalPrefixTransformRule": "1481$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2429,9 +2505,10 @@
     "isoCode": "GH",
     "phone": {
       "dialCode": "233",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2460,9 +2537,10 @@
     "isoCode": "GI",
     "phone": {
       "dialCode": "350",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2491,9 +2569,10 @@
     "isoCode": "GL",
     "phone": {
       "dialCode": "299",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2522,9 +2601,10 @@
     "isoCode": "GM",
     "phone": {
       "dialCode": "220",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2553,9 +2633,10 @@
     "isoCode": "GN",
     "phone": {
       "dialCode": "224",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2584,9 +2665,10 @@
     "isoCode": "GP",
     "phone": {
       "dialCode": "590",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": true,
       "validation": {
@@ -2615,9 +2697,10 @@
     "isoCode": "GQ",
     "phone": {
       "dialCode": "240",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2646,9 +2729,10 @@
     "isoCode": "GR",
     "phone": {
       "dialCode": "30",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2677,9 +2761,10 @@
     "isoCode": "GT",
     "phone": {
       "dialCode": "502",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2708,9 +2793,10 @@
     "isoCode": "GU",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "671",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([3-9]\\d{6})$",
+      "leadingDigits": "671",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([3-9]\\d{6})$",
       "nationalPrefixTransformRule": "671$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2739,9 +2825,10 @@
     "isoCode": "GW",
     "phone": {
       "dialCode": "245",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2770,9 +2857,10 @@
     "isoCode": "GY",
     "phone": {
       "dialCode": "592",
-      "leadingDigits": null,
       "internationalPrefix": "001",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2801,9 +2889,10 @@
     "isoCode": "HK",
     "phone": {
       "dialCode": "852",
-      "leadingDigits": null,
       "internationalPrefix": "00(?:30|5[09]|[126-9]?)",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2832,9 +2921,10 @@
     "isoCode": "HN",
     "phone": {
       "dialCode": "504",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2863,9 +2953,10 @@
     "isoCode": "HR",
     "phone": {
       "dialCode": "385",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2896,9 +2987,10 @@
     "isoCode": "HT",
     "phone": {
       "dialCode": "509",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2927,9 +3019,10 @@
     "isoCode": "HU",
     "phone": {
       "dialCode": "36",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "06",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2958,9 +3051,10 @@
     "isoCode": "ID",
     "phone": {
       "dialCode": "62",
-      "leadingDigits": null,
       "internationalPrefix": "00[89]",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -2996,9 +3090,10 @@
     "isoCode": "IE",
     "phone": {
       "dialCode": "353",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3030,9 +3125,10 @@
     "isoCode": "IL",
     "phone": {
       "dialCode": "972",
-      "leadingDigits": null,
       "internationalPrefix": "0(?:0|1[2-9])",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3063,9 +3159,10 @@
     "isoCode": "IM",
     "phone": {
       "dialCode": "44",
-      "leadingDigits": "74576|(?:16|7[56])24",
       "internationalPrefix": "00",
-      "nationalPrefix": "0|([25-8]\\d{5})$",
+      "leadingDigits": "74576|(?:16|7[56])24",
+      "nationalPrefix": "0",
+      "nationalPrefixForParsing": "0|([25-8]\\d{5})$",
       "nationalPrefixTransformRule": "1624$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3094,9 +3191,10 @@
     "isoCode": "IN",
     "phone": {
       "dialCode": "91",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3125,9 +3223,10 @@
     "isoCode": "IO",
     "phone": {
       "dialCode": "246",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3156,9 +3255,10 @@
     "isoCode": "IQ",
     "phone": {
       "dialCode": "964",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3188,9 +3288,10 @@
     "isoCode": "IR",
     "phone": {
       "dialCode": "98",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3221,9 +3322,10 @@
     "isoCode": "IS",
     "phone": {
       "dialCode": "354",
-      "leadingDigits": null,
       "internationalPrefix": "00|1(?:0(?:01|[12]0)|100)",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3253,9 +3355,10 @@
     "isoCode": "IT",
     "phone": {
       "dialCode": "39",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": true,
       "validation": {
@@ -3290,9 +3393,10 @@
     "isoCode": "JE",
     "phone": {
       "dialCode": "44",
-      "leadingDigits": null,
       "internationalPrefix": "00",
-      "nationalPrefix": "0|([0-24-8]\\d{5})$",
+      "leadingDigits": null,
+      "nationalPrefix": "0",
+      "nationalPrefixForParsing": "0|([0-24-8]\\d{5})$",
       "nationalPrefixTransformRule": "1534$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3321,9 +3425,10 @@
     "isoCode": "JM",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "658|876",
       "internationalPrefix": "011",
+      "leadingDigits": "658|876",
       "nationalPrefix": "1",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3352,9 +3457,10 @@
     "isoCode": "JO",
     "phone": {
       "dialCode": "962",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3383,9 +3489,10 @@
     "isoCode": "JP",
     "phone": {
       "dialCode": "81",
-      "leadingDigits": null,
       "internationalPrefix": "010",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3414,9 +3521,10 @@
     "isoCode": "KE",
     "phone": {
       "dialCode": "254",
-      "leadingDigits": null,
       "internationalPrefix": "000",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3447,9 +3555,10 @@
     "isoCode": "KG",
     "phone": {
       "dialCode": "996",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3478,9 +3587,10 @@
     "isoCode": "KH",
     "phone": {
       "dialCode": "855",
-      "leadingDigits": null,
       "internationalPrefix": "00[14-9]",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3511,9 +3621,10 @@
     "isoCode": "KI",
     "phone": {
       "dialCode": "686",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3543,9 +3654,10 @@
     "isoCode": "KM",
     "phone": {
       "dialCode": "269",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3574,9 +3686,10 @@
     "isoCode": "KN",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "869",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([2-7]\\d{6})$",
+      "leadingDigits": "869",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([2-7]\\d{6})$",
       "nationalPrefixTransformRule": "869$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3605,9 +3718,10 @@
     "isoCode": "KP",
     "phone": {
       "dialCode": "850",
-      "leadingDigits": null,
       "internationalPrefix": "00|99",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3637,9 +3751,10 @@
     "isoCode": "KR",
     "phone": {
       "dialCode": "82",
-      "leadingDigits": null,
       "internationalPrefix": "00(?:[125689]|3(?:[46]5|91)|7(?:00|27|3|55|6[126]))",
-      "nationalPrefix": "0(8(?:[1-46-8]|5\\d\\d))?",
+      "leadingDigits": null,
+      "nationalPrefix": "0",
+      "nationalPrefixForParsing": "0(8(?:[1-46-8]|5\\d\\d))?",
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3673,9 +3788,10 @@
     "isoCode": "KW",
     "phone": {
       "dialCode": "965",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3704,9 +3820,10 @@
     "isoCode": "KY",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "345",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([2-9]\\d{6})$",
+      "leadingDigits": "345",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([2-9]\\d{6})$",
       "nationalPrefixTransformRule": "345$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3735,9 +3852,10 @@
     "isoCode": "KZ",
     "phone": {
       "dialCode": "7",
-      "leadingDigits": "33|7",
       "internationalPrefix": "810",
+      "leadingDigits": "33|7",
       "nationalPrefix": "8",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3766,9 +3884,10 @@
     "isoCode": "LA",
     "phone": {
       "dialCode": "856",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3797,9 +3916,10 @@
     "isoCode": "LB",
     "phone": {
       "dialCode": "961",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3830,9 +3950,10 @@
     "isoCode": "LC",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "758",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([2-8]\\d{6})$",
+      "leadingDigits": "758",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([2-8]\\d{6})$",
       "nationalPrefixTransformRule": "758$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3861,9 +3982,10 @@
     "isoCode": "LI",
     "phone": {
       "dialCode": "423",
-      "leadingDigits": null,
       "internationalPrefix": "00",
-      "nationalPrefix": "0|(1001)",
+      "leadingDigits": null,
+      "nationalPrefix": "0",
+      "nationalPrefixForParsing": "0|(1001)",
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3893,9 +4015,10 @@
     "isoCode": "LK",
     "phone": {
       "dialCode": "94",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3924,9 +4047,10 @@
     "isoCode": "LR",
     "phone": {
       "dialCode": "231",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3957,9 +4081,10 @@
     "isoCode": "LS",
     "phone": {
       "dialCode": "266",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -3988,9 +4113,10 @@
     "isoCode": "LT",
     "phone": {
       "dialCode": "370",
-      "leadingDigits": null,
       "internationalPrefix": "00",
-      "nationalPrefix": "[08]",
+      "leadingDigits": null,
+      "nationalPrefix": "8",
+      "nationalPrefixForParsing": "[08]",
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4019,9 +4145,10 @@
     "isoCode": "LU",
     "phone": {
       "dialCode": "352",
-      "leadingDigits": null,
       "internationalPrefix": "00",
-      "nationalPrefix": "(15(?:0[06]|1[12]|[35]5|4[04]|6[26]|77|88|99)\\d)",
+      "leadingDigits": null,
+      "nationalPrefix": null,
+      "nationalPrefixForParsing": "(15(?:0[06]|1[12]|[35]5|4[04]|6[26]|77|88|99)\\d)",
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4057,9 +4184,10 @@
     "isoCode": "LV",
     "phone": {
       "dialCode": "371",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4088,9 +4216,10 @@
     "isoCode": "LY",
     "phone": {
       "dialCode": "218",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4119,9 +4248,10 @@
     "isoCode": "MA",
     "phone": {
       "dialCode": "212",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": true,
       "validation": {
@@ -4150,9 +4280,10 @@
     "isoCode": "MC",
     "phone": {
       "dialCode": "377",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4182,9 +4313,10 @@
     "isoCode": "MD",
     "phone": {
       "dialCode": "373",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4213,9 +4345,10 @@
     "isoCode": "ME",
     "phone": {
       "dialCode": "382",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4244,9 +4377,10 @@
     "isoCode": "MF",
     "phone": {
       "dialCode": "590",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4275,9 +4409,10 @@
     "isoCode": "MG",
     "phone": {
       "dialCode": "261",
-      "leadingDigits": null,
       "internationalPrefix": "00",
-      "nationalPrefix": "0|([24-9]\\d{6})$",
+      "leadingDigits": null,
+      "nationalPrefix": "0",
+      "nationalPrefixForParsing": "0|([24-9]\\d{6})$",
       "nationalPrefixTransformRule": "20$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4306,9 +4441,10 @@
     "isoCode": "MH",
     "phone": {
       "dialCode": "692",
-      "leadingDigits": null,
       "internationalPrefix": "011",
+      "leadingDigits": null,
       "nationalPrefix": "1",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4337,9 +4473,10 @@
     "isoCode": "MK",
     "phone": {
       "dialCode": "389",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4368,9 +4505,10 @@
     "isoCode": "ML",
     "phone": {
       "dialCode": "223",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4399,9 +4537,10 @@
     "isoCode": "MM",
     "phone": {
       "dialCode": "95",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4436,9 +4575,10 @@
     "isoCode": "MN",
     "phone": {
       "dialCode": "976",
-      "leadingDigits": null,
       "internationalPrefix": "001",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4469,9 +4609,10 @@
     "isoCode": "MO",
     "phone": {
       "dialCode": "853",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4500,9 +4641,10 @@
     "isoCode": "MP",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "670",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([2-9]\\d{6})$",
+      "leadingDigits": "670",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([2-9]\\d{6})$",
       "nationalPrefixTransformRule": "670$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4531,9 +4673,10 @@
     "isoCode": "MQ",
     "phone": {
       "dialCode": "596",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4562,9 +4705,10 @@
     "isoCode": "MR",
     "phone": {
       "dialCode": "222",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4593,9 +4737,10 @@
     "isoCode": "MS",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "664",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([34]\\d{6})$",
+      "leadingDigits": "664",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([34]\\d{6})$",
       "nationalPrefixTransformRule": "664$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4624,9 +4769,10 @@
     "isoCode": "MT",
     "phone": {
       "dialCode": "356",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4655,9 +4801,10 @@
     "isoCode": "MU",
     "phone": {
       "dialCode": "230",
-      "leadingDigits": null,
       "internationalPrefix": "0(?:0|[24-7]0|3[03])",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4687,9 +4834,10 @@
     "isoCode": "MV",
     "phone": {
       "dialCode": "960",
-      "leadingDigits": null,
       "internationalPrefix": "0(?:0|19)",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4718,9 +4866,10 @@
     "isoCode": "MW",
     "phone": {
       "dialCode": "265",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4750,9 +4899,10 @@
     "isoCode": "MX",
     "phone": {
       "dialCode": "52",
-      "leadingDigits": null,
       "internationalPrefix": "0[09]",
-      "nationalPrefix": "0(?:[12]|4[45])|1",
+      "leadingDigits": null,
+      "nationalPrefix": "01",
+      "nationalPrefixForParsing": "0(?:[12]|4[45])|1",
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4782,9 +4932,10 @@
     "isoCode": "MY",
     "phone": {
       "dialCode": "60",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4815,9 +4966,10 @@
     "isoCode": "MZ",
     "phone": {
       "dialCode": "258",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4846,9 +4998,10 @@
     "isoCode": "NA",
     "phone": {
       "dialCode": "264",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4878,9 +5031,10 @@
     "isoCode": "NC",
     "phone": {
       "dialCode": "687",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4909,9 +5063,10 @@
     "isoCode": "NE",
     "phone": {
       "dialCode": "227",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4940,9 +5095,10 @@
     "isoCode": "NF",
     "phone": {
       "dialCode": "672",
-      "leadingDigits": null,
       "internationalPrefix": "00",
-      "nationalPrefix": "([0-258]\\d{4})$",
+      "leadingDigits": null,
+      "nationalPrefix": null,
+      "nationalPrefixForParsing": "([0-258]\\d{4})$",
       "nationalPrefixTransformRule": "3$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -4971,9 +5127,10 @@
     "isoCode": "NG",
     "phone": {
       "dialCode": "234",
-      "leadingDigits": null,
       "internationalPrefix": "009",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5003,9 +5160,10 @@
     "isoCode": "NI",
     "phone": {
       "dialCode": "505",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5034,9 +5192,10 @@
     "isoCode": "NL",
     "phone": {
       "dialCode": "31",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5065,9 +5224,10 @@
     "isoCode": "NO",
     "phone": {
       "dialCode": "47",
-      "leadingDigits": "[02-689]|7[0-8]",
       "internationalPrefix": "00",
+      "leadingDigits": "[02-689]|7[0-8]",
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": true,
       "validation": {
@@ -5096,9 +5256,10 @@
     "isoCode": "NP",
     "phone": {
       "dialCode": "977",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5127,9 +5288,10 @@
     "isoCode": "NR",
     "phone": {
       "dialCode": "674",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5158,9 +5320,10 @@
     "isoCode": "NU",
     "phone": {
       "dialCode": "683",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5189,9 +5352,10 @@
     "isoCode": "NZ",
     "phone": {
       "dialCode": "64",
-      "leadingDigits": null,
       "internationalPrefix": "0(?:0|161)",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5222,9 +5386,10 @@
     "isoCode": "OM",
     "phone": {
       "dialCode": "968",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5253,9 +5418,10 @@
     "isoCode": "PA",
     "phone": {
       "dialCode": "507",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5285,9 +5451,10 @@
     "isoCode": "PE",
     "phone": {
       "dialCode": "51",
-      "leadingDigits": null,
       "internationalPrefix": "19(?:1[124]|77|90)00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5316,9 +5483,10 @@
     "isoCode": "PF",
     "phone": {
       "dialCode": "689",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5347,9 +5515,10 @@
     "isoCode": "PG",
     "phone": {
       "dialCode": "675",
-      "leadingDigits": null,
       "internationalPrefix": "00|140[1-3]",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5379,9 +5548,10 @@
     "isoCode": "PH",
     "phone": {
       "dialCode": "63",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5413,9 +5583,10 @@
     "isoCode": "PK",
     "phone": {
       "dialCode": "92",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5445,9 +5616,10 @@
     "isoCode": "PL",
     "phone": {
       "dialCode": "48",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5477,9 +5649,10 @@
     "isoCode": "PM",
     "phone": {
       "dialCode": "508",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5508,9 +5681,10 @@
     "isoCode": "PR",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "787|939",
       "internationalPrefix": "011",
+      "leadingDigits": "787|939",
       "nationalPrefix": "1",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5539,9 +5713,10 @@
     "isoCode": "PS",
     "phone": {
       "dialCode": "970",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5570,9 +5745,10 @@
     "isoCode": "PT",
     "phone": {
       "dialCode": "351",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5601,9 +5777,10 @@
     "isoCode": "PW",
     "phone": {
       "dialCode": "680",
-      "leadingDigits": null,
       "internationalPrefix": "01[12]",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5632,9 +5809,10 @@
     "isoCode": "PY",
     "phone": {
       "dialCode": "595",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5665,9 +5843,10 @@
     "isoCode": "QA",
     "phone": {
       "dialCode": "974",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5696,9 +5875,10 @@
     "isoCode": "RE",
     "phone": {
       "dialCode": "262",
-      "leadingDigits": "26[23]|69|[89]",
       "internationalPrefix": "00",
+      "leadingDigits": "26[23]|69|[89]",
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": true,
       "validation": {
@@ -5727,9 +5907,10 @@
     "isoCode": "RO",
     "phone": {
       "dialCode": "40",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5759,9 +5940,10 @@
     "isoCode": "RS",
     "phone": {
       "dialCode": "381",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5797,9 +5979,10 @@
     "isoCode": "RU",
     "phone": {
       "dialCode": "7",
-      "leadingDigits": "3[04-689]|[489]",
       "internationalPrefix": "810",
+      "leadingDigits": "3[04-689]|[489]",
       "nationalPrefix": "8",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": true,
       "validation": {
@@ -5828,9 +6011,10 @@
     "isoCode": "RW",
     "phone": {
       "dialCode": "250",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5860,9 +6044,10 @@
     "isoCode": "SA",
     "phone": {
       "dialCode": "966",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5891,9 +6076,10 @@
     "isoCode": "SB",
     "phone": {
       "dialCode": "677",
-      "leadingDigits": null,
       "internationalPrefix": "0[01]",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5923,9 +6109,10 @@
     "isoCode": "SC",
     "phone": {
       "dialCode": "248",
-      "leadingDigits": null,
       "internationalPrefix": "010|0[0-2]",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5954,9 +6141,10 @@
     "isoCode": "SD",
     "phone": {
       "dialCode": "249",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -5985,9 +6173,10 @@
     "isoCode": "SE",
     "phone": {
       "dialCode": "46",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6018,9 +6207,10 @@
     "isoCode": "SG",
     "phone": {
       "dialCode": "65",
-      "leadingDigits": null,
       "internationalPrefix": "0[0-3]\\d",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6049,9 +6239,10 @@
     "isoCode": "SH",
     "phone": {
       "dialCode": "290",
-      "leadingDigits": "[256]",
       "internationalPrefix": "00",
+      "leadingDigits": "[256]",
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": true,
       "validation": {
@@ -6081,9 +6272,10 @@
     "isoCode": "SI",
     "phone": {
       "dialCode": "386",
-      "leadingDigits": null,
       "internationalPrefix": "00|10(?:22|66|88|99)",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6112,9 +6304,10 @@
     "isoCode": "SJ",
     "phone": {
       "dialCode": "47",
-      "leadingDigits": "79",
       "internationalPrefix": "00",
+      "leadingDigits": "79",
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6143,9 +6336,10 @@
     "isoCode": "SK",
     "phone": {
       "dialCode": "421",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6176,9 +6370,10 @@
     "isoCode": "SL",
     "phone": {
       "dialCode": "232",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6207,9 +6402,10 @@
     "isoCode": "SM",
     "phone": {
       "dialCode": "378",
-      "leadingDigits": null,
       "internationalPrefix": "00",
-      "nationalPrefix": "([89]\\d{5})$",
+      "leadingDigits": null,
+      "nationalPrefix": null,
+      "nationalPrefixForParsing": "([89]\\d{5})$",
       "nationalPrefixTransformRule": "0549$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6238,9 +6434,10 @@
     "isoCode": "SN",
     "phone": {
       "dialCode": "221",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6269,9 +6466,10 @@
     "isoCode": "SO",
     "phone": {
       "dialCode": "252",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6303,9 +6501,10 @@
     "isoCode": "SR",
     "phone": {
       "dialCode": "597",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6335,9 +6534,10 @@
     "isoCode": "SS",
     "phone": {
       "dialCode": "211",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6366,9 +6566,10 @@
     "isoCode": "ST",
     "phone": {
       "dialCode": "239",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6397,9 +6598,10 @@
     "isoCode": "SV",
     "phone": {
       "dialCode": "503",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6428,9 +6630,10 @@
     "isoCode": "SY",
     "phone": {
       "dialCode": "963",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6460,9 +6663,10 @@
     "isoCode": "SZ",
     "phone": {
       "dialCode": "268",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6491,9 +6695,10 @@
     "isoCode": "TC",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "649",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([2-479]\\d{6})$",
+      "leadingDigits": "649",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([2-479]\\d{6})$",
       "nationalPrefixTransformRule": "649$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6522,9 +6727,10 @@
     "isoCode": "TD",
     "phone": {
       "dialCode": "235",
-      "leadingDigits": null,
       "internationalPrefix": "00|16",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6553,9 +6759,10 @@
     "isoCode": "TG",
     "phone": {
       "dialCode": "228",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6584,9 +6791,10 @@
     "isoCode": "TH",
     "phone": {
       "dialCode": "66",
-      "leadingDigits": null,
       "internationalPrefix": "00[1-9]",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6615,9 +6823,10 @@
     "isoCode": "TJ",
     "phone": {
       "dialCode": "992",
-      "leadingDigits": null,
       "internationalPrefix": "810",
+      "leadingDigits": null,
       "nationalPrefix": "8",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6646,9 +6855,10 @@
     "isoCode": "TK",
     "phone": {
       "dialCode": "690",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6683,9 +6893,10 @@
     "isoCode": "TL",
     "phone": {
       "dialCode": "670",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6714,9 +6925,10 @@
     "isoCode": "TM",
     "phone": {
       "dialCode": "993",
-      "leadingDigits": null,
       "internationalPrefix": "810",
+      "leadingDigits": null,
       "nationalPrefix": "8",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6745,9 +6957,10 @@
     "isoCode": "TN",
     "phone": {
       "dialCode": "216",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6776,9 +6989,10 @@
     "isoCode": "TO",
     "phone": {
       "dialCode": "676",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6807,9 +7021,10 @@
     "isoCode": "TR",
     "phone": {
       "dialCode": "90",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6838,9 +7053,10 @@
     "isoCode": "TT",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "868",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([2-46-8]\\d{6})$",
+      "leadingDigits": "868",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([2-46-8]\\d{6})$",
       "nationalPrefixTransformRule": "868$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6869,9 +7085,10 @@
     "isoCode": "TV",
     "phone": {
       "dialCode": "688",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6901,9 +7118,10 @@
     "isoCode": "TW",
     "phone": {
       "dialCode": "886",
-      "leadingDigits": null,
       "internationalPrefix": "0(?:0[25-79]|19)",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6933,9 +7151,10 @@
     "isoCode": "TZ",
     "phone": {
       "dialCode": "255",
-      "leadingDigits": null,
       "internationalPrefix": "00[056]",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6964,9 +7183,10 @@
     "isoCode": "UA",
     "phone": {
       "dialCode": "380",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -6995,9 +7215,10 @@
     "isoCode": "UG",
     "phone": {
       "dialCode": "256",
-      "leadingDigits": null,
       "internationalPrefix": "00[057]",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -7026,9 +7247,10 @@
     "isoCode": "US",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": null,
       "internationalPrefix": "011",
+      "leadingDigits": null,
       "nationalPrefix": "1",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": true,
       "validation": {
@@ -7057,9 +7279,10 @@
     "isoCode": "UY",
     "phone": {
       "dialCode": "598",
-      "leadingDigits": null,
       "internationalPrefix": "0(?:0|1[3-9]\\d)",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -7088,9 +7311,10 @@
     "isoCode": "UZ",
     "phone": {
       "dialCode": "998",
-      "leadingDigits": null,
       "internationalPrefix": "810",
+      "leadingDigits": null,
       "nationalPrefix": "8",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -7119,9 +7343,10 @@
     "isoCode": "VA",
     "phone": {
       "dialCode": "39",
-      "leadingDigits": "06698",
       "internationalPrefix": "00",
+      "leadingDigits": "06698",
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -7156,9 +7381,10 @@
     "isoCode": "VC",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "784",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([2-7]\\d{6})$",
+      "leadingDigits": "784",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([2-7]\\d{6})$",
       "nationalPrefixTransformRule": "784$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -7187,9 +7413,10 @@
     "isoCode": "VE",
     "phone": {
       "dialCode": "58",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -7218,9 +7445,10 @@
     "isoCode": "VG",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "284",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([2-578]\\d{6})$",
+      "leadingDigits": "284",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([2-578]\\d{6})$",
       "nationalPrefixTransformRule": "284$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -7249,9 +7477,10 @@
     "isoCode": "VI",
     "phone": {
       "dialCode": "1",
-      "leadingDigits": "340",
       "internationalPrefix": "011",
-      "nationalPrefix": "1|([2-9]\\d{6})$",
+      "leadingDigits": "340",
+      "nationalPrefix": "1",
+      "nationalPrefixForParsing": "1|([2-9]\\d{6})$",
       "nationalPrefixTransformRule": "340$1",
       "isMainCountryForDialCode": false,
       "validation": {
@@ -7280,9 +7509,10 @@
     "isoCode": "VN",
     "phone": {
       "dialCode": "84",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -7311,9 +7541,10 @@
     "isoCode": "VU",
     "phone": {
       "dialCode": "678",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -7342,9 +7573,10 @@
     "isoCode": "WF",
     "phone": {
       "dialCode": "681",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -7373,9 +7605,10 @@
     "isoCode": "WS",
     "phone": {
       "dialCode": "685",
-      "leadingDigits": null,
       "internationalPrefix": "0",
+      "leadingDigits": null,
       "nationalPrefix": null,
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -7406,9 +7639,10 @@
     "isoCode": "YE",
     "phone": {
       "dialCode": "967",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -7438,9 +7672,10 @@
     "isoCode": "YT",
     "phone": {
       "dialCode": "262",
-      "leadingDigits": "269|63",
       "internationalPrefix": "00",
+      "leadingDigits": "269|63",
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -7469,9 +7704,10 @@
     "isoCode": "ZA",
     "phone": {
       "dialCode": "27",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -7504,9 +7740,10 @@
     "isoCode": "ZM",
     "phone": {
       "dialCode": "260",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
@@ -7535,9 +7772,10 @@
     "isoCode": "ZW",
     "phone": {
       "dialCode": "263",
-      "leadingDigits": null,
       "internationalPrefix": "00",
+      "leadingDigits": null,
       "nationalPrefix": "0",
+      "nationalPrefixForParsing": null,
       "nationalPrefixTransformRule": null,
       "isMainCountryForDialCode": false,
       "validation": {
