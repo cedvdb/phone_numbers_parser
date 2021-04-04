@@ -14,7 +14,8 @@ Future<Map<String, String>> getCountryNamesMap() async {
 
 /// reads the json file of country names which is an array of country information
 Future<List<dynamic>> _readCountryNameJson() async {
-  final filePath = path.join('lib/resources/data_source', 'country_names.json');
+  final filePath =
+      path.join('lib/resources/original/data_source', 'country_names.json');
   final jsonString = await File(filePath).readAsString();
   return jsonDecode(jsonString);
 }

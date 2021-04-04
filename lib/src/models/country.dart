@@ -1,4 +1,3 @@
-import 'package:phone_numbers_parser/src/generated/countries_by_iso_code_map.dart';
 import 'package:phone_numbers_parser/src/models/country_phone_description.dart';
 import 'package:phone_numbers_parser/src/parsers/country_parser.dart';
 
@@ -36,4 +35,22 @@ class Country {
 
   static Country fromDialCode(String dialCode) =>
       CountryParser.fromDialCode(dialCode);
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'flag': flag,
+      'isoCode': isoCode,
+      'phone': phone.toMap(),
+    };
+  }
+
+  factory Country.fromMap(Map<String, dynamic> map) {
+    return Country(
+      name: map['name'],
+      flag: map['flag'],
+      isoCode: map['isoCode'],
+      phone: CountryPhoneDescription.fromMap(map['phone']),
+    );
+  }
 }

@@ -1,4 +1,4 @@
-import 'package:phone_numbers_parser/src/validator.dart';
+import 'package:phone_numbers_parser/src/parsers/validator.dart';
 
 import '../parsers/phone_number_parser.dart';
 import 'country.dart';

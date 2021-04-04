@@ -4,28 +4,30 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:phone_numbers_parser/resources/data_extraction/generate_country_data.dart';
+import 'package:phone_numbers_parser/resources/countries_converter.dart';
 import 'package:phone_numbers_parser/src/models/country.dart';
 import 'package:phone_numbers_parser/src/models/country_phone_description.dart';
 
 const String DATA_TOKEN = '// data here';
 const String COMMENT_TOKEN = '// comment here';
 final String comment = '// This file was auto generated';
-final String BASE_COUNTRY_LIST = 'base_country_list.dart';
-final String BASE_COUNTRY_BY_ISO_CODE = 'base_country_by_iso_code.dart';
-final String BASE_COUNTRY_BY_DIAL_CODE = 'base_country_by_dial_code.dart';
-final String OUTPUT_PATH = '../../src/generated';
+final String INPUT_PATH = 'lib/resources/file_generation';
+final String BASE_COUNTRY_LIST = '$INPUT_PATH/base_country_list.dart';
+final String BASE_COUNTRY_BY_ISO_CODE =
+    '$INPUT_PATH/base_country_by_iso_code.dart';
+final String BASE_COUNTRY_BY_DIAL_CODE =
+    '$INPUT_PATH/base_country_by_dial_code.dart';
+final String OUTPUT_PATH = 'lib/src/generated';
 final String OUTPUT_LIST = '$OUTPUT_PATH/country_list.dart';
 final String OUTPUT_BY_DIAL_CODE =
     '$OUTPUT_PATH/countries_by_dial_code_map.dart';
 final String OUTPUT_BY_ISO_CODE = '$OUTPUT_PATH/countries_by_iso_code_map.dart';
 
 void main() async {
-  // final extractedData = await getExtractedCountryData();
-  // print(extractedData.countries.length);
-  // await createList(extractedData.countries);
-  // await createByIsoCode(extractedData.countriesByIsoCode);
-  // await createByDialCode(extractedData.countriesByDialCode);
+  final countries = await getCountries();
+  await createList(countries);
+  await createByIsoCode(toIsoCodeMap(countries));
+  await createByDialCode(toDialCodeMap(countries));
 }
 
 Future createList(List<Country> countries) async {
@@ -77,6 +79,7 @@ String countryString(Country country) {
 String phoneDescriptionString(CountryPhoneDescription desc) {
   return '''const CountryPhoneDescription(
       dialCode: ${enc(desc.dialCode)}, 
+      leadingDigits: ${enc(desc.leadingDigits)},
       internationalPrefix: ${enc(desc.internationalPrefix)}, 
       nationalPrefix: ${enc(desc.nationalPrefix)},
       nationalPrefixTransformRule: ${enc(desc.nationalPrefixTransformRule)},
