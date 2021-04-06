@@ -1,5 +1,3 @@
-// test that
-
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:test/test.dart';
 
@@ -11,7 +9,7 @@ void main() {
       expect(() => Country.fromIsoCode('WRONG'),
           throwsA(TypeMatcher<PhoneNumberException>()));
     });
-    test('should create with isoCode ', () {
+    test('should create with dialCode ', () {
       expect(Country.fromDialCode('33').name, equals('France'));
       expect(Country.fromDialCode('+33').name, equals('France'));
       expect(() => Country.fromDialCode('0'),
