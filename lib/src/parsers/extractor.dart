@@ -161,10 +161,12 @@ class Extractor {
     return transformed;
   }
 
-  /// gets the country of a [nationalNumber] by providing a [dialCode]
+  /// Gets the country of a [nationalNumber] by providing a [dialCode]
   ///
   /// Since a [dialCode] can target multiple countries, this will use pattern
   /// matching to figuring out the correct one.
+  /// the returned [ExtractResult] will contain the country if found, and the
+  /// national number transformed for international use
   static ExtractResult<Country> extractCountry(
     String nationalNumber,
     String dialCode,
