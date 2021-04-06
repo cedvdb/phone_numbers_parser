@@ -5,15 +5,21 @@ import 'package:phone_numbers_parser/src/models/phone_number.dart';
 import 'package:phone_numbers_parser/src/parsers/country_parser.dart';
 
 import '../constants.dart';
-import 'prefix_parser.dart';
+import 'extractor.dart';
 import '../regexp_fix.dart';
+
+// This class mainly contains the public api. The methods body here
+// are mainly summaries of what happens and use the [PrefixParser]
+// to do the parsing business logic
+// Therefor this class must stay clean as to be readable as almost plain english
 
 /// Parser to do various operations on Strings representing phone numbers.
 class PhoneNumberParser {
   /// Extracts phone numbers from a [text].
+  /// The potential phone numbers returned are not checked for their validity.
+  /// It is possible that a match could be a date or anything else ressembling a phone number.
+  /// To verify it is in fact a phone number you can parse it and check its validity
   static Iterable<Match> findPotentialPhoneNumbers(String text) {
-    // we dont check if it is a valid phone number, a date or anything else.
-    // the user can parse the phone number to check validity
     return RegExp(Constants.POSSIBLE_PHONE_NUMBER).allMatches(text);
   }
 
@@ -33,100 +39,57 @@ class PhoneNumberParser {
 
   /// Extracts the necessary information from [rawPhoneNumber] to return [PhoneNumber].
   ///
-  /// The [rawPhoneNumber] is expected to contain the country dial code
+  /// The [rawPhoneNumber] is expected to contain the country dial code.
+  /// It will return a valid result if the [rawPhoneNumber] start with +, 00 or 011
+  /// as international prefix.
+  ///
+  /// If the phoneNumber does not contain a country dial code, use [parseNational]
   ///
   /// Throws [PhoneNumberException].
-  static PhoneNumber parseAsPhoneNumber(String rawPhoneNumber) {
+  static PhoneNumber parse(String rawPhoneNumber) {
     final country = getCountry(rawPhoneNumber);
 
     if (country == null) {
       throw PhoneNumberException(
           code: Code.INVALID_DIAL_CODE, description: 'not found');
     }
-    final nationalNumberResult = PrefixParser.extractNationalPrefix(
+    final nationalNumberResult = Extractor.extractNationalPrefix(
       dialCodeResult.phoneNumber,
       country,
     );
     return PhoneNumber.fromCountry(country, nationalNumberResult.phoneNumber);
   }
 
-  /// Parses a [nationalNumber] by normalizing it and keeping only the
+  /// Converts a [nationalNumber] by normalizing it and keeping only the
   /// significants digits.
   static String parseNationalNumber(String nationalNumber, Country country) {
     final normalized = normalize(nationalNumber);
     final extractedPrefix =
-        PrefixParser.extractNationalPrefix(normalized, country);
+        Extractor.extractNationalPrefix(normalized, country);
     return extractedPrefix.phoneNumber;
   }
 
-  /// gets the country a phone number originates from
+  /// Gets the [Country] a [phoneNumber] originates from
   ///
   /// returns null if none can be found
   static Country? getCountry(String phoneNumber) {
     final normalized = normalize(phoneNumber);
-    // 1. remove international prefix
-    final iddResult = PrefixParser.extractInternationalPrefix(
-      normalized,
-    );
-    // 2. extract country dial code and get country list
-    final dialCodeResult = PrefixParser.extractDialCode(
-      iddResult.phoneNumber,
+    final internationalPrefixResult =
+        Extractor.extractInternationalPrefix(normalized);
+    final dialCodeResult = Extractor.extractDialCode(
+      internationalPrefixResult.phoneNumber,
     );
 
     if (dialCodeResult.prefix == null) {
-      return null;
-    }
-    final nationalNumber = dialCodeResult.phoneNumber;
-    final potentialCountries =
-        CountryParser.listFromDialCode(dialCodeResult.prefix!);
-
-    if (potentialCountries.length == 1) {
-      return potentialCountries[0];
+      throw PhoneNumberException(
+        code: Code.INVALID_DIAL_CODE,
+        description: 'not found',
+      );
     }
 
-    for (var country in potentialCountries) {
-      // 3. check leading digits
-      final nationalPrefix = country.phone.nationalPrefix ?? '';
-      var parsedNationalNumber = nationalNumber;
-      if (nationalNumber.startsWith(nationalPrefix)) {
-        parsedNationalNumber = nationalNumber.substring(nationalPrefix.length);
-      }
-      final leadingDigits = country.phone.leadingDigits;
-      if (leadingDigits != null &&
-          parsedNationalNumber.startsWith(leadingDigits)) {
-        return country;
-      }
-      // 4. attempt pattern matching
-      if (getType(parsedNationalNumber, country) != null) {
-        return country;
-      }
-    }
-  }
-
-  /// [nationalPhoneNumber] a parsed national phone number
-  static PhoneNumberType? getType(String nationalPhoneNumber, Country country) {
-    final validation = country.phone.validation;
-    final general = validation.general;
-    final fixedLine = validation.fixedLine;
-    final mobile = validation.mobile;
-    final length = nationalPhoneNumber.length;
-
-    if (length < Constants.MIN_LENGTH_FOR_NSN) {
-      return null;
-    }
-
-    final matchGeneralDesc =
-        RegExp(general.pattern).matchEntirely(nationalPhoneNumber);
-    if (matchGeneralDesc == null) {
-      return null;
-    }
-    if (fixedLine.lengths!.contains(length) &&
-        RegExp(fixedLine.pattern).matchEntirely(nationalPhoneNumber) != null) {
-      return PhoneNumberType.fixedLine;
-    }
-    if (mobile.lengths!.contains(length) &&
-        RegExp(mobile.pattern).matchEntirely(nationalPhoneNumber) != null) {
-      return PhoneNumberType.fixedLine;
-    }
+    return Extractor.extractCountryOfNationalNumber(
+      dialCodeResult.phoneNumber,
+      dialCodeResult.prefix!,
+    );
   }
 }

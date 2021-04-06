@@ -15,8 +15,7 @@ class PhoneNumber {
     valid = Validator.isValidNationalNumber(nationalNumber, country.phone);
   }
 
-  static PhoneNumber fromRaw(String raw) =>
-      PhoneNumberParser.parseAsPhoneNumber(raw);
+  static PhoneNumber fromRaw(String raw) => PhoneNumberParser.parse(raw);
 
   static PhoneNumber fromIsoCode(String isoCode, String nationalNumber) {
     final country = Country.fromIsoCode(isoCode);
