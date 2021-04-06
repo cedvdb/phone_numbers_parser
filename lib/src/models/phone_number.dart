@@ -9,6 +9,7 @@ class PhoneNumber {
   late final bool valid;
 
   String get dialCode => country.dialCode;
+  String get isoCode => country.isoCode;
   String get value => '+' + dialCode + nationalNumber;
 
   PhoneNumber._(this.country, this.nationalNumber) {
