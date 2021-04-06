@@ -47,33 +47,7 @@ class PhoneNumberParser {
   ///
   /// Throws [PhoneNumberException].
   static PhoneNumber parse(String rawPhoneNumber) {
-    final country = getCountry(rawPhoneNumber);
-
-    if (country == null) {
-      throw PhoneNumberException(
-          code: Code.INVALID_DIAL_CODE, description: 'not found');
-    }
-    final nationalNumberResult = Extractor.extractNationalPrefix(
-      dialCodeResult.phoneNumber,
-      country,
-    );
-    return PhoneNumber.fromCountry(country, nationalNumberResult.phoneNumber);
-  }
-
-  /// Converts a [nationalNumber] by normalizing it and keeping only the
-  /// significants digits.
-  static String parseNationalNumber(String nationalNumber, Country country) {
-    final normalized = normalize(nationalNumber);
-    final extractedPrefix =
-        Extractor.extractNationalPrefix(normalized, country);
-    return extractedPrefix.phoneNumber;
-  }
-
-  /// Gets the [Country] a [phoneNumber] originates from
-  ///
-  /// returns null if none can be found
-  static Country? getCountry(String phoneNumber) {
-    final normalized = normalize(phoneNumber);
+    final normalized = normalize(rawPhoneNumber);
     final internationalPrefixResult =
         Extractor.extractInternationalPrefix(normalized);
     final dialCodeResult = Extractor.extractDialCode(
@@ -87,9 +61,29 @@ class PhoneNumberParser {
       );
     }
 
-    return Extractor.extractCountryOfNationalNumber(
+    final countryResult = Extractor.extractCountry(
       dialCodeResult.phoneNumber,
       dialCodeResult.extracted!,
     );
+
+    if (countryResult.extracted == null) {
+      throw PhoneNumberException(
+        code: Code.INVALID_DIAL_CODE,
+        description: 'The country could not be guessed',
+      );
+    }
+    return PhoneNumber.fromCountry(
+      countryResult.extracted!,
+      countryResult.phoneNumber,
+    );
+  }
+
+  /// Converts a [nationalNumber] by normalizing it and keeping only the
+  /// significants digits.
+  static String parseNationalNumber(String nationalNumber, Country country) {
+    final normalized = normalize(nationalNumber);
+    final extractedPrefix =
+        Extractor.extractNationalPrefix(normalized, country);
+    return extractedPrefix.phoneNumber;
   }
 }

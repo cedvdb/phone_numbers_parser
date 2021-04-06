@@ -165,12 +165,11 @@ class Extractor {
   ///
   /// Since a [dialCode] can target multiple countries, this will use pattern
   /// matching to figuring out the correct one.
-  static ExtractResult<Country> extractCountryOfNationalNumber(
+  static ExtractResult<Country> extractCountry(
     String nationalNumber,
     String dialCode,
   ) {
     final potentialCountries = CountryParser.listFromDialCode(dialCode);
-    Country foundCountry;
 
     if (potentialCountries.length == 1) {
       return ExtractResult(
