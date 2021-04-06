@@ -80,7 +80,7 @@ class PhoneNumberParser {
       internationalPrefixResult.phoneNumber,
     );
 
-    if (dialCodeResult.prefix == null) {
+    if (dialCodeResult.extracted == null) {
       throw PhoneNumberException(
         code: Code.INVALID_DIAL_CODE,
         description: 'not found',
@@ -89,7 +89,7 @@ class PhoneNumberParser {
 
     return Extractor.extractCountryOfNationalNumber(
       dialCodeResult.phoneNumber,
-      dialCodeResult.prefix!,
+      dialCodeResult.extracted!,
     );
   }
 }

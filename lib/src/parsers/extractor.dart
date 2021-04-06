@@ -7,12 +7,12 @@ import 'package:phone_numbers_parser/src/models/country_phone_description.dart';
 import '../regexp_fix.dart';
 import 'country_parser.dart';
 
-class ExtractionResult {
+class ExtractResult<T> {
   String phoneNumber;
-  String? prefix;
+  T? extracted;
 
-  ExtractionResult({
-    this.prefix,
+  ExtractResult({
+    required this.extracted,
     required this.phoneNumber,
   });
 }
@@ -25,7 +25,7 @@ class Extractor {
   ///
   /// It expects a normalized [phoneNumber] starting
   /// with the country code and without the +.
-  static ExtractionResult extractDialCode(String phoneNumber) {
+  static ExtractResult<String> extractDialCode(String phoneNumber) {
     var dialCode = '';
     // Country dial codes do not begin with a '0'.
     if (phoneNumber.isNotEmpty || !phoneNumber.startsWith('0')) {
@@ -40,9 +40,9 @@ class Extractor {
         }
       }
     }
-    return ExtractionResult(
+    return ExtractResult(
       phoneNumber: phoneNumber.substring(dialCode.length),
-      prefix: dialCode,
+      extracted: dialCode,
     );
   }
 
@@ -54,14 +54,15 @@ class Extractor {
   ///  - else if starts with 00 or 011
   ///    we consider those as internationalPrefix as
   ///    they cover 4/5 of the international prefix
-  static ExtractionResult extractInternationalPrefix(
+  static ExtractResult<String> extractInternationalPrefix(
     String phoneNumber, [
     Country? country,
   ]) {
     if (phoneNumber.startsWith('+')) {
-      return ExtractionResult(
+      return ExtractResult(
         // we remove the plus as to stay consistent with other results
         phoneNumber: phoneNumber.substring(1),
+        extracted: null,
       );
     }
 
@@ -73,41 +74,42 @@ class Extractor {
     }
     // 4/5 of the world wide numbers start with 00 or 011
     if (phoneNumber.startsWith('00')) {
-      return ExtractionResult(
-          phoneNumber: phoneNumber.substring(2), prefix: '00');
+      return ExtractResult(
+          phoneNumber: phoneNumber.substring(2), extracted: '00');
     }
 
     if (phoneNumber.startsWith('011')) {
-      return ExtractionResult(
-          phoneNumber: phoneNumber.substring(3), prefix: '011');
+      return ExtractResult(
+          phoneNumber: phoneNumber.substring(3), extracted: '011');
     }
 
-    return ExtractionResult(phoneNumber: phoneNumber);
+    return ExtractResult(phoneNumber: phoneNumber, extracted: null);
   }
 
-  static ExtractionResult _extractInternationalPrefixFromDefaultCountry(
+  static ExtractResult<String> _extractInternationalPrefixFromDefaultCountry(
     String phoneNumber,
     Country country,
   ) {
     final match =
         RegExp(country.phone.internationalPrefix).matchAsPrefix(phoneNumber);
     if (match != null) {
-      return ExtractionResult(
+      return ExtractResult(
         phoneNumber: phoneNumber.substring(match.end + 1),
-        prefix: phoneNumber.substring(0, match.end),
+        extracted: phoneNumber.substring(0, match.end),
       );
     }
     // if it does not start with the international prefix from the
     // country we assume the prefix is not present
-    return ExtractionResult(
+    return ExtractResult(
       phoneNumber: phoneNumber,
+      extracted: null,
     );
   }
 
   /// extract the national prefix of a [nationalNumber] and applies possible
   /// transformation to the nationalNumber which might be valid locally
   /// to make it a valid nationalNumber internationally
-  static ExtractionResult extractNationalPrefix(
+  static ExtractResult<String> extractNationalPrefix(
     String nationalNumber,
     Country country,
   ) {
@@ -123,12 +125,12 @@ class Extractor {
     nationalNumber =
         _transformLocalNsnToInternationalNsn(nationalNumber, country);
 
-    return ExtractionResult(
+    return ExtractResult(
       phoneNumber: nationalNumber,
       // nationalPrefix will be null if it was not removed, even though
       // we have the country and could add it, to stay coherent with the
       // other methods in this class
-      prefix: nationalPrefix,
+      extracted: nationalPrefix,
     );
   }
 
@@ -163,37 +165,59 @@ class Extractor {
   ///
   /// Since a [dialCode] can target multiple countries, this will use pattern
   /// matching to figuring out the correct one.
-  static Country? extractCountryOfNationalNumber(
+  static ExtractResult<Country> extractCountryOfNationalNumber(
     String nationalNumber,
     String dialCode,
   ) {
     final potentialCountries = CountryParser.listFromDialCode(dialCode);
+    Country foundCountry;
 
     if (potentialCountries.length == 1) {
-      return potentialCountries[0];
+      return ExtractResult(
+        phoneNumber: _transformLocalNsnToInternationalNsn(
+          nationalNumber,
+          potentialCountries[0],
+        ),
+        extracted: potentialCountries[0],
+      );
     }
 
     for (var country in potentialCountries) {
       // 3. check leading digits
-      final nationalPrefix = country.phone.nationalPrefix ?? '';
+      final nationalPrefix = country.phone.nationalPrefix;
+      final leadingDigits = country.phone.leadingDigits;
       var parsedNationalNumber = nationalNumber;
-      if (nationalNumber.startsWith(RegExp(nationalPrefix))) {
+
+      if (nationalPrefix != null &&
+          nationalNumber.startsWith(RegExp(nationalPrefix))) {
         parsedNationalNumber = nationalNumber.substring(nationalPrefix.length);
       }
-      final leadingDigits = country.phone.leadingDigits;
+      final transformedNationalNumber = _transformLocalNsnToInternationalNsn(
+        nationalNumber,
+        country,
+      );
+
       if (leadingDigits != null &&
           parsedNationalNumber.startsWith(leadingDigits)) {
-        return country;
+        return ExtractResult(
+          phoneNumber: transformedNationalNumber,
+          extracted: country,
+        );
       }
       // 4. attempt pattern matching against the different types
       // first we transform it so it fits the pattern
-      final transformed =
-          _transformLocalNsnToInternationalNsn(parsedNationalNumber, country);
-
-      if (getType(transformed, country) != null) {
-        return country;
+      if (getType(transformedNationalNumber, country) != null) {
+        return ExtractResult(
+          phoneNumber: transformedNationalNumber,
+          extracted: country,
+        );
       }
     }
+
+    return ExtractResult(
+      phoneNumber: nationalNumber,
+      extracted: null,
+    );
   }
 
   /// gets get [PhoneNumberType] of a phone number by checking
