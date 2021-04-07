@@ -10,13 +10,13 @@ class Validator {
   /// [nsn] national number without country code,
   /// international prefix, or national prefix
   static bool isValidNationalNumber(
-    String phoneNumber,
+    String nationalNumber,
     CountryPhoneDescription desc,
   ) {
-    if (phoneNumber.length < Constants.MIN_LENGTH_FOR_NSN) {
+    if (nationalNumber.length < Constants.MIN_LENGTH_FOR_NSN) {
       return false;
     }
     final pattern = desc.validation.general.pattern;
-    return RegExp(pattern).matchEntirely(pattern) != null;
+    return RegExp(pattern).matchEntirely(nationalNumber) != null;
   }
 }
