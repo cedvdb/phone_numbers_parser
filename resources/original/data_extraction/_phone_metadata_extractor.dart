@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:phone_numbers_parser/src/models/country_phone_description.dart';
 import 'package:xml/xml.dart';
-import 'package:path/path.dart' as path;
 // this file is responsible of extracting the data
 // from the phone_number_metadata.xml
 
@@ -14,8 +13,7 @@ Future<Map<String, CountryPhoneDescription>> getPhoneDescriptionMap() async {
 }
 
 Future<XmlDocument> _readPhoneNumbersXml() async {
-  final filePath = path.join(
-      'lib/resources/original/data_source', 'phone_number_metadata.xml');
+  final filePath = 'resources/original/data_source/phone_number_metadata.xml';
   final xmlString = await File(filePath).readAsString();
   return XmlDocument.parse(xmlString);
 }

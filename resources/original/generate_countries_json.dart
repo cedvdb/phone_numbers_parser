@@ -13,6 +13,6 @@ void main() async {
   final phoneDescriptions = await getPhoneDescriptionMap();
   final countries = generateCountries(names, phoneDescriptions);
   final encoder = JsonEncoder.withIndent('  ');
-  await File('lib/resources/countries.json')
+  await File('resources/countries.json')
       .writeAsString(encoder.convert(countries.map((c) => c.toMap()).toList()));
 }

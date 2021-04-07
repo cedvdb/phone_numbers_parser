@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:phone_numbers_parser/src/models/country.dart';
 
 Future<List<Country>> getCountries() async {
-  final jsonStr = await File('lib/resources/countries.json').readAsString();
+  final jsonStr = await File('resources/countries.json').readAsString();
   List<dynamic> decoded = jsonDecode(jsonStr);
   return decoded.map((map) => Country.fromMap(map)).toList();
 }
