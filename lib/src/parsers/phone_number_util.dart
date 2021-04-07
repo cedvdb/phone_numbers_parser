@@ -1,0 +1,27 @@
+import '../constants.dart';
+
+/// This class regroups helper methods to do operations on phone numbers
+/// that might be needed in the public API.
+class PhoneNumberUtil {
+  /// Extracts phone numbers from a [text].
+  /// The potential phone numbers returned are not checked for their validity.
+  /// It is possible that a match could be a date or anything else ressembling a phone number.
+  /// To verify it is in fact a phone number you can parse it and check its validity
+  static Iterable<Match> findPotentialPhoneNumbers(String text) {
+    return RegExp(Constants.POSSIBLE_PHONE_NUMBER).allMatches(text);
+  }
+
+  /// Normalize phone number so it's only digits and possible + sign.
+  ///
+  /// It also converts easthern arabic digits to westhern arabic.
+  ///
+  /// Example:
+  /// [unformatedPhoneNumber]: (+32) 0489/99.99.99
+  /// Returns: +320489999999
+  static String normalize(String unformatedPhoneNumber) {
+    return unformatedPhoneNumber
+        .split('')
+        .map((char) => Constants.allNormalizationMappings[char] ?? '')
+        .join('');
+  }
+}

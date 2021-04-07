@@ -1,3 +1,4 @@
+import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/validator.dart';
 
 import '../parsers/phone_number_parser.dart';
@@ -17,17 +18,17 @@ class PhoneNumber {
   }
 
   static PhoneNumber fromRaw(String rawPhoneNumber) {
-    final normalized = PhoneNumberParser.normalize(rawPhoneNumber);
+    final normalized = PhoneNumberUtil.normalize(rawPhoneNumber);
     return PhoneNumberParser.parse(normalized);
   }
 
   static PhoneNumber fromIsoCode(String isoCode, String nationalNumber) {
-    final normalized = PhoneNumberParser.normalize(nationalNumber);
+    final normalized = PhoneNumberUtil.normalize(nationalNumber);
     return PhoneNumberParser.parseWithIsoCode(normalized, isoCode);
   }
 
   static PhoneNumber fromDialCode(String dialCode, String nationalNumber) {
-    final normalized = PhoneNumberParser.normalize(nationalNumber);
+    final normalized = PhoneNumberUtil.normalize(nationalNumber);
     return PhoneNumberParser.parseWithDialCode(normalized, dialCode);
   }
 
