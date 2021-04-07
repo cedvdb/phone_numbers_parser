@@ -1,6 +1,5 @@
 import 'package:phone_numbers_parser/src/models/country_phone_description.dart';
 import 'package:phone_numbers_parser/src/parsers/country_parser.dart';
-import 'package:phone_numbers_parser/src/parsers/validator.dart';
 
 /// Country regroup informations for displaying a list of countries
 class Country {

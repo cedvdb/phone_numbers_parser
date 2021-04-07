@@ -113,14 +113,8 @@ class Extractor {
     String nationalNumber,
     Country country,
   ) {
-    var nationalPrefix;
-    final countryNationalPrefix = country.phone.nationalPrefix;
-
-    if (countryNationalPrefix != null &&
-        nationalNumber.startsWith(countryNationalPrefix)) {
-      nationalPrefix = country.phone.nationalPrefix;
-      nationalNumber = nationalNumber.substring(nationalPrefix.length);
-    }
+    final nationalPrefix =
+        country.phone.nationalPrefixForParsing ?? country.phone.nationalPrefix;
 
     nationalNumber =
         _transformLocalNsnToInternationalNsn(nationalNumber, country);
@@ -146,7 +140,7 @@ class Extractor {
     // match as prefix because we are only replacing the group and keeping
     // the end intact
     final match =
-        RegExp(nationalPrefixForParsing).matchAsPrefix(nationalNumber);
+        RegExp(nationalPrefixForParsing!).matchAsPrefix(nationalNumber);
     if (match == null) {
       return nationalNumber;
     }
