@@ -8,8 +8,8 @@
 
 for the country.json file generation  (from root dir)
 
-`dart lib/resources/original/generate_countries_json.dart`
+`dart resources/original/generate_countries_json.dart`
 
 for generating dart files (from root dir)
 
-`dart lib/resources/generate_country_data_files.dart`
+`dart resources/generate_country_data_files.dart`

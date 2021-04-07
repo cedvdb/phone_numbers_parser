@@ -4,14 +4,14 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:phone_numbers_parser/resources/countries_converter.dart';
+import './countries_converter.dart';
 import 'package:phone_numbers_parser/src/models/country.dart';
 import 'package:phone_numbers_parser/src/models/country_phone_description.dart';
 
 const String DATA_TOKEN = '// data here';
 const String COMMENT_TOKEN = '// comment here';
 final String comment = '// This file was auto generated';
-final String INPUT_PATH = 'lib/resources/file_generation';
+final String INPUT_PATH = 'resources/file_generation';
 final String BASE_COUNTRY_LIST = '$INPUT_PATH/base_country_list.dart';
 final String BASE_COUNTRY_BY_ISO_CODE =
     '$INPUT_PATH/base_country_by_iso_code.dart';
