@@ -10,6 +10,7 @@ Dart library for parsing phone numbers. Inspired by Google's libphonenumber and 
  - Phone number parsing
  - Country list for display
  - Simple syntax
+ - Supports easthern arabic digits
  - Uses best-in-class metadata from Google's libPhoneNumber project. 
 
 ## Usage
