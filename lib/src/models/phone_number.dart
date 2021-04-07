@@ -4,41 +4,39 @@ import '../parsers/phone_number_parser.dart';
 import 'country.dart';
 
 class PhoneNumber {
-  late final String nationalNumber;
+  late final String nsn;
   late final Country country;
   late final bool valid;
 
   String get dialCode => country.dialCode;
   String get isoCode => country.isoCode;
-  String get value => '+' + dialCode + nationalNumber;
+  String get international => '+' + dialCode + nsn;
 
-  PhoneNumber._(this.country, this.nationalNumber) {
-    valid = Validator.isValidNationalNumber(nationalNumber, country.phone);
+  PhoneNumber._(this.country, this.nsn) {
+    valid = Validator.isValidNationalNumber(nsn, country.phone);
   }
 
-  static PhoneNumber fromRaw(String raw) => PhoneNumberParser.parse(raw);
+  static PhoneNumber fromRaw(String rawPhoneNumber) {
+    final normalized = PhoneNumberParser.normalize(rawPhoneNumber);
+    return PhoneNumberParser.parse(normalized);
+  }
 
   static PhoneNumber fromIsoCode(String isoCode, String nationalNumber) {
-    final country = Country.fromIsoCode(isoCode);
-    nationalNumber =
-        PhoneNumberParser.parseNationalNumber(nationalNumber, country);
-    return PhoneNumber._(country, nationalNumber);
+    final normalized = PhoneNumberParser.normalize(nationalNumber);
+    return PhoneNumberParser.parseWithIsoCode(normalized, isoCode);
   }
 
   static PhoneNumber fromDialCode(String dialCode, String nationalNumber) {
-    final country = Country.fromDialCode(dialCode);
-    nationalNumber =
-        PhoneNumberParser.parseNationalNumber(nationalNumber, country);
-    return PhoneNumber._(country, nationalNumber);
+    final normalized = PhoneNumberParser.normalize(nationalNumber);
+    return PhoneNumberParser.parseWithDialCode(normalized, dialCode);
   }
 
+  /// This method does not transform the national number
   static PhoneNumber fromCountry(Country country, String nationalNumber) {
-    nationalNumber =
-        PhoneNumberParser.parseNationalNumber(nationalNumber, country);
     return PhoneNumber._(country, nationalNumber);
   }
 
   bool validate() {
-    return Validator.isValidNationalNumber(value, country.phone);
+    return Validator.isValidNationalNumber(international, country.phone);
   }
 }

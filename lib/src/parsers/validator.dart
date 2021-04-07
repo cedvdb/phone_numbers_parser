@@ -7,7 +7,7 @@ import '../regexp_fix.dart';
 class Validator {
   /// Returns whether or not a national number is viable
   ///
-  /// [nationalNumber] national number without country code,
+  /// [nsn] national number without country code,
   /// international prefix, or national prefix
   static bool isValidNationalNumber(
     String phoneNumber,

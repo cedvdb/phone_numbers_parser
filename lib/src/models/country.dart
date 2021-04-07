@@ -34,9 +34,6 @@ class Country {
   static Country fromIsoCode(String isoCode) =>
       CountryParser.fromIsoCode(isoCode);
 
-  static Country fromDialCode(String dialCode) =>
-      CountryParser.fromDialCode(dialCode);
-
   Map<String, dynamic> toMap() {
     return {
       'name': name,

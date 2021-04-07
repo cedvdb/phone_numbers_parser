@@ -1,17 +1,13 @@
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
-import 'package:phone_numbers_parser/src/models/country.dart';
-import 'package:phone_numbers_parser/src/models/country_phone_description.dart';
 import 'package:phone_numbers_parser/src/models/phone_number.dart';
-import 'package:phone_numbers_parser/src/parsers/country_parser.dart';
 
 import '../constants.dart';
 import 'extractor.dart';
-import '../regexp_fix.dart';
 
-// This class mainly contains the public api. The methods body here
+// This class mainly contains the public methods bodies which
 // are mainly summaries of what happens and use the [PrefixParser]
 // to do the parsing business logic
-// Therefor this class must stay clean as to be readable as almost plain english
+// Therefor this class must stay clean as to be readable.
 
 /// Parser to do various operations on Strings representing phone numbers.
 class PhoneNumberParser {
@@ -37,19 +33,19 @@ class PhoneNumberParser {
         .join('');
   }
 
-  /// Extracts the necessary information from [rawPhoneNumber] to return [PhoneNumber].
+  /// Extracts the necessary information from a normalized [phoneNumber]
+  /// to return a [PhoneNumber].
   ///
-  /// The [rawPhoneNumber] is expected to contain the country dial code.
-  /// It will return a valid result if the [rawPhoneNumber] start with +, 00 or 011
+  /// The [phoneNumber] is expected to contain the country dial code.
+  /// It will return a valid result if the [phoneNumber] start with +, 00 or 011
   /// as international prefix.
   ///
   /// If the phoneNumber does not contain a country dial code, use [parseNational]
   ///
   /// Throws [PhoneNumberException].
-  static PhoneNumber parse(String rawPhoneNumber) {
-    final normalized = normalize(rawPhoneNumber);
+  static PhoneNumber parse(String phoneNumber) {
     final internationalPrefixResult =
-        Extractor.extractInternationalPrefix(normalized);
+        Extractor.extractInternationalPrefix(phoneNumber);
     final dialCodeResult = Extractor.extractDialCode(
       internationalPrefixResult.phoneNumber,
     );
@@ -61,11 +57,18 @@ class PhoneNumberParser {
       );
     }
 
-    final countryResult = Extractor.extractCountry(
+    return parseWithDialCode(
       dialCodeResult.phoneNumber,
       dialCodeResult.extracted!,
     );
+  }
 
+  /// Converts a normalized [nationalNumber] to a [PhoneNumber],
+  /// the [PhoneNumber.nsn] is the national number valid internationally
+  /// with the leading digits for the region and so on
+  static PhoneNumber parseWithDialCode(String nationalNumber, String dialCode) {
+    // multiple countries share the same dial code
+    final countryResult = Extractor.extractCountry(nationalNumber, dialCode);
     if (countryResult.extracted == null) {
       throw PhoneNumberException(
         code: Code.INVALID_DIAL_CODE,
@@ -78,12 +81,13 @@ class PhoneNumberParser {
     );
   }
 
-  /// Converts a [nationalNumber] by normalizing it and keeping only the
-  /// significants digits.
-  static String parseNationalNumber(String nationalNumber, Country country) {
-    final normalized = normalize(nationalNumber);
-    final extractedPrefix =
-        Extractor.extractNationalPrefix(normalized, country);
-    return extractedPrefix.phoneNumber;
+  static PhoneNumber parseWithIsoCode(String nationalNumber, String isoCode) {
+    final country = Country.fromIsoCode(isoCode);
+    final nationalNumberResult =
+        Extractor.extractNationalPrefix(nationalNumber, country);
+    return PhoneNumber.fromCountry(
+      country,
+      nationalNumberResult.phoneNumber,
+    );
   }
 }
