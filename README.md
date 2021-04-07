@@ -2,6 +2,9 @@
 
 Dart library for parsing phone numbers. Inspired by Google's libphonenumber and PhoneNumberKit for ios.
 
+The advantage of this lib instead of libphonenumber is that it instantly supports all platforms (no need for channeling).
+
+
 ## Features
 
  - Find phone numbers in a text
