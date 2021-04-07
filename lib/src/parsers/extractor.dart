@@ -139,9 +139,12 @@ class Extractor {
     Country country,
   ) {
     final nationalPrefixForParsing = country.phone.nationalPrefixForParsing;
+    // just remove national prefix if no national prefix for parsing
     if (nationalPrefixForParsing == null) {
-      return nationalNumber;
+      _removeNationalPrefix(nationalNumber, country);
     }
+    // match as prefix because we are only replacing the group and keeping
+    // the end intact
     final match =
         RegExp(nationalPrefixForParsing).matchAsPrefix(nationalNumber);
     if (match == null) {
@@ -149,16 +152,37 @@ class Extractor {
     }
     final transformRule = country.phone.nationalPrefixTransformRule;
     // if there is no group caught there is no need to transform
-    if (transformRule == null || match.groupCount == 0) {
+    // it is possible for a group to be null despite the group count being 1
+    if (transformRule == null ||
+        match.groupCount == 0 ||
+        match.group(1) == null) {
       return nationalNumber;
     }
     // I did not find a built in way of replacing a match with a template so
-    // let's do it by hand. There seems to be be max 2 groups. todo add loop instead
-    var transformed = transformRule.replaceFirst(r'$1', match.group(1)!);
-    if (match.groupCount > 1) {
-      transformed = transformed.replaceFirst(r'$2', match.group(2)!);
+    // let's do it by hand. There seems to be be max 2 groups.
+    // there is also an issue with group count where group(1) could be null while
+    // groupCount == 1. https://github.com/dart-lang/sdk/issues/45608
+
+    var transformed = transformRule;
+    final shouldContinueLoop = (int i) =>
+        match.groupCount >= i &&
+        match.group(i) != null &&
+        transformed.contains('\$$i');
+    for (var i = 1; shouldContinueLoop(i); i++) {
+      transformed = transformed.replaceFirst('\$$i', match.group(i)!);
     }
-    return transformed;
+    return transformed + nationalNumber.substring(match.end);
+  }
+
+  static String _removeNationalPrefix(String nationalNumber, Country country) {
+    final nationalPrefix = country.phone.nationalPrefix;
+    if (nationalPrefix != null) {
+      final match = RegExp(nationalPrefix).matchAsPrefix(nationalNumber);
+      if (match != null) {
+        return nationalNumber.substring(match.group(0)!.length);
+      }
+    }
+    return nationalNumber;
   }
 
   /// Gets the country of a [nationalNumber] by providing a [dialCode]
