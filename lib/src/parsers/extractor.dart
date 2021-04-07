@@ -135,12 +135,12 @@ class Extractor {
     final nationalPrefixForParsing = country.phone.nationalPrefixForParsing;
     // just remove national prefix if no national prefix for parsing
     if (nationalPrefixForParsing == null) {
-      _removeNationalPrefix(nationalNumber, country);
+      return _removeNationalPrefix(nationalNumber, country);
     }
     // match as prefix because we are only replacing the group and keeping
     // the end intact
     final match =
-        RegExp(nationalPrefixForParsing!).matchAsPrefix(nationalNumber);
+        RegExp(nationalPrefixForParsing).matchAsPrefix(nationalNumber);
     if (match == null) {
       return nationalNumber;
     }
@@ -150,7 +150,7 @@ class Extractor {
     if (transformRule == null ||
         match.groupCount == 0 ||
         match.group(1) == null) {
-      return nationalNumber;
+      return nationalNumber.substring(match.end);
     }
     // I did not find a built in way of replacing a match with a template so
     // let's do it by hand. There seems to be be max 2 groups.
@@ -235,7 +235,7 @@ class Extractor {
 
     return ExtractResult(
       phoneNumber: nationalNumber,
-      extracted: null,
+      extracted: potentialCountries[0],
     );
   }
 

@@ -52,9 +52,9 @@ void main() {
           () {
         final arPhone = fromIsoCode('Ar', argentinaNational);
         final arPhone2 = fromIsoCode('Ar', argentinaNationalLocal);
-        // expect(arPhone.isoCode, equals('AR'));
-        // expect(arPhone.nsn, equals(argentinaNationalExpected));
-        // expect(arPhone.international, equals(argentinaInternationalExpected));
+        expect(arPhone.isoCode, equals('AR'));
+        expect(arPhone.nsn, equals(argentinaNationalExpected));
+        expect(arPhone.international, equals(argentinaInternationalExpected));
 
         expect(arPhone2.isoCode, equals('AR'));
         expect(arPhone2.nsn, equals(argentinaNationalExpected));
@@ -74,6 +74,17 @@ void main() {
         expect(amSamoaPhone2.nsn, equals(amerSamoaNationalExpected));
         expect(amSamoaPhone2.international,
             equals(amerSamoaInternationalExpected));
+      });
+
+      test('should not throw error for empty input when country is valid', () {
+        expect(fromIsoCode('fr', ''), TypeMatcher<PhoneNumber>());
+      });
+
+      test('should throw error when country is invalid', () {
+        expect(
+          () => fromIsoCode('not found', ''),
+          throwsA(TypeMatcher<PhoneNumberException>()),
+        );
       });
     });
 
@@ -121,6 +132,17 @@ void main() {
         expect(amSamoaPhone2.international,
             equals(amerSamoaInternationalExpected));
       });
+
+      test('should not throw error for empty input when country is valid', () {
+        expect(fromDialCode('1', ''), TypeMatcher<PhoneNumber>());
+      });
+
+      test('should throw error when country is invalid', () {
+        expect(
+          () => fromDialCode('0', ''),
+          throwsA(TypeMatcher<PhoneNumberException>()),
+        );
+      });
     });
 
     group('fromRaw', () {
@@ -156,6 +178,20 @@ void main() {
         expect(amSamoaPhone.nsn, equals(amerSamoaNationalExpected));
         expect(
             amSamoaPhone.international, equals(amerSamoaInternationalExpected));
+      });
+
+      test('should throw error for empty input', () {
+        expect(() => fromRaw(''), throwsA(TypeMatcher<PhoneNumberException>()));
+      });
+    });
+
+    group('validity', () {
+      test('should give the correct validity', () {
+        final valid = PhoneNumber.fromRaw('+33 93 987 6218');
+        final invalid = PhoneNumber.fromRaw('+33 93 987');
+
+        expect(valid.valid, equals(true));
+        expect(invalid.valid, equals(false));
       });
     });
   });

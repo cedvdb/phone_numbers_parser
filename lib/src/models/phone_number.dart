@@ -35,8 +35,4 @@ class PhoneNumber {
   static PhoneNumber fromCountry(Country country, String nationalNumber) {
     return PhoneNumber._(country, nationalNumber);
   }
-
-  bool validate() {
-    return Validator.isValidNationalNumber(international, country.phone);
-  }
 }
