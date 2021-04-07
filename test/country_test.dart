@@ -9,11 +9,5 @@ void main() {
       expect(() => Country.fromIsoCode('WRONG'),
           throwsA(TypeMatcher<PhoneNumberException>()));
     });
-    test('should create with dialCode ', () {
-      expect(Country.fromDialCode('33').name, equals('France'));
-      expect(Country.fromDialCode('+33').name, equals('France'));
-      expect(() => Country.fromDialCode('0'),
-          throwsA(TypeMatcher<PhoneNumberException>()));
-    });
   });
 }
