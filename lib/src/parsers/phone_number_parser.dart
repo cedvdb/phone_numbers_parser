@@ -1,8 +1,19 @@
 import 'package:phone_numbers_parser/src/models/country.dart';
-import 'package:phone_numbers_parser/src/models/phone_number.dart';
 
 import '../exceptions.dart';
 import 'extractor.dart';
+
+/// Parsing result to not return a PhoneNumber and avoid circular dep.
+class ParsingResult {
+  final Country country;
+  final String nsn;
+  final String nationalNumberUnparsed;
+  ParsingResult({
+    required this.country,
+    required this.nsn,
+    required this.nationalNumberUnparsed,
+  });
+}
 
 // This class mainly contains the public methods bodies which
 // are mainly summaries of what happens and use the [PrefixParser]
@@ -21,7 +32,7 @@ class PhoneNumberParser {
   /// If the phoneNumber does not contain a country dial code, use [parseNational]
   ///
   /// Throws [PhoneNumberException].
-  static PhoneNumber parse(String phoneNumber) {
+  static ParsingResult parse(String phoneNumber) {
     final internationalPrefixResult =
         Extractor.extractInternationalPrefix(phoneNumber);
     final dialCodeResult = Extractor.extractDialCode(
@@ -44,7 +55,8 @@ class PhoneNumberParser {
   /// Converts a normalized [nationalNumber] to a [PhoneNumber],
   /// the [PhoneNumber.nsn] is the national number valid internationally
   /// with the leading digits for the region and so on
-  static PhoneNumber parseWithDialCode(String nationalNumber, String dialCode) {
+  static ParsingResult parseWithDialCode(
+      String nationalNumber, String dialCode) {
     // multiple countries share the same dial code
     final countryResult = Extractor.extractCountry(nationalNumber, dialCode);
     if (countryResult.extracted == null) {
@@ -53,21 +65,21 @@ class PhoneNumberParser {
         description: 'The country could not be guessed',
       );
     }
-    return PhoneNumber.fromCountry(
-      countryResult.extracted!,
-      countryResult.phoneNumber,
-      nationalNumber,
+    return ParsingResult(
+      country: countryResult.extracted!,
+      nsn: countryResult.phoneNumber,
+      nationalNumberUnparsed: nationalNumber,
     );
   }
 
-  static PhoneNumber parseWithIsoCode(String nationalNumber, String isoCode) {
+  static ParsingResult parseWithIsoCode(String nationalNumber, String isoCode) {
     final country = Country.fromIsoCode(isoCode);
     final nationalNumberResult =
         Extractor.extractNationalPrefix(nationalNumber, country);
-    return PhoneNumber.fromCountry(
-      country,
-      nationalNumberResult.phoneNumber,
-      nationalNumber,
+    return ParsingResult(
+      country: country,
+      nsn: nationalNumberResult.phoneNumber,
+      nationalNumberUnparsed: nationalNumber,
     );
   }
 }

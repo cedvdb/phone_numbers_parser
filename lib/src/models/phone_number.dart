@@ -53,7 +53,8 @@ class PhoneNumber {
   /// from cannot be found. If you know the country in advance use [fromIsoCode].
   static PhoneNumber fromRaw(String rawPhoneNumber) {
     final normalized = PhoneNumberUtil.normalize(rawPhoneNumber);
-    return PhoneNumberParser.parse(normalized);
+    final result = PhoneNumberParser.parse(normalized);
+    return _parsingResultToPhoneNumber(result);
   }
 
   /// Creates a [PhoneNumber] with an isoCode or a nationalNumber
@@ -72,7 +73,8 @@ class PhoneNumber {
   /// If the [isoCode] is invalid, throws a [PhoneNumberException]
   static PhoneNumber fromIsoCode(String isoCode, String nationalNumber) {
     final normalized = PhoneNumberUtil.normalize(nationalNumber);
-    return PhoneNumberParser.parseWithIsoCode(normalized, isoCode);
+    final result = PhoneNumberParser.parseWithIsoCode(normalized, isoCode);
+    return _parsingResultToPhoneNumber(result);
   }
 
   /// Creates a phone number with a [dialCode] and a [nationalNumber].
@@ -86,7 +88,8 @@ class PhoneNumber {
   /// If the [dialCode] is invalid, throws a [PhoneNumberException]
   static PhoneNumber fromDialCode(String dialCode, String nationalNumber) {
     final normalized = PhoneNumberUtil.normalize(nationalNumber);
-    return PhoneNumberParser.parseWithDialCode(normalized, dialCode);
+    final result = PhoneNumberParser.parseWithDialCode(normalized, dialCode);
+    return _parsingResultToPhoneNumber(result);
   }
 
   /// This method does not transform the national number and should
@@ -96,8 +99,17 @@ class PhoneNumber {
     return PhoneNumber._(country, nsn, nationalNumber);
   }
 
+  static PhoneNumber _parsingResultToPhoneNumber(ParsingResult result) {
+    return PhoneNumber._(
+      result.country,
+      result.nsn,
+      result.nationalNumberUnparsed,
+    );
+  }
+
   PhoneNumber copyWithIsoCode(String isoCode) {
-    return PhoneNumberParser.parseWithIsoCode(_national, isoCode);
+    final result = PhoneNumberParser.parseWithIsoCode(_national, isoCode);
+    return _parsingResultToPhoneNumber(result);
   }
 
   @override
