@@ -18,17 +18,23 @@ class Country {
   /// country dialing code to call them internationally
   String get dialCode => phone.dialCode;
 
+  String? get leadingDigits => phone.leadingDigits;
+
+  /// + country dial code with the leading digits for a country
+  String get displayDialCode {
+    var forDisplay = '+ $dialCode';
+    if (leadingDigits != null) {
+      forDisplay += ' $leadingDigits';
+    }
+    return forDisplay;
+  }
+
   const Country({
     required this.name,
     required this.flag,
     required this.isoCode,
     required this.phone,
   });
-
-  @override
-  String toString() {
-    return 'Country(name: $name, flag: $flag, isoCode: $isoCode, phone: $phone)';
-  }
 
   static Country fromIsoCode(String isoCode) =>
       CountryParser.fromIsoCode(isoCode);
@@ -49,5 +55,10 @@ class Country {
       isoCode: map['isoCode'],
       phone: CountryPhoneDescription.fromMap(map['phone']),
     );
+  }
+
+  @override
+  String toString() {
+    return 'Country(name: $name, flag: $flag, isoCode: $isoCode, phone: $phone)';
   }
 }

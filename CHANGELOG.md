@@ -1,3 +1,9 @@
+## 0.0.3
+
+- added toString to PhoneNumber
+- added leading digits getter to country
+- added displayDialCode on country which is a mix of dial code and leading digits
+
 ## 0.0.2
 
 - added some doc, by Cedvdb
