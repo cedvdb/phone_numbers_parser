@@ -5,6 +5,7 @@
 - added displayDialCode on country which is a mix of dial code and leading digits
 - added copyWithIsoCode as instance method on phone number to make it
   easy to switch between countries in a phone number input
+- added toString to exception
 
 ## 0.0.2
 
