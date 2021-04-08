@@ -1,6 +1,7 @@
-import 'package:phone_numbers_parser/phone_numbers_parser.dart';
+import 'package:phone_numbers_parser/src/models/country.dart';
 import 'package:phone_numbers_parser/src/models/phone_number.dart';
 
+import '../exceptions.dart';
 import 'extractor.dart';
 
 // This class mainly contains the public methods bodies which
@@ -55,6 +56,7 @@ class PhoneNumberParser {
     return PhoneNumber.fromCountry(
       countryResult.extracted!,
       countryResult.phoneNumber,
+      nationalNumber,
     );
   }
 
@@ -65,6 +67,7 @@ class PhoneNumberParser {
     return PhoneNumber.fromCountry(
       country,
       nationalNumberResult.phoneNumber,
+      nationalNumber,
     );
   }
 }
