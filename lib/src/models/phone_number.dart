@@ -101,6 +101,7 @@ class PhoneNumber {
   }
 
   @override
-  String toString() =>
-      'PhoneNumber(nsn: $nsn, country: $country, valid: $valid)';
+  String toString() {
+    return 'PhoneNumber(isoCode: $isoCode, dialCode: $dialCode, international: $international, nsn: $nsn, valid: $valid)';
+  }
 }
