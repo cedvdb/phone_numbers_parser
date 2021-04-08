@@ -196,13 +196,22 @@ void main() {
     });
 
     test('copyWithIsoCode', () {
-      final phoneNumber = PhoneNumber.fromRaw(franceInternationalExpected);
+      final frPhone = PhoneNumber.fromRaw('+33 93 987 6218');
+      expect(frPhone.valid, equals(true));
+      expect(frPhone.dialCode, equals('33'));
+      expect(frPhone.isoCode, equals('FR'));
+      expect(frPhone.international, equals('+33939876218'));
+      final esPhone = frPhone.copyWithIsoCode('ES');
+      expect(esPhone.valid, equals(true));
+      expect(esPhone.dialCode, equals('34'));
+      expect(esPhone.isoCode, equals('ES'));
+      expect(esPhone.international, equals('+34939876218'));
+
+      // the transformation of the national number method should be unapplied
       final argentinaNationalLocal = '0343155551212';
       final phoneNumberAg =
           PhoneNumber.fromIsoCode('ag', argentinaNationalLocal);
       final phoneNumberCopy = phoneNumberAg.copyWithIsoCode('FR');
-      expect(phoneNumber.copyWithIsoCode('FR').country.isoCode, equals('FR'));
-      // the transformation of the national number method should be unapplied
       expect(phoneNumberAg.nsn,
           isNot(equals(argentinaNationalLocal.substring(1))));
       expect(phoneNumberCopy.isoCode, equals('FR'));
