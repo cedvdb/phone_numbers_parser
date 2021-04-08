@@ -20,10 +20,11 @@ class Country {
 
   String? get leadingDigits => phone.leadingDigits;
 
-  /// + country dial code with the leading digits for a country
-  String get displayDialCode {
+  /// returns "+ [dialCode]" or "+ [dialCode] [leadingDigits]" if
+  /// [withLeadingDigits] is true.
+  String getDialCodeForDisplay({bool withLeadingDigits = false}) {
     var forDisplay = '+ $dialCode';
-    if (leadingDigits != null) {
+    if (withLeadingDigits && leadingDigits != null) {
       forDisplay += ' $leadingDigits';
     }
     return forDisplay;

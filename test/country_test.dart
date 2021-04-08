@@ -9,5 +9,13 @@ void main() {
       expect(() => Country.fromIsoCode('WRONG'),
           throwsA(TypeMatcher<PhoneNumberException>()));
     });
+
+    test('dial code for display', () {
+      expect(Country.fromIsoCode('AS').getDialCodeForDisplay(), equals('+ 1'));
+      expect(
+          Country.fromIsoCode('AS')
+              .getDialCodeForDisplay(withLeadingDigits: true),
+          equals('+ 1 684'));
+    });
   });
 }

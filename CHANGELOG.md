@@ -1,3 +1,6 @@
+## 0.0.4 
+- changed displayDialCode getter into method to allow for different syntax
+
 ## 0.0.3
 
 - added toString to PhoneNumber
