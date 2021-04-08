@@ -38,5 +38,8 @@ print(esPhone.international); // +34939876218
 
 final text = 'hey my phone number is: +33 939 876 218';
 final found = PhoneNumberUtil.findPotentialPhoneNumbers(text);
+
+final allCountries = countries; // contains name, isoCode, dialCode, leading digits, etc
+
  
 ```
