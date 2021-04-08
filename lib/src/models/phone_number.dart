@@ -97,7 +97,7 @@ class PhoneNumber {
   }
 
   PhoneNumber copyWithIsoCode(String isoCode) {
-    return PhoneNumberParser.parseWithIsoCode(_national, dialCode);
+    return PhoneNumberParser.parseWithIsoCode(_national, isoCode);
   }
 
   @override
