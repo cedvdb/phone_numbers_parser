@@ -24,11 +24,17 @@ PhoneNumber.fromRaw('+33 93 987 6218');
 PhoneNumber.fromIsoCode('fr','93 987 6218');
 PhoneNumber.fromDialCode('33', '93 987 6218')
 // extract info
-final phoneNumber = PhoneNumber.fromRaw('+33 93 987 6218');
-print(phoneNumber.valid); // true
-print(phoneNumber.dialCode); // 33
-print(phoneNumber.isoCode); // FR
-print(phoneNumber.international); // +33939876218
+final frPhone = PhoneNumber.fromRaw('+33 93 987 6218');
+print(frPhone.valid); // true
+print(frPhone.dialCode); // 33
+print(frPhone.isoCode); // FR
+print(frPhone.international); // +33939876218
+final esPhone = frPhone.copyWithIsoCode('ES');
+print(esPhone.valid); // true
+print(esPhone.dialCode); // 34
+print(esPhone.isoCode); // ES
+print(esPhone.international); // +34939876218
+
 
 final text = 'hey my phone number is: +33 939 876 218';
 final found = PhoneNumberUtil.findPotentialPhoneNumbers(text);
