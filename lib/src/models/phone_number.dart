@@ -86,4 +86,8 @@ class PhoneNumber {
   static PhoneNumber fromCountry(Country country, String nationalNumber) {
     return PhoneNumber._(country, nationalNumber);
   }
+
+  @override
+  String toString() =>
+      'PhoneNumber(nsn: $nsn, country: $country, valid: $valid)';
 }
