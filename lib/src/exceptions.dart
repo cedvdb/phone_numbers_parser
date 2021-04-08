@@ -6,6 +6,10 @@ class PhoneNumberException {
     required this.code,
     this.description,
   });
+
+  @override
+  String toString() =>
+      'PhoneNumberException(code: $code, description: $description)';
 }
 
 enum Code {
