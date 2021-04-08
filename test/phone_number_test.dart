@@ -194,5 +194,19 @@ void main() {
         expect(invalid.valid, equals(false));
       });
     });
+
+    test('copyWithIsoCode', () {
+      final phoneNumber = PhoneNumber.fromRaw(franceInternationalExpected);
+      final argentinaNationalLocal = '0343155551212';
+      final phoneNumberAg =
+          PhoneNumber.fromIsoCode('ag', argentinaNationalLocal);
+      final phoneNumberCopy = phoneNumberAg.copyWithIsoCode('FR');
+      expect(phoneNumber.copyWithIsoCode('FR').country.isoCode, equals('FR'));
+      // the transformation of the national number method should be unapplied
+      expect(phoneNumberAg.nsn,
+          isNot(equals(argentinaNationalLocal.substring(1))));
+      expect(phoneNumberCopy.isoCode, equals('FR'));
+      expect(phoneNumberCopy.nsn, equals(argentinaNationalLocal.substring(1)));
+    });
   });
 }
