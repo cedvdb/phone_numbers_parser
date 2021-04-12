@@ -18,16 +18,9 @@ class Country {
   /// country dialing code to call them internationally
   String get dialCode => phone.dialCode;
 
-  String? get leadingDigits => phone.leadingDigits;
-
-  /// returns "+ [dialCode]" or "+ [dialCode] [leadingDigits]" if
-  /// [withLeadingDigits] is true.
-  String getDialCodeForDisplay({bool withLeadingDigits = false}) {
-    var forDisplay = '+ $dialCode';
-    if (withLeadingDigits && leadingDigits != null) {
-      forDisplay += ' $leadingDigits';
-    }
-    return forDisplay;
+  /// returns "+ [dialCode]"
+  String getDialCodeForDisplay() {
+    return '+ $dialCode';
   }
 
   const Country({

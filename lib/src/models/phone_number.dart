@@ -26,7 +26,6 @@ class PhoneNumber {
 
   String get dialCode => country.dialCode;
   String get isoCode => country.isoCode;
-  String? get leadingDigits => country.leadingDigits;
   String get international => '+' + dialCode + nsn;
 
   PhoneNumber._(this.country, this.nsn, this._national) {
@@ -115,6 +114,6 @@ class PhoneNumber {
 
   @override
   String toString() {
-    return 'PhoneNumber(isoCode: $isoCode, dialCode: $dialCode, leadingDigits: $leadingDigits, international: $international, nsn: $nsn, valid: $valid)';
+    return 'PhoneNumber(isoCode: $isoCode, dialCode: $dialCode, international: $international, nsn: $nsn, valid: $valid)';
   }
 }

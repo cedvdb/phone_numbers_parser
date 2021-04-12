@@ -11,11 +11,7 @@ void main() {
     });
 
     test('dial code for display', () {
-      expect(Country.fromIsoCode('AS').getDialCodeForDisplay(), equals('+ 1'));
-      expect(
-          Country.fromIsoCode('AS')
-              .getDialCodeForDisplay(withLeadingDigits: true),
-          equals('+ 1 684'));
+      expect(Country.fromIsoCode('us').getDialCodeForDisplay(), equals('+ 1'));
     });
   });
 }

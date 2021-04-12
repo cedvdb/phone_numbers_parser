@@ -1,6 +1,7 @@
 ## 0.0.5
 
-- added leading digits getter on phone number
+- Breaking: remove getters for leading digits as it sometimes contains patterns
+- Put space in American Samoa's name
 
 ## 0.0.4 
 
