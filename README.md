@@ -46,4 +46,4 @@ final allCountries = countries; // contains name, isoCode, dialCode, leading dig
 
 ## Demo
 
-The phone number input packages has a demo that uses this parser: https://cedvdb.github.io/phone_number_input/
+The phone number input packages has a demo that uses this parser: https://cedvdb.github.io/phone_form_field/
