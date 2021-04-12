@@ -16,6 +16,7 @@ The advantage of this lib instead of libphonenumber is that it instantly support
  - Supports easthern arabic digits
  - Uses best-in-class metadata from Google's libPhoneNumber project. 
 
+
 ## Usage
 
 ```dart
@@ -40,6 +41,9 @@ final text = 'hey my phone number is: +33 939 876 218';
 final found = PhoneNumberUtil.findPotentialPhoneNumbers(text);
 
 final allCountries = countries; // contains name, isoCode, dialCode, leading digits, etc
-
  
 ```
+
+## Demo
+
+The phone number input packages has a demo that uses this parser: https://cedvdb.github.io/phone_number_input/
