@@ -135,12 +135,7 @@ class Extractor {
 
     return ExtractResult(
       phoneNumber: transformed,
-      // nationalPrefix will be null if it was not removed, even though
-      // we have the country and could add it, to stay coherent with the
-      // other methods in this class
-      extracted: transformed != nationalNumber
-          ? country.phoneDescription.nationalPrefix
-          : null,
+      extracted: nationalPrefix,
     );
   }
 
@@ -194,6 +189,8 @@ class Extractor {
   /// matching to figuring out the correct one.
   /// the returned [ExtractResult] will contain the country if found, and the
   /// national number transformed for international use
+  ///
+  /// Expects a normalized [nationalNumber] with or without prefix
   static ExtractResult<Country> extractCountry(
     String nationalNumber,
     String dialCode,
@@ -234,7 +231,7 @@ class Extractor {
       }
       // 4. attempt pattern matching against the different types
       // first we transform it so it fits the pattern
-      if (getType(transformedNationalNumber, country) != null) {
+      if (_matchesCountryPatternType(transformedNationalNumber, country)) {
         return ExtractResult(
           phoneNumber: transformedNationalNumber,
           extracted: country,
@@ -248,12 +245,15 @@ class Extractor {
     );
   }
 
-  /// gets get [PhoneNumberType] of a phone number by checking
+  /// returns whether or not this matches any of the country patterns
   /// if it matches any pattern in the list of mobile and fixedLine.
   ///
   /// [nationalPhoneNumber] a parsed national phone number without national prefix
   /// that has already been transformed
-  static PhoneNumberType? getType(String nationalPhoneNumber, Country country) {
+  static bool _matchesCountryPatternType(
+    String nationalPhoneNumber,
+    Country country,
+  ) {
     final validation = country.phoneDescription.validation;
     final general = validation.general;
     final fixedLine = validation.fixedLine;
@@ -261,21 +261,22 @@ class Extractor {
     final length = nationalPhoneNumber.length;
 
     if (length < Constants.MIN_LENGTH_FOR_NSN) {
-      return null;
+      return false;
     }
 
     final matchGeneralDesc =
         RegExp(general.pattern).matchEntirely(nationalPhoneNumber);
     if (matchGeneralDesc == null) {
-      return null;
-    }
-    if (fixedLine.lengths!.contains(length) &&
-        RegExp(fixedLine.pattern).matchEntirely(nationalPhoneNumber) != null) {
-      return PhoneNumberType.fixedLine;
+      return false;
     }
     if (mobile.lengths!.contains(length) &&
         RegExp(mobile.pattern).matchEntirely(nationalPhoneNumber) != null) {
-      return PhoneNumberType.fixedLine;
+      return true;
     }
+    if (fixedLine.lengths!.contains(length) &&
+        RegExp(fixedLine.pattern).matchEntirely(nationalPhoneNumber) != null) {
+      return true;
+    }
+    return false;
   }
 }

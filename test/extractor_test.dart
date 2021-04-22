@@ -1,6 +1,7 @@
-import 'package:phone_numbers_parser/src/models/country.dart';
 import 'package:phone_numbers_parser/src/parsers/extractor.dart';
 import 'package:test/test.dart';
+
+import 'test_data.dart';
 
 void main() {
   group('Extractor', () {
@@ -21,33 +22,35 @@ void main() {
     });
 
     test('should extract dial code', () {
-      final france = '33 655 5705 76'.replaceAll(' ', '');
+      final france = '339999';
       final r0 = Extractor.extractDialCode(france);
       // dial codes do not begin by 0
       final r1 = Extractor.extractDialCode('0123456789');
       expect(r0.extracted, equals('33'));
-      expect(r0.phoneNumber, equals('655570576'));
+      expect(r0.phoneNumber, equals('9999'));
       expect(r1.extracted, equals(null));
       expect(r1.phoneNumber, equals('0123456789'));
     });
 
     test('Should extract national prefix', () {
-      final france = Country.fromIsoCode('fr');
-      final franceWithoutPrefix = '655 5705 76'.replaceAll(' ', '');
-      final franceWithPrefix = '0' + franceWithoutPrefix;
-
-      final fr1 = Extractor.extractNationalPrefix(franceWithoutPrefix, france);
-      final fr2 = Extractor.extractNationalPrefix(franceWithPrefix, france);
-
-      expect(fr1.extracted, equals(null));
-      expect(fr1.phoneNumber, franceWithoutPrefix);
-
-      expect(fr2.extracted, equals('0'));
-      expect(fr2.phoneNumber, franceWithoutPrefix);
+      testData.forEach((element) {
+        final transformed = Extractor.extractNationalPrefix(
+            element.nationalLocal, element.country);
+        expect(transformed.phoneNumber, equals(element.nsn));
+        expect(transformed.extracted,
+            equals(element.country.phoneDescription.nationalPrefix));
+      });
     });
 
-    test('Should extract the country from the phone number', () {});
-
-    test('Should extract the type of phone number', () {});
+    test('Should extract the country from the phone number', () {
+      testData.forEach((element) {
+        final result1 = Extractor.extractCountry(
+            element.nationalLocal, element.country.dialCode);
+        final result2 =
+            Extractor.extractCountry(element.nsn, element.country.dialCode);
+        expect(result1.extracted, equals(element.country));
+        expect(result2.extracted, equals(element.country));
+      });
+    });
   });
 }
