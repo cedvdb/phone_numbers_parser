@@ -1,3 +1,4 @@
+import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/phone_number_util.dart';
 import 'package:phone_numbers_parser/src/parsers/validator.dart';
 
@@ -73,7 +74,7 @@ class PhoneNumber {
   /// If the [isoCode] is invalid, throws a [PhoneNumberException]
   static PhoneNumber fromIsoCode(String isoCode, String nationalNumber) {
     final normalized = PhoneNumberUtil.normalize(nationalNumber);
-    final result = PhoneNumberParser.parseWithIsoCode(normalized, isoCode);
+    final result = PhoneNumberParser.parseWithIsoCode(isoCode, normalized);
     return _parsingResultToPhoneNumber(result);
   }
 
@@ -88,7 +89,7 @@ class PhoneNumber {
   /// If the [dialCode] is invalid, throws a [PhoneNumberException]
   static PhoneNumber fromDialCode(String dialCode, String nationalNumber) {
     final normalized = PhoneNumberUtil.normalize(nationalNumber);
-    final result = PhoneNumberParser.parseWithDialCode(normalized, dialCode);
+    final result = PhoneNumberParser.parseWithDialCode(dialCode, normalized);
     return _parsingResultToPhoneNumber(result);
   }
 
@@ -110,6 +111,11 @@ class PhoneNumber {
   PhoneNumber copyWithIsoCode(String isoCode) {
     final result = PhoneNumberParser.parseWithIsoCode(_national, isoCode);
     return _parsingResultToPhoneNumber(result);
+  }
+
+  /// to validate the phone number against a specific phone number (mobile, fixedLine)
+  bool validate(PhoneNumberType type) {
+    return Validator.isValidForType(type, nsn, country.phoneDescription);
   }
 
   @override

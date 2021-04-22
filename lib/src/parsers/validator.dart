@@ -19,4 +19,27 @@ class Validator {
     final pattern = desc.validation.general.pattern;
     return RegExp(pattern).matchEntirely(nationalNumber) != null;
   }
+
+  static bool isValidForType(
+    PhoneNumberType type,
+    String nationalNumber,
+    CountryPhoneDescription desc,
+  ) {
+    PhoneValidationRules rules;
+    switch (type) {
+      case PhoneNumberType.mobile:
+        rules = desc.validation.mobile;
+        break;
+      case PhoneNumberType.fixedLine:
+        rules = desc.validation.fixedLine;
+        break;
+    }
+    final isRightLength = rules.lengths?.contains(nationalNumber.length);
+    // if we don't have length information we will do pattern matching
+    // or if the length is correct we do pattern matching too
+    if (isRightLength != null && !isRightLength) {
+      return false;
+    }
+    return RegExp(rules.pattern).matchEntirely(nationalNumber) != null;
+  }
 }

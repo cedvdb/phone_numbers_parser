@@ -25,6 +25,9 @@ class CountryParser {
     if (countries != null) {
       return countries;
     }
-    throw PhoneNumberException(code: Code.INVALID_DIAL_CODE);
+    throw PhoneNumberException(
+      code: Code.INVALID_DIAL_CODE,
+      description: 'dialCode $dialCode not found',
+    );
   }
 }

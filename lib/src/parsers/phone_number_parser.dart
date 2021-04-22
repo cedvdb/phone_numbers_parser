@@ -42,7 +42,7 @@ class PhoneNumberParser {
     if (dialCodeResult.extracted == null) {
       throw PhoneNumberException(
         code: Code.INVALID_DIAL_CODE,
-        description: 'not found',
+        description: 'not found for ${internationalPrefixResult.phoneNumber}',
       );
     }
 
@@ -56,7 +56,7 @@ class PhoneNumberParser {
   /// the [PhoneNumber.nsn] is the national number valid internationally
   /// with the leading digits for the region and so on
   static ParsingResult parseWithDialCode(
-      String nationalNumber, String dialCode) {
+      String dialCode, String nationalNumber) {
     // multiple countries share the same dial code
     final countryResult = Extractor.extractCountry(nationalNumber, dialCode);
     if (countryResult.extracted == null) {
@@ -72,7 +72,7 @@ class PhoneNumberParser {
     );
   }
 
-  static ParsingResult parseWithIsoCode(String nationalNumber, String isoCode) {
+  static ParsingResult parseWithIsoCode(String isoCode, String nationalNumber) {
     final country = Country.fromIsoCode(isoCode);
     final nationalNumberResult =
         Extractor.extractNationalPrefix(nationalNumber, country);

@@ -2,12 +2,21 @@ import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:test/test.dart';
 
 void main() {
-  // simple with national prefix
-  final franceInternational = '+33 93 987 6218';
-  final franceInternationalWithPrefix = '00 33 93 987 6218';
-  final franceInternationalExpected = franceInternational.replaceAll(' ', '');
-  final franceNational = '093 987 6218';
-  final franceNsnExpected = '939876218';
+  // fixed line simple with national prefix
+  final franceFixInternational = '+33 1 40 71 87 28';
+  final franceFixInternationalWithPrefix = '00 33 1 40 71 87 28';
+  final franceFixInternationalExpected =
+      franceFixInternational.replaceAll(' ', '');
+  final franceFixNational = '0140718728';
+  final franceFixNsnExpected = '140718728';
+
+  // mobile
+  final franceMobileInternational = '+33 655 5705 76';
+  final franceMobileInternationalWithPrefix = '00 33 655 5705 76';
+  final franceMobileInternationalExpected =
+      franceFixInternational.replaceAll(' ', '');
+  final franceMobileNational = '0655570576';
+  final franceMobileNsnExpected = '655 5705 76';
 
   // simple international prefix
   // not main country
@@ -35,10 +44,11 @@ void main() {
     group('fromIsoCode', () {
       final fromIsoCode = PhoneNumber.fromIsoCode;
       test('should create with national prefix', () {
-        final francePhone = fromIsoCode('fr', franceNational);
+        final francePhone = fromIsoCode('fr', franceFixNational);
         expect(francePhone.isoCode, equals('FR'));
-        expect(francePhone.nsn, equals(franceNsnExpected));
-        expect(francePhone.international, equals(franceInternationalExpected));
+        expect(francePhone.nsn, equals(franceFixNsnExpected));
+        expect(
+            francePhone.international, equals(franceFixInternationalExpected));
       });
 
       test('should create when not main country for iso code', () {
@@ -91,10 +101,11 @@ void main() {
     group('fromDialCode', () {
       final fromDialCode = PhoneNumber.fromDialCode;
       test('should create with national prefix', () {
-        final francePhone = fromDialCode('33', franceNational);
+        final francePhone = fromDialCode('33', franceFixNational);
         expect(francePhone.isoCode, equals('FR'));
-        expect(francePhone.nsn, equals(franceNsnExpected));
-        expect(francePhone.international, equals(franceInternationalExpected));
+        expect(francePhone.nsn, equals(franceFixNsnExpected));
+        expect(
+            francePhone.international, equals(franceFixInternationalExpected));
       });
 
       test('should create when not main country for iso code', () {
@@ -148,14 +159,16 @@ void main() {
     group('fromRaw', () {
       final fromRaw = PhoneNumber.fromRaw;
       test('should create with international prefix', () {
-        final francePhone = fromRaw(franceInternational);
-        final francePhone2 = fromRaw(franceInternationalWithPrefix);
+        final francePhone = fromRaw(franceFixInternational);
+        final francePhone2 = fromRaw(franceFixInternationalWithPrefix);
         expect(francePhone.isoCode, equals('FR'));
-        expect(francePhone.nsn, equals(franceNsnExpected));
-        expect(francePhone.international, equals(franceInternationalExpected));
+        expect(francePhone.nsn, equals(franceFixNsnExpected));
+        expect(
+            francePhone.international, equals(franceFixInternationalExpected));
         expect(francePhone2.isoCode, equals('FR'));
-        expect(francePhone2.nsn, equals(franceNsnExpected));
-        expect(francePhone2.international, equals(franceInternationalExpected));
+        expect(francePhone2.nsn, equals(franceFixNsnExpected));
+        expect(
+            francePhone2.international, equals(franceFixInternationalExpected));
       });
 
       test('should create when not main country for iso code', () {
@@ -187,25 +200,31 @@ void main() {
 
     group('validity', () {
       test('should give the correct validity', () {
-        final valid = PhoneNumber.fromRaw('+33 93 987 6218');
+        final valid = PhoneNumber.fromRaw(franceFixNational);
         final invalid = PhoneNumber.fromRaw('+33 93 987');
 
         expect(valid.valid, equals(true));
         expect(invalid.valid, equals(false));
       });
+
+      test('should validate for type', () {
+        final frPhone = PhoneNumber.fromRaw(franceFixNational);
+        expect(frPhone.validate(PhoneNumberType.fixedLine), equals(true));
+        expect(frPhone.validate(PhoneNumberType.mobile), equals(false));
+      });
     });
 
     test('copyWithIsoCode', () {
-      final frPhone = PhoneNumber.fromRaw('+33 93 987 6218');
+      final frPhone = PhoneNumber.fromRaw(franceFixInternational);
       expect(frPhone.valid, equals(true));
       expect(frPhone.dialCode, equals('33'));
       expect(frPhone.isoCode, equals('FR'));
-      expect(frPhone.international, equals('+33939876218'));
+      expect(frPhone.international, equals(franceFixInternational));
       final esPhone = frPhone.copyWithIsoCode('ES');
       expect(esPhone.valid, equals(true));
       expect(esPhone.dialCode, equals('34'));
       expect(esPhone.isoCode, equals('ES'));
-      expect(esPhone.international, equals('+34939876218'));
+      expect(esPhone.international, equals('+34140718728'));
 
       // the transformation of the national number method should be unapplied
       final argentinaNationalLocal = '0343155551212';

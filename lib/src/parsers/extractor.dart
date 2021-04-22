@@ -42,7 +42,7 @@ class Extractor {
     }
     return ExtractResult(
       phoneNumber: phoneNumber.substring(dialCode.length),
-      extracted: dialCode,
+      extracted: dialCode.isNotEmpty ? dialCode : null,
     );
   }
 
@@ -62,7 +62,7 @@ class Extractor {
       return ExtractResult(
         // we remove the plus as to stay consistent with other results
         phoneNumber: phoneNumber.substring(1),
-        extracted: null,
+        extracted: '+',
       );
     }
 
@@ -113,31 +113,42 @@ class Extractor {
     String nationalNumber,
     Country country,
   ) {
-    final nationalPrefix = country.phoneDescription.nationalPrefixForParsing ??
-        country.phoneDescription.nationalPrefix;
+    final nationalPrefix = country.phoneDescription.nationalPrefix;
+    final nationalPrefixForParsing =
+        country.phoneDescription.nationalPrefixForParsing;
+    final transformRule = country.phoneDescription.nationalPrefixTransformRule;
 
-    nationalNumber =
-        _transformLocalNsnToInternationalNsn(nationalNumber, country);
+    var transformed = nationalNumber;
+
+    if (nationalPrefixForParsing != null) {
+      transformed = _transformLocalNsnToInternationalNsn(
+        nationalNumber,
+        nationalPrefixForParsing,
+        transformRule,
+      );
+    } else if (nationalPrefix != null) {
+      transformed = _removeNationalPrefix(
+        nationalNumber,
+        nationalPrefix,
+      );
+    }
 
     return ExtractResult(
-      phoneNumber: nationalNumber,
+      phoneNumber: transformed,
       // nationalPrefix will be null if it was not removed, even though
       // we have the country and could add it, to stay coherent with the
       // other methods in this class
-      extracted: nationalPrefix,
+      extracted: transformed != nationalNumber
+          ? country.phoneDescription.nationalPrefix
+          : null,
     );
   }
 
   static String _transformLocalNsnToInternationalNsn(
     String nationalNumber,
-    Country country,
+    String nationalPrefixForParsing,
+    String? transformRule,
   ) {
-    final nationalPrefixForParsing =
-        country.phoneDescription.nationalPrefixForParsing;
-    // just remove national prefix if no national prefix for parsing
-    if (nationalPrefixForParsing == null) {
-      return _removeNationalPrefix(nationalNumber, country);
-    }
     // match as prefix because we are only replacing the group and keeping
     // the end intact
     final match =
@@ -145,7 +156,6 @@ class Extractor {
     if (match == null) {
       return nationalNumber;
     }
-    final transformRule = country.phoneDescription.nationalPrefixTransformRule;
     // if there is no group caught there is no need to transform
     // it is possible for a group to be null despite the group count being 1
     if (transformRule == null ||
@@ -169,13 +179,11 @@ class Extractor {
     return transformed + nationalNumber.substring(match.end);
   }
 
-  static String _removeNationalPrefix(String nationalNumber, Country country) {
-    final nationalPrefix = country.phoneDescription.nationalPrefix;
-    if (nationalPrefix != null) {
-      final match = RegExp(nationalPrefix).matchAsPrefix(nationalNumber);
-      if (match != null) {
-        return nationalNumber.substring(match.group(0)!.length);
-      }
+  static String _removeNationalPrefix(
+      String nationalNumber, String nationalPrefix) {
+    final match = RegExp(nationalPrefix).matchAsPrefix(nationalNumber);
+    if (match != null) {
+      return nationalNumber.substring(match.group(0)!.length);
     }
     return nationalNumber;
   }
@@ -194,10 +202,10 @@ class Extractor {
 
     if (potentialCountries.length == 1) {
       return ExtractResult(
-        phoneNumber: _transformLocalNsnToInternationalNsn(
+        phoneNumber: extractNationalPrefix(
           nationalNumber,
           potentialCountries[0],
-        ),
+        ).phoneNumber,
         extracted: potentialCountries[0],
       );
     }
@@ -212,10 +220,10 @@ class Extractor {
           nationalNumber.startsWith(RegExp(nationalPrefix))) {
         parsedNationalNumber = nationalNumber.substring(nationalPrefix.length);
       }
-      final transformedNationalNumber = _transformLocalNsnToInternationalNsn(
+      final transformedNationalNumber = extractNationalPrefix(
         nationalNumber,
         country,
-      );
+      ).phoneNumber;
 
       if (leadingDigits != null &&
           parsedNationalNumber.startsWith(leadingDigits)) {
