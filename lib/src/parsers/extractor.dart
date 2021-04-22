@@ -90,8 +90,8 @@ class Extractor {
     String phoneNumber,
     Country country,
   ) {
-    final match =
-        RegExp(country.phone.internationalPrefix).matchAsPrefix(phoneNumber);
+    final match = RegExp(country.phoneDescription.internationalPrefix)
+        .matchAsPrefix(phoneNumber);
     if (match != null) {
       return ExtractResult(
         phoneNumber: phoneNumber.substring(match.end + 1),
@@ -113,8 +113,8 @@ class Extractor {
     String nationalNumber,
     Country country,
   ) {
-    final nationalPrefix =
-        country.phone.nationalPrefixForParsing ?? country.phone.nationalPrefix;
+    final nationalPrefix = country.phoneDescription.nationalPrefixForParsing ??
+        country.phoneDescription.nationalPrefix;
 
     nationalNumber =
         _transformLocalNsnToInternationalNsn(nationalNumber, country);
@@ -132,7 +132,8 @@ class Extractor {
     String nationalNumber,
     Country country,
   ) {
-    final nationalPrefixForParsing = country.phone.nationalPrefixForParsing;
+    final nationalPrefixForParsing =
+        country.phoneDescription.nationalPrefixForParsing;
     // just remove national prefix if no national prefix for parsing
     if (nationalPrefixForParsing == null) {
       return _removeNationalPrefix(nationalNumber, country);
@@ -144,7 +145,7 @@ class Extractor {
     if (match == null) {
       return nationalNumber;
     }
-    final transformRule = country.phone.nationalPrefixTransformRule;
+    final transformRule = country.phoneDescription.nationalPrefixTransformRule;
     // if there is no group caught there is no need to transform
     // it is possible for a group to be null despite the group count being 1
     if (transformRule == null ||
@@ -169,7 +170,7 @@ class Extractor {
   }
 
   static String _removeNationalPrefix(String nationalNumber, Country country) {
-    final nationalPrefix = country.phone.nationalPrefix;
+    final nationalPrefix = country.phoneDescription.nationalPrefix;
     if (nationalPrefix != null) {
       final match = RegExp(nationalPrefix).matchAsPrefix(nationalNumber);
       if (match != null) {
@@ -203,8 +204,8 @@ class Extractor {
 
     for (var country in potentialCountries) {
       // 3. check leading digits
-      final nationalPrefix = country.phone.nationalPrefix;
-      final leadingDigits = country.phone.leadingDigits;
+      final nationalPrefix = country.phoneDescription.nationalPrefix;
+      final leadingDigits = country.phoneDescription.leadingDigits;
       var parsedNationalNumber = nationalNumber;
 
       if (nationalPrefix != null &&
@@ -245,7 +246,7 @@ class Extractor {
   /// [nationalPhoneNumber] a parsed national phone number without national prefix
   /// that has already been transformed
   static PhoneNumberType? getType(String nationalPhoneNumber, Country country) {
-    final validation = country.phone.validation;
+    final validation = country.phoneDescription.validation;
     final general = validation.general;
     final fixedLine = validation.fixedLine;
     final mobile = validation.mobile;

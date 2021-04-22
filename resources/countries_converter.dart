@@ -28,7 +28,7 @@ Map<String, List<Country>> toDialCodeMap(List<Country> countries) {
       map[element.dialCode] = [];
     }
     // we insert the main country at the start of the array so it's easy to find
-    if (element.phone.isMainCountryForDialCode == true) {
+    if (element.phoneDescription.isMainCountryForDialCode == true) {
       map[element.dialCode]!.insert(0, element);
     } else {
       map[element.dialCode]!.add(element);

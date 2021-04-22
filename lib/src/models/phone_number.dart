@@ -29,7 +29,7 @@ class PhoneNumber {
   String get international => '+' + dialCode + nsn;
 
   PhoneNumber._(this.country, this.nsn, this._national) {
-    valid = Validator.isValidNationalNumber(nsn, country.phone);
+    valid = Validator.isValidNationalNumber(nsn, country.phoneDescription);
   }
 
   /// Creates a [PhoneNumber] from a [rawPhoneNumber],

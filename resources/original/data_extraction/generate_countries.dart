@@ -23,7 +23,7 @@ List<Country> generateCountries(
           name: names[entry.key]!,
           flag: _generateFlagEmojiUnicode(entry.key),
           isoCode: entry.key,
-          phone: entry.value,
+          phoneDescription: entry.value,
         ),
       )
       .toList();

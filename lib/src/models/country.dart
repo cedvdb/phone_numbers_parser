@@ -13,10 +13,10 @@ class Country {
   final String isoCode;
 
   /// description of what the phone number should look like
-  final CountryPhoneDescription phone;
+  final CountryPhoneDescription phoneDescription;
 
   /// country dialing code to call them internationally
-  String get dialCode => phone.dialCode;
+  String get dialCode => phoneDescription.dialCode;
 
   /// returns "+ [dialCode]"
   String getDialCodeForDisplay() {
@@ -27,7 +27,7 @@ class Country {
     required this.name,
     required this.flag,
     required this.isoCode,
-    required this.phone,
+    required this.phoneDescription,
   });
 
   static Country fromIsoCode(String isoCode) =>
@@ -38,7 +38,7 @@ class Country {
       'name': name,
       'flag': flag,
       'isoCode': isoCode,
-      'phone': phone.toMap(),
+      'phone': phoneDescription.toMap(),
     };
   }
 
@@ -47,12 +47,12 @@ class Country {
       name: map['name'],
       flag: map['flag'],
       isoCode: map['isoCode'],
-      phone: CountryPhoneDescription.fromMap(map['phone']),
+      phoneDescription: CountryPhoneDescription.fromMap(map['phone']),
     );
   }
 
   @override
   String toString() {
-    return 'Country(name: $name, flag: $flag, isoCode: $isoCode, phone: $phone)';
+    return 'Country(name: $name, flag: $flag, isoCode: $isoCode, phone: $phoneDescription)';
   }
 }

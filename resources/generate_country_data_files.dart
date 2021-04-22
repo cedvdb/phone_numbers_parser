@@ -72,12 +72,12 @@ String countryString(Country country) {
   name: ${enc(country.name)}, 
   flag: ${enc(country.flag)}, 
   isoCode: ${enc(country.isoCode)}, 
-  phone: ${phoneDescriptionString(country.phone)}, 
+  phoneDescription: ${phoneDescriptionString(country.phoneDescription)}, 
   )''';
 }
 
 String phoneDescriptionString(CountryPhoneDescription desc) {
-  return '''const CountryPhoneDescription(
+  return '''CountryPhoneDescription(
       dialCode: ${enc(desc.dialCode)}, 
       leadingDigits: ${enc(desc.leadingDigits)},
       internationalPrefix: ${enc(desc.internationalPrefix)}, 
@@ -90,7 +90,7 @@ String phoneDescriptionString(CountryPhoneDescription desc) {
 }
 
 String phoneValidationString(PhoneValidation v) {
-  return '''const PhoneValidation(
+  return '''PhoneValidation(
         general: ${phoneValidationRulesString(v.general)}, 
         mobile: ${phoneValidationRulesString(v.mobile)}, 
         fixedLine: ${phoneValidationRulesString(v.fixedLine)}, 
@@ -98,7 +98,7 @@ String phoneValidationString(PhoneValidation v) {
 }
 
 String phoneValidationRulesString(PhoneValidationRules r) {
-  return '''const PhoneValidationRules(lengths: ${enc(r.lengths)}, pattern: ${enc(r.pattern)},)''';
+  return '''PhoneValidationRules(lengths: ${enc(r.lengths)}, pattern: ${enc(r.pattern)},)''';
 }
 
 String enc(v) {
