@@ -47,8 +47,8 @@ class PhoneNumberParser {
     }
 
     return parseWithDialCode(
-      dialCodeResult.phoneNumber,
       dialCodeResult.extracted!,
+      dialCodeResult.phoneNumber,
     );
   }
 
@@ -56,7 +56,9 @@ class PhoneNumberParser {
   /// the [PhoneNumber.nsn] is the national number valid internationally
   /// with the leading digits for the region and so on
   static ParsingResult parseWithDialCode(
-      String dialCode, String nationalNumber) {
+    String dialCode,
+    String nationalNumber,
+  ) {
     // multiple countries share the same dial code
     final countryResult = Extractor.extractCountry(nationalNumber, dialCode);
     if (countryResult.extracted == null) {

@@ -109,7 +109,7 @@ class PhoneNumber {
   }
 
   PhoneNumber copyWithIsoCode(String isoCode) {
-    final result = PhoneNumberParser.parseWithIsoCode(_national, isoCode);
+    final result = PhoneNumberParser.parseWithIsoCode(isoCode, _national);
     return _parsingResultToPhoneNumber(result);
   }
 
