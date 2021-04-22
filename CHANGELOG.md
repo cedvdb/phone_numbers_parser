@@ -1,3 +1,9 @@
+## 0.1.0
+
+- fix substantial bug where validity would be true for longer numbers
+- added validity check on phone number to further check validity for a given phone number type (mobile, fixedLine)
+- added more tests
+
 ## 0.0.5
 
 - Breaking: remove getters for leading digits as it sometimes contains patterns

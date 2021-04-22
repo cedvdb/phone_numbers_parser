@@ -22,7 +22,10 @@ class PhoneNumber {
   /// The national number transformed for international use
   final String nsn;
 
-  /// Whether this phone number is valid for its country
+  /// Whether this phone number is valid for its country.
+  ///
+  /// This is quite general, if you need more precise validation use
+  /// the [validate] method instead
   late final bool valid;
 
   String get dialCode => country.dialCode;
@@ -113,7 +116,7 @@ class PhoneNumber {
     return _parsingResultToPhoneNumber(result);
   }
 
-  /// to validate the phone number against a specific phone number (mobile, fixedLine)
+  /// validates against a specific [PhoneNumberType] (mobile, fixedLine)
   bool validate(PhoneNumberType type) {
     return Validator.isValidForType(type, nsn, country.phoneDescription);
   }

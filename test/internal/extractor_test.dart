@@ -1,7 +1,7 @@
 import 'package:phone_numbers_parser/src/parsers/extractor.dart';
 import 'package:test/test.dart';
 
-import 'test_data.dart';
+import '../test_data.dart';
 
 void main() {
   group('Extractor', () {
