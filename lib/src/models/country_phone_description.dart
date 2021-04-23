@@ -88,11 +88,11 @@ class PhoneValidation {
 }
 
 class PhoneValidationRules {
-  final List<int>? lengths;
+  final List<int> lengths;
   final String pattern;
 
   const PhoneValidationRules({
-    this.lengths,
+    required this.lengths,
     required this.pattern,
   });
 

@@ -83,10 +83,10 @@ PhoneValidationRules _extractPhoneValidationRules(XmlElement element) {
   final lengthsUnparsed =
       element.getElement('possibleLengths')?.getAttribute('national');
   final lengths =
-      lengthsUnparsed != null ? _parsePossibleLengths(lengthsUnparsed) : null;
+      lengthsUnparsed != null ? _parsePossibleLengths(lengthsUnparsed) : [];
   return PhoneValidationRules(
     pattern: pattern,
-    lengths: lengths,
+    lengths: lengths as List<int>,
   );
 }
 

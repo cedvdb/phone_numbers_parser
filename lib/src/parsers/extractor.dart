@@ -268,11 +268,11 @@ class Extractor {
     if (matchGeneralDesc == null) {
       return false;
     }
-    if (mobile.lengths!.contains(length) &&
+    if (mobile.lengths.contains(length) &&
         RegExp(mobile.pattern).matchEntirely(nationalPhoneNumber) != null) {
       return true;
     }
-    if (fixedLine.lengths!.contains(length) &&
+    if (fixedLine.lengths.contains(length) &&
         RegExp(fixedLine.pattern).matchEntirely(nationalPhoneNumber) != null) {
       return true;
     }

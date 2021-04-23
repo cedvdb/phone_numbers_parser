@@ -34,11 +34,11 @@ final allInternationalEqual = international == frPhone.international &&
 print(allInternationalEqual); // true
 
 // extracting info
-print(frPhone.valid); // true
 print(frPhone.dialCode); // 33
 print(frPhone.isoCode); // fr
 print(frPhone.validate(PhoneNumberType.fixedLine)); // false
 print(frPhone.validate(PhoneNumberType.mobile)); // true
+print(frPhone.validate(null)); // true
 
 // changing the country
 final esPhone = frPhone.copyWithIsoCode('ES');

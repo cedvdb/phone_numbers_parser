@@ -29,6 +29,8 @@ void main() {
       expect(validate(mobile, '4754545454', desc), equals(false));
       expect(validate(mobile, '47545454', desc), equals(false));
       expect(validate(mobile, '775454545', desc), equals(false));
+      expect(validate(null, '26334343', desc), equals(true));
+      expect(validate(null, '26334343999', desc), equals(false));
     });
   });
 }

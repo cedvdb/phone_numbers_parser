@@ -7,7 +7,7 @@ import 'country.dart';
 
 /// Represents a phone number.
 ///
-/// To know if a phone number is valid you can check the [valid] property.
+/// To know if a phone number is valid you can call the [validate] method.
 ///
 /// The [international] property gives you a format that can be used to call
 /// a phone number.
@@ -26,6 +26,7 @@ class PhoneNumber {
   ///
   /// This is quite general, if you need more precise validation use
   /// the [validate] method instead
+  @Deprecated('use phoneNumber.validate instead')
   late final bool valid;
 
   String get dialCode => country.dialCode;
@@ -33,6 +34,7 @@ class PhoneNumber {
   String get international => '+' + dialCode + nsn;
 
   PhoneNumber._(this.country, this.nsn, this._national) {
+    // ignore: deprecated_member_use_from_same_package
     valid = Validator.isValidNationalNumber(nsn, country.phoneDescription);
   }
 
@@ -117,12 +119,16 @@ class PhoneNumber {
   }
 
   /// validates against a specific [PhoneNumberType] (mobile, fixedLine)
-  bool validate(PhoneNumberType type) {
+  ///
+  /// [PhoneNumberType] (mobile, fixedLine), if null will validate largely
+  /// against all possible numbers, which could be also tollFree, premiumRates,
+  /// etc.
+  bool validate(PhoneNumberType? type) {
     return Validator.isValidForType(type, nsn, country.phoneDescription);
   }
 
   @override
   String toString() {
-    return 'PhoneNumber(isoCode: $isoCode, dialCode: $dialCode, international: $international, nsn: $nsn, valid: $valid)';
+    return 'PhoneNumber(isoCode: $isoCode, dialCode: $dialCode, international: $international, nsn: $nsn)';
   }
 }

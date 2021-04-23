@@ -18,7 +18,6 @@ void main() {
         expect(francePhone.isoCode, equals(isoCode));
         expect(francePhone.nsn, equals(nsnResult));
         expect(francePhone.international, equals(internationalResult));
-        expect(francePhone.valid, equals(true));
       });
 
       test('should not throw error for empty input when country is valid', () {
@@ -39,7 +38,6 @@ void main() {
         expect(francePhone.isoCode, equals(isoCode));
         expect(francePhone.nsn, equals(nsnResult));
         expect(francePhone.international, equals(internationalResult));
-        expect(francePhone.valid, equals(true));
       });
 
       test('should not throw error for empty input when country is valid', () {
@@ -60,7 +58,6 @@ void main() {
         expect(francePhone.isoCode, equals(isoCode));
         expect(francePhone.nsn, equals(nsnResult));
         expect(francePhone.international, equals(internationalResult));
-        expect(francePhone.valid, equals(true));
       });
 
       test('should throw error for empty input', () {
@@ -70,20 +67,13 @@ void main() {
     });
 
     group('validity', () {
-      test('should give the correct validity', () {
-        final valid = PhoneNumber.fromRaw('+33 655 5705 76');
-        final invalid = PhoneNumber.fromRaw('+33 655 5705');
-        final invalid2 = PhoneNumber.fromRaw('+33 655 5705 76 99');
-        expect(valid.valid, equals(true));
-        expect(invalid.valid, equals(false));
-        expect(invalid2.valid, equals(false));
-      });
-
       test('should validate for type', () {
         final frMobile = PhoneNumber.fromRaw('+33 655 5705 76');
+        expect(frMobile.validate(null), equals(true));
         expect(frMobile.validate(PhoneNumberType.fixedLine), equals(false));
         expect(frMobile.validate(PhoneNumberType.mobile), equals(true));
         final frFix = PhoneNumber.fromRaw('+33 1 40 71 87 28');
+        expect(frFix.validate(null), equals(true));
         expect(frFix.validate(PhoneNumberType.fixedLine), equals(true));
         expect(frFix.validate(PhoneNumberType.mobile), equals(false));
       });
@@ -94,7 +84,6 @@ void main() {
       expect(frPhone.isoCode, equals('FR'));
       expect(frPhone.international, equals('+33655570576'));
       final esPhone = frPhone.copyWithIsoCode('ES');
-      expect(esPhone.valid, equals(true));
       expect(esPhone.dialCode, equals('34'));
       expect(esPhone.isoCode, equals('ES'));
       expect(esPhone.international, equals('+34655570576'));
@@ -125,13 +114,11 @@ void main() {
           international == frPhone2.international &&
           international == frPhone3.international;
       expect(allInternationalEqual, equals(true));
-      expect(frPhone.valid, equals(true));
       expect(frPhone.dialCode, equals('33'));
       expect(frPhone.isoCode, equals('FR'));
       expect(frPhone.validate(PhoneNumberType.fixedLine), equals(false));
       expect(frPhone.validate(PhoneNumberType.mobile), equals(true));
       final esPhone = frPhone.copyWithIsoCode('ES');
-      expect(esPhone.valid, equals(true));
       expect(esPhone.dialCode, equals('34'));
       expect(esPhone.isoCode, equals('ES'));
       expect(esPhone.international, equals('+34655570576'));

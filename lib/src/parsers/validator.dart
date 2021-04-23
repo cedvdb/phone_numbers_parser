@@ -21,7 +21,7 @@ class Validator {
   }
 
   static bool isValidForType(
-    PhoneNumberType type,
+    PhoneNumberType? type,
     String nationalNumber,
     CountryPhoneDescription desc,
   ) {
@@ -33,11 +33,13 @@ class Validator {
       case PhoneNumberType.fixedLine:
         rules = desc.validation.fixedLine;
         break;
+      default:
+        rules = desc.validation.general;
     }
-    final isRightLength = rules.lengths?.contains(nationalNumber.length);
+    final isRightLength = rules.lengths.contains(nationalNumber.length);
     // if we don't have length information we will do pattern matching
     // or if the length is correct we do pattern matching too
-    if (isRightLength != null && !isRightLength) {
+    if (rules.lengths.isNotEmpty && !isRightLength) {
       return false;
     }
     return RegExp(rules.pattern).matchEntirely(nationalNumber) != null;
