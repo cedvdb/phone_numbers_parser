@@ -1,4 +1,4 @@
-# Phone Number Parser
+# Phone Numbers Parser
 
 Dart library for parsing phone numbers. Inspired by Google's libphonenumber and PhoneNumberKit for ios.
 
