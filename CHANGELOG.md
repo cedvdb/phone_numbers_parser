@@ -1,6 +1,6 @@
 ## 0.1.3
 * deprecate valid property on phone number
-+ make phone number type in validate method nulable to validate against general type
+* make phone number type in validate method nullable to validate against general type
 
 ## 0.1.2
 * rename example so it shows in pub.dev
