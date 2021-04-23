@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:phone_numbers_parser/src/constants.dart';
 import 'package:phone_numbers_parser/src/generated/countries_by_dial_code_map.dart';
 import 'package:phone_numbers_parser/src/models/country.dart';
-import 'package:phone_numbers_parser/src/models/country_phone_description.dart';
 import '../regexp_fix.dart';
 import 'country_parser.dart';
 

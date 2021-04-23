@@ -20,24 +20,6 @@ The advantage of this lib instead of libphonenumber is that it instantly support
 ## Usage
 
 ```dart
-// creation
-PhoneNumber.fromRaw('+33 93 987 6218');
-PhoneNumber.fromIsoCode('fr','93 987 6218');
-PhoneNumber.fromDialCode('33', '93 987 6218')
-// extract info
-final frPhone = PhoneNumber.fromRaw('+33 93 987 6218');
-print(frPhone.dialCode); // 33
-print(frPhone.isoCode); // FR
-print(frPhone.international); // +33939876218
-print(frPhone.valid); // true
-print(frPhone.validate(PhoneNumberType.mobile)); // true
-print(frPhone.validate(PhoneNumberType.fixedLine)); // false
-
-final esPhone = frPhone.copyWithIsoCode('ES');
-print(esPhone.valid); // true
-print(esPhone.dialCode); // 34
-print(esPhone.isoCode); // ES
-print(esPhone.international); // +34939876218
 
 // creation
 final frPhone = PhoneNumber.fromRaw('+33 655 5705 76');

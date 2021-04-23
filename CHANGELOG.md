@@ -1,3 +1,6 @@
+## 0.1.1
+* Add example
+
 ## 0.1.0
 
 - fix substantial bug where validity would be true for longer numbers
