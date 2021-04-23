@@ -1,5 +1,5 @@
 ## 0.1.2
-* Add example readme
+* rename example so it shows in pub.dev
 
 ## 0.1.1
 * Add example
