@@ -1,3 +1,6 @@
+## 0.1.2
+* Add example readme
+
 ## 0.1.1
 * Add example
 
