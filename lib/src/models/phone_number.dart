@@ -15,8 +15,10 @@ class PhoneNumber {
   /// The country this phone number originates from
   final Country country;
 
-  /// The national number given as input, marked as private atm
-  /// because it could lead to confusion
+  /// The national number given as input,
+  /// it may or may not equal nsn depending on w.hether or
+  /// not transformation was applied
+  /// marked as private atm because it could lead to confusion.
   final String _national;
 
   /// The national number transformed for international use
@@ -98,8 +100,8 @@ class PhoneNumber {
     return _parsingResultToPhoneNumber(result);
   }
 
-  /// This method does not transform the national number and should
-  /// be used mainly by the library
+  /// This method does not transform the national, should be used mainly
+  /// by the library.
   static PhoneNumber fromCountry(
       Country country, String nsn, String nationalNumber) {
     return PhoneNumber._(country, nsn, nationalNumber);

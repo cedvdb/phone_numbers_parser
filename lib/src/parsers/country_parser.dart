@@ -10,7 +10,10 @@ class CountryParser {
     if (found != null) {
       return found;
     }
-    throw PhoneNumberException(code: Code.INVALID_ISO_CODE);
+    throw PhoneNumberException(
+      code: Code.INVALID_ISO_CODE,
+      description: 'isoCode "$isoCode" not found',
+    );
   }
 
   static Country fromDialCode(String dialCode) {

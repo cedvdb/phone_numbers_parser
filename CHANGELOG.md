@@ -1,3 +1,6 @@
+## 0.1.4
+* upgrade dependencies
+
 ## 0.1.3
 * deprecate valid property on phone number
 * make phone number type in validate method nullable to validate against general type
