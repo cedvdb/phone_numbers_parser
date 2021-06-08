@@ -1,4 +1,4 @@
-import 'package:phone_numbers_parser/src/models/country.dart';
+import 'package:dart_countries/dart_countries.dart';
 
 import '../exceptions.dart';
 import 'extractor.dart';

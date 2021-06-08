@@ -1,3 +1,6 @@
+## 0.2.0
+* extracted country data files to another library dart_countries as it can be used in other scenarios
+
 ## 0.1.4
 * upgrade dependencies
 

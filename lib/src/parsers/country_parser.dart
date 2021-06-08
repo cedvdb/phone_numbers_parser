@@ -1,8 +1,5 @@
-import 'package:phone_numbers_parser/src/generated/countries_by_dial_code_map.dart';
-import 'package:phone_numbers_parser/src/generated/countries_by_iso_code_map.dart';
-import 'package:phone_numbers_parser/src/models/country.dart';
-
 import '../exceptions.dart';
+import 'package:dart_countries/dart_countries.dart';
 
 class CountryParser {
   static Country fromIsoCode(String isoCode) {

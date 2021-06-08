@@ -1,8 +1,8 @@
 import 'dart:math';
 
+import 'package:dart_countries/dart_countries.dart'
+    show countriesByDialCode, Country;
 import 'package:phone_numbers_parser/src/constants.dart';
-import 'package:phone_numbers_parser/src/generated/countries_by_dial_code_map.dart';
-import 'package:phone_numbers_parser/src/models/country.dart';
 import '../regexp_fix.dart';
 import 'country_parser.dart';
 

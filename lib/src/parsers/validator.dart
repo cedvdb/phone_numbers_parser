@@ -1,6 +1,7 @@
+import 'package:dart_countries/dart_countries.dart'
+    show PhoneNumberType, PhoneDescription, PhoneValidationRules;
 import 'package:phone_numbers_parser/src/constants.dart';
 
-import '../models/country_phone_description.dart';
 import '../regexp_fix.dart';
 
 /// responsible of validating phone numbers
@@ -11,7 +12,7 @@ class Validator {
   /// international prefix, or national prefix
   static bool isValidNationalNumber(
     String nationalNumber,
-    CountryPhoneDescription desc,
+    PhoneDescription desc,
   ) {
     if (nationalNumber.length < Constants.MIN_LENGTH_FOR_NSN) {
       return false;
@@ -23,7 +24,7 @@ class Validator {
   static bool isValidForType(
     PhoneNumberType? type,
     String nationalNumber,
-    CountryPhoneDescription desc,
+    PhoneDescription desc,
   ) {
     PhoneValidationRules rules;
     switch (type) {
