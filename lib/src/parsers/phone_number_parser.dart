@@ -75,7 +75,13 @@ class PhoneNumberParser {
   }
 
   static ParsingResult parseWithIsoCode(String isoCode, String nationalNumber) {
-    final country = Country.fromIsoCode(isoCode);
+    Country country;
+    try {
+      country = Country.fromIsoCode(isoCode);
+    } catch (e) {
+      throw PhoneNumberException(
+          code: Code.INVALID_ISO_CODE, description: 'invalid isocode $isoCode');
+    }
     final nationalNumberResult =
         Extractor.extractNationalPrefix(nationalNumber, country);
     return ParsingResult(
