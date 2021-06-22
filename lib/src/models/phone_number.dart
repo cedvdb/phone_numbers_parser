@@ -24,21 +24,11 @@ class PhoneNumber {
   /// The national number transformed for international use
   final String nsn;
 
-  /// Whether this phone number is valid for its country.
-  ///
-  /// This is quite general, if you need more precise validation use
-  /// the [validate] method instead
-  @Deprecated('use phoneNumber.validate instead')
-  late final bool valid;
-
   String get dialCode => country.dialCode;
   String get isoCode => country.isoCode;
   String get international => '+' + dialCode + nsn;
 
-  PhoneNumber._(this.country, this.nsn, this._national) {
-    // ignore: deprecated_member_use_from_same_package
-    valid = Validator.isValidNationalNumber(nsn, country.phoneDescription);
-  }
+  PhoneNumber._(this.country, this.nsn, this._national);
 
   /// Creates a [PhoneNumber] from a [rawPhoneNumber],
   ///
