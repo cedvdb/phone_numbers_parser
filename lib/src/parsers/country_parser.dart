@@ -14,10 +14,10 @@ class CountryParser {
   }
 
   static Country fromDialCode(String dialCode) {
-    return listFromDialCode(dialCode)[0];
+    return listIsoFromDialCode(dialCode)[0];
   }
 
-  static List<Country> listFromDialCode(String dialCode) {
+  static List<Country> listIsoFromDialCode(String dialCode) {
     if (dialCode.startsWith('+')) {
       dialCode = dialCode.substring(1);
     }

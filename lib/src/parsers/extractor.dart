@@ -190,11 +190,11 @@ class Extractor {
   /// national number transformed for international use
   ///
   /// Expects a normalized [nationalNumber] with or without prefix
-  static ExtractResult<Country> extractCountry(
+  static ExtractResult<Country> extractIsoCode(
     String nationalNumber,
     String dialCode,
   ) {
-    final potentialCountries = CountryParser.listFromDialCode(dialCode);
+    final potentialCountries = CountryParser.listIsoFromDialCode(dialCode);
 
     if (potentialCountries.length == 1) {
       return ExtractResult(

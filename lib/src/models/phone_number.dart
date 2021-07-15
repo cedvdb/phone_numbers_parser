@@ -1,5 +1,6 @@
 import 'package:dart_countries/dart_countries.dart'
     show Country, PhoneNumberType;
+import 'package:dart_countries/dart_countries.dart';
 import 'package:phone_numbers_parser/src/parsers/phone_number_util.dart';
 import 'package:phone_numbers_parser/src/parsers/validator.dart';
 
@@ -12,9 +13,6 @@ import '../parsers/phone_number_parser.dart';
 /// The [international] property gives you a format that can be used to call
 /// a phone number.
 class PhoneNumber {
-  /// The country this phone number originates from
-  final Country country;
-
   /// The national number given as input,
   /// it may or may not equal nsn depending on w.hether or
   /// not transformation was applied
@@ -24,11 +22,11 @@ class PhoneNumber {
   /// The national number transformed for international use
   final String nsn;
 
-  String get dialCode => country.dialCode;
-  String get isoCode => country.isoCode;
+  final IsoCode isoCode;
+  String get dialCode => countriesDialcode[isoCode]!;
   String get international => '+' + dialCode + nsn;
 
-  PhoneNumber._(this.country, this.nsn, this._national);
+  PhoneNumber._(this.isoCode, this.nsn, this._national);
 
   /// Creates a [PhoneNumber] from a [rawPhoneNumber],
   ///
@@ -93,13 +91,13 @@ class PhoneNumber {
   /// This method does not transform the national, should be used mainly
   /// by the library.
   static PhoneNumber fromCountry(
-      Country country, String nsn, String nationalNumber) {
-    return PhoneNumber._(country, nsn, nationalNumber);
+      IsoCode country, String nsn, String nationalNumber) {
+    return PhoneNumber._(iso, nsn, nationalNumber);
   }
 
   static PhoneNumber _parsingResultToPhoneNumber(ParsingResult result) {
     return PhoneNumber._(
-      result.country,
+      result.isoCode,
       result.nsn,
       result.nationalNumberUnparsed,
     );
@@ -116,7 +114,8 @@ class PhoneNumber {
   /// against all possible numbers, which could be also tollFree, premiumRates,
   /// etc.
   bool validate(PhoneNumberType? type) {
-    return Validator.isValidForType(type, nsn, country.phoneDescription);
+    final phoneDescription = countriesPhoneDescription[isoCode]!;
+    return Validator.isValidForType(type, nsn, phoneDescription);
   }
 
   @override

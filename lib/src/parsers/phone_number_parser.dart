@@ -5,11 +5,11 @@ import 'extractor.dart';
 
 /// Parsing result to not return a PhoneNumber and avoid circular dep.
 class ParsingResult {
-  final Country country;
+  final IsoCode isoCode;
   final String nsn;
   final String nationalNumberUnparsed;
   ParsingResult({
-    required this.country,
+    required this.isoCode,
     required this.nsn,
     required this.nationalNumberUnparsed,
   });
@@ -60,7 +60,7 @@ class PhoneNumberParser {
     String nationalNumber,
   ) {
     // multiple countries share the same dial code
-    final countryResult = Extractor.extractCountry(nationalNumber, dialCode);
+    final countryResult = Extractor.extractIsoCode(nationalNumber, dialCode);
     if (countryResult.extracted == null) {
       throw PhoneNumberException(
         code: Code.INVALID_DIAL_CODE,
@@ -68,7 +68,7 @@ class PhoneNumberParser {
       );
     }
     return ParsingResult(
-      country: countryResult.extracted!,
+      isoCode: countryResult.extracted!,
       nsn: countryResult.phoneNumber,
       nationalNumberUnparsed: nationalNumber,
     );

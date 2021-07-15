@@ -44,10 +44,10 @@ void main() {
 
     test('Should extract the country from the phone number', () {
       testData.forEach((element) {
-        final result1 = Extractor.extractCountry(
+        final result1 = Extractor.extractIsoCode(
             element.nationalLocal, element.country.dialCode);
         final result2 =
-            Extractor.extractCountry(element.nsn, element.country.dialCode);
+            Extractor.extractIsoCode(element.nsn, element.country.dialCode);
         expect(result1.extracted, equals(element.country));
         expect(result2.extracted, equals(element.country));
       });
