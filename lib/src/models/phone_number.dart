@@ -91,7 +91,7 @@ class PhoneNumber {
   /// This method does not transform the national, should be used mainly
   /// by the library.
   static PhoneNumber fromCountry(
-      IsoCode country, String nsn, String nationalNumber) {
+      String country, String nsn, String nationalNumber) {
     return PhoneNumber._(iso, nsn, nationalNumber);
   }
 
