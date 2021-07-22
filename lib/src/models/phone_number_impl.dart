@@ -6,19 +6,17 @@ import 'phone_number.dart';
 class PhoneNumberImpl implements PhoneNumber {
   @override
   final String nsn;
-  @override
-  final String isoCode;
 
-  /// metadata of the region the phone originates from
   @override
   final PhoneMetadata metadata;
+  @override
+  String get isoCode => metadata.isoCode;
 
   @override
   String get dialCode => metadata.dialCode;
 
-  ///
   @override
-  String get international => dialCode + nsn;
+  String get international => '+' + dialCode + nsn;
 
-  const PhoneNumberImpl(this.isoCode, this.nsn, this.metadata);
+  const PhoneNumberImpl(this.nsn, this.metadata);
 }

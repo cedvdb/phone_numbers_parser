@@ -1,5 +1,7 @@
 import 'package:phone_numbers_parser/phone_number_parser.dart';
 import 'package:phone_numbers_parser/src/models/phone_number.dart';
+import 'package:phone_numbers_parser/src/models/phone_number_impl.dart';
+import 'package:phone_numbers_parser/src/models/phone_number_type.dart';
 import 'package:phone_numbers_parser/src/parsers/_dial_code_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_international_prefix_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_iso_code_parser.dart';
@@ -17,6 +19,14 @@ import 'package:phone_numbers_parser/src/parsers/_validator.dart';
 /// If the objective is decent accuracy with lighter file size then this parser
 /// can be used.
 abstract class LightPhoneParser {
+  /// parses a [phoneNumber] given an [isoCode]
+  ///
+  /// The [phoneNumber] can be of the sort:
+  ///  +33 478 88 88 88
+  ///  0478 88 88 88
+  ///  478 88 88 88
+  ///
+  /// throws a PhoneNumberException if the isoCode is invalid
   static PhoneNumber parseWithIsoCode(String isoCode, String phoneNumber) {
     isoCode = IsoCodeParser.normalizeIsoCode(isoCode);
     phoneNumber = TextParser.normalize(phoneNumber);
@@ -26,11 +36,13 @@ abstract class LightPhoneParser {
     phoneNumber = DialCodeParser.removeDialCode(phoneNumber, metadata);
     final nsn =
         NationalPrefixParser.removeNationalPrefix(phoneNumber, metadata);
-    return PhoneNumberImpl(isoCode, nsn);
+    return PhoneNumberImpl(nsn, metadata);
   }
 
   /// Validates a phone number using only the length information
-  static bool validate(PhoneNumber phone) {
+  ///
+  /// if a [type] is added, will validate against a specific type
+  static bool validate(PhoneNumber phone, [PhoneNumberType? type]) {
     return Validator.validateWithLength(phone.nsn, phone.metadata);
   }
 }
