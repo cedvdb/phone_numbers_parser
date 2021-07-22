@@ -16,3 +16,22 @@
 
 //   PhoneNumber(this.isoCode, String national) : _nationalInput = national;
 // }
+
+import 'package:phone_number_metadata/phone_number_metadata.dart';
+
+abstract class PhoneNumber {
+  /// National significant number in its internanational form
+  final String nsn;
+
+  /// country code
+  final String isoCode;
+
+  /// metadata of the region the phone originates from
+  final PhoneMetadata metadata;
+
+  String get dialCode => metadata.dialCode;
+
+  String get international => dialCode + nsn;
+
+  const PhoneNumber._(this.isoCode, this.nsn, this.metadata);
+}

@@ -17,13 +17,13 @@ abstract class PhoneParser {
         phoneNumber, metadata);
   }
 
-  static parseWithDialCode(String dialCode, String nationalNumber) {
+  static parseWithDialCode(String dialCode, String phoneNumber) {
     dialCode = DialCodeParser.normalizeDialCode(dialCode);
-    nationalNumber = TextParser.normalize(nationalNumber);
+    phoneNumber = TextParser.normalize(phoneNumber);
     final metadatas = MetadataFinder.getExtendedMetadatasForDialCode(dialCode);
     final metadata = DialCodeParser.selectMetadataMatchForDialCode(
-        dialCode, nationalNumber, metadatas);
-    nationalNumber = NationalPrefixParser.transformLocalNsnToInternational(
-        nationalNumber, metadata);
+        dialCode, phoneNumber, metadatas);
+    phoneNumber = NationalPrefixParser.transformLocalNsnToInternational(
+        phoneNumber, metadata);
   }
 }
