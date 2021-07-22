@@ -195,7 +195,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "698bc36d2863e3372ca835b85234fbaf8d41b697"
+      resolved-ref: "1bb59c6a3ce598257f9aba69946a3c32a2387c6b"
       url: "https://github.com/cedvdb/dart_phone_metadata.git"
     source: git
     version: "1.0.0"

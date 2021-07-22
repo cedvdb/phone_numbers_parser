@@ -1,6 +1,6 @@
-import 'package:phone_number_parser/phone_number_parser.dart';
-import 'package:phone_number_parser/src/models/phone_number_exceptions.dart';
-import 'package:phone_number_parser/src/parsers/_dial_code_parser.dart';
+import 'package:phone_numbers_parser/phone_number_parser.dart';
+import 'package:phone_numbers_parser/src/models/phone_number_exceptions.dart';
+import 'package:phone_numbers_parser/src/parsers/_dial_code_parser.dart';
 import 'package:test/test.dart';
 
 void main() {

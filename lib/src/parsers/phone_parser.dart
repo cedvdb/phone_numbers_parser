@@ -1,7 +1,7 @@
-import 'package:phone_number_parser/phone_number_parser.dart';
-import 'package:phone_number_parser/src/parsers/_dial_code_parser.dart';
-import 'package:phone_number_parser/src/parsers/_international_prefix_parser.dart';
-import 'package:phone_number_parser/src/parsers/_national_prefix_parser.dart';
+import 'package:phone_numbers_parser/phone_number_parser.dart';
+import 'package:phone_numbers_parser/src/parsers/_dial_code_parser.dart';
+import 'package:phone_numbers_parser/src/parsers/_international_prefix_parser.dart';
+import 'package:phone_numbers_parser/src/parsers/_national_prefix_parser.dart';
 
 import '_iso_code_parser.dart';
 

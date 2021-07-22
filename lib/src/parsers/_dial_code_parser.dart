@@ -1,7 +1,7 @@
 import 'package:phone_number_metadata/phone_number_metadata.dart' as p;
-import 'package:phone_number_parser/src/constants/constants.dart';
-import 'package:phone_number_parser/src/models/phone_number_exceptions.dart';
-import 'package:phone_number_parser/src/parsers/_validator.dart';
+import 'package:phone_numbers_parser/src/constants/constants.dart';
+import 'package:phone_numbers_parser/src/models/phone_number_exceptions.dart';
+import 'package:phone_numbers_parser/src/parsers/_validator.dart';
 
 import '_text_parser.dart';
 

@@ -1,4 +1,4 @@
-import 'package:phone_number_parser/src/parsers/_text_parser.dart';
+import 'package:phone_numbers_parser/src/parsers/_text_parser.dart';
 import 'package:test/test.dart';
 
 void main() {
