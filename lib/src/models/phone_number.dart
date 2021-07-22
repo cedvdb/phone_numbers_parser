@@ -23,7 +23,7 @@ abstract class PhoneNumber {
   /// National significant number in its internanational form
   final String nsn;
 
-  /// country code
+  /// country alpha2 code example: 'FR', 'US', ...
   final String isoCode;
 
   /// metadata of the region the phone originates from
@@ -31,6 +31,7 @@ abstract class PhoneNumber {
 
   String get dialCode => metadata.dialCode;
 
+  ///
   String get international => dialCode + nsn;
 
   const PhoneNumber._(this.isoCode, this.nsn, this.metadata);
