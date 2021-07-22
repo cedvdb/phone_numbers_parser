@@ -1,3 +1,7 @@
+## 1.0.0
+- 
+- [Breaking]: removed country class
+
 ## 0.2.0
 * extracted country data files to another library dart_countries as it can be used in other scenarios
 * [Breaking]: Country.getDisplayDialCode is now a getter Country.displayIsoCode.

@@ -2,7 +2,7 @@ class PhoneNumberException {
   final Code code;
   final String? description;
 
-  PhoneNumberException({
+  const PhoneNumberException({
     required this.code,
     this.description,
   });
