@@ -19,6 +19,12 @@ void main() {
       expect(DialCodeParser.removeDialCode('339', metadataFR), equals('9'));
     });
 
+    test('should extract dial code', () {
+      expect(DialCodeParser.extractDialCode('33'), equals('33'));
+      expect(DialCodeParser.extractDialCode('33479887766'), equals('33'));
+      expect(DialCodeParser.extractDialCode('18889997772'), equals('1'));
+    });
+
     test('should find matching metadata', () {
       expect(
         DialCodeParser.selectMetadataMatchForDialCode(
