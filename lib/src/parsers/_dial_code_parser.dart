@@ -49,9 +49,9 @@ abstract class DialCodeParser {
         description: 'dial code not found in phone number');
   }
 
-  static String removeDialCode(String phoneNumber, p.PhoneMetadata metadata) {
-    if (phoneNumber.startsWith(metadata.dialCode)) {
-      return phoneNumber.substring(metadata.dialCode.length);
+  static String removeDialCode(String phoneNumber, String dialCode) {
+    if (phoneNumber.startsWith(dialCode)) {
+      return phoneNumber.substring(dialCode.length);
     }
     return phoneNumber;
   }

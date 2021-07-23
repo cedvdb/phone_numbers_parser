@@ -54,6 +54,10 @@ abstract class PhoneParser {
   static PhoneNumber parseWithDialCode(String dialCode, String phoneNumber) {
     dialCode = DialCodeParser.normalizeDialCode(dialCode);
     phoneNumber = TextParser.normalize(phoneNumber);
+    if (phoneNumber.startsWith('+')) {
+      phoneNumber = phoneNumber.substring(1);
+    }
+    phoneNumber = DialCodeParser.removeDialCode(phoneNumber, dialCode);
     final metadatas = MetadataFinder.getExtendedMetadatasForDialCode(dialCode);
     final metadata = DialCodeParser.selectMetadataMatchForDialCode(
         dialCode, phoneNumber, metadatas);
