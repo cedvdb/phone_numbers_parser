@@ -9,6 +9,7 @@ class PhoneNumberImpl implements PhoneNumber {
 
   @override
   final PhoneMetadata metadata;
+
   @override
   String get isoCode => metadata.isoCode;
 
@@ -19,4 +20,16 @@ class PhoneNumberImpl implements PhoneNumber {
   String get international => '+' + dialCode + nsn;
 
   const PhoneNumberImpl(this.nsn, this.metadata);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is PhoneNumberImpl &&
+        other.nsn == nsn &&
+        other.metadata == metadata;
+  }
+
+  @override
+  int get hashCode => nsn.hashCode ^ metadata.hashCode;
 }

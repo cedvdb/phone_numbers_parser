@@ -21,7 +21,7 @@ import '_text_parser.dart';
 /// then the other parser should be used.
 /// If the objective is decent accuracy with lighter file size then this parser
 /// can be used.
-abstract class LightPhoneParser {
+class LightPhoneParser {
   /// parses a [phoneNumber] given an [isoCode]
   ///
   /// The [phoneNumber] can be of the sort:
@@ -30,7 +30,7 @@ abstract class LightPhoneParser {
   ///  478 88 88 88
   ///
   /// throws a PhoneNumberException if the isoCode is invalid
-  static PhoneNumber parseWithIsoCode(String isoCode, String phoneNumber) {
+  PhoneNumber parseWithIsoCode(String isoCode, String phoneNumber) {
     isoCode = IsoCodeParser.normalizeIsoCode(isoCode);
     phoneNumber = TextParser.normalize(phoneNumber);
     final metadata = MetadataFinder.getLightMetadataForIsoCode(isoCode);
@@ -42,10 +42,22 @@ abstract class LightPhoneParser {
     return PhoneNumberImpl(nsn, metadata);
   }
 
+  PhoneNumber copyWithIsoCode(PhoneNumber phoneNumber, String isoCode) {
+    return parseWithIsoCode(isoCode, phoneNumber.nsn);
+  }
+
   /// Validates a phone number using only the length information
   ///
   /// if a [type] is added, will validate against a specific type
-  static bool validate(PhoneNumber phone, [PhoneNumberType? type]) {
+  bool validate(PhoneNumber phone, [PhoneNumberType? type]) {
     return Validator.validateWithLength(phone.nsn, phone.metadata, type);
+  }
+
+  /// Extracts phone numbers from a [text].
+  /// The potential phone numbers returned are not checked for their validity.
+  /// It is possible that a match could be a date or anything else ressembling a phone number.
+  /// To verify it is in fact a phone number you can parse it and check its validity
+  Iterable<Match> findPotentialPhoneNumbers(String text) {
+    return TextParser.findPotentialPhoneNumbers(text);
   }
 }

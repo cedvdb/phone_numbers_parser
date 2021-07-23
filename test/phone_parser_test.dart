@@ -4,8 +4,9 @@ import 'package:test/test.dart';
 
 void main() {
   group('PhoneParser', () {
+    final parser = PhoneParser();
     test('should parse with iso code', () {
-      final parse = PhoneParser.parseWithIsoCode;
+      final parse = parser.parseWithIsoCode;
       final international = '+33479995533';
       // fr no transformation required except removing prefixes
       expect(
@@ -41,7 +42,7 @@ void main() {
     });
 
     test('should parse with dial code', () {
-      final parse = PhoneParser.parseWithDialCode;
+      final parse = parser.parseWithDialCode;
       // basic
       expect(parse('33', '479 995 533').international, equals('+33479995533'));
       expect(parse('33', '479-995-533').international, equals('+33479995533'));
@@ -60,7 +61,7 @@ void main() {
     });
 
     test('should parse with raw phone number', () {
-      final parse = PhoneParser.parseRaw;
+      final parse = parser.parseRaw;
       // basic
       expect(parse('+33 479 995 533').international, equals('+33479995533'));
       expect(parse('+33 479-995-533').international, equals('+33479995533'));
@@ -76,12 +77,12 @@ void main() {
     });
 
     test('should validate with pattern', () {
-      final validate = PhoneParser.validate;
-      final validMobile = PhoneParser.parseWithIsoCode('BE', '479 99 99 99');
-      final validCA = PhoneParser.parseWithIsoCode('CA', '+16135550165');
-      final validUS = PhoneParser.parseWithIsoCode('US', '+12025550128');
-      final invalidCA = PhoneParser.parseWithIsoCode('US', '+16135550165');
-      final invalidUS = PhoneParser.parseWithIsoCode('CA', '+12025550128');
+      final validate = parser.validate;
+      final validMobile = parser.parseWithIsoCode('BE', '479 99 99 99');
+      final validCA = parser.parseWithIsoCode('CA', '+16135550165');
+      final validUS = parser.parseWithIsoCode('US', '+12025550128');
+      final invalidCA = parser.parseWithIsoCode('US', '+16135550165');
+      final invalidUS = parser.parseWithIsoCode('CA', '+12025550128');
 
       // belgian phone numbers dont have the same length for fixedLine vs mobile
       expect(validate(validMobile), equals(true));

@@ -15,8 +15,8 @@ import '_validator.dart';
 
 /// {@template phoneNumber}
 /// The [phoneNumber] can be of the sort:
-///  +33 478 88 88 88
-///  0478 88 88 88
+///  +33 478 88 88 88,
+///  0478 88 88 88,
 ///  478 88 88 88
 /// {@endtemplate}
 
@@ -27,13 +27,14 @@ import '_validator.dart';
 /// size when imported
 ///
 /// It also furnishes more utilities that cannot be achieved with the light parser
-abstract class PhoneParser {
+class PhoneParser extends LightPhoneParser {
   /// parses a [phoneNumber] given an [isoCode]
   ///
   /// {@macro phoneNumber}
   ///
   /// throws a PhoneNumberException if the isoCode is invalid
-  static PhoneNumber parseWithIsoCode(String isoCode, String phoneNumber) {
+  @override
+  PhoneNumber parseWithIsoCode(String isoCode, String phoneNumber) {
     isoCode = IsoCodeParser.normalizeIsoCode(isoCode);
     phoneNumber = TextParser.normalize(phoneNumber);
     final metadata = MetadataFinder.getExtendedMetadataForIsoCode(isoCode);
@@ -53,7 +54,7 @@ abstract class PhoneParser {
   /// {@macro phoneNumber}
   ///
   /// throws a PhoneNumberException if the dial code is invalid
-  static PhoneNumber parseWithDialCode(String dialCode, String phoneNumber) {
+  PhoneNumber parseWithDialCode(String dialCode, String phoneNumber) {
     dialCode = DialCodeParser.normalizeDialCode(dialCode);
     phoneNumber = TextParser.normalize(phoneNumber);
     phoneNumber =
@@ -75,7 +76,7 @@ abstract class PhoneParser {
   /// This assumes the phone number starts with the dial code
   ///
   /// throws a PhoneNumberException if the dial code is invalid
-  static PhoneNumber parseRaw(String phoneNumber) {
+  PhoneNumber parseRaw(String phoneNumber) {
     phoneNumber = TextParser.normalize(phoneNumber);
     phoneNumber =
         InternationalPrefixParser.removeInternationalPrefix(phoneNumber);
@@ -86,7 +87,8 @@ abstract class PhoneParser {
   /// Validates a phone number using pattern matching
   ///
   /// if a [type] is added, will validate against a specific type
-  static bool validate(PhoneNumber phone, [PhoneNumberType? type]) {
+  @override
+  bool validate(PhoneNumber phone, [PhoneNumberType? type]) {
     final metadata = phone.metadata;
     if (phone.metadata is PhoneMetadataExtended) {
       return Validator.validateWithPattern(
@@ -95,7 +97,12 @@ abstract class PhoneParser {
         type,
       );
     } else {
-      return LightPhoneParser.validate(phone, type);
+      return super.validate(phone, type);
     }
+  }
+
+  @override
+  PhoneNumber copyWithIsoCode(PhoneNumber phoneNumber, String isoCode) {
+    return parseWithIsoCode(isoCode, phoneNumber.nsn);
   }
 }
