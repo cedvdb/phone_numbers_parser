@@ -1,4 +1,4 @@
-## 1.0.0
+## 1.0.1
 - validate method on PhoneNumber
 
 ## 1.0.0
