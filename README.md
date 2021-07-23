@@ -11,16 +11,16 @@ The advantage of this lib instead of libphonenumber is that it instantly support
  - Validate a phone number
  - Find the region of a phone number
  - Phone number parsing
- - Country list for display
- - Simple syntax
+ - A light parser for size aware applications
  - Supports easthern arabic digits
  - Uses best-in-class metadata from Google's libPhoneNumber project. 
 
 
-## Usage
+## Usage LightPhoneParser
+
+## Usage PhoneParser
 
 ```dart
-
 // creation
 final frPhone = PhoneNumber.fromRaw('+33 655 5705 76');
 final frPhone1 = PhoneNumber.fromIsoCode('fr', '655 5705 76');
@@ -54,6 +54,31 @@ final found = PhoneNumberUtil.findPotentialPhoneNumbers(text);
 final allCountries = countries; // contains name, isoCode, dialCode, leading digits, etc
  
 ```
+
+## Migration to 1.0.0
+
+1.0.0 introduces two parsers:
+
+  - PhoneParser: Heavy, more accurate and more computationally intensive (relies on pattern matching)
+  - LightPhoneParser: Light, somewhat accurate and less computationally intensive (relies on length)
+  If a light validation based on length suffice, LightPhoneParser can be used, assuming you don't import
+  the other parser, that will decrease the library size footprint.
+
+With this change a few breaking changes had to be made
+
+  before:
+  ```dart
+  final frPhone = PhoneNumber.fromRaw('+33 655 5705 76');
+  final frPhone1 = PhoneNumber.fromIsoCode('FR', '655 5705 76');
+  final valid = frPhone.validate();
+  ```
+
+  after:
+  ```dart
+  final frPhone = PhoneParser.fromRaw('+33 655 5705 76')
+  final frPhone1 = LightPhoneParser.fromIsoCode('FR', '655 5705 76');
+  final valid = PhoneParser.validate(frPhone);
+  ```
 
 ## Demo
 

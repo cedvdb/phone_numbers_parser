@@ -1,6 +1,26 @@
 ## 1.0.0
-- 
-- [Breaking]: removed country class
+- There are now two parsers:
+   - PhoneParser: Heavy, more accurate and more computationally intensive (relies on pattern matching)
+   - LightPhoneParser: Light, somewhat accurate and less computationally intensive (relies on length)
+   If a light validation based on length suffice, LightPhoneParser can be used, assuming you don't import
+   the other parser, that will decrease the library size footprint.
+
+  With this change a few breaking changes had to be made
+- [Breaking]: PhoneNumber creation is now made with parsers:
+
+  before:
+  ```dart
+  final frPhone = PhoneNumber.fromRaw('+33 655 5705 76');
+  final frPhone1 = PhoneNumber.fromIsoCode('FR', '655 5705 76');
+  ```
+
+  after:
+  ```dart
+  final frPhone = PhoneParser.fromRaw('+33 655 5705 76')
+  final frPhone1 = LightPhoneParser.fromIsoCode('FR', '655 5705 76');
+  ```
+
+- [Breaking]: removed country class and country list, which are now in a separate library
 
 ## 0.2.0
 * extracted country data files to another library dart_countries as it can be used in other scenarios

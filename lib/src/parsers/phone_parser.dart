@@ -1,5 +1,5 @@
 import 'package:phone_number_metadata/phone_number_metadata.dart';
-import 'package:phone_numbers_parser/phone_number_parser.dart';
+import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:phone_numbers_parser/src/models/phone_number.dart';
 import 'package:phone_numbers_parser/src/models/phone_number_impl.dart';
 import 'package:phone_numbers_parser/src/models/phone_number_type.dart';
@@ -7,8 +7,10 @@ import 'package:phone_numbers_parser/src/parsers/_dial_code_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_international_prefix_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_national_prefix_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/light_phone_parser.dart';
+import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 
 import '_iso_code_parser.dart';
+import '_text_parser.dart';
 import '_validator.dart';
 
 /// {@template phoneNumber}
