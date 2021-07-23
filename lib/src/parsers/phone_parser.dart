@@ -84,23 +84,6 @@ class PhoneParser extends LightPhoneParser {
     return parseWithDialCode(dialCode, phoneNumber);
   }
 
-  /// Validates a phone number using pattern matching
-  ///
-  /// if a [type] is added, will validate against a specific type
-  @override
-  bool validate(PhoneNumber phone, [PhoneNumberType? type]) {
-    final metadata = phone.metadata;
-    if (phone.metadata is PhoneMetadataExtended) {
-      return Validator.validateWithPattern(
-        phone.nsn,
-        metadata as PhoneMetadataExtended,
-        type,
-      );
-    } else {
-      return super.validate(phone, type);
-    }
-  }
-
   @override
   PhoneNumber copyWithIsoCode(PhoneNumber phoneNumber, String isoCode) {
     return parseWithIsoCode(isoCode, phoneNumber.nsn);

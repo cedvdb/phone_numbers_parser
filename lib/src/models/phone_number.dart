@@ -18,6 +18,9 @@
 // }
 
 import 'package:phone_number_metadata/phone_number_metadata.dart';
+import 'package:phone_numbers_parser/src/parsers/_validator.dart';
+
+import 'phone_number_type.dart';
 
 abstract class PhoneNumber {
   /// National significant number in its internanational form
@@ -35,4 +38,9 @@ abstract class PhoneNumber {
   String get international => throw 'unimplemented';
 
   const PhoneNumber._(this.nsn, this.metadata);
+
+  /// Validates a phone number using pattern matching
+  ///
+  /// if a [type] is added, will validate against a specific type
+  bool validate([PhoneNumberType? type]) => throw 'unimplemented';
 }

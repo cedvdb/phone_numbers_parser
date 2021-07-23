@@ -12,9 +12,9 @@ void main(List<String> arguments) {
   print(allSame); // true
 
   // validation
-  print(parser.validate(frPhone1)); // true
-  print(parser.validate(frPhone1, PhoneNumberType.mobile)); // true
-  print(parser.validate(frPhone1, PhoneNumberType.fixedLine)); // false
+  print(frPhone1.validate()); // true
+  print(frPhone1.validate(PhoneNumberType.mobile)); // true
+  print(frPhone1.validate(PhoneNumberType.fixedLine)); // false
 
   // changing the country
   final esPhone = parser.copyWithIsoCode(frPhone, 'ES');

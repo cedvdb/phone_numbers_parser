@@ -1,4 +1,7 @@
 ## 1.0.0
+- validate method on PhoneNumber
+
+## 1.0.0
 - There are now two parsers:
    - PhoneParser: Heavy, more accurate and more computationally intensive (relies on pattern matching)
    - LightPhoneParser: Light, somewhat accurate and less computationally intensive (relies on length)

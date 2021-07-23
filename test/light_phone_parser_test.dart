@@ -15,15 +15,6 @@ void main() {
       expect(parse('FR', nsnFR).nsn, equals(nsnFR));
     });
 
-    test('should validate with length', () {
-      final validate = parser.validate;
-      final validMobile = parser.parseWithIsoCode('BE', '479 99 99 99');
-      // belgian phone numbers dont have the same length for fixedLine vs mobile
-      expect(validate(validMobile), equals(true));
-      expect(validate(validMobile, PhoneNumberType.mobile), equals(true));
-      expect(validate(validMobile, PhoneNumberType.fixedLine), equals(false));
-    });
-
     test('should copy with iso code', () {
       final copy = parser.copyWithIsoCode;
       final be = parser.parseWithIsoCode('BE', '0479 99 99 99');

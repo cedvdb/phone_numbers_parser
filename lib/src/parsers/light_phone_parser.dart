@@ -1,3 +1,4 @@
+import 'package:phone_number_metadata/phone_number_metadata.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:phone_numbers_parser/src/models/phone_number.dart';
 import 'package:phone_numbers_parser/src/models/phone_number_impl.dart';
@@ -44,13 +45,6 @@ class LightPhoneParser {
 
   PhoneNumber copyWithIsoCode(PhoneNumber phoneNumber, String isoCode) {
     return parseWithIsoCode(isoCode, phoneNumber.nsn);
-  }
-
-  /// Validates a phone number using only the length information
-  ///
-  /// if a [type] is added, will validate against a specific type
-  bool validate(PhoneNumber phone, [PhoneNumberType? type]) {
-    return Validator.validateWithLength(phone.nsn, phone.metadata, type);
   }
 
   /// Extracts phone numbers from a [text].
