@@ -43,6 +43,6 @@ abstract class LightPhoneParser {
   ///
   /// if a [type] is added, will validate against a specific type
   static bool validate(PhoneNumber phone, [PhoneNumberType? type]) {
-    return Validator.validateWithLength(phone.nsn, phone.metadata);
+    return Validator.validateWithLength(phone.nsn, phone.metadata, type);
   }
 }

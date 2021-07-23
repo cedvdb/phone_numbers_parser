@@ -39,13 +39,15 @@ abstract class Validator {
   ///
   /// [nsn] national number without country code,
   /// international prefix, or national prefix
-  static bool validateWithLength(String nsn, PhoneMetadata metadata,
-      [PhoneNumberType? type]) {
+  static bool validateWithLength(
+    String nsn,
+    PhoneMetadata metadata, [
+    PhoneNumberType? type,
+  ]) {
     if (nsn.length < Constants.MIN_LENGTH_FOR_NSN) {
       return false;
     }
     final lengths = _getPossibleLengths(metadata, type);
-
     final isRightLength = lengths.contains(nsn.length);
     // if we don't have length information we will do pattern matching
     // or if the length is correct we do pattern matching too
