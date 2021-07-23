@@ -15,8 +15,7 @@ void main() {
     });
 
     test('should remove dial code', () {
-      final metadataFR = MetadataFinder.getLightMetadataForIsoCode('FR');
-      expect(DialCodeParser.removeDialCode('339', metadataFR), equals('9'));
+      expect(DialCodeParser.removeDialCode('339', '33'), equals('9'));
     });
 
     test('should extract dial code', () {

@@ -37,7 +37,7 @@ abstract class PhoneParser {
     final metadata = MetadataFinder.getExtendedMetadataForIsoCode(isoCode);
     phoneNumber = InternationalPrefixParser.removeInternationalPrefix(
         phoneNumber, metadata);
-    phoneNumber = DialCodeParser.removeDialCode(phoneNumber, metadata);
+    phoneNumber = DialCodeParser.removeDialCode(phoneNumber, metadata.dialCode);
     final nsn = NationalPrefixParser.transformLocalNsnToInternational(
         phoneNumber, metadata);
     return PhoneNumberImpl(nsn, metadata);
@@ -54,9 +54,8 @@ abstract class PhoneParser {
   static PhoneNumber parseWithDialCode(String dialCode, String phoneNumber) {
     dialCode = DialCodeParser.normalizeDialCode(dialCode);
     phoneNumber = TextParser.normalize(phoneNumber);
-    if (phoneNumber.startsWith('+')) {
-      phoneNumber = phoneNumber.substring(1);
-    }
+    phoneNumber =
+        InternationalPrefixParser.removeInternationalPrefix(phoneNumber);
     phoneNumber = DialCodeParser.removeDialCode(phoneNumber, dialCode);
     final metadatas = MetadataFinder.getExtendedMetadatasForDialCode(dialCode);
     final metadata = DialCodeParser.selectMetadataMatchForDialCode(

@@ -62,15 +62,16 @@ void main() {
       final parse = PhoneParser.parseRaw;
       // basic
       expect(parse('+33 479 995 533').international, equals('+33479995533'));
-      // expect(parse('+33 479-995-533').international, equals('+33479995533'));
-      // expect(parse('00 33 479-995-533').international, equals('+33479995533'));
-      // expect(parse('33 479-995-533').international, equals('+33479995533'));
+      expect(parse('+33 479-995-533').international, equals('+33479995533'));
+      expect(parse('00 33 479-995-533').international, equals('+33479995533'));
+      expect(parse('33 479-995-533').international, equals('+33479995533'));
 
-      // // same dial code
-      // expect(parse('+16135550165').isoCode, equals('CA'));
-      // expect(parse('+12025550128').isoCode, equals('US'));
-      // // no transform
-      // expect(parse('+54 9 343 555 1212'), equals('+5493435551212'));
+      // same dial code
+      expect(parse('+16135550165').isoCode, equals('CA'));
+      expect(parse('+12025550128').isoCode, equals('US'));
+      // no transform
+      expect(
+          parse('+54 9 343 555 1212').international, equals('+5493435551212'));
     });
   });
 }

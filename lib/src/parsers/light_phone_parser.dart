@@ -33,7 +33,7 @@ abstract class LightPhoneParser {
     final metadata = MetadataFinder.getLightMetadataForIsoCode(isoCode);
     phoneNumber =
         InternationalPrefixParser.removeInternationalPrefix(phoneNumber);
-    phoneNumber = DialCodeParser.removeDialCode(phoneNumber, metadata);
+    phoneNumber = DialCodeParser.removeDialCode(phoneNumber, metadata.dialCode);
     final nsn =
         NationalPrefixParser.removeNationalPrefix(phoneNumber, metadata);
     return PhoneNumberImpl(nsn, metadata);
