@@ -5,8 +5,6 @@ import 'package:test/test.dart';
 
 void main() {
   group('PhoneNumber', () {
-    final parser = PhoneParser();
-
     test('should validate with pattern when created with PhoneParser', () {
       final parser = PhoneParser();
       final validMobile = parser.parseWithIsoCode('BE', '479 99 99 99');

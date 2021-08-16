@@ -1,4 +1,3 @@
-import 'package:phone_numbers_parser/src/models/phone_number_type.dart';
 import 'package:phone_numbers_parser/src/parsers/phone_parser.dart';
 import 'package:test/test.dart';
 

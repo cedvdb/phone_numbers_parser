@@ -18,7 +18,6 @@
 // }
 
 import 'package:phone_number_metadata/phone_number_metadata.dart';
-import 'package:phone_numbers_parser/src/parsers/_validator.dart';
 
 import 'phone_number_type.dart';
 
