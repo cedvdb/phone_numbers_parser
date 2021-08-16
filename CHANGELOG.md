@@ -1,3 +1,6 @@
+## 1.0.2
+- Add toString to PhoneNumber
+
 ## 1.0.1
 - validate method on PhoneNumber
 
