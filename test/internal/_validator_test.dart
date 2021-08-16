@@ -5,80 +5,97 @@ import 'package:test/test.dart';
 
 void main() {
   group('_Validator', () {
-    test('should validate with length', () {
-      final metadataBE = MetadataFinder.getLightMetadataForIsoCode('BE');
-      final metadataUS = MetadataFinder.getLightMetadataForIsoCode('US');
-      final beMobilePhone = '479554265';
+    group('ValidateWithLength()', () {
+      test('BE', () {
+        final metadataBE = MetadataFinder.getLightMetadataForIsoCode('BE');
+        final beValidMobilePhone = '479554265';
+        final beInvalidMobilePhone = '4795542650';
 
-      expect(Validator.validateWithLength(beMobilePhone, metadataBE),
-          equals(true));
-      expect(
-          Validator.validateWithLength(
-              beMobilePhone, metadataBE, PhoneNumberType.mobile),
-          equals(true));
-      // not a fixed line
-      expect(
-          Validator.validateWithLength(
-              beMobilePhone, metadataBE, PhoneNumberType.fixedLine),
-          equals(false));
-      // invalid for US
-      expect(Validator.validateWithLength(beMobilePhone, metadataUS),
-          equals(false));
-      expect(
-          Validator.validateWithLength(
-              beMobilePhone, metadataUS, PhoneNumberType.fixedLine),
-          equals(false));
-      expect(
-          Validator.validateWithLength(
-              beMobilePhone, metadataUS, PhoneNumberType.mobile),
-          equals(false));
-      // valid US
-      expect(
-          Validator.validateWithLength('2025550128', metadataUS), equals(true));
-      expect(
-          Validator.validateWithLength(
-              '2025550128', metadataUS, PhoneNumberType.fixedLine),
-          equals(true));
-      expect(
-          Validator.validateWithLength(
-              '2025550128', metadataUS, PhoneNumberType.mobile),
-          equals(true));
-      // invalid us
-      expect(Validator.validateWithLength('20255501289', metadataUS),
-          equals(false));
-      expect(
-          Validator.validateWithLength(
-              '20255501289', metadataUS, PhoneNumberType.fixedLine),
-          equals(false));
-      expect(
-          Validator.validateWithLength(
-              '20255501289', metadataUS, PhoneNumberType.mobile),
-          equals(false));
+        expect(Validator.validateWithLength(beValidMobilePhone, metadataBE),
+            isTrue);
+        expect(
+            Validator.validateWithLength(
+                beValidMobilePhone, metadataBE, PhoneNumberType.mobile),
+            isTrue);
+        // not a fixed line
+        expect(
+            Validator.validateWithLength(
+                beValidMobilePhone, metadataBE, PhoneNumberType.fixedLine),
+            isFalse);
+        expect(Validator.validateWithLength(beInvalidMobilePhone, metadataBE),
+            isFalse);
+      });
+
+      test('US', () {
+        final metadataUS = MetadataFinder.getLightMetadataForIsoCode('US');
+        final validUs = '2025550128';
+        final invalidUs = '479554265';
+        // invalid for US
+        expect(Validator.validateWithLength(invalidUs, metadataUS), isFalse);
+        expect(
+            Validator.validateWithLength(
+                invalidUs, metadataUS, PhoneNumberType.fixedLine),
+            isFalse);
+        expect(
+            Validator.validateWithLength(
+                invalidUs, metadataUS, PhoneNumberType.mobile),
+            isFalse);
+        // valid US
+        expect(Validator.validateWithLength(validUs, metadataUS), isTrue);
+        expect(
+            Validator.validateWithLength(
+                validUs, metadataUS, PhoneNumberType.fixedLine),
+            isTrue);
+        expect(
+            Validator.validateWithLength(
+                validUs, metadataUS, PhoneNumberType.mobile),
+            isTrue);
+        // invalid us
+        expect(
+            Validator.validateWithLength('20255501289', metadataUS), isFalse);
+        expect(
+            Validator.validateWithLength(
+                '20255501289', metadataUS, PhoneNumberType.fixedLine),
+            isFalse);
+        expect(
+            Validator.validateWithLength(
+                '20255501289', metadataUS, PhoneNumberType.mobile),
+            isFalse);
+      });
+
+      test('MY (Malaysia)', () {
+        final metadata = MetadataFinder.getLightMetadataForIsoCode('MY');
+        expect(Validator.validateWithLength('11122224444', metadata), isTrue);
+      });
     });
 
-    test('should validate with pattern', () {
-      final metadataUS = MetadataFinder.getExtendedMetadataForIsoCode('US');
-      final metadataCA = MetadataFinder.getExtendedMetadataForIsoCode('CA');
-      final metadataBE = MetadataFinder.getExtendedMetadataForIsoCode('BE');
-      // valid us
-      expect(Validator.validateWithPattern('7205754713', metadataUS),
-          equals(true));
-      expect(Validator.validateWithPattern('7205754713', metadataCA),
-          equals(false));
-      // valid CA
-      expect(Validator.validateWithPattern('6135550165', metadataUS),
-          equals(false));
-      expect(Validator.validateWithPattern('6135550165', metadataCA),
-          equals(true));
-      // mobile vs fixed line
-      expect(
-          Validator.validateWithPattern(
-              '479889855', metadataBE, PhoneNumberType.mobile),
-          equals(true));
-      expect(
-          Validator.validateWithPattern(
-              '479889855', metadataBE, PhoneNumberType.fixedLine),
-          equals(false));
+    group('ValidateWithPattern()', () {
+      test('BE', () {
+        final metadataBE = MetadataFinder.getExtendedMetadataForIsoCode('BE');
+        expect(
+            Validator.validateWithPattern(
+                '479889855', metadataBE, PhoneNumberType.mobile),
+            isTrue);
+        expect(
+            Validator.validateWithPattern(
+                '479889855', metadataBE, PhoneNumberType.fixedLine),
+            isFalse);
+      });
+
+      test('CA', () {
+        final metadataCA = MetadataFinder.getExtendedMetadataForIsoCode('CA');
+        expect(
+            Validator.validateWithPattern('7205754713', metadataCA), isFalse);
+        expect(Validator.validateWithPattern('6135550165', metadataCA), isTrue);
+      });
+
+      test('US', () {
+        final metadataUS = MetadataFinder.getExtendedMetadataForIsoCode('US');
+        expect(Validator.validateWithPattern('7205754713', metadataUS), isTrue);
+
+        expect(
+            Validator.validateWithPattern('6135550165', metadataUS), isFalse);
+      });
     });
   });
 }
