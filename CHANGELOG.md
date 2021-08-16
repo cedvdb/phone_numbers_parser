@@ -1,3 +1,6 @@
+## 1.0.3
+- Made toString more readable
+
 ## 1.0.2
 - Add toString to PhoneNumber
 
