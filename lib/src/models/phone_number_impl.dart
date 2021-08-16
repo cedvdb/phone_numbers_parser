@@ -1,5 +1,6 @@
 import 'package:phone_number_metadata/phone_number_metadata.dart';
 import 'package:phone_number_metadata/src/models/phone_metadata.dart';
+
 import 'package:phone_numbers_parser/src/parsers/_validator.dart';
 
 import 'phone_number.dart';
@@ -45,10 +46,16 @@ class PhoneNumberImpl implements PhoneNumber {
     if (identical(this, other)) return true;
 
     return other is PhoneNumberImpl &&
+        other.isoCode == isoCode &&
+        other.dialCode == dialCode &&
         other.nsn == nsn &&
         other.metadata == metadata;
   }
 
   @override
   int get hashCode => nsn.hashCode ^ metadata.hashCode;
+
+  @override
+  String toString() =>
+      'PhoneNumber(isoCode: $isoCode, dialCode: $dialCode, nsn: $nsn, metadata: $metadata)';
 }

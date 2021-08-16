@@ -65,7 +65,7 @@ void main() {
 
       test('MY (Malaysia)', () {
         final metadata = MetadataFinder.getLightMetadataForIsoCode('MY');
-        expect(Validator.validateWithLength('11122224444', metadata), isTrue);
+        expect(Validator.validateWithLength('1112222444', metadata), isTrue);
       });
     });
 
