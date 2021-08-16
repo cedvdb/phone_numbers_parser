@@ -57,5 +57,5 @@ class PhoneNumberImpl implements PhoneNumber {
 
   @override
   String toString() =>
-      'PhoneNumber(isoCode: $isoCode, dialCode: $dialCode, nsn: $nsn)';
+      'PhoneNumber(isoCode: $isoCode, dialCode: $dialCode, nsn: $nsn, metadata: ${metadata.runtimeType})';
 }
