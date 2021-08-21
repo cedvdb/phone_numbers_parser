@@ -1,3 +1,6 @@
+## 1.0.5
+- Minor doc change
+
 ## 1.0.4
 - Added metadata property runtime type to toString to make it more obvious when two instances are not equals
 

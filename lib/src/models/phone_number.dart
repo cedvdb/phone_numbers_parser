@@ -38,7 +38,11 @@ abstract class PhoneNumber {
 
   const PhoneNumber._(this.nsn, this.metadata);
 
-  /// Validates a phone number using pattern matching
+  /// Validates a phone number
+  ///
+  /// Will use pattern matching if the phone number was created
+  /// with PhoneParser, or length if the phone number was created
+  /// with LightPhoneParser
   ///
   /// if a [type] is added, will validate against a specific type
   bool validate([PhoneNumberType? type]) => throw 'unimplemented';
