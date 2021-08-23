@@ -7,7 +7,7 @@ void main() {
   group('_Validator', () {
     group('ValidateWithLength()', () {
       test('BE', () {
-        final metadataBE = MetadataFinder.getLightMetadataForIsoCode('BE');
+        final metadataBE = MetadataFinder.getMetadataForIsoCode('BE');
         final beValidMobilePhone = '479554265';
         final beInvalidMobilePhone = '4795542650';
 
@@ -27,7 +27,7 @@ void main() {
       });
 
       test('US', () {
-        final metadataUS = MetadataFinder.getLightMetadataForIsoCode('US');
+        final metadataUS = MetadataFinder.getMetadataForIsoCode('US');
         final validUs = '2025550128';
         final invalidUs = '479554265';
         // invalid for US
@@ -64,14 +64,14 @@ void main() {
       });
 
       test('MY (Malaysia)', () {
-        final metadata = MetadataFinder.getLightMetadataForIsoCode('MY');
+        final metadata = MetadataFinder.getMetadataForIsoCode('MY');
         expect(Validator.validateWithLength('1112222444', metadata), isTrue);
       });
     });
 
     group('ValidateWithPattern()', () {
       test('BE', () {
-        final metadataBE = MetadataFinder.getExtendedMetadataForIsoCode('BE');
+        final metadataBE = MetadataFinder.getMetadataForIsoCode('BE');
         expect(
             Validator.validateWithPattern(
                 '479889855', metadataBE, PhoneNumberType.mobile),
@@ -83,14 +83,14 @@ void main() {
       });
 
       test('CA', () {
-        final metadataCA = MetadataFinder.getExtendedMetadataForIsoCode('CA');
+        final metadataCA = MetadataFinder.getMetadataForIsoCode('CA');
         expect(
             Validator.validateWithPattern('7205754713', metadataCA), isFalse);
         expect(Validator.validateWithPattern('6135550165', metadataCA), isTrue);
       });
 
       test('US', () {
-        final metadataUS = MetadataFinder.getExtendedMetadataForIsoCode('US');
+        final metadataUS = MetadataFinder.getMetadataForIsoCode('US');
         expect(Validator.validateWithPattern('7205754713', metadataUS), isTrue);
 
         expect(

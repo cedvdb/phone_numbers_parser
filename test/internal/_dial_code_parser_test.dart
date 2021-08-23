@@ -30,7 +30,7 @@ void main() {
         DialCodeParser.selectMetadataMatchForDialCode(
           '33',
           '0478999999',
-          MetadataFinder.getExtendedMetadatasForDialCode('33'),
+          MetadataFinder.getMetadatasForDialCode('33'),
         ).isoCode,
         equals('FR'),
       );
@@ -38,7 +38,7 @@ void main() {
         DialCodeParser.selectMetadataMatchForDialCode(
           '1',
           '2025550128',
-          MetadataFinder.getExtendedMetadatasForDialCode('1'),
+          MetadataFinder.getMetadatasForDialCode('1'),
         ).isoCode,
         equals('US'),
       );
@@ -46,7 +46,7 @@ void main() {
         DialCodeParser.selectMetadataMatchForDialCode(
           '1',
           '6135550165',
-          MetadataFinder.getExtendedMetadatasForDialCode('1'),
+          MetadataFinder.getMetadatasForDialCode('1'),
         ).isoCode,
         equals('CA'),
       );

@@ -25,22 +25,6 @@ class PhoneNumberImpl implements PhoneNumber {
 
   const PhoneNumberImpl(this.nsn, this.metadata);
 
-  /// Validates a phone number using pattern matching
-  ///
-  /// if a [type] is added, will validate against a specific type
-  @override
-  bool validate([PhoneNumberType? type]) {
-    if (metadata is PhoneMetadataExtended) {
-      return Validator.validateWithPattern(
-        nsn,
-        metadata as PhoneMetadataExtended,
-        type,
-      );
-    } else {
-      return Validator.validateWithLength(nsn, metadata, type);
-    }
-  }
-
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;

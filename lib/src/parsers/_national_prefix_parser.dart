@@ -1,4 +1,5 @@
 import 'package:phone_number_metadata/phone_number_metadata.dart';
+import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 
 abstract class NationalPrefixParser {
   /// extract the national prefix from the phone number if there is one
@@ -24,10 +25,12 @@ abstract class NationalPrefixParser {
   //  number as +54 9 343 555 1212 (international)
   static String transformLocalNsnToInternational(
     String nationalNumber,
-    PhoneMetadataExtended metadata,
+    PhoneMetadata metadata,
   ) {
-    final nationalPrefixForParsing = metadata.nationalPrefixForParsing;
-    final transformRule = metadata.nationalPrefixTransformRule;
+    final patterns =
+        MetadataFinder.getMetadataPatternsForIsoCode(metadata.isoCode);
+    final nationalPrefixForParsing = patterns.nationalPrefixForParsing;
+    final transformRule = patterns.nationalPrefixTransformRule;
 
     if (nationalPrefixForParsing != null) {
       final transformed = _applyTransformRules(

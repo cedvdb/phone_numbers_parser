@@ -1,3 +1,6 @@
+## 1.1.0
+- Resolve issue #1 where it was possible to significantly increase memory foothprint by importing both parsers. Thanks @xvrh 
+
 ## 1.0.5
 - Minor doc change
 

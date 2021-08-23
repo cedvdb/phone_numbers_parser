@@ -8,6 +8,7 @@ import 'package:phone_numbers_parser/src/parsers/_national_prefix_parser.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 
 import '_text_parser.dart';
+import '_validator.dart';
 
 /// light parser, faster and lighter for tree shaking
 ///
@@ -31,13 +32,23 @@ class LightPhoneParser {
   PhoneNumber parseWithIsoCode(String isoCode, String phoneNumber) {
     isoCode = IsoCodeParser.normalizeIsoCode(isoCode);
     phoneNumber = TextParser.normalize(phoneNumber);
-    final metadata = MetadataFinder.getLightMetadataForIsoCode(isoCode);
+    final metadata = MetadataFinder.getMetadataForIsoCode(isoCode);
     phoneNumber =
         InternationalPrefixParser.removeInternationalPrefix(phoneNumber);
     phoneNumber = DialCodeParser.removeDialCode(phoneNumber, metadata.dialCode);
     final nsn =
         NationalPrefixParser.removeNationalPrefix(phoneNumber, metadata);
     return PhoneNumberImpl(nsn, metadata);
+  }
+
+  /// Validates a phone number using length information
+  ///
+  /// To validate with pattern use the PhoneParser.validate
+  ///
+  /// if a [type] is added, will validate against a specific type
+  bool validate(PhoneNumber phoneNumber, [PhoneNumberType? type]) {
+    final metadata = MetadataFinder.getMetadataForIsoCode(phoneNumber.isoCode);
+    return Validator.validateWithLength(phoneNumber, type);
   }
 
   PhoneNumber copyWithIsoCode(PhoneNumber phoneNumber, String isoCode) {

@@ -1,4 +1,5 @@
 import 'package:phone_number_metadata/phone_number_metadata.dart';
+import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 
 import '../constants/constants.dart';
 import '../utils/_regexp_ext.dart';
@@ -11,12 +12,15 @@ abstract class Validator {
   /// [nsn] national number without country code,
   /// international prefix, or national prefix
   static bool validateWithPattern(
-    String nsn,
-    PhoneMetadataExtended metadata, [
+    String isoCode,
+    String nsn, [
     PhoneNumberType? type,
   ]) {
+    final metadata = MetadataFinder.getMetadataForIsoCode(isoCode);
+    final patternMetadatas =
+        MetadataFinder.getMetadataPatternsForIsoCode(metadata.isoCode);
     // if it's not matching the length it won't match the pattern
-    if (!validateWithLength(nsn, metadata)) {
+    if (!validateWithLength(nsn, isoCode)) {
       return false;
     }
     final rules = [];
@@ -24,13 +28,11 @@ abstract class Validator {
     // general one gives too much false positives
     if (type == null) {
       rules.addAll([
-        _getRules(metadata, PhoneNumberType.fixedLine)
-            as PhoneValidationRulesExtended,
-        _getRules(metadata, PhoneNumberType.mobile)
-            as PhoneValidationRulesExtended
+        _getPatterns(patternMetadatas, PhoneNumberType.fixedLine),
+        _getPatterns(patternMetadatas, PhoneNumberType.mobile)
       ]);
     } else {
-      rules.add(_getRules(metadata, type));
+      rules.add(_getPatterns(patternMetadatas, type));
     }
     return rules.any((r) => RegExp(r.pattern).matchEntirely(nsn) != null);
   }
@@ -40,14 +42,17 @@ abstract class Validator {
   /// [nsn] national number without country code,
   /// international prefix, or national prefix
   static bool validateWithLength(
-    String nsn,
-    PhoneMetadata metadata, [
+    String isoCode,
+    String nsn, [
     PhoneNumberType? type,
   ]) {
+    final metadata = MetadataFinder.getMetadataForIsoCode(isoCode);
+    final lengthMetadatas =
+        MetadataFinder.getMetadataLengthForIsoCode(metadata.isoCode);
     if (nsn.length < Constants.MIN_LENGTH_FOR_NSN) {
       return false;
     }
-    final lengths = _getPossibleLengths(metadata, type);
+    final lengths = _getPossibleLengths(lengthMetadatas, type);
     final isRightLength = lengths.contains(nsn.length);
     // if we don't have length information we will do pattern matching
     // or if the length is correct we do pattern matching too
@@ -58,29 +63,47 @@ abstract class Validator {
   }
 
   static Set<int> _getPossibleLengths(
-    PhoneMetadata metadata,
+    PhoneMetadataLengths lengthMetadatas,
     PhoneNumberType? type,
   ) {
     if (type != null) {
-      final rules = _getRules(metadata, type);
-      return Set.from(rules.lengths);
+      final _lengths = _getLengths(lengthMetadatas, type);
+      return Set.from(_lengths);
     } else {
       // if the type is not specified it can be either mobile or fixedLine
-      final rulesFixed = _getRules(metadata, PhoneNumberType.fixedLine);
-      final rulesMobile = _getRules(metadata, PhoneNumberType.mobile);
-      return {...rulesFixed.lengths, ...rulesMobile.lengths};
+      // so we return a set containing both
+      final rulesFixed =
+          _getLengths(lengthMetadatas, PhoneNumberType.fixedLine);
+      final rulesMobile = _getLengths(lengthMetadatas, PhoneNumberType.mobile);
+      return {...rulesFixed, ...rulesMobile};
     }
   }
 
-  static PhoneValidationRules _getRules(
-      PhoneMetadata metadata, PhoneNumberType? type) {
+  static List<int> _getLengths(
+    PhoneMetadataLengths lengthMetadatas,
+    PhoneNumberType? type,
+  ) {
     switch (type) {
       case PhoneNumberType.mobile:
-        return metadata.validation.mobile;
+        return lengthMetadatas.mobile;
       case PhoneNumberType.fixedLine:
-        return metadata.validation.fixedLine;
+        return lengthMetadatas.fixedLine;
       default:
-        return metadata.validation.general;
+        return lengthMetadatas.general;
+    }
+  }
+
+  static String _getPatterns(
+    PhoneMetadataPatterns patternMetadatas,
+    PhoneNumberType? type,
+  ) {
+    switch (type) {
+      case PhoneNumberType.mobile:
+        return patternMetadatas.mobile;
+      case PhoneNumberType.fixedLine:
+        return patternMetadatas.fixedLine;
+      default:
+        return patternMetadatas.general;
     }
   }
 }

@@ -40,7 +40,7 @@ abstract class DialCodeParser {
     for (var i = 1; i <= potentialDialCode.length; i++) {
       try {
         final potentialDialCodeFit = potentialDialCode.substring(0, i);
-        MetadataFinder.getLightMetadatasForDialCode(potentialDialCodeFit);
+        MetadataFinder.getMetadatasForDialCode(potentialDialCodeFit);
         return potentialDialCodeFit;
         // ignore: empty_catches
       } catch (e) {}
@@ -60,10 +60,10 @@ abstract class DialCodeParser {
   /// Gets the metadata of a [nationalNumber] by providing a [dialCode]
   ///
   /// Expects a normalized [nationalNumber] that is in its international form
-  static p.PhoneMetadataExtended selectMetadataMatchForDialCode(
+  static p.PhoneMetadata selectMetadataMatchForDialCode(
     String dialCode,
     String nationalNumber,
-    List<p.PhoneMetadataExtended> potentialFits,
+    List<p.PhoneMetadata> potentialFits,
   ) {
     if (potentialFits.length == 1) {
       return potentialFits[0];
@@ -76,7 +76,6 @@ abstract class DialCodeParser {
       if (leadingDigits != null && nationalNumber.startsWith(leadingDigits)) {
         return fit;
       }
-
       if (Validator.validateWithPattern(nationalNumber, fit)) {
         return fit;
       }

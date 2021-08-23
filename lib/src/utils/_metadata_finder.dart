@@ -2,9 +2,9 @@ import 'package:phone_number_metadata/phone_number_metadata.dart' as p;
 import '../models/phone_number_exceptions.dart';
 
 abstract class MetadataFinder {
-  /// expects a nomalized iso code
-  static p.PhoneMetadataExtended getExtendedMetadataForIsoCode(String isoCode) {
-    final metadata = p.extendedMetadataByIsoCode[isoCode];
+  /// expects a normalized iso code
+  static p.PhoneMetadata getMetadataForIsoCode(String isoCode) {
+    final metadata = p.metadataByIsoCode[isoCode];
     if (metadata == null) {
       throw PhoneNumberException(
         code: Code.INVALID_ISO_CODE,
@@ -15,8 +15,19 @@ abstract class MetadataFinder {
   }
 
   /// expects a normalized iso code
-  static p.PhoneMetadata getLightMetadataForIsoCode(String isoCode) {
-    final metadata = p.lightMetadataByIsoCode[isoCode];
+  static p.PhoneMetadataPatterns getMetadataPatternsForIsoCode(String isoCode) {
+    final metadata = p.metadataPatternsByIsoCode[isoCode];
+    if (metadata == null) {
+      throw PhoneNumberException(
+        code: Code.INVALID_ISO_CODE,
+        description: 'isoCode "$isoCode" not found',
+      );
+    }
+    return metadata;
+  }
+
+  static p.PhoneMetadataLengths getMetadataLengthForIsoCode(String isoCode) {
+    final metadata = p.metadataLenghtsByIsoCode[isoCode];
     if (metadata == null) {
       throw PhoneNumberException(
         code: Code.INVALID_ISO_CODE,
@@ -27,16 +38,9 @@ abstract class MetadataFinder {
   }
 
   /// expects normalized dialCode
-  static List<p.PhoneMetadata> getLightMetadatasForDialCode(String dialCode) {
+  static List<p.PhoneMetadata> getMetadatasForDialCode(String dialCode) {
     final isoList = _getIsoCodesFromDialCode(dialCode);
-    return isoList.map((iso) => getLightMetadataForIsoCode(iso)).toList();
-  }
-
-  /// expects normalized dialCode
-  static List<p.PhoneMetadataExtended> getExtendedMetadatasForDialCode(
-      String dialCode) {
-    final isoList = _getIsoCodesFromDialCode(dialCode);
-    return isoList.map((iso) => getExtendedMetadataForIsoCode(iso)).toList();
+    return isoList.map((iso) => getMetadataForIsoCode(iso)).toList();
   }
 
   static List<String> _getIsoCodesFromDialCode(String dialCode) {

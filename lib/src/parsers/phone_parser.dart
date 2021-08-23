@@ -9,6 +9,7 @@ import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 
 import '_iso_code_parser.dart';
 import '_text_parser.dart';
+import '_validator.dart';
 
 /// {@template phoneNumber}
 /// The [phoneNumber] can be of the sort:
@@ -34,7 +35,7 @@ class PhoneParser extends LightPhoneParser {
   PhoneNumber parseWithIsoCode(String isoCode, String phoneNumber) {
     isoCode = IsoCodeParser.normalizeIsoCode(isoCode);
     phoneNumber = TextParser.normalize(phoneNumber);
-    final metadata = MetadataFinder.getExtendedMetadataForIsoCode(isoCode);
+    final metadata = MetadataFinder.getMetadataForIsoCode(isoCode);
     phoneNumber = InternationalPrefixParser.removeInternationalPrefix(
         phoneNumber, metadata);
     phoneNumber = DialCodeParser.removeDialCode(phoneNumber, metadata.dialCode);
@@ -57,7 +58,7 @@ class PhoneParser extends LightPhoneParser {
     phoneNumber =
         InternationalPrefixParser.removeInternationalPrefix(phoneNumber);
     phoneNumber = DialCodeParser.removeDialCode(phoneNumber, dialCode);
-    final metadatas = MetadataFinder.getExtendedMetadatasForDialCode(dialCode);
+    final metadatas = MetadataFinder.getMetadatasForDialCode(dialCode);
     final metadata = DialCodeParser.selectMetadataMatchForDialCode(
         dialCode, phoneNumber, metadatas);
     final nsn = NationalPrefixParser.transformLocalNsnToInternational(
@@ -79,6 +80,14 @@ class PhoneParser extends LightPhoneParser {
         InternationalPrefixParser.removeInternationalPrefix(phoneNumber);
     final dialCode = DialCodeParser.extractDialCode(phoneNumber);
     return parseWithDialCode(dialCode, phoneNumber);
+  }
+
+  /// Validates a phone number using pattern mathing
+  ///
+  /// if a [type] is added, will validate against a specific type
+  bool validate(PhoneNumber phoneNumber, [PhoneNumberType? type]) {
+    return Validator.validateWithPattern(
+        phoneNumber.nsn, phoneNumber.metadata, type);
   }
 
   @override

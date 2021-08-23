@@ -1,40 +1,32 @@
+import 'package:phone_number_metadata/phone_number_metadata.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('MetadataFinder', () {
-    test('should get light metadata for iso code', () {
-      expect(MetadataFinder.getLightMetadataForIsoCode('US').isoCode,
-          equals('US'));
+    test('should get metadata for iso code', () {
+      expect(MetadataFinder.getMetadataForIsoCode('US').isoCode, equals('US'));
     });
 
-    test('should get extended metadata for iso code', () {
-      expect(MetadataFinder.getExtendedMetadataForIsoCode('US').isoCode,
-          equals('US'));
+    test('should get patterns metadata for iso code', () {
+      expect(MetadataFinder.getMetadataPatternsForIsoCode('US'),
+          isA<PhoneMetadataPatterns>());
     });
 
-    test('should get light metadata list for dial code', () {
+    test('should get lengths metadata for iso code', () {
+      expect(MetadataFinder.getMetadataLengthForIsoCode('US'),
+          isA<PhoneMetadataLengths>());
+    });
+
+    test('should get metadata list for dial code', () {
+      expect(MetadataFinder.getMetadatasForDialCode('33').length, equals(1));
+      expect(MetadataFinder.getMetadatasForDialCode('33')[0].isoCode,
+          equals('FR'));
+
       expect(
-          MetadataFinder.getLightMetadatasForDialCode('33').length, equals(1));
-      expect(MetadataFinder.getLightMetadatasForDialCode('33')[0].isoCode,
-          equals('FR'));
-
-      expect(MetadataFinder.getLightMetadatasForDialCode('1').length,
-          greaterThan(1));
-      expect(MetadataFinder.getLightMetadatasForDialCode('1')[0].isoCode,
-          equals('US'));
-    });
-
-    test('should get light metadata list for dial code', () {
-      expect(MetadataFinder.getExtendedMetadatasForDialCode('33').length,
-          equals(1));
-      expect(MetadataFinder.getExtendedMetadatasForDialCode('33')[0].isoCode,
-          equals('FR'));
-
-      expect(MetadataFinder.getExtendedMetadatasForDialCode('1').length,
-          greaterThan(1));
-      expect(MetadataFinder.getExtendedMetadatasForDialCode('1')[0].isoCode,
-          equals('US'));
+          MetadataFinder.getMetadatasForDialCode('1').length, greaterThan(1));
+      expect(
+          MetadataFinder.getMetadatasForDialCode('1')[0].isoCode, equals('US'));
     });
   });
 }

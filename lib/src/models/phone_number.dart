@@ -21,29 +21,15 @@ import 'package:phone_number_metadata/phone_number_metadata.dart';
 
 import 'phone_number_type.dart';
 
-abstract class PhoneNumber {
+class PhoneNumber {
   /// National significant number in its internanational form
   final String nsn;
 
-  /// metadata of the region the phone originates from
-  final PhoneMetadata metadata;
-
-  String get dialCode => throw 'unimplemented';
-
   /// country alpha2 code example: 'FR', 'US', ...
-  String get isoCode => throw 'unimplemented';
+  final String isoCode;
 
   /// international version of phone number
   String get international => throw 'unimplemented';
 
-  const PhoneNumber._(this.nsn, this.metadata);
-
-  /// Validates a phone number
-  ///
-  /// Will use pattern matching if the phone number was created
-  /// with PhoneParser, or length if the phone number was created
-  /// with LightPhoneParser
-  ///
-  /// if a [type] is added, will validate against a specific type
-  bool validate([PhoneNumberType? type]) => throw 'unimplemented';
+  const PhoneNumber(this.nsn, this.isoCode);
 }
