@@ -1,7 +1,7 @@
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 
 void main(List<String> arguments) {
-  final parser = PhoneParser();
+  final parser = PhoneParser(); // alternatively LightPhoneParser
   // creation
   final frPhone = parser.parseRaw('+33 655 5705 76');
   final frPhone1 = parser.parseWithIsoCode('fr', '655 5705 76');
@@ -12,9 +12,9 @@ void main(List<String> arguments) {
   print(allSame); // true
 
   // validation
-  print(parser.validate(frPhone)); // true
-  print(parser.validate(frPhone, PhoneNumberType.mobile)); // true
-  print(parser.validate(frPhone, PhoneNumberType.fixedLine)); // false
+  print(parser.validate(frPhone1)); // true
+  print(parser.validate(frPhone1, PhoneNumberType.mobile)); // true
+  print(parser.validate(frPhone1, PhoneNumberType.fixedLine)); // false
 
   // changing the country
   final esPhone = parser.copyWithIsoCode(frPhone, 'ES');

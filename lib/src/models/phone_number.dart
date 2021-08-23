@@ -17,4 +17,17 @@ class PhoneNumber {
     required this.isoCode,
     required this.nsn,
   });
+
+  @override
+  String toString() => 'PhoneNumber(nsn: $nsn, isoCode: $isoCode)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is PhoneNumber && other.nsn == nsn && other.isoCode == isoCode;
+  }
+
+  @override
+  int get hashCode => nsn.hashCode ^ isoCode.hashCode;
 }

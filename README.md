@@ -26,7 +26,6 @@ LightPhoneParser:
 
 PhoneParser:
   - more accurate
-  - more utilities
   - bigger size footprint
   - more computationally intensive
   - uses pattern matching
@@ -34,7 +33,7 @@ PhoneParser:
 ### Usage PhoneParser
 
 ```dart
-  final parser = PhoneParser();
+  final parser = PhoneParser(); // alternatively LightPhoneParser
   // creation
   final frPhone = parser.parseRaw('+33 655 5705 76');
   final frPhone1 = parser.parseWithIsoCode('fr', '655 5705 76');
@@ -62,38 +61,9 @@ PhoneParser:
 ```
 
 
-### Usage LightPhoneParser
+## Migration to 2.0.0
 
-```dart
-  final parser = LightPhoneParser();
-  // creation
-  final frPhone = parser.parseWithIsoCode('fr', '+33 655 5705 76');
-  final frPhone1 = parser.parseWithIsoCode('fr', '655 5705 76');
-  final frPhone2 = parser.parseWithIsoCode('fr', '655 5705 76');
-  final frPhone3 = parser.parseWithIsoCode('fr', '0655 5705 76');
-  final allSame =
-      frPhone == frPhone1 && frPhone == frPhone2 && frPhone == frPhone3;
-  print(allSame); // true
-
-  // validation
-  print(parser.validate(frPhone1)); // true
-  print(parser.validate(frPhone1, PhoneNumberType.mobile)); // true
-  print(parser.validate(frPhone1, PhoneNumberType.fixedLine)); // false
-
-  // changing the country
-  final esPhone = parser.copyWithIsoCode(frPhone, 'ES');
-  print(esPhone.dialCode); // 34
-  print(esPhone.isoCode); // ES
-  print(esPhone.international); // '+34655570576'
-
-  // utils
-  final text = 'hey my phone number is: +33 939 876 218';
-  final found = parser.findPotentialPhoneNumbers(text);
-  print(text.substring(found.first.start, found.first.end));
-
- 
-```
-
+`PhoneNumber.validate` has been removed, use `PhoneParser.validate` or `LightPhoneParser.validate`
 
 ## Migration to 1.0.0
 
