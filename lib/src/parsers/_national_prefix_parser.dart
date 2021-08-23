@@ -5,7 +5,7 @@ abstract class NationalPrefixParser {
   /// extract the national prefix from the phone number if there is one
   /// this method assumes that the national number is in its international
   /// form with a national prefix in front. It does not transform the national
-  /// number (except for removing the national prefix). See [transformLocalNsnToInternational].
+  /// number (except for removing the national prefix). See [transformLocalNsnToInternationalUsingPatterns].
   static String removeNationalPrefix(
     String nationalNumber,
     PhoneMetadata metadata,
@@ -23,7 +23,7 @@ abstract class NationalPrefixParser {
   ///
   /// example: in argentina 0343 15 555 1212 (local) is exactly the
   //  number as +54 9 343 555 1212 (international)
-  static String transformLocalNsnToInternational(
+  static String transformLocalNsnToInternationalUsingPatterns(
     String nationalNumber,
     PhoneMetadata metadata,
   ) {

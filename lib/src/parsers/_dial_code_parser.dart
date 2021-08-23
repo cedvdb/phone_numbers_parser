@@ -60,30 +60,34 @@ abstract class DialCodeParser {
   /// Gets the metadata of a [nationalNumber] by providing a [dialCode]
   ///
   /// Expects a normalized [nationalNumber] that is in its international form
-  static p.PhoneMetadata selectMetadataMatchForDialCode(
-    String dialCode,
-    String nationalNumber,
-    List<p.PhoneMetadata> potentialFits,
-  ) {
-    if (potentialFits.length == 1) {
-      return potentialFits[0];
-    }
+  // static p.PhoneMetadata selectMetadataMatchForDialCode({
+  //   required String dialCode,
+  //   required String nationalNumber,
+  //   required List<p.PhoneMetadata> potentialFits,
+  //   required bool usePatternMatching,
+  // }) {
+  //   if (potentialFits.length == 1) {
+  //     return potentialFits[0];
+  //   }
 
-    for (var fit in potentialFits) {
-      // if multiple fits, check leading digits to see if there is a fit
-      final leadingDigits = fit.leadingDigits;
+  //   for (var fit in potentialFits) {
+  //     // if multiple fits, check leading digits to see if there is a fit
+  //     final leadingDigits = fit.leadingDigits;
 
-      if (leadingDigits != null && nationalNumber.startsWith(leadingDigits)) {
-        return fit;
-      }
-      final isValidForIso = Validator.validateWithPattern(
-          PhoneNumber(nsn: nationalNumber, isoCode: fit.isoCode));
+  //     if (leadingDigits != null && nationalNumber.startsWith(leadingDigits)) {
+  //       return fit;
+  //     }
+  //     if (usePatternMatching) {
+  //       final isValidForIso = Validator.validateWithPattern(
+  //           PhoneNumber(nsn: nationalNumber, isoCode: fit.isoCode));
 
-      if (isValidForIso) {
-        return fit;
-      }
-    }
+  //       if (isValidForIso) {
+  //         return fit;
+  //       }
+  //     }
+  //   }
 
-    return potentialFits[0];
-  }
+  //   return potentialFits[0];
+  // }
+
 }

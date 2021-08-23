@@ -24,32 +24,5 @@ void main() {
       expect(DialCodeParser.extractDialCode('33479887766'), equals('33'));
       expect(DialCodeParser.extractDialCode('18889997772'), equals('1'));
     });
-
-    test('should find matching metadata', () {
-      expect(
-        DialCodeParser.selectMetadataMatchForDialCode(
-          '33',
-          '0478999999',
-          MetadataFinder.getMetadatasForDialCode('33'),
-        ).isoCode,
-        equals('FR'),
-      );
-      expect(
-        DialCodeParser.selectMetadataMatchForDialCode(
-          '1',
-          '2025550128',
-          MetadataFinder.getMetadatasForDialCode('1'),
-        ).isoCode,
-        equals('US'),
-      );
-      expect(
-        DialCodeParser.selectMetadataMatchForDialCode(
-          '1',
-          '6135550165',
-          MetadataFinder.getMetadatasForDialCode('1'),
-        ).isoCode,
-        equals('CA'),
-      );
-    });
   });
 }

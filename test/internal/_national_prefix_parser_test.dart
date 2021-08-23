@@ -14,7 +14,8 @@ void main() {
       // in argentina 0343 15 555 1212 (local) is exactly the
       // number as +54 9 343 555 1212 (international)
       final metadataAR = MetadataFinder.getMetadataForIsoCode('AR');
-      final tr = NationalPrefixParser.transformLocalNsnToInternational;
+      final tr =
+          NationalPrefixParser.transformLocalNsnToInternationalUsingPatterns;
       expect(tr('0343155551212', metadataAR), equals('93435551212'));
     });
   });

@@ -46,9 +46,8 @@ abstract class Validator {
     PhoneNumber phoneNumber, [
     PhoneNumberType? type,
   ]) {
-    final metadata = MetadataFinder.getMetadataForIsoCode(phoneNumber.isoCode);
     final lengthMetadatas =
-        MetadataFinder.getMetadataLengthForIsoCode(metadata.isoCode);
+        MetadataFinder.getMetadataLengthForIsoCode(phoneNumber.isoCode);
     if (phoneNumber.nsn.length < Constants.MIN_LENGTH_FOR_NSN) {
       return false;
     }
