@@ -76,7 +76,10 @@ abstract class DialCodeParser {
       if (leadingDigits != null && nationalNumber.startsWith(leadingDigits)) {
         return fit;
       }
-      if (Validator.validateWithPattern(nationalNumber, fit)) {
+      final isValidForIso = Validator.validateWithPattern(
+          PhoneNumber(nsn: nationalNumber, isoCode: fit.isoCode));
+
+      if (isValidForIso) {
         return fit;
       }
     }

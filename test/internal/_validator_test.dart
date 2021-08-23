@@ -1,3 +1,4 @@
+import 'package:phone_numbers_parser/src/models/phone_number.dart';
 import 'package:phone_numbers_parser/src/models/phone_number_type.dart';
 import 'package:phone_numbers_parser/src/parsers/_validator.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
@@ -7,94 +8,124 @@ void main() {
   group('_Validator', () {
     group('ValidateWithLength()', () {
       test('BE', () {
-        final metadataBE = MetadataFinder.getMetadataForIsoCode('BE');
+        final BE = 'BE';
         final beValidMobilePhone = '479554265';
         final beInvalidMobilePhone = '4795542650';
 
-        expect(Validator.validateWithLength(beValidMobilePhone, metadataBE),
-            isTrue);
+        expect(
+          Validator.validateWithLength(
+            PhoneNumber(nsn: beValidMobilePhone, isoCode: BE),
+          ),
+          isTrue,
+        );
         expect(
             Validator.validateWithLength(
-                beValidMobilePhone, metadataBE, PhoneNumberType.mobile),
+                PhoneNumber(nsn: beValidMobilePhone, isoCode: BE),
+                PhoneNumberType.mobile),
             isTrue);
         // not a fixed line
         expect(
             Validator.validateWithLength(
-                beValidMobilePhone, metadataBE, PhoneNumberType.fixedLine),
+                PhoneNumber(nsn: beValidMobilePhone, isoCode: BE),
+                PhoneNumberType.fixedLine),
             isFalse);
-        expect(Validator.validateWithLength(beInvalidMobilePhone, metadataBE),
+        // and not a general
+        expect(
+            Validator.validateWithLength(
+              PhoneNumber(nsn: beInvalidMobilePhone, isoCode: BE),
+            ),
             isFalse);
       });
 
       test('US', () {
-        final metadataUS = MetadataFinder.getMetadataForIsoCode('US');
+        final US = 'US';
         final validUs = '2025550128';
         final invalidUs = '479554265';
         // invalid for US
-        expect(Validator.validateWithLength(invalidUs, metadataUS), isFalse);
         expect(
             Validator.validateWithLength(
-                invalidUs, metadataUS, PhoneNumberType.fixedLine),
+              PhoneNumber(nsn: invalidUs, isoCode: US),
+            ),
             isFalse);
         expect(
             Validator.validateWithLength(
-                invalidUs, metadataUS, PhoneNumberType.mobile),
+                PhoneNumber(nsn: invalidUs, isoCode: US),
+                PhoneNumberType.fixedLine),
+            isFalse);
+        expect(
+            Validator.validateWithLength(
+                PhoneNumber(nsn: invalidUs, isoCode: US),
+                PhoneNumberType.mobile),
             isFalse);
         // valid US
-        expect(Validator.validateWithLength(validUs, metadataUS), isTrue);
         expect(
             Validator.validateWithLength(
-                validUs, metadataUS, PhoneNumberType.fixedLine),
+                PhoneNumber(nsn: validUs, isoCode: US)),
+            isTrue);
+        expect(
+            Validator.validateWithLength(PhoneNumber(nsn: validUs, isoCode: US),
+                PhoneNumberType.fixedLine),
             isTrue);
         expect(
             Validator.validateWithLength(
-                validUs, metadataUS, PhoneNumberType.mobile),
+                PhoneNumber(nsn: validUs, isoCode: US), PhoneNumberType.mobile),
             isTrue);
-        // invalid us
-        expect(
-            Validator.validateWithLength('20255501289', metadataUS), isFalse);
-        expect(
-            Validator.validateWithLength(
-                '20255501289', metadataUS, PhoneNumberType.fixedLine),
-            isFalse);
-        expect(
-            Validator.validateWithLength(
-                '20255501289', metadataUS, PhoneNumberType.mobile),
-            isFalse);
-      });
-
-      test('MY (Malaysia)', () {
-        final metadata = MetadataFinder.getMetadataForIsoCode('MY');
-        expect(Validator.validateWithLength('1112222444', metadata), isTrue);
       });
     });
 
     group('ValidateWithPattern()', () {
       test('BE', () {
-        final metadataBE = MetadataFinder.getMetadataForIsoCode('BE');
+        final BE = 'BE';
+        final validMobileBE = '479889855';
+        final validFixedBE = '64223344';
         expect(
             Validator.validateWithPattern(
-                '479889855', metadataBE, PhoneNumberType.mobile),
+                PhoneNumber(isoCode: BE, nsn: validMobileBE),
+                PhoneNumberType.mobile),
             isTrue);
         expect(
             Validator.validateWithPattern(
-                '479889855', metadataBE, PhoneNumberType.fixedLine),
+                PhoneNumber(isoCode: BE, nsn: validMobileBE),
+                PhoneNumberType.fixedLine),
+            isFalse);
+        // fixed
+        expect(
+            Validator.validateWithPattern(
+                PhoneNumber(isoCode: BE, nsn: validFixedBE),
+                PhoneNumberType.fixedLine),
+            isTrue);
+        expect(
+            Validator.validateWithPattern(
+                PhoneNumber(isoCode: BE, nsn: validFixedBE),
+                PhoneNumberType.mobile),
             isFalse);
       });
 
       test('CA', () {
-        final metadataCA = MetadataFinder.getMetadataForIsoCode('CA');
+        final CA = 'CA';
         expect(
-            Validator.validateWithPattern('7205754713', metadataCA), isFalse);
-        expect(Validator.validateWithPattern('6135550165', metadataCA), isTrue);
+            Validator.validateWithPattern(
+              PhoneNumber(isoCode: CA, nsn: '7205754713'),
+            ),
+            isFalse);
+        expect(
+            Validator.validateWithPattern(
+                PhoneNumber(isoCode: CA, nsn: '6135550165')),
+            isTrue);
       });
 
       test('US', () {
-        final metadataUS = MetadataFinder.getMetadataForIsoCode('US');
-        expect(Validator.validateWithPattern('7205754713', metadataUS), isTrue);
+        final US = 'US';
+        expect(
+            Validator.validateWithPattern(
+              PhoneNumber(isoCode: US, nsn: '7205754713'),
+            ),
+            isTrue);
 
         expect(
-            Validator.validateWithPattern('6135550165', metadataUS), isFalse);
+            Validator.validateWithPattern(
+                PhoneNumber(isoCode: US, nsn: '6135550165')),
+            isFalse);
       });
     });
   });

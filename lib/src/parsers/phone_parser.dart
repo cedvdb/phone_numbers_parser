@@ -1,6 +1,5 @@
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:phone_numbers_parser/src/models/phone_number.dart';
-import 'package:phone_numbers_parser/src/models/phone_number_impl.dart';
 import 'package:phone_numbers_parser/src/parsers/_dial_code_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_international_prefix_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_national_prefix_parser.dart';
@@ -41,7 +40,7 @@ class PhoneParser extends LightPhoneParser {
     phoneNumber = DialCodeParser.removeDialCode(phoneNumber, metadata.dialCode);
     final nsn = NationalPrefixParser.transformLocalNsnToInternational(
         phoneNumber, metadata);
-    return PhoneNumberImpl(nsn, metadata);
+    return PhoneNumber(isoCode: metadata.isoCode, nsn: nsn);
   }
 
   /// parses a [phoneNumber] given a [dialCode]
@@ -63,7 +62,7 @@ class PhoneParser extends LightPhoneParser {
         dialCode, phoneNumber, metadatas);
     final nsn = NationalPrefixParser.transformLocalNsnToInternational(
         phoneNumber, metadata);
-    return PhoneNumberImpl(nsn, metadata);
+    return PhoneNumber(isoCode: metadata.isoCode, nsn: nsn);
   }
 
   /// parses a [phoneNumber] given a [dialCode]
@@ -85,9 +84,9 @@ class PhoneParser extends LightPhoneParser {
   /// Validates a phone number using pattern mathing
   ///
   /// if a [type] is added, will validate against a specific type
+  @override
   bool validate(PhoneNumber phoneNumber, [PhoneNumberType? type]) {
-    return Validator.validateWithPattern(
-        phoneNumber.nsn, phoneNumber.metadata, type);
+    return Validator.validateWithPattern(phoneNumber, type);
   }
 
   @override

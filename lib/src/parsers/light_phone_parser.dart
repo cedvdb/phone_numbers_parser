@@ -1,6 +1,5 @@
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:phone_numbers_parser/src/models/phone_number.dart';
-import 'package:phone_numbers_parser/src/models/phone_number_impl.dart';
 import 'package:phone_numbers_parser/src/parsers/_dial_code_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_international_prefix_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_iso_code_parser.dart';
@@ -38,7 +37,7 @@ class LightPhoneParser {
     phoneNumber = DialCodeParser.removeDialCode(phoneNumber, metadata.dialCode);
     final nsn =
         NationalPrefixParser.removeNationalPrefix(phoneNumber, metadata);
-    return PhoneNumberImpl(nsn, metadata);
+    return PhoneNumber(nsn: nsn, isoCode: metadata.isoCode);
   }
 
   /// Validates a phone number using length information
@@ -47,7 +46,6 @@ class LightPhoneParser {
   ///
   /// if a [type] is added, will validate against a specific type
   bool validate(PhoneNumber phoneNumber, [PhoneNumberType? type]) {
-    final metadata = MetadataFinder.getMetadataForIsoCode(phoneNumber.isoCode);
     return Validator.validateWithLength(phoneNumber, type);
   }
 
