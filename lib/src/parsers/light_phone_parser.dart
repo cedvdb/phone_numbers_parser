@@ -4,7 +4,7 @@ import 'package:phone_numbers_parser/src/parsers/_dial_code_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_international_prefix_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_iso_code_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_national_prefix_parser.dart';
-import 'package:phone_numbers_parser/src/parsers/parser.dart';
+import 'package:phone_numbers_parser/src/parsers/base_phone_parser.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_matcher.dart';
 
@@ -21,7 +21,7 @@ import '_validator.dart';
 /// then the other parser should be used.
 /// If the objective is decent accuracy with lighter file size then this parser
 /// can be used.
-class LightPhoneParser extends Parser {
+class LightPhoneParser extends BasePhoneParser {
   /// parses a [phoneNumber] given an [isoCode]
   ///
   /// The [phoneNumber] can be of the sort:

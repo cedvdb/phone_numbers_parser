@@ -1,3 +1,7 @@
+## 2.0.1
+- rename base class for parsers to BasePhoneParser, as parser was too broad.
+- export BasePhoneParser
+
 ## 2.0.0
 - Resolve issue #1 where it was possible to significantly increase memory foothprint by importing both parsers. Thanks @xvrh 
 - Deplaced validate method from PhoneNumber to PhoneParser and LightPhoneParser to 
