@@ -18,13 +18,13 @@ abstract class DialCodeParser {
     if (dialCode.startsWith('0')) {
       throw PhoneNumberException(
           code: Code.INVALID_DIAL_CODE,
-          description: 'dial code do not start with 0');
+          description: "dial codes do not start with 0, found '$dialCode'");
     }
     if (dialCode.length < Constants.MIN_LENGTH_COUNTRY_DIAL_CODE ||
         dialCode.length > Constants.MAX_LENGTH_COUNTRY_DIAL_CODE) {
       throw PhoneNumberException(
           code: Code.INVALID_DIAL_CODE,
-          description: 'dial code invalid length');
+          description: "dial code has an invalid length, found '$dialCode'");
     }
     return dialCode;
   }
@@ -45,7 +45,7 @@ abstract class DialCodeParser {
     }
     throw PhoneNumberException(
         code: Code.NOT_FOUND,
-        description: 'dial code not found in phone number');
+        description: "dial code not found in phone number '$phoneNumber'");
   }
 
   static String removeDialCode(String phoneNumber, String dialCode) {
