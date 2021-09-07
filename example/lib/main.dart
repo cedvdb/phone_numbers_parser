@@ -26,4 +26,33 @@ void main(List<String> arguments) {
   final text = 'hey my phone number is: +33 939 876 218';
   final found = parser.findPotentialPhoneNumbers(text);
   print(text.substring(found.first.start, found.first.end));
+
+  // Ranges
+  final first = parser.parseRaw('+33 655 5705 00');
+  final last = parser.parseRaw('+33 655 5705 03');
+  final range = PhoneNumberRange(first, last);
+
+  print('Count: ${range.count}');
+  print('Expand: ${range.expandRange().join(',')}');
+
+  if (first > last) {
+    print("this shouldn't be.");
+  }
+
+  final one = parser.parseRaw('+33 655 5705 01');
+  final two = parser.parseRaw('+33 655 5705 02');
+
+  if (one.isAdjacentTo(two)) {
+    print('We are together');
+  }
+  if (one.isSequentialTo(two)) {
+    print('$two comes after $one');
+  }
+
+  /// treat the phone no. like an int
+  var three = two + 1;
+  print('Its still a phone No. $three');
+  two - 1 == one;
+  var another = one + 2;
+  print('$another == $three');
 }
