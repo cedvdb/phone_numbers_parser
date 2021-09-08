@@ -20,8 +20,8 @@ abstract class DialCodeParser {
           code: Code.INVALID_DIAL_CODE,
           description: 'dial code do not start with 0');
     }
-    if (dialCode.length < Constants.MIN_LENGTH_COUNTRY_DIAL_CODE ||
-        dialCode.length > Constants.MAX_LENGTH_COUNTRY_DIAL_CODE) {
+    if (dialCode.length < Constants.MIN_LENGTH_COUNTRY_CALLING_CODE ||
+        dialCode.length > Constants.MAX_LENGTH_COUNTRY_CALLING_CODE) {
       throw PhoneNumberException(
           code: Code.INVALID_DIAL_CODE,
           description: 'dial code invalid length');
@@ -32,7 +32,7 @@ abstract class DialCodeParser {
   /// tries to find a dial code at the start of a phone number
   static String extractDialCode(String phoneNumber) {
     final maxLength =
-        min(phoneNumber.length, Constants.MAX_LENGTH_COUNTRY_DIAL_CODE);
+        min(phoneNumber.length, Constants.MAX_LENGTH_COUNTRY_CALLING_CODE);
     var potentialDialCode = phoneNumber.substring(0, maxLength);
     potentialDialCode = normalizeDialCode(potentialDialCode);
     for (var i = 1; i <= potentialDialCode.length; i++) {

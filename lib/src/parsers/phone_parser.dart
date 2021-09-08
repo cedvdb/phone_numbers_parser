@@ -38,7 +38,8 @@ class PhoneParser extends BasePhoneParser {
     final metadata = MetadataFinder.getMetadataForIsoCode(isoCode);
     phoneNumber = InternationalPrefixParser.removeInternationalPrefix(
         phoneNumber, metadata);
-    phoneNumber = DialCodeParser.removeDialCode(phoneNumber, metadata.dialCode);
+    phoneNumber =
+        DialCodeParser.removeDialCode(phoneNumber, metadata.countryCallingCode);
     final nsn =
         NationalPrefixParser.transformLocalNsnToInternationalUsingPatterns(
             phoneNumber, metadata);
@@ -71,7 +72,7 @@ class PhoneParser extends BasePhoneParser {
     return PhoneNumber(isoCode: metadata.isoCode, nsn: nsn);
   }
 
-  /// parses a [phoneNumber] given a [dialCode]
+  /// parses a [phoneNumber] given a [countryCallingCode]
   ///
   /// Use parseWithIsoCode when possible at multiple countries
   /// use the same dial code.

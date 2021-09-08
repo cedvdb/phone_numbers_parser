@@ -7,11 +7,12 @@ class PhoneNumber {
   /// country alpha2 code example: 'FR', 'US', ...
   final String isoCode;
 
-  /// territory numerical code that precedes a phone number. Example 33 for france
-  String get dialCode => MetadataFinder.getMetadataForIsoCode(isoCode).dialCode;
+  /// Country numerical code that precedes a phone number. Example 33 for france
+  String get countryCallingCode =>
+      MetadataFinder.getMetadataForIsoCode(isoCode).countryCallingCode;
 
   /// international version of phone number
-  String get international => '+' + dialCode + nsn;
+  String get international => '+' + countryCallingCode + nsn;
 
   const PhoneNumber({
     required this.isoCode,

@@ -28,7 +28,7 @@ abstract class BasePhoneParser {
   /// throws a PhoneNumberException if the dial code is invalid
   PhoneNumber parseWithDialCode(String dialCode, String phoneNumber);
 
-  /// parses a [phoneNumber] given a [dialCode]
+  /// parses a [phoneNumber] given a [countryCallingCode]
   ///
   /// Use parseWithIsoCode when possible at multiple countries
   /// use the same dial code.

@@ -37,7 +37,8 @@ class LightPhoneParser extends BasePhoneParser {
     final metadata = MetadataFinder.getMetadataForIsoCode(isoCode);
     phoneNumber =
         InternationalPrefixParser.removeInternationalPrefix(phoneNumber);
-    phoneNumber = DialCodeParser.removeDialCode(phoneNumber, metadata.dialCode);
+    phoneNumber =
+        DialCodeParser.removeDialCode(phoneNumber, metadata.countryCallingCode);
     final nsn =
         NationalPrefixParser.removeNationalPrefix(phoneNumber, metadata);
     return PhoneNumber(nsn: nsn, isoCode: metadata.isoCode);

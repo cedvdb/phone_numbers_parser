@@ -39,12 +39,12 @@ abstract class MetadataFinder {
 
   /// expects normalized dialCode
   static List<p.PhoneMetadata> getMetadatasForDialCode(String dialCode) {
-    final isoList = _getIsoCodesFromDialCode(dialCode);
+    final isoList = _getIsoCodesFromCountryCallingCode(dialCode);
     return isoList.map((iso) => getMetadataForIsoCode(iso)).toList();
   }
 
-  static List<String> _getIsoCodesFromDialCode(String dialCode) {
-    final isoCodes = p.dialCodeToIsoCode[dialCode];
+  static List<String> _getIsoCodesFromCountryCallingCode(String dialCode) {
+    final isoCodes = p.countryCallingCodeToIsoCode[dialCode];
     if (isoCodes == null) {
       throw PhoneNumberException(
         code: Code.INVALID_DIAL_CODE,
