@@ -40,8 +40,8 @@ void main() {
           parse('AR', '93435551212').international, equals('+5493435551212'));
     });
 
-    test('should parse with dial code', () {
-      final parse = parser.parseWithDialCode;
+    test('should parse with country calling code', () {
+      final parse = parser.parseWithCountryCallingCode;
       // basic
       expect(parse('33', '479 995 533').international, equals('+33479995533'));
       expect(parse('33', '479-995-533').international, equals('+33479995533'));
@@ -49,7 +49,7 @@ void main() {
       expect(
           parse('33', '+33 479.995.533').international, equals('+33479995533'));
 
-      // same dial code
+      // same country calling code
       expect(parse('1', '6135550165').isoCode, equals('CA'));
       expect(parse('1', '2025550128').isoCode, equals('US'));
       // transform
@@ -67,7 +67,7 @@ void main() {
       expect(parse('00 33 479-995-533').international, equals('+33479995533'));
       expect(parse('33 479-995-533').international, equals('+33479995533'));
 
-      // same dial code
+      // same country calling code
       expect(parse('+16135550165').isoCode, equals('CA'));
       expect(parse('+12025550128').isoCode, equals('US'));
       // no transform

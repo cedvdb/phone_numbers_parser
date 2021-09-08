@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 void main() {
   group('MetadataMatcher', () {
     test('should reduce the list of potential metadata fits', () {
-      final fits = MetadataFinder.getMetadatasForDialCode('1');
+      final fits = MetadataFinder.getMetadatasForCountryCallingCode('1');
       final nationalNumberWithLeadingDigits = '26811111111';
       final reduced = MetadataMatcher.reducePotentialMetadatasFits(
           nationalNumberWithLeadingDigits, fits);
@@ -18,14 +18,14 @@ void main() {
       expect(
         MetadataMatcher.getMatchUsingPatterns(
           '2025550128',
-          MetadataFinder.getMetadatasForDialCode('1'),
+          MetadataFinder.getMetadatasForCountryCallingCode('1'),
         ).isoCode,
         equals('US'),
       );
       expect(
         MetadataMatcher.getMatchUsingPatterns(
           '6135550165',
-          MetadataFinder.getMetadatasForDialCode('1'),
+          MetadataFinder.getMetadatasForCountryCallingCode('1'),
         ).isoCode,
         equals('CA'),
       );

@@ -1,3 +1,6 @@
+## 3.0.0
+- renamed [dialCode] to [countryCallingCode]
+
 ## 2.0.1
 - rename base class for parsers to BasePhoneParser, as parser was too broad.
 - export BasePhoneParser

@@ -18,24 +18,25 @@ abstract class BasePhoneParser {
   /// throws a PhoneNumberException if the isoCode is invalid
   PhoneNumber parseWithIsoCode(String isoCode, String phoneNumber);
 
-  /// parses a [phoneNumber] given a [dialCode]
+  /// parses a [phoneNumber] given a [countryCallingCode]
   ///
   /// Use parseWithIsoCode when possible at multiple countries
-  /// use the same dial code.
+  /// use the same country calling code.
   ///
   /// {@macro phoneNumber}
   ///
-  /// throws a PhoneNumberException if the dial code is invalid
-  PhoneNumber parseWithDialCode(String dialCode, String phoneNumber);
+  /// throws a PhoneNumberException if the country calling code is invalid
+  PhoneNumber parseWithCountryCallingCode(
+      String countryCallingCode, String phoneNumber);
 
   /// parses a [phoneNumber] given a [countryCallingCode]
   ///
   /// Use parseWithIsoCode when possible at multiple countries
-  /// use the same dial code.
+  /// use the same country calling code.
   ///
-  /// This assumes the phone number starts with the dial code
+  /// This assumes the phone number starts with the country calling code
   ///
-  /// throws a PhoneNumberException if the dial code is invalid
+  /// throws a PhoneNumberException if the country calling code is invalid
   PhoneNumber parseRaw(String phoneNumber);
 
   /// Validates a phone number using length information

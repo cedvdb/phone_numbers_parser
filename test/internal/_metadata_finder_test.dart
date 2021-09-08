@@ -18,15 +18,16 @@ void main() {
           isA<PhoneMetadataLengths>());
     });
 
-    test('should get metadata list for dial code', () {
-      expect(MetadataFinder.getMetadatasForDialCode('33').length, equals(1));
-      expect(MetadataFinder.getMetadatasForDialCode('33')[0].isoCode,
+    test('should get metadata list for country calling code', () {
+      expect(MetadataFinder.getMetadatasForCountryCallingCode('33').length,
+          equals(1));
+      expect(MetadataFinder.getMetadatasForCountryCallingCode('33')[0].isoCode,
           equals('FR'));
 
-      expect(
-          MetadataFinder.getMetadatasForDialCode('1').length, greaterThan(1));
-      expect(
-          MetadataFinder.getMetadatasForDialCode('1')[0].isoCode, equals('US'));
+      expect(MetadataFinder.getMetadatasForCountryCallingCode('1').length,
+          greaterThan(1));
+      expect(MetadataFinder.getMetadatasForCountryCallingCode('1')[0].isoCode,
+          equals('US'));
     });
   });
 }

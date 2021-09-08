@@ -5,7 +5,7 @@ void main(List<String> arguments) {
   // creation
   final frPhone = parser.parseRaw('+33 655 5705 76');
   final frPhone1 = parser.parseWithIsoCode('fr', '655 5705 76');
-  final frPhone2 = parser.parseWithDialCode('33', '655 5705 76');
+  final frPhone2 = parser.parseWithCountryCallingCode('33', '655 5705 76');
   final frPhone3 = parser.parseWithIsoCode('fr', '0655 5705 76');
   final allSame =
       frPhone == frPhone1 && frPhone == frPhone2 && frPhone == frPhone3;

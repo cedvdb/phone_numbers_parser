@@ -1,6 +1,6 @@
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:phone_numbers_parser/src/models/phone_number.dart';
-import 'package:phone_numbers_parser/src/parsers/_dial_code_parser.dart';
+import 'package:phone_numbers_parser/src/parsers/_country_calling_code_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_international_prefix_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_national_prefix_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/base_phone_parser.dart';
@@ -38,30 +38,36 @@ class PhoneParser extends BasePhoneParser {
     final metadata = MetadataFinder.getMetadataForIsoCode(isoCode);
     phoneNumber = InternationalPrefixParser.removeInternationalPrefix(
         phoneNumber, metadata);
-    phoneNumber =
-        DialCodeParser.removeDialCode(phoneNumber, metadata.countryCallingCode);
+    phoneNumber = CountryCallingCodeParser.removeCountryCallingCode(
+        phoneNumber, metadata.countryCallingCode);
     final nsn =
         NationalPrefixParser.transformLocalNsnToInternationalUsingPatterns(
             phoneNumber, metadata);
     return PhoneNumber(isoCode: metadata.isoCode, nsn: nsn);
   }
 
-  /// parses a [phoneNumber] given a [dialCode]
+  /// parses a [phoneNumber] given a [countryCallingCode]
   ///
   /// Use parseWithIsoCode when possible at multiple countries
-  /// use the same dial code.
+  /// use the same country calling code.
   ///
   /// {@macro phoneNumber}
   ///
-  /// throws a PhoneNumberException if the dial code is invalid
+  /// throws a PhoneNumberException if the country calling code is invalid
   @override
-  PhoneNumber parseWithDialCode(String dialCode, String phoneNumber) {
-    dialCode = DialCodeParser.normalizeDialCode(dialCode);
+  PhoneNumber parseWithCountryCallingCode(
+    String countryCallingCode,
+    String phoneNumber,
+  ) {
+    countryCallingCode = CountryCallingCodeParser.normalizeCountryCallingCode(
+        countryCallingCode);
     phoneNumber = TextParser.normalize(phoneNumber);
     phoneNumber =
         InternationalPrefixParser.removeInternationalPrefix(phoneNumber);
-    phoneNumber = DialCodeParser.removeDialCode(phoneNumber, dialCode);
-    final metadatas = MetadataFinder.getMetadatasForDialCode(dialCode);
+    phoneNumber = CountryCallingCodeParser.removeCountryCallingCode(
+        phoneNumber, countryCallingCode);
+    final metadatas =
+        MetadataFinder.getMetadatasForCountryCallingCode(countryCallingCode);
     final metadata =
         MetadataMatcher.getMatchUsingPatterns(phoneNumber, metadatas);
     final nsn =
@@ -75,18 +81,19 @@ class PhoneParser extends BasePhoneParser {
   /// parses a [phoneNumber] given a [countryCallingCode]
   ///
   /// Use parseWithIsoCode when possible at multiple countries
-  /// use the same dial code.
+  /// use the same country calling code.
   ///
-  /// This assumes the phone number starts with the dial code
+  /// This assumes the phone number starts with the country calling code
   ///
-  /// throws a PhoneNumberException if the dial code is invalid
+  /// throws a PhoneNumberException if the country calling code is invalid
   @override
   PhoneNumber parseRaw(String phoneNumber) {
     phoneNumber = TextParser.normalize(phoneNumber);
     phoneNumber =
         InternationalPrefixParser.removeInternationalPrefix(phoneNumber);
-    final dialCode = DialCodeParser.extractDialCode(phoneNumber);
-    return parseWithDialCode(dialCode, phoneNumber);
+    final countryCallingCode =
+        CountryCallingCodeParser.extractCountryCallingCode(phoneNumber);
+    return parseWithCountryCallingCode(countryCallingCode, phoneNumber);
   }
 
   /// Validates a phone number using pattern mathing

@@ -19,8 +19,14 @@ enum Code {
   /// Invalid phone number
   INVALID,
 
-  //
-  INVALID_DIAL_CODE,
+  /// invalid country code
+  ///
+  /// Valid example: 33 for france
+  INVALID_COUNTRY_CALLING_CODE,
+
+  /// invalid alpha-2 code (example valid)
+  ///
+  /// Valid example: FR for france
   INVALID_ISO_CODE,
 
   /// Input has reached the maximum limit
