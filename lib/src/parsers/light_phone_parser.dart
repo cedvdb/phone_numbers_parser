@@ -40,27 +40,31 @@ class LightPhoneParser extends BasePhoneParser {
     final metadata = MetadataFinder.getMetadataForIsoCode(isoCode);
     phoneNumber =
         InternationalPrefixParser.removeInternationalPrefix(phoneNumber);
-    phoneNumber = CountryCallingCodeParser.removeCountryCallingCode(
-        phoneNumber, metadata.countryCallingCode);
+    phoneNumber =
+        CountryCodeParser.removeCountryCode(phoneNumber, metadata.countryCode);
     final nsn =
         NationalPrefixParser.removeNationalPrefix(phoneNumber, metadata);
     return PhoneNumber(nsn: nsn, isoCode: metadata.isoCode);
   }
 
   @override
-  PhoneNumber parseWithCountryCallingCode(
-    String countryCallingCode,
+  @Deprecated(
+      'renamed to parse with countryCode, dial code was semantically incorrect')
+  PhoneNumber parseWithDialCodeCode(String dialCode, String phoneNumber) {
+    return parseWithCountryCode(dialCode, phoneNumber);
+  }
+
+  @override
+  PhoneNumber parseWithCountryCode(
+    String countryCode,
     String phoneNumber,
   ) {
-    countryCallingCode = CountryCallingCodeParser.normalizeCountryCallingCode(
-        countryCallingCode);
+    countryCode = CountryCodeParser.normalizeCountryCode(countryCode);
     phoneNumber = TextParser.normalize(phoneNumber);
     phoneNumber =
         InternationalPrefixParser.removeInternationalPrefix(phoneNumber);
-    phoneNumber = CountryCallingCodeParser.removeCountryCallingCode(
-        phoneNumber, countryCallingCode);
-    var metadatas =
-        MetadataFinder.getMetadatasForCountryCallingCode(countryCallingCode);
+    phoneNumber = CountryCodeParser.removeCountryCode(phoneNumber, countryCode);
+    var metadatas = MetadataFinder.getMetadatasForCountryCode(countryCode);
     metadatas =
         MetadataMatcher.reducePotentialMetadatasFits(phoneNumber, metadatas);
     // this line will give some fake results between US and CA but that's the
@@ -76,9 +80,8 @@ class LightPhoneParser extends BasePhoneParser {
     phoneNumber = TextParser.normalize(phoneNumber);
     phoneNumber =
         InternationalPrefixParser.removeInternationalPrefix(phoneNumber);
-    final countryCallingCode =
-        CountryCallingCodeParser.extractCountryCallingCode(phoneNumber);
-    return parseWithCountryCallingCode(countryCallingCode, phoneNumber);
+    final countryCode = CountryCodeParser.extractCountryCode(phoneNumber);
+    return parseWithCountryCode(countryCode, phoneNumber);
   }
 
   /// Validates a phone number using length information

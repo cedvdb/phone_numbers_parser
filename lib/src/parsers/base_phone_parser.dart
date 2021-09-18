@@ -18,7 +18,7 @@ abstract class BasePhoneParser {
   /// throws a PhoneNumberException if the isoCode is invalid
   PhoneNumber parseWithIsoCode(String isoCode, String phoneNumber);
 
-  /// parses a [phoneNumber] given a [countryCallingCode]
+  /// parses a [phoneNumber] given a [countryCode]
   ///
   /// Use parseWithIsoCode when possible at multiple countries
   /// use the same country calling code.
@@ -26,10 +26,13 @@ abstract class BasePhoneParser {
   /// {@macro phoneNumber}
   ///
   /// throws a PhoneNumberException if the country calling code is invalid
-  PhoneNumber parseWithCountryCallingCode(
-      String countryCallingCode, String phoneNumber);
+  PhoneNumber parseWithCountryCode(String countryCode, String phoneNumber);
 
-  /// parses a [phoneNumber] given a [countryCallingCode]
+  @Deprecated(
+      'renamed to parse with countryCode, dial code was semantically incorrect')
+  PhoneNumber parseWithDialCodeCode(String dialCode, String phoneNumber);
+
+  /// parses a [phoneNumber] given a [countryCode]
   ///
   /// Use parseWithIsoCode when possible at multiple countries
   /// use the same country calling code.
