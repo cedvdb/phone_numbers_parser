@@ -28,8 +28,8 @@ class PhoneNumberRange {
   /// Calculates the number of [PhoneNumber]s in the range (inclusive of start and end)
   /// where 'this' is the start of the range and [endOfRange] is the end of the range.
   int get count {
-    var first = BigInt.parse(_number(start));
-    var last = BigInt.parse(_number(end));
+    var first = BigInt.parse(start.international);
+    var last = BigInt.parse(end.international);
 
     var bigInterval = last - first;
 
@@ -38,39 +38,17 @@ class PhoneNumberRange {
     return interval;
   }
 
-  String _number(PhoneNumber phone) => '${phone.dialCode}${phone.nsn}';
-
   /// Returns a list of [PhoneNumber]s in the range
   /// [this] to [endOfRange] inclusive.
   List<PhoneNumber> expandRange() {
-    var startZeros = _getLeadingZeros(start);
-
-    var first = BigInt.parse(_number(start));
-    var last = BigInt.parse(_number(end));
+    var first = BigInt.parse(start.international);
+    var last = BigInt.parse(end.international);
 
     var range = <PhoneNumber>[];
     for (var current = first; current <= last; current = current + BigInt.one) {
-      range.add(PhoneParser().parseRaw(startZeros + current.toString()));
+      range.add(PhoneParser().parseRaw(current.toString()));
     }
 
     return range;
-  }
-
-  /// Technically this isn't need as [PhoneNumber] uses dial
-  /// codes, non of which start with leading zeros.
-  /// At a future we may want to support national numbers
-  /// which can be of the form 0383208100 in which case
-  /// handling leading zeros is already supported.
-  String _getLeadingZeros(PhoneNumber phone) {
-    var leadingZeros = '';
-
-    for (var digit in _number(phone).runes) {
-      if (String.fromCharCode(digit) == '0') {
-        leadingZeros += '0';
-      } else {
-        break;
-      }
-    }
-    return leadingZeros;
   }
 }

@@ -15,8 +15,6 @@ class PhoneNumber {
   /// international version of phone number
   String get international => '+' + dialCode + nsn;
 
-  String get _number => '$dialCode$nsn';
-
   const PhoneNumber({
     required this.isoCode,
     required this.nsn,
@@ -35,12 +33,11 @@ class PhoneNumber {
   @override
   int get hashCode => nsn.hashCode ^ isoCode.hashCode;
 
-
   /// Returns true if this phone number is numerically greater
   /// than [other]
   bool operator >(PhoneNumber other) {
-    var self = BigInt.parse(_number);
-    var _other = BigInt.parse(other._number);
+    var self = BigInt.parse(international);
+    var _other = BigInt.parse(other.international);
 
     return (self - _other).toInt() > 0;
   }
@@ -83,12 +80,10 @@ class PhoneNumber {
   /// PhoneParser.parseRaw('61383208100') + 1 == PhoneParser.parseRaw('61383208101');
   /// ```
   PhoneNumber operator +(int operand) {
-    var leadingZeros = _getLeadingZeros();
-
-    var phone = BigInt.parse(_number);
+    var phone = BigInt.parse(international);
     var result = phone + (BigInt.from(operand));
 
-    return PhoneParser().parseRaw(leadingZeros + result.toString());
+    return PhoneParser().parseRaw(result.toString());
   }
 
   /// numerically subtract [operand] from this phone number
@@ -97,29 +92,9 @@ class PhoneNumber {
   /// PhoneParser.parseRaw('61383208100') - 1 == PhoneParser.parseRaw('61383208099');
   /// ```
   PhoneNumber operator -(int operand) {
-    var leadingZeros = _getLeadingZeros();
-
-    var phone = BigInt.parse(_number);
+    var phone = BigInt.parse(international);
     var result = phone - BigInt.from(operand);
 
-    return PhoneParser().parseRaw(leadingZeros + result.toString());
-  }
-
-  /// Technically this isn't need as [PhoneNumber] uses dial
-  /// codes, non of which start with leading zeros.
-  /// At a future we may want to support national numbers
-  /// which can be of the form 0383208100 in which case
-  /// handling leading zeros is already supported.
-  String _getLeadingZeros() {
-    var leadingZeros = '';
-
-    for (var digit in _number.runes) {
-      if (String.fromCharCode(digit) == '0') {
-        leadingZeros += '0';
-      } else {
-        break;
-      }
-    }
-    return leadingZeros;
+    return PhoneParser().parseRaw(result.toString());
   }
 }
