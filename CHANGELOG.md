@@ -1,5 +1,5 @@
 ## 3.0.0
-- renamed [dialCode] to [countryCallingCode]
+- renamed [dialCode] to [countryCode] as dialCode was semantically incorrect
 
 ## 2.0.1
 - rename base class for parsers to BasePhoneParser, as parser was too broad.
@@ -86,7 +86,7 @@
 
 - added toString to PhoneNumber
 - added leading digits getter to country
-- added displayDialCode on country which is a mix of dial code and leading digits
+- added displayDialCode on country which is a mix of country code and leading digits
 - added copyWithIsoCode as instance method on phone number to make it
   easy to switch between countries in a phone number input
 - added toString to exception

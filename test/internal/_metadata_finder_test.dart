@@ -19,14 +19,13 @@ void main() {
     });
 
     test('should get metadata list for country calling code', () {
-      expect(MetadataFinder.getMetadatasForCountryCallingCode('33').length,
-          equals(1));
-      expect(MetadataFinder.getMetadatasForCountryCallingCode('33')[0].isoCode,
+      expect(MetadataFinder.getMetadatasForCountryCode('33').length, equals(1));
+      expect(MetadataFinder.getMetadatasForCountryCode('33')[0].isoCode,
           equals('FR'));
 
-      expect(MetadataFinder.getMetadatasForCountryCallingCode('1').length,
+      expect(MetadataFinder.getMetadatasForCountryCode('1').length,
           greaterThan(1));
-      expect(MetadataFinder.getMetadatasForCountryCallingCode('1')[0].isoCode,
+      expect(MetadataFinder.getMetadatasForCountryCode('1')[0].isoCode,
           equals('US'));
     });
   });

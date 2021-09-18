@@ -41,7 +41,7 @@ void main() {
     });
 
     test('should parse with country calling code', () {
-      final parse = parser.parseWithCountryCallingCode;
+      final parse = parser.parseWithCountryCode;
       // basic
       expect(parse('33', '479 995 533').international, equals('+33479995533'));
       expect(parse('33', '479-995-533').international, equals('+33479995533'));

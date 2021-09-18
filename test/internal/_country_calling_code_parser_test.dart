@@ -4,32 +4,24 @@ import 'package:phone_numbers_parser/src/parsers/_country_calling_code_parser.da
 import 'package:test/test.dart';
 
 void main() {
-  group('_CountryCallingCodeParser', () {
+  group('_CountryCodeParser', () {
     test('should normalize country calling code', () {
-      expect(CountryCallingCodeParser.normalizeCountryCallingCode('33'),
-          equals('33'));
-      expect(CountryCallingCodeParser.normalizeCountryCallingCode('+33'),
-          equals('33'));
-      expect(CountryCallingCodeParser.normalizeCountryCallingCode(' + 33 '),
-          equals('33'));
-      expect(CountryCallingCodeParser.normalizeCountryCallingCode(' ＋ 33 '),
-          equals('33'));
-      expect(() => CountryCallingCodeParser.normalizeCountryCallingCode('not'),
+      expect(CountryCodeParser.normalizeCountryCode('33'), equals('33'));
+      expect(CountryCodeParser.normalizeCountryCode('+33'), equals('33'));
+      expect(CountryCodeParser.normalizeCountryCode(' + 33 '), equals('33'));
+      expect(CountryCodeParser.normalizeCountryCode(' ＋ 33 '), equals('33'));
+      expect(() => CountryCodeParser.normalizeCountryCode('not'),
           throwsA(isA<PhoneNumberException>()));
     });
 
     test('should remove country calling code', () {
-      expect(CountryCallingCodeParser.removeCountryCallingCode('339', '33'),
-          equals('9'));
+      expect(CountryCodeParser.removeCountryCode('339', '33'), equals('9'));
     });
 
     test('should extract country calling code', () {
-      expect(CountryCallingCodeParser.extractCountryCallingCode('33'),
-          equals('33'));
-      expect(CountryCallingCodeParser.extractCountryCallingCode('33479887766'),
-          equals('33'));
-      expect(CountryCallingCodeParser.extractCountryCallingCode('18889997772'),
-          equals('1'));
+      expect(CountryCodeParser.extractCountryCode('33'), equals('33'));
+      expect(CountryCodeParser.extractCountryCode('33479887766'), equals('33'));
+      expect(CountryCodeParser.extractCountryCode('18889997772'), equals('1'));
     });
   });
 }
