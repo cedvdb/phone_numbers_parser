@@ -18,7 +18,7 @@ void main(List<String> arguments) {
 
   // changing the country
   final esPhone = parser.copyWithIsoCode(frPhone, 'ES');
-  print(esPhone.dialCode); // 34
+  print(esPhone.countryCode); // 34
   print(esPhone.isoCode); // ES
   print(esPhone.international); // '+34655570576'
 

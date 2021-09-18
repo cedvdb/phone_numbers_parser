@@ -10,10 +10,14 @@ class PhoneNumber {
   final String isoCode;
 
   /// territory numerical code that precedes a phone number. Example 33 for france
-  String get dialCode => MetadataFinder.getMetadataForIsoCode(isoCode).dialCode;
+  String get countryCode =>
+      MetadataFinder.getMetadataForIsoCode(isoCode).countryCode;
+
+  @Deprecated('use countryCode, dialCode was semantically incorrect')
+  String get dialCode => countryCode;
 
   /// international version of phone number
-  String get international => '+' + dialCode + nsn;
+  String get international => '+' + countryCode + nsn;
 
   const PhoneNumber({
     required this.isoCode,
