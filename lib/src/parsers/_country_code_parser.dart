@@ -19,13 +19,15 @@ abstract class CountryCodeParser {
     if (countryCode.startsWith('0')) {
       throw PhoneNumberException(
           code: Code.INVALID_COUNTRY_CALLING_CODE,
-          description: 'country calling code do not start with 0');
+          description:
+              'country calling code do not start with 0, was $countryCode');
     }
     if (countryCode.length < Constants.MIN_LENGTH_COUNTRY_CALLING_CODE ||
         countryCode.length > Constants.MAX_LENGTH_COUNTRY_CALLING_CODE) {
       throw PhoneNumberException(
           code: Code.INVALID_COUNTRY_CALLING_CODE,
-          description: 'country calling code invalid length');
+          description:
+              'country calling code has an invalid length, was $countryCode');
     }
     return countryCode;
   }
@@ -46,7 +48,8 @@ abstract class CountryCodeParser {
     }
     throw PhoneNumberException(
         code: Code.NOT_FOUND,
-        description: 'country calling code not found in phone number');
+        description:
+            'country calling code not found in phone number $phoneNumber');
   }
 
   static String removeCountryCode(String phoneNumber, String countryCode) {
