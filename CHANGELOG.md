@@ -1,5 +1,6 @@
 ## 3.0.0
 - added localized formatter to format a phone number in an human readable way
+- added PhoneNumberRanges and utility operators on PhoneNumber (thanks @bsutton)
 - renamed [dialCode] to [countryCode] as dialCode was semantically incorrect
 
 ## 2.0.1
