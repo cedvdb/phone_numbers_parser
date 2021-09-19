@@ -37,6 +37,17 @@ abstract class MetadataFinder {
     return metadata;
   }
 
+  static p.PhoneMetadataFormats getMetadataFormatsForIsoCode(String isoCode) {
+    final metadata = p.metadataFormatsByIsoCode[isoCode];
+    if (metadata == null) {
+      throw PhoneNumberException(
+        code: Code.INVALID_ISO_CODE,
+        description: 'isoCode "$isoCode" not found',
+      );
+    }
+    return metadata;
+  }
+
   /// expects normalized countryCode
   static List<p.PhoneMetadata> getMetadatasForCountryCode(String countryCode) {
     final isoList = _getIsoCodesFromCountryCode(countryCode);
