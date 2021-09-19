@@ -9,11 +9,13 @@ The advantage of this lib instead of libphonenumber is that it instantly support
 
  - Find phone numbers in a text
  - Validate a phone number
- - Find the region of a phone number
- - Phone number parsing
+ - Find the country of a phone number (Geocoding available as separate package)
  - A light parser for size aware applications
+ - Formatter
+ - Phone ranges
  - Supports easthern arabic digits
  - Uses best-in-class metadata from Google's libPhoneNumber project. 
+
 
 
 ## Parsers
@@ -50,7 +52,7 @@ PhoneParser:
 
   // changing the country
   final esPhone = parser.copyWithIsoCode(frPhone, 'ES');
-  print(esPhone.dialCode); // 34
+  print(esPhone.countryCode); // 34
   print(esPhone.isoCode); // ES
   print(esPhone.international); // '+34655570576'
 
@@ -60,35 +62,49 @@ PhoneParser:
   print(text.substring(found.first.start, found.first.end)); 
 ```
 
+## Formatter
 
-## Migration to 2.0.0
+```dart
+  final parser = PhoneParser();
+  final formatter = PhoneNumberFormatter();
+  final phoneNumber = parser.parseWithIsoCode('US', '2025550119');
+  final formatted = formatter.formatNsn(phoneNumber);
+  print(formatted); // 202-555-0119
+```
 
-`PhoneNumber.validate` has been removed, use `PhoneParser.validate` or `LightPhoneParser.validate`
+## Range 
 
-## Migration to 1.0.0
+```dart
+ final first = parser.parseRaw('+33 655 5705 00');
+  final last = parser.parseRaw('+33 655 5705 03');
+  final range = PhoneNumberRange(first, last);
 
-1.0.0 introduces two parsers:
+  print('Count: ${range.count}');
+  print('Expand: ${range.expandRange().join(',')}');
 
-  - PhoneParser: Heavy, more accurate and more computationally intensive (relies on pattern matching)
-  - LightPhoneParser: Light, somewhat accurate and less computationally intensive (relies on length)
-  If a light validation based on length suffice, LightPhoneParser can be used, assuming you don't import
-  the other parser, that will decrease the library size footprint.
+  if (first > last) {
+    print("this shouldn't be.");
+  }
 
-With this change a few breaking changes had to be made
+  final one = parser.parseRaw('+33 655 5705 01');
+  final two = parser.parseRaw('+33 655 5705 02');
 
-  before:
-  ```dart
-  final frPhone = PhoneNumber.fromRaw('+33 655 5705 76');
-  final frPhone1 = PhoneNumber.fromIsoCode('FR', '655 5705 76');
-  final valid = frPhone.validate();
-  ```
+  if (one.isAdjacentTo(two)) {
+    print('We are together');
+  }
+  if (one.isSequentialTo(two)) {
+    print('$two comes after $one');
+  }
 
-  after:
-  ```dart
-  final frPhone = PhoneParser.fromRaw('+33 655 5705 76')
-  final frPhone1 = LightPhoneParser.fromIsoCode('FR', '655 5705 76');
-  final valid = PhoneParser.validate(frPhone);
-  ```
+  /// treat the phone no. like an int
+  var three = two + 1;
+  print('Its still a phone No. $three');
+  two - 1 == one;
+  var another = one + 2;
+  print('$another == $three');
+
+```
+
 
 ## Demo
 

@@ -3,7 +3,7 @@ import 'package:phone_number_metadata/phone_number_metadata.dart';
 abstract class InternationalPrefixParser {
   /// remove the international prefix of a phone number if present.
   ///
-  /// It expects a normalized [phoneNumber] without the dial code.
+  /// It expects a normalized [phoneNumber] without the country calling code.
   ///  if phone starts with + it is removed
   ///  if starts with 00 or 011
   ///  we consider those as internationalPrefix as

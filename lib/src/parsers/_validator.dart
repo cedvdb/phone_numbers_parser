@@ -1,9 +1,9 @@
 import 'package:phone_number_metadata/phone_number_metadata.dart';
 import 'package:phone_numbers_parser/src/models/phone_number.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
+import 'package:phone_numbers_parser/src/utils/_regexp_manager.dart';
 
 import '../constants/constants.dart';
-import '../utils/_regexp_ext.dart';
 import '../models/phone_number_type.dart';
 
 /// Validates phone numbers
@@ -35,7 +35,7 @@ abstract class Validator {
       patterns.add(_getPatterns(patternMetadatas, type));
     }
     return patterns
-        .any((r) => RegExp(r).matchEntirely(phoneNumber.nsn) != null);
+        .any((r) => RegexpManager.matchEntirely(r, phoneNumber.nsn) != null);
   }
 
   /// Returns whether or not a national number is viable using length

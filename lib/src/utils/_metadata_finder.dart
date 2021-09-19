@@ -37,18 +37,29 @@ abstract class MetadataFinder {
     return metadata;
   }
 
-  /// expects normalized dialCode
-  static List<p.PhoneMetadata> getMetadatasForDialCode(String dialCode) {
-    final isoList = _getIsoCodesFromDialCode(dialCode);
+  static p.PhoneMetadataFormats getMetadataFormatsForIsoCode(String isoCode) {
+    final metadata = p.metadataFormatsByIsoCode[isoCode];
+    if (metadata == null) {
+      throw PhoneNumberException(
+        code: Code.INVALID_ISO_CODE,
+        description: 'isoCode "$isoCode" not found',
+      );
+    }
+    return metadata;
+  }
+
+  /// expects normalized countryCode
+  static List<p.PhoneMetadata> getMetadatasForCountryCode(String countryCode) {
+    final isoList = _getIsoCodesFromCountryCode(countryCode);
     return isoList.map((iso) => getMetadataForIsoCode(iso)).toList();
   }
 
-  static List<String> _getIsoCodesFromDialCode(String dialCode) {
-    final isoCodes = p.dialCodeToIsoCode[dialCode];
+  static List<String> _getIsoCodesFromCountryCode(String countryCode) {
+    final isoCodes = p.countryCodeToIsoCode[countryCode];
     if (isoCodes == null) {
       throw PhoneNumberException(
-        code: Code.INVALID_DIAL_CODE,
-        description: 'dialCode $dialCode not found',
+        code: Code.INVALID_COUNTRY_CALLING_CODE,
+        description: 'countryCode $countryCode not found',
       );
     }
     return isoCodes;

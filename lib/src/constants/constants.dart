@@ -1,7 +1,7 @@
 class Constants {
   /// The minimum and maximum length of the country calling code.
-  static final int MIN_LENGTH_COUNTRY_DIAL_CODE = 1;
-  static final int MAX_LENGTH_COUNTRY_DIAL_CODE = 3;
+  static final int MIN_LENGTH_COUNTRY_CALLING_CODE = 1;
+  static final int MAX_LENGTH_COUNTRY_CALLING_CODE = 3;
 
   /// The minimum and maximum length of the national significant number.
   /// lib phone number uses 2 but ITU says it's 3
