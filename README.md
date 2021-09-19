@@ -11,6 +11,7 @@ The advantage of this lib instead of libphonenumber is that it instantly support
  - Validate a phone number
  - Find the country of a phone number (Geocoding available as separate package)
  - A light parser for size aware applications
+ - Formatter
  - Phone ranges
  - Supports easthern arabic digits
  - Uses best-in-class metadata from Google's libPhoneNumber project. 
@@ -59,6 +60,16 @@ PhoneParser:
   final text = 'hey my phone number is: +33 939 876 218';
   final found = parser.findPotentialPhoneNumbers(text);
   print(text.substring(found.first.start, found.first.end)); 
+```
+
+## Formatter
+
+```dart
+  final parser = PhoneParser();
+  final formatter = PhoneNumberFormatter();
+  final phoneNumber = parser.parseWithIsoCode('US', '2025550119');
+  final formatted = formatter.formatNsn(phoneNumber);
+  print(formatted); // 202-555-0119
 ```
 
 ## Range 

@@ -18,6 +18,11 @@ void main() {
           isA<PhoneMetadataLengths>());
     });
 
+    test('should get formats metadata for iso code', () {
+      expect(MetadataFinder.getMetadataFormatsForIsoCode('US'),
+          isA<PhoneMetadataFormats>());
+    });
+
     test('should get metadata list for country calling code', () {
       expect(MetadataFinder.getMetadatasForCountryCode('33').length, equals(1));
       expect(MetadataFinder.getMetadatasForCountryCode('33')[0].isoCode,

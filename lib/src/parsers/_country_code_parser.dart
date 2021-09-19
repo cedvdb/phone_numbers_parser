@@ -22,6 +22,12 @@ abstract class CountryCodeParser {
           description:
               'country calling code do not start with 0, was $countryCode');
     }
+    if (int.tryParse(countryCode) == null) {
+      throw PhoneNumberException(
+          code: Code.INVALID_COUNTRY_CALLING_CODE,
+          description: 'country calling code must be digits, was $countryCode. '
+              'Maybe you wanted to parse with isoCode ?');
+    }
     if (countryCode.length < Constants.MIN_LENGTH_COUNTRY_CALLING_CODE ||
         countryCode.length > Constants.MAX_LENGTH_COUNTRY_CALLING_CODE) {
       throw PhoneNumberException(

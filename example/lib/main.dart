@@ -27,6 +27,12 @@ void main(List<String> arguments) {
   final found = parser.findPotentialPhoneNumbers(text);
   print(text.substring(found.first.start, found.first.end));
 
+  // Formatting
+  final formatter = PhoneNumberFormatter();
+  final phoneNumber = parser.parseWithIsoCode('US', '2025550119');
+  final formatted = formatter.formatNsn(phoneNumber);
+  print(formatted); // 202-555-0119
+
   // Ranges
   final first = parser.parseRaw('+33 655 5705 00');
   final last = parser.parseRaw('+33 655 5705 03');

@@ -1,5 +1,6 @@
 import 'package:phone_number_metadata/phone_number_metadata.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
+import 'package:phone_numbers_parser/src/utils/_regexp_manager.dart';
 
 abstract class NationalPrefixParser {
   /// extract the national prefix from the phone number if there is one
@@ -33,45 +34,14 @@ abstract class NationalPrefixParser {
     final transformRule = patterns.nationalPrefixTransformRule;
 
     if (nationalPrefixForParsing != null) {
-      final transformed = _applyTransformRules(
-        nationalNumber,
-        nationalPrefixForParsing,
-        transformRule,
+      final transformed = RegexpManager.applyTransformRules(
+        appliedTo: nationalNumber,
+        pattern: nationalPrefixForParsing,
+        transformRule: transformRule,
       );
       return transformed;
     } else {
       return removeNationalPrefix(nationalNumber, metadata);
     }
-  }
-
-  static String _applyTransformRules(
-    String nationalNumber,
-    String nationalPrefixForParsing,
-    String? transformRule,
-  ) {
-    // match as prefix because we are only replacing the group and keeping
-    // the end intact
-    final match =
-        RegExp(nationalPrefixForParsing).matchAsPrefix(nationalNumber);
-    if (match == null) {
-      return nationalNumber;
-    }
-    // if there is no group caught there is no need to transform
-    // it is possible for a group to be null despite the group count being 1
-    if (transformRule == null ||
-        match.groupCount == 0 ||
-        match.group(1) == null) {
-      return nationalNumber.substring(match.end);
-    }
-
-    var transformed = transformRule;
-    final shouldContinueLoop = (int i) =>
-        match.groupCount >= i &&
-        match.group(i) != null &&
-        transformed.contains('\$$i');
-    for (var i = 1; shouldContinueLoop(i); i++) {
-      transformed = transformed.replaceFirst('\$$i', match.group(i)!);
-    }
-    return transformed + nationalNumber.substring(match.end);
   }
 }
