@@ -3,7 +3,7 @@ import 'package:phone_numbers_parser/src/models/phone_number.dart';
 import 'package:phone_numbers_parser/src/parsers/_country_code_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_international_prefix_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_national_prefix_parser.dart';
-import 'package:phone_numbers_parser/src/parsers/base_phone_parser.dart';
+import 'package:phone_numbers_parser/src/parsers/light_phone_parser.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_matcher.dart';
 
@@ -11,39 +11,33 @@ import '_iso_code_parser.dart';
 import '_text_parser.dart';
 import '_validator.dart';
 
-/// {@template phoneNumber}
-/// The [phoneNumber] can be of the sort:
-///  +33 478 88 88 88,
-///  0478 88 88 88,
-///  478 88 88 88
-/// {@endtemplate}
-
-/// Heavy parser
+/// For parsing phone numbers
 ///
-/// This parser is more accurate than the LightPhoneParser at the expense
+/// Use [parseNational] when you know that a phone number is a
+/// national version (phone number input)
+///
+/// Use [parseWithIsoCode] over [parseWithCountryCode] as it is faster
+/// Use [parseWithCountryCode] over [parseRaw] as it is faster
+///
+/// Note: This parser is more accurate than the LightPhoneParser at the expense
 /// of being more computationally intensive and resulting in a bigger
 /// size when imported
-///
-/// It also furnishes more utilities that cannot be achieved with the light parser
-class PhoneParser extends BasePhoneParser {
-  /// parses a [phoneNumber] given an [isoCode]
-  ///
-  /// {@macro phoneNumber}
-  ///
-  /// throws a PhoneNumberException if the isoCode is invalid
+class PhoneParser extends LightPhoneParser {
   @override
-  PhoneNumber parseWithIsoCode(String isoCode, String phoneNumber) {
+  PhoneNumber parseNational(String isoCode, String national) {
     isoCode = IsoCodeParser.normalizeIsoCode(isoCode);
-    phoneNumber = TextParser.normalize(phoneNumber);
+
+    national = TextParser.normalize(national);
     final metadata = MetadataFinder.getMetadataForIsoCode(isoCode);
-    phoneNumber = InternationalPrefixParser.removeInternationalPrefix(
-        phoneNumber, metadata);
-    phoneNumber =
-        CountryCodeParser.removeCountryCode(phoneNumber, metadata.countryCode);
     final nsn =
         NationalPrefixParser.transformLocalNsnToInternationalUsingPatterns(
-            phoneNumber, metadata);
+            national, metadata);
     return PhoneNumber(isoCode: metadata.isoCode, nsn: nsn);
+  }
+
+  @override
+  PhoneNumber parseWithIsoCode(String isoCode, String phoneNumber) {
+    return super.parseWithIsoCode(isoCode, phoneNumber);
   }
 
   @override
@@ -53,14 +47,6 @@ class PhoneParser extends BasePhoneParser {
     return parseWithCountryCode(dialCode, phoneNumber);
   }
 
-  /// parses a [phoneNumber] given a [countryCode]
-  ///
-  /// Use parseWithIsoCode when possible at multiple countries
-  /// use the same country calling code.
-  ///
-  /// {@macro phoneNumber}
-  ///
-  /// throws a PhoneNumberException if the country calling code is invalid
   @override
   PhoneNumber parseWithCountryCode(
     String countryCode,
@@ -68,35 +54,20 @@ class PhoneParser extends BasePhoneParser {
   ) {
     countryCode = CountryCodeParser.normalizeCountryCode(countryCode);
     phoneNumber = TextParser.normalize(phoneNumber);
-    phoneNumber =
-        InternationalPrefixParser.removeInternationalPrefix(phoneNumber);
+    phoneNumber = InternationalPrefixParser.removeInternationalPrefix(
+      phoneNumber,
+      countryCode: countryCode,
+    );
     phoneNumber = CountryCodeParser.removeCountryCode(phoneNumber, countryCode);
     final metadatas = MetadataFinder.getMetadatasForCountryCode(countryCode);
     final metadata =
         MetadataMatcher.getMatchUsingPatterns(phoneNumber, metadatas);
-    final nsn =
-        NationalPrefixParser.transformLocalNsnToInternationalUsingPatterns(
-      phoneNumber,
-      metadata,
-    );
-    return PhoneNumber(isoCode: metadata.isoCode, nsn: nsn);
+    return parseNational(metadata.isoCode, phoneNumber);
   }
 
-  /// parses a [phoneNumber] given a [countryCode]
-  ///
-  /// Use parseWithIsoCode when possible at multiple countries
-  /// use the same country calling code.
-  ///
-  /// This assumes the phone number starts with the country calling code
-  ///
-  /// throws a PhoneNumberException if the country calling code is invalid
   @override
   PhoneNumber parseRaw(String phoneNumber) {
-    phoneNumber = TextParser.normalize(phoneNumber);
-    phoneNumber =
-        InternationalPrefixParser.removeInternationalPrefix(phoneNumber);
-    final countryCode = CountryCodeParser.extractCountryCode(phoneNumber);
-    return parseWithCountryCode(countryCode, phoneNumber);
+    return super.parseRaw(phoneNumber);
   }
 
   /// Validates a phone number using pattern mathing

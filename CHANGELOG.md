@@ -1,3 +1,7 @@
+
+## 3.0.1
+- added [parseNational]
+
 ## 3.0.0
 - added localized formatter to format a phone number in an human readable way
 - added PhoneNumberRanges and utility operators on PhoneNumber (thanks @bsutton)
