@@ -4,33 +4,42 @@ import 'package:test/test.dart';
 void main() {
   group('PhoneParser', () {
     final parser = PhoneParser();
+
+    test('should parse national', () {
+      expect(
+        parser.parseNational('FR', '6 86 57 90 14').international,
+        equals('+33686579014'),
+      );
+    });
+
     test('should parse with iso code', () {
       final parse = parser.parseWithIsoCode;
-      final international = '+33479995533';
+      final international = '+33686579014';
       // fr no transformation required except removing prefixes
       expect(
-        parse('FR', '+33 479 995 533').international,
+        parse('FR', '+33 6 86 57 90 14').international,
         equals(international),
       );
       expect(
-        parse('FR', '+33 479-995-533').international,
+        parse('FR', '+33 6 865-79-014').international,
         equals(international),
       );
       expect(
-        parse('FR', '+33 479.995.533').international,
+        parse('FR', '+33 6 86.57.90.14').international,
         equals(international),
       );
 
       expect(
-        parse('FR', '+33 479995533').international,
+        parse('FR', '+33 6 86 57 90 14').international,
         equals(international),
       );
       expect(
-        parse('FR', '0033 479995533').international,
+        parse('FR', '00 33 6 86 57 90 14').international,
         equals(international),
       );
-      expect(parse('FR', '0479 995533').international, equals(international));
-      expect(parse('FR', '479995533').international, equals(international));
+      expect(
+          parse('FR', '06 86 57 90 14').international, equals(international));
+      expect(parse('FR', '6 86 57 90 14').international, equals(international));
       // should modify national number from local to international
       // example: in argentina 0343 15 555 1212 (local) is exactly the
       // number as +54 9 343 555 1212 (international)

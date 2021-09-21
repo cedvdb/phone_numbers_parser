@@ -8,20 +8,30 @@ void main() {
 
     test('should remove + prefix in all cases', () {
       expect(fix('+654'), '654');
-      expect(fix('+654', MetadataFinder.getMetadataForIsoCode('US')), '654');
+      expect(fix('+654', metadata: MetadataFinder.getMetadataForIsoCode('US')),
+          '654');
     });
 
     test('should remove remove 00 and 011 prefixes, if no metadata provided',
         () {
       expect(fix('00654'), '654');
       expect(fix('011654'), '654');
-      expect(fix('00654', MetadataFinder.getMetadataForIsoCode('US')), '00654');
+      expect(fix('00654', metadata: MetadataFinder.getMetadataForIsoCode('US')),
+          '00654');
+    });
+
+    test('should not remove if country code not following', () {
+      expect(fix('00654', countryCode: '6'), '654');
+      expect(fix('00654', countryCode: '7'), '00654');
     });
 
     test('should remove prefix from metadata', () {
-      expect(fix('011654', MetadataFinder.getMetadataForIsoCode('US')), '654');
       expect(
-          fix('0033654', MetadataFinder.getMetadataForIsoCode('FR')), '33654');
+          fix('011654', metadata: MetadataFinder.getMetadataForIsoCode('US')),
+          '654');
+      expect(
+          fix('0033654', metadata: MetadataFinder.getMetadataForIsoCode('FR')),
+          '33654');
     });
   });
 }
