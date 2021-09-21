@@ -1,5 +1,5 @@
 
-## 3.0.0
+## 3.0.1
 - added [parseNational]
 
 ## 3.0.0
