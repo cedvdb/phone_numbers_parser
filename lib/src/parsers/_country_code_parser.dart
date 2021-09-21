@@ -26,7 +26,7 @@ abstract class CountryCodeParser {
       throw PhoneNumberException(
           code: Code.INVALID_COUNTRY_CALLING_CODE,
           description: 'country calling code must be digits, was $countryCode. '
-              'Maybe you wanted to parse with isoCode ?');
+              'Maybe you wanted to parseWithIsoCode ?');
     }
     if (countryCode.length < Constants.MIN_LENGTH_COUNTRY_CALLING_CODE ||
         countryCode.length > Constants.MAX_LENGTH_COUNTRY_CALLING_CODE) {

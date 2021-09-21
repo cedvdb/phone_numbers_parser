@@ -3,9 +3,8 @@
 /// More dartdocs go here.
 library phone_number_parser;
 
-export 'src/parsers/light_phone_parser.dart';
 export 'src/parsers/phone_parser.dart';
-export 'src/parsers/base_phone_parser.dart';
+export 'src/parsers/light_phone_parser.dart';
 
 export 'src/formatters/phone_number_formatter.dart';
 
