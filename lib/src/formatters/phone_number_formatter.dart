@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:phone_number_metadata/phone_number_metadata.dart';
+import 'package:phone_numbers_parser/src/constants/constants.dart';
 import 'package:phone_numbers_parser/src/models/phone_number.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 import 'package:phone_numbers_parser/src/utils/_regexp_manager.dart';
@@ -8,6 +9,9 @@ import 'package:phone_numbers_parser/src/utils/_regexp_manager.dart';
 class PhoneNumberFormatter {
   /// format national number for international use
   String formatNsn(PhoneNumber phoneNumber) {
+    if (phoneNumber.nsn.isEmpty) {
+      return phoneNumber.nsn;
+    }
     final missingDigits = _getMissingDigits(phoneNumber);
     final completePhoneNumber = phoneNumber.nsn + missingDigits;
     final formatingRules =

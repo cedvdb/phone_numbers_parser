@@ -1,4 +1,7 @@
 
+## 3.0.2
+- fix formatter error when empty input
+
 ## 3.0.1
 - added [parseNational]
 

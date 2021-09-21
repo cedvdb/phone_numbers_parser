@@ -8,7 +8,9 @@ void main() {
       final formatter = PhoneNumberFormatter();
       final format = (String phoneNumber) =>
           formatter.formatNsn(parser.parseWithIsoCode('US', phoneNumber));
-      var testNumber = '2';
+      var testNumber = '';
+      expect(format(testNumber), equals(''));
+      testNumber = '2';
       expect(format(testNumber), equals('2'));
       testNumber = '20';
       expect(format(testNumber), equals('20'));
