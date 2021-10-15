@@ -1,4 +1,18 @@
 
+## 4.0.0 Consolidating Public API
+
+This release removes the LightPhoneParser because it was not working perfectly and the cost of maintaining
+two parsers is too high.
+
+Removing that parser allowed to revert to a more succint public API, where methods should be accessed
+solely via the PhoneNumber class.
+
+PhoneParser,  PhoneNumberFormatter and the likes are still exported for backward compatibility but it is advised 
+to switch to PhoneNumber's methods instead
+
+- [Breaking]: LightPhoneParser has been removed as it was imperfect and added complexity in maintaining two parsers.
+- [Deprecated]: PhoneParser methods have been deprecated in favor of the methods on PhoneNumber class
+
 ## 3.0.2
 - fix formatter error when empty input
 

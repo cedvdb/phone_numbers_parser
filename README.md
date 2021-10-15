@@ -35,52 +35,55 @@ PhoneParser:
 ### Usage PhoneParser
 
 ```dart
-  final parser = PhoneParser(); // alternatively LightPhoneParser
   // creation
-  final frPhone = parser.parseNational('fr', '655 5705 76');
-  final frPhone1 = parser.parseRaw('+33 655 5705 76');
-  final frPhone2 = parser.parseWithIsoCode('fr', '655 5705 76');
-  final frPhone3 = parser.parseWithCountryCode('33', '655 5705 76');
-  final frPhone4 = parser.parseWithIsoCode('fr', '0655 5705 76');
+  final frPhone = PhoneNumber.fromNational('fr', '655 5705 76');
+  final frPhone1 = PhoneNumber.fromRaw('+33 655 5705 76');
+  final frPhone2 = PhoneNumber.fromIsoCode('fr', '655 5705 76');
+  final frPhone3 = PhoneNumber.fromCountryCode('33', '655 5705 76');
+  final frPhone4 = PhoneNumber.fromIsoCode('fr', '0655 5705 76');
   final allSame = frPhone == frPhone1 &&
       frPhone == frPhone2 &&
       frPhone == frPhone3 &&
       frPhone == frPhone4;
-  print(allSame); // true
+  print('allSame: $allSame'); // true
 
   // validation
-  print(parser.validate(frPhone1)); // true
-  print(parser.validate(frPhone1, PhoneNumberType.mobile)); // true
-  print(parser.validate(frPhone1, PhoneNumberType.fixedLine)); // false
+  final valid = frPhone1.validate();
+  final validMobile = frPhone1.validate(type: PhoneNumberType.mobile);
+  final validFixed = frPhone1.validate(type: PhoneNumberType.fixedLine);
+  print('valid: $valid'); // true
+  print('valid mobile: $validMobile'); // true
+  print('valid fixed line: $validFixed'); // false
 
   // changing the country
-  final esPhone = parser.copyWithIsoCode(frPhone, 'ES');
-  print(esPhone.countryCode); // 34
-  print(esPhone.isoCode); // ES
-  print(esPhone.international); // '+34655570576'
+
+  final esPhone =
+      frPhone1.rebuildWith(isoCode: 'ES'); // will reparse the nsn for new iso
+  print('new country code: ' + esPhone.countryCode); // 34 // '+34655570576'
 
   // utils
   final text = 'hey my phone number is: +33 939 876 218';
-  final found = parser.findPotentialPhoneNumbers(text);
-  print(text.substring(found.first.start, found.first.end)); 
+  final found = PhoneNumber.findPotentialPhoneNumbers(text);
+  print('found: ' + (found.first.group(0) ?? ''));
 ```
 
-## Formatter
+## Formatting
+
+Formatting is region specific, so the formats will vary by iso code to accomodate
+for local formats.
 
 ```dart
-  final parser = PhoneParser();
-  final formatter = PhoneNumberFormatter();
-  final phoneNumber = parser.parseWithIsoCode('US', '2025550119');
-  final formatted = formatter.formatNsn(phoneNumber);
-  print(formatted); // 202-555-0119
+  final phoneNumber = PhoneNumber.fromIsoCode('US', '2025550119');
+  final formattedNsn = phoneNumber.getFormattedNsn();
+  print('formatted: $formattedNsn'); 
 ```
 
 ## Range 
 
 ```dart
- final first = parser.parseRaw('+33 655 5705 00');
-  final last = parser.parseRaw('+33 655 5705 03');
-  final range = PhoneNumberRange(first, last);
+final first = PhoneNumber.fromRaw('+33 655 5705 00');
+  final last = PhoneNumber.fromRaw('+33 655 5705 03');
+  final range = PhoneNumber.getRange(first, last);
 
   print('Count: ${range.count}');
   print('Expand: ${range.expandRange().join(',')}');
@@ -89,8 +92,8 @@ PhoneParser:
     print("this shouldn't be.");
   }
 
-  final one = parser.parseRaw('+33 655 5705 01');
-  final two = parser.parseRaw('+33 655 5705 02');
+  final one = PhoneNumber.fromRaw('+33 655 5705 01');
+  final two = PhoneNumber.fromRaw('+33 655 5705 02');
 
   if (one.isAdjacentTo(two)) {
     print('We are together');
@@ -100,10 +103,10 @@ PhoneParser:
   }
 
   /// treat the phone no. like an int
-  var three = two + 1;
+  final three = two + 1;
   print('Its still a phone No. $three');
   two - 1 == one;
-  var another = one + 2;
+  final another = one + 2;
   print('$another == $three');
 
 ```
