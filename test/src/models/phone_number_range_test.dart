@@ -4,12 +4,10 @@ import 'package:test/test.dart';
 
 void main() {
   test('count', () async {
-    var parser = PhoneParser();
-
-    var zero = parser.parseRaw('61383208100');
-    var one = parser.parseRaw('61383208101');
-    var two = parser.parseRaw('61383208102');
-    var ninenine = parser.parseRaw('61383208199');
+    var zero = PhoneNumber.fromRaw('61383208100');
+    var one = PhoneNumber.fromRaw('61383208101');
+    var two = PhoneNumber.fromRaw('61383208102');
+    var ninenine = PhoneNumber.fromRaw('61383208199');
 
     expect(PhoneNumberRange(zero, one).count, equals(2));
     expect(PhoneNumberRange(zero, two).count, equals(3));
@@ -19,12 +17,10 @@ void main() {
   });
 
   test('range', () async {
-    var parser = PhoneParser();
-
-    var zero = parser.parseRaw('61383208100');
-    var one = parser.parseRaw('61383208101');
-    var two = parser.parseRaw('61383208102');
-    var ninenine = parser.parseRaw('61383208199');
+    var zero = PhoneNumber.fromRaw('61383208100');
+    var one = PhoneNumber.fromRaw('61383208101');
+    var two = PhoneNumber.fromRaw('61383208102');
+    var ninenine = PhoneNumber.fromRaw('61383208199');
 
     expect(PhoneNumberRange(zero, one).expandRange().length, equals(2));
     expect(PhoneNumberRange(zero, two).expandRange().length, equals(3));

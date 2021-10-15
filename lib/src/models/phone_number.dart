@@ -1,7 +1,16 @@
+import 'package:phone_numbers_parser/src/formatters/phone_number_formatter.dart';
+import 'package:phone_numbers_parser/src/models/phone_number_range.dart';
+import 'package:phone_numbers_parser/src/models/phone_number_type.dart';
+import 'package:phone_numbers_parser/src/parsers/_text_parser.dart';
+import 'package:phone_numbers_parser/src/parsers/_validator.dart';
+import 'package:phone_numbers_parser/src/parsers/_phone_parser.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 
-import '../../phone_numbers_parser.dart';
-
+/// represents a phone number
+///
+/// Use one of the static method starting with 'from' in order to
+/// return a [PhoneNumber] that has been parsed to it's international version.
+///
 class PhoneNumber {
   /// National significant number in its internanational form
   final String nsn;
@@ -13,9 +22,6 @@ class PhoneNumber {
   String get countryCode =>
       MetadataFinder.getMetadataForIsoCode(isoCode).countryCode;
 
-  @Deprecated('use countryCode, dialCode was semantically incorrect')
-  String get dialCode => countryCode;
-
   /// international version of phone number
   String get international => '+' + countryCode + nsn;
 
@@ -24,8 +30,106 @@ class PhoneNumber {
     required this.nsn,
   });
 
-  @override
-  String toString() => 'PhoneNumber(nsn: $nsn, isoCode: $isoCode)';
+  ///
+  ///  Creation
+  ////////////////
+
+  /// Parses a [national] phone number given a country code and returns
+  /// a [PhoneNumber]
+  ///
+  /// This is useful for when you know in advance that a phone
+  /// number is a national version.
+  /// For example in a phone number input with two inputs for the
+  /// country code and national number
+  ///
+  /// alias for [PhoneParser.fromNational]
+  static PhoneNumber fromNational(
+    String countryCode,
+    String national,
+  ) =>
+      PhoneParser.fromNational(countryCode, national);
+
+  /// Parses a [phoneNumber] given a [countryCode]
+  ///
+  /// Use [fromIsoCode] when possible as multiple countries
+  /// use the same country calling code.
+  ///
+  /// If you know the [phoneNumber] is a national number,
+  /// prefer [fromNational].
+  ///
+  /// {@macro phoneNumber}
+  ///
+  /// throws a PhoneNumberException if the country calling code is invalid
+  ///
+  /// alias for [PhoneParser.fromCountryCode]
+  static PhoneNumber fromCountryCode(
+    String countryCode,
+    String phoneNumber,
+  ) =>
+      PhoneParser.fromCountryCode(countryCode, phoneNumber);
+
+  /// Parses a [phoneNumber] given an [isoCode]
+  ///
+  /// {@macro phoneNumber}
+  ///
+  /// throws a PhoneNumberException if the isoCode is invalid
+  static PhoneNumber fromIsoCode(
+    String isoCode,
+    String phoneNumber,
+  ) =>
+      PhoneParser.fromIsoCode(isoCode, phoneNumber);
+
+  /// Parses a [phoneNumber] given a [countryCode]
+  ///
+  /// Use [fromIsoCode] when possible as multiple countries
+  /// use the same country calling code.
+  ///
+  /// This method assumes the phone number starts with the country calling code
+  ///
+  /// throws a PhoneNumberException if the country calling code is invalid
+  static PhoneNumber fromRaw(String phoneNumber) =>
+      PhoneParser.fromRaw(phoneNumber);
+
+  /// reparse phone number with new values
+  PhoneNumber rebuildWith({String? isoCode, String? nsn}) =>
+      PhoneParser.fromIsoCode(
+        isoCode ?? this.isoCode,
+        nsn ?? this.nsn,
+      );
+
+  ///
+  ///  Formatting
+  //////////////////
+
+  /// formats the national phone number to the format expected by the iso code
+  /// region
+  String getFormattedNsn() => PhoneNumberFormatter.formatNsn(this);
+
+  ///
+  ///  Validation
+  //////////////////
+
+  /// validates a phone number by first checking its length then pattern matching
+  bool validate({PhoneNumberType? type}) =>
+      Validator.validateWithPattern(this, type);
+
+  /// validates a phone number by only checking its length
+  bool validateLength({PhoneNumberType? type}) =>
+      Validator.validateWithPattern(this, type);
+
+  ///
+  ///  text
+  ////////////////////
+
+  static Iterable<Match> findPotentialPhoneNumbers(String text) =>
+      TextParser.findPotentialPhoneNumbers(text);
+
+  ///
+  ///  inequalities
+  ////////////////////
+
+  static PhoneNumberRange getRange(PhoneNumber start, PhoneNumber end) =>
+      PhoneNumberRange(start, end);
 
   @override
   bool operator ==(Object other) {
@@ -36,6 +140,34 @@ class PhoneNumber {
 
   @override
   int get hashCode => nsn.hashCode ^ isoCode.hashCode;
+
+  ///  numerically add [operand] to this phone number
+  /// e.g.
+  /// ```dart
+  /// PhoneParser.parseRaw('61383208100') + 1 == PhoneParser.parseRaw('61383208101');
+  /// ```
+  PhoneNumber operator +(int operand) {
+    var result = BigInt.parse(international) + BigInt.from(operand);
+
+    return PhoneNumber(
+      isoCode: isoCode,
+      nsn: result.toString().substring(countryCode.length),
+    );
+  }
+
+  /// numerically subtract [operand] from this phone number
+  /// e.g.
+  /// ```dart
+  /// PhoneParser.parseRaw('61383208100') - 1 == PhoneParser.parseRaw('61383208099');
+  /// ```
+  PhoneNumber operator -(int operand) {
+    var result = BigInt.parse(international) - BigInt.from(operand);
+
+    return PhoneNumber(
+      isoCode: isoCode,
+      nsn: result.toString().substring(countryCode.length),
+    );
+  }
 
   /// Returns true if this phone number is numerically greater
   /// than [other]
@@ -78,27 +210,6 @@ class PhoneNumber {
     return ((this + 1) == nextNumber);
   }
 
-  ///  numerically add [operand] to this phone number
-  /// e.g.
-  /// ```dart
-  /// PhoneParser.parseRaw('61383208100') + 1 == PhoneParser.parseRaw('61383208101');
-  /// ```
-  PhoneNumber operator +(int operand) {
-    var phone = BigInt.parse(international);
-    var result = phone + (BigInt.from(operand));
-
-    return PhoneParser().parseRaw(result.toString());
-  }
-
-  /// numerically subtract [operand] from this phone number
-  /// e.g.
-  /// ```dart
-  /// PhoneParser.parseRaw('61383208100') - 1 == PhoneParser.parseRaw('61383208099');
-  /// ```
-  PhoneNumber operator -(int operand) {
-    var phone = BigInt.parse(international);
-    var result = phone - BigInt.from(operand);
-
-    return PhoneParser().parseRaw(result.toString());
-  }
+  @override
+  String toString() => 'PhoneNumber(nsn: $nsn, isoCode: $isoCode)';
 }

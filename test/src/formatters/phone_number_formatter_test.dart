@@ -1,13 +1,14 @@
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
+import 'package:phone_numbers_parser/src/formatters/phone_number_formatter.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('Phone number formatter', () {
     test('should format nsn US', () {
-      final parser = PhoneParser();
-      final formatter = PhoneNumberFormatter();
-      final format = (String phoneNumber) =>
-          formatter.formatNsn(parser.parseWithIsoCode('US', phoneNumber));
+      final format = (String phoneNumber) => PhoneNumberFormatter.formatNsn(
+            PhoneNumber.fromIsoCode('US', phoneNumber),
+          );
+
       var testNumber = '';
       expect(format(testNumber), equals(''));
       testNumber = '2';
@@ -33,10 +34,9 @@ void main() {
     });
 
     test('should format nsn FR', () {
-      final parser = PhoneParser();
-      final formatter = PhoneNumberFormatter();
-      final format = (String phoneNumber) =>
-          formatter.formatNsn(parser.parseWithIsoCode('FR', phoneNumber));
+      final format = (String phoneNumber) => PhoneNumberFormatter.formatNsn(
+            PhoneNumber.fromIsoCode('FR', phoneNumber),
+          );
 
       var testNumber = '6';
       expect(format(testNumber), equals('6'));

@@ -1,14 +1,13 @@
 import 'dart:math';
 
 import 'package:phone_number_metadata/phone_number_metadata.dart';
-import 'package:phone_numbers_parser/src/constants/constants.dart';
 import 'package:phone_numbers_parser/src/models/phone_number.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 import 'package:phone_numbers_parser/src/utils/_regexp_manager.dart';
 
 class PhoneNumberFormatter {
   /// format national number for international use
-  String formatNsn(PhoneNumber phoneNumber) {
+  static String formatNsn(PhoneNumber phoneNumber) {
     if (phoneNumber.nsn.isEmpty) {
       return phoneNumber.nsn;
     }
@@ -41,7 +40,7 @@ class PhoneNumberFormatter {
     return formatted;
   }
 
-  String _removeMissingDigits(String formatted, String missingDigits) {
+  static String _removeMissingDigits(String formatted, String missingDigits) {
     while (missingDigits.isNotEmpty) {
       // not an ending digit
       final isEndingWithSpecialChar =
@@ -62,7 +61,7 @@ class PhoneNumberFormatter {
   }
 
   /// returns 9's to have a valid length number
-  String _getMissingDigits(PhoneNumber phoneNumber) {
+  static String _getMissingDigits(PhoneNumber phoneNumber) {
     final lengthRule =
         MetadataFinder.getMetadataLengthForIsoCode(phoneNumber.isoCode);
 
@@ -77,7 +76,7 @@ class PhoneNumberFormatter {
   }
 
   /// gets the matching format rule
-  PhoneMetadataFormat? _getMatchingFormatRules({
+  static PhoneMetadataFormat? _getMatchingFormatRules({
     required PhoneMetadataFormats formatingRules,
     required String nsn,
   }) {

@@ -4,11 +4,14 @@ import '../../phone_numbers_parser.dart';
 class PhoneNumberRange {
   final PhoneNumber start;
   final PhoneNumber end;
+  final String countryCode;
 
-  const PhoneNumberRange(
+  PhoneNumberRange(
     this.start,
     this.end,
-  );
+  )   : assert(start.isoCode == end.isoCode,
+            'Cannot range with different iso codes'),
+        countryCode = start.countryCode;
 
   @override
   String toString() => '${start.international} - ${end.international}';
@@ -46,7 +49,11 @@ class PhoneNumberRange {
 
     var range = <PhoneNumber>[];
     for (var current = first; current <= last; current = current + BigInt.one) {
-      range.add(PhoneParser().parseRaw(current.toString()));
+      final next = PhoneNumber.fromCountryCode(
+        start.countryCode,
+        current.toString().substring(countryCode.length),
+      );
+      range.add(next);
     }
 
     return range;
