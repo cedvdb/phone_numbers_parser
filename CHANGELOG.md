@@ -1,4 +1,8 @@
 
+## 4.0.0+1
+
+  - small readme update
+
 ## 4.0.0 Consolidating Public API
 
 This release removes the LightPhoneParser because it was not working perfectly and the cost of maintaining

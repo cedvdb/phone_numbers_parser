@@ -17,7 +17,11 @@ The advantage of this lib instead of libphonenumber is that it instantly support
  - Uses best-in-class metadata from Google's libPhoneNumber project. 
 
 
+<<<<<<< HEAD
+### Usage PhoneParser
+=======
 ## Usage 
+>>>>>>> dev
 
 ```dart
   // creation
