@@ -17,7 +17,7 @@ The advantage of this lib instead of libphonenumber is that it instantly support
  - Uses best-in-class metadata from Google's libPhoneNumber project. 
 
 
-### Usage PhoneParser
+## Usage 
 
 ```dart
   // creation
@@ -52,7 +52,7 @@ The advantage of this lib instead of libphonenumber is that it instantly support
   print('found: ' + (found.first.group(0) ?? ''));
 ```
 
-## Formatting
+### Formatting
 
 Formatting is region specific, so the formats will vary by iso code to accomodate
 for local formats.
@@ -63,7 +63,7 @@ for local formats.
   print('formatted: $formattedNsn'); 
 ```
 
-## Range 
+### Range 
 
 ```dart
 final first = PhoneNumber.fromRaw('+33 655 5705 00');
