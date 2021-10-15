@@ -68,7 +68,7 @@ for local formats.
 ### Range 
 
 ```dart
-final first = PhoneNumber.fromRaw('+33 655 5705 00');
+  final first = PhoneNumber.fromRaw('+33 655 5705 00');
   final last = PhoneNumber.fromRaw('+33 655 5705 03');
   final range = PhoneNumber.getRange(first, last);
 

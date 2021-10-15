@@ -25,7 +25,6 @@ import '_validator.dart';
 ///
 /// Use [fromIsoCode] over [fromCountryCode] as it is faster
 /// Use [fromCountryCode] over [fromRaw] as it is faster
-@internal
 class PhoneParser {
   /// parses a [national] phone number given a country code
   ///

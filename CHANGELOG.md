@@ -1,7 +1,7 @@
 
-## 4.0.0+5
+## 4.0.1
 
-  - small readme update
+  - reexport deprecated public api for backward comp
 
 ## 4.0.0 Consolidating Public API
 
