@@ -62,7 +62,7 @@ for local formats.
 ```dart
   final phoneNumber = PhoneNumber.fromIsoCode('US', '2025550119');
   final formattedNsn = phoneNumber.getFormattedNsn();
-  print('formatted: $formattedNsn'); 
+  print('formatted: $formattedNsn'); // 202-555-0119
 ```
 
 ### Range 
