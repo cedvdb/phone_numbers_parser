@@ -17,21 +17,6 @@ The advantage of this lib instead of libphonenumber is that it instantly support
  - Uses best-in-class metadata from Google's libPhoneNumber project. 
 
 
-
-## Parsers
-There are two parsers: LightPhoneParser and Phone Parser
-
-LightPhoneParser:
-  - smaller size footprint (more will be tree shaken)
-  - uses mainly length information for validation
-  - fast
-
-PhoneParser:
-  - more accurate
-  - bigger size footprint
-  - more computationally intensive
-  - uses pattern matching
-
 ### Usage PhoneParser
 
 ```dart
