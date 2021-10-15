@@ -2,7 +2,7 @@ import 'package:phone_number_metadata/phone_number_metadata.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 import 'package:phone_numbers_parser/src/utils/_regexp_manager.dart';
 
-abstract class NationalPrefixParser {
+abstract class NationalNumberParser {
   /// extract the national prefix from the phone number if there is one
   /// this method assumes that the national number is in its international
   /// form with a national prefix in front. It does not transform the national
@@ -23,7 +23,9 @@ abstract class NationalPrefixParser {
   /// local to international nsn
   ///
   /// example: in argentina 0343 15 555 1212 (local) is exactly the
-  //  number as +54 9 343 555 1212 (international)
+  ///  number as +54 9 343 555 1212 (international)
+  ///
+  /// note: uses pattern metadata
   static String transformLocalNsnToInternationalUsingPatterns(
     String nationalNumber,
     PhoneMetadata metadata,

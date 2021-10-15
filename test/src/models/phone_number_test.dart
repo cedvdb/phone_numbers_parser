@@ -3,22 +3,18 @@ import 'package:test/test.dart';
 
 void main() {
   test('add/subtract', () async {
-    var parser = PhoneParser();
-
-    var start = parser.parseRaw('61383208100');
+    var start = PhoneNumber.fromRaw('61383208100');
 
     start = start + 1;
-    expect(start, equals(parser.parseRaw('61383208101')));
+    expect(start, equals(PhoneNumber.fromRaw('61383208101')));
 
     start = start - 1;
-    expect(start, equals(parser.parseRaw('61383208100')));
+    expect(start, equals(PhoneNumber.fromRaw('61383208100')));
   });
 
   test('comparision', () async {
-    var parser = PhoneParser();
-
-    var zero = parser.parseRaw('61383208100');
-    var one = parser.parseRaw('61383208101');
+    var zero = PhoneNumber.fromRaw('61383208100');
+    var one = PhoneNumber.fromRaw('61383208101');
 
     expect(zero == zero, isTrue);
     expect(zero < one, isTrue);
@@ -28,11 +24,9 @@ void main() {
   });
 
   test('sequence', () async {
-    var parser = PhoneParser();
-
-    var zero = parser.parseRaw('61383208100');
-    var one = parser.parseRaw('61383208101');
-    var two = parser.parseRaw('61383208102');
+    var zero = PhoneNumber.fromRaw('61383208100');
+    var one = PhoneNumber.fromRaw('61383208101');
+    var two = PhoneNumber.fromRaw('61383208102');
 
     expect(zero.isAdjacentTo(one), isTrue);
     expect(zero.isSequentialTo(one), isTrue);
