@@ -41,7 +41,10 @@ class PhoneParser {
     final nsn =
         NationalNumberParser.transformLocalNsnToInternationalUsingPatterns(
             national, metadata);
-    return PhoneNumber(isoCode: metadata.isoCode, nsn: nsn);
+    final result = PhoneNumber(isoCode: metadata.isoCode, nsn: nsn);
+    // we only want to modify the national number when it is valid
+    if (result.validate()) return result;
+    return PhoneNumber(isoCode: isoCode, nsn: national);
   }
 
   @Deprecated('use static method [PhoneNumber.fromNational] instead')

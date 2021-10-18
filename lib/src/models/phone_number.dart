@@ -12,7 +12,7 @@ import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 /// return a [PhoneNumber] that has been parsed to it's international version.
 ///
 class PhoneNumber {
-  /// National significant number in its internanational form
+  /// National number in its internanational form
   final String nsn;
 
   /// country alpha2 code example: 'FR', 'US', ...
@@ -147,11 +147,11 @@ class PhoneNumber {
   /// PhoneParser.parseRaw('61383208100') + 1 == PhoneParser.parseRaw('61383208101');
   /// ```
   PhoneNumber operator +(int operand) {
-    var result = BigInt.parse(international) + BigInt.from(operand);
-
+    final nsnLength = nsn.length;
+    final resultNsn = BigInt.parse(nsn) + BigInt.from(operand);
     return PhoneNumber(
       isoCode: isoCode,
-      nsn: result.toString().substring(countryCode.length),
+      nsn: resultNsn.toString().padLeft(nsnLength, '0'),
     );
   }
 
@@ -161,11 +161,11 @@ class PhoneNumber {
   /// PhoneParser.parseRaw('61383208100') - 1 == PhoneParser.parseRaw('61383208099');
   /// ```
   PhoneNumber operator -(int operand) {
-    var result = BigInt.parse(international) - BigInt.from(operand);
-
+    final nsnLength = nsn.length;
+    final resultNsn = BigInt.parse(nsn) - BigInt.from(operand);
     return PhoneNumber(
       isoCode: isoCode,
-      nsn: result.toString().substring(countryCode.length),
+      nsn: resultNsn.toString().padLeft(nsnLength, '0'),
     );
   }
 
@@ -211,5 +211,6 @@ class PhoneNumber {
   }
 
   @override
-  String toString() => 'PhoneNumber(nsn: $nsn, isoCode: $isoCode)';
+  String toString() =>
+      'PhoneNumber(isoCode: $isoCode, countryCode: $countryCode, nsn: $nsn)';
 }

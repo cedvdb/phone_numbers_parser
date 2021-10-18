@@ -1,3 +1,5 @@
+## 4.2.0
+  - only modify national number to its international version when it is valid
 
 ## 4.0.1
 
