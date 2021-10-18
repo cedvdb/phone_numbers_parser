@@ -1,3 +1,6 @@
+## 4.1.0
+  - only modify national number to its international version when it is valid
+  - resolve issue where phone number were incorrectly parsed if national number started with country code (it happens)
 
 ## 4.0.1
 

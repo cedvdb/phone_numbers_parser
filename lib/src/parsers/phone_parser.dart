@@ -26,7 +26,10 @@ import '_validator.dart';
 /// Use [fromIsoCode] over [fromCountryCode] as it is faster
 /// Use [fromCountryCode] over [fromRaw] as it is faster
 class PhoneParser {
-  /// parses a [national] phone number given a country code
+  /// parses a [national] phone number given an iso code
+  ///
+  /// The difference with fromIsoCode is that here we assume that the phoneNumber
+  /// is a national one. Therefor some parsing steps are skipped.
   ///
   /// This is useful for when you know in advance that a phone
   /// number is a national version.
@@ -35,13 +38,11 @@ class PhoneParser {
   @internal
   static PhoneNumber fromNational(String isoCode, String national) {
     isoCode = IsoCodeParser.normalizeIsoCode(isoCode);
-
     national = TextParser.normalize(national);
-    final metadata = MetadataFinder.getMetadataForIsoCode(isoCode);
-    final nsn =
-        NationalNumberParser.transformLocalNsnToInternationalUsingPatterns(
-            national, metadata);
-    return PhoneNumber(isoCode: metadata.isoCode, nsn: nsn);
+    final result = _parse(isoCode, national);
+    // we only want to modify the national number when it is valid
+    if (result.validate()) return result;
+    return PhoneNumber(isoCode: isoCode, nsn: national);
   }
 
   @Deprecated('use static method [PhoneNumber.fromNational] instead')
@@ -58,14 +59,36 @@ class PhoneParser {
     isoCode = IsoCodeParser.normalizeIsoCode(isoCode);
     phoneNumber = TextParser.normalize(phoneNumber);
     final metadata = MetadataFinder.getMetadataForIsoCode(isoCode);
-    phoneNumber = InternationalPrefixParser.removeInternationalPrefix(
+    // we now have national which is the phone number that will be transformed
+    // to nsn. If the result is not valid, we will keep the original input as
+    // the nsn. That is because for the national we assume that if the number
+    // starts with the country code, it is in fact the country code.
+    // however that's not always the case, some countries like KZ can have an nsn
+    // starting with the same digits as the country code.
+    // For example we could do fromIsoCode('KZ', '7710009998')
+    // the below code will first assume that the leading 7 is the country code
+    // then will realize the phone number is invalid when the 7 is removed
+    // and will return a result with the original input, which is valid
+    final withoutIntlPrefix =
+        InternationalPrefixParser.removeInternationalPrefix(
       phoneNumber,
       countryCode: metadata.countryCode,
       metadata: metadata,
     );
-    phoneNumber =
-        CountryCodeParser.removeCountryCode(phoneNumber, metadata.countryCode);
-    return fromNational(isoCode, phoneNumber);
+
+    final withoutCountryCode = CountryCodeParser.removeCountryCode(
+        withoutIntlPrefix, metadata.countryCode);
+    var national = withoutCountryCode;
+    // if a country code did not immediately follow the international prefix
+    // then it was not an international prefix by definition
+    if (withoutIntlPrefix.length == withoutCountryCode.length) {
+      national = withoutCountryCode;
+    }
+
+    final result = _parse(isoCode, national);
+    // we only want to modify the national number when it is valid
+    if (result.validate()) return result;
+    return PhoneNumber(isoCode: isoCode, nsn: phoneNumber);
   }
 
   @Deprecated('use static method [PhoneNumber.fromIsoCode] instead')
@@ -87,15 +110,25 @@ class PhoneParser {
   ) {
     countryCode = CountryCodeParser.normalizeCountryCode(countryCode);
     phoneNumber = TextParser.normalize(phoneNumber);
-    phoneNumber = InternationalPrefixParser.removeInternationalPrefix(
+    final withoutIntlPrefix =
+        InternationalPrefixParser.removeInternationalPrefix(
       phoneNumber,
       countryCode: countryCode,
     );
-    phoneNumber = CountryCodeParser.removeCountryCode(phoneNumber, countryCode);
+    final withoutCountryCode =
+        CountryCodeParser.removeCountryCode(withoutIntlPrefix, countryCode);
+    var national = withoutCountryCode;
+    // if a country code did not immediately follow the international prefix
+    // then it was not an international prefix by definition
+    if (withoutIntlPrefix.length == withoutCountryCode.length) {
+      national = withoutCountryCode;
+    }
     final metadatas = MetadataFinder.getMetadatasForCountryCode(countryCode);
-    final metadata =
-        MetadataMatcher.getMatchUsingPatterns(phoneNumber, metadatas);
-    return fromNational(metadata.isoCode, phoneNumber);
+    final metadata = MetadataMatcher.getMatchUsingPatterns(national, metadatas);
+    final result = _parse(metadata.isoCode, national);
+    // we only want to modify the national number when it is valid
+    if (result.validate()) return result;
+    return PhoneNumber(isoCode: metadata.isoCode, nsn: phoneNumber);
   }
 
   @Deprecated('use static method [PhoneNumber.fromCountryCode] instead')
@@ -125,6 +158,17 @@ class PhoneParser {
 
   @Deprecated('use static method [PhoneNumber.fromRaw] instead')
   PhoneNumber parseRaw(String phoneNumber) => PhoneParser.fromRaw(phoneNumber);
+
+  /// parse a phone number by providing an [isoCode] and the [national]
+  /// this will transform the national from its local version to international
+  /// this function assumes well formed params
+  static PhoneNumber _parse(String isoCode, String national) {
+    final metadata = MetadataFinder.getMetadataForIsoCode(isoCode);
+    final nsn =
+        NationalNumberParser.transformLocalNsnToInternationalUsingPatterns(
+            national, metadata);
+    return PhoneNumber(isoCode: metadata.isoCode, nsn: nsn);
+  }
 
   /// Validates a phone number using pattern mathing
   ///
