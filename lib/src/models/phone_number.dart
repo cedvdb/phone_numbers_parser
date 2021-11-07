@@ -30,9 +30,9 @@ class PhoneNumber {
     required this.nsn,
   });
 
-  ///
-  ///  Creation
-  ////////////////
+  //
+  //  Creation
+  //
 
   /// Parses a [national] phone number given a country code and returns
   /// a [PhoneNumber]
@@ -97,17 +97,17 @@ class PhoneNumber {
         nsn ?? this.nsn,
       );
 
-  ///
-  ///  Formatting
-  //////////////////
+  //
+  //  Formatting
+  //
 
   /// formats the national phone number to the format expected by the iso code
   /// region
   String getFormattedNsn() => PhoneNumberFormatter.formatNsn(this);
 
-  ///
-  ///  Validation
-  //////////////////
+  //
+  //  Validation
+  //
 
   /// validates a phone number by first checking its length then pattern matching
   bool validate({PhoneNumberType? type}) =>
@@ -115,18 +115,18 @@ class PhoneNumber {
 
   /// validates a phone number by only checking its length
   bool validateLength({PhoneNumberType? type}) =>
-      Validator.validateWithPattern(this, type);
+      Validator.validateWithLength(this, type);
 
-  ///
-  ///  text
-  ////////////////////
+  //
+  //  text
+  //
 
   static Iterable<Match> findPotentialPhoneNumbers(String text) =>
       TextParser.findPotentialPhoneNumbers(text);
 
-  ///
-  ///  inequalities
-  ////////////////////
+  //
+  //  inequalities
+  //
 
   static PhoneNumberRange getRange(PhoneNumber start, PhoneNumber end) =>
       PhoneNumberRange(start, end);

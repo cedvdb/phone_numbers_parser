@@ -70,6 +70,14 @@ void main() {
                 PhoneNumber(nsn: validUs, isoCode: US), PhoneNumberType.mobile),
             isTrue);
       });
+
+      test('zeroes', () {
+        expect(
+          Validator.validateWithLength(
+              PhoneNumber(isoCode: 'GB', nsn: '7000000002')),
+          isTrue,
+        );
+      });
     });
 
     group('ValidateWithPattern()', () {

@@ -1,6 +1,5 @@
 import 'package:meta/meta.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
-import 'package:phone_numbers_parser/src/models/phone_number.dart';
 import 'package:phone_numbers_parser/src/parsers/_country_code_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_international_prefix_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_national_number_parser.dart';
@@ -121,13 +120,13 @@ class PhoneParser {
     // if a country code did not immediately follow the international prefix
     // then it was not an international prefix by definition
     if (withoutIntlPrefix.length == withoutCountryCode.length) {
-      national = withoutCountryCode;
+      national = phoneNumber;
     }
     final metadatas = MetadataFinder.getMetadatasForCountryCode(countryCode);
     final metadata = MetadataMatcher.getMatchUsingPatterns(national, metadatas);
     final result = _parse(metadata.isoCode, national);
     // we only want to modify the national number when it is valid
-    if (result.validate()) return result;
+    if (result.validateLength()) return result;
     return PhoneNumber(isoCode: metadata.isoCode, nsn: phoneNumber);
   }
 
