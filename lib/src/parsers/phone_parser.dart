@@ -1,6 +1,5 @@
 import 'package:meta/meta.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
-import 'package:phone_numbers_parser/src/models/phone_number.dart';
 import 'package:phone_numbers_parser/src/parsers/_country_code_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_international_prefix_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_national_number_parser.dart';
@@ -39,7 +38,11 @@ class PhoneParser {
   static PhoneNumber fromNational(String isoCode, String national) {
     isoCode = IsoCodeParser.normalizeIsoCode(isoCode);
     national = TextParser.normalize(national);
-    final result = _parse(isoCode, national);
+    final metadata = MetadataFinder.getMetadataForIsoCode(isoCode);
+    final nsn =
+        NationalNumberParser.transformLocalNsnToInternationalUsingPatterns(
+            national, metadata);
+    final result = PhoneNumber(isoCode: metadata.isoCode, nsn: nsn);
     // we only want to modify the national number when it is valid
     if (result.validate()) return result;
     return PhoneNumber(isoCode: isoCode, nsn: national);
