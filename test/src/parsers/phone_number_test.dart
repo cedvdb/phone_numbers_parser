@@ -11,9 +11,6 @@ void main() {
       final phone1 = PhoneNumber.fromIsoCode('GB', '7000000000');
       final phone2 = PhoneNumber.fromCountryCode('44', '7000000000');
       final phone3 = PhoneNumber.fromRaw('+447000000000');
-      print(phone1);
-      print(phone2);
-      print(phone3);
       expect((phone1 == phone2 && phone1 == phone3), isTrue);
     });
 
