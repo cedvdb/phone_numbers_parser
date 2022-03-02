@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:phone_numbers_parser/src/formatters/phone_number_formatter.dart';
 import 'package:phone_numbers_parser/src/models/phone_number_range.dart';
 import 'package:phone_numbers_parser/src/models/phone_number_type.dart';
@@ -213,4 +215,23 @@ class PhoneNumber {
   @override
   String toString() =>
       'PhoneNumber(isoCode: $isoCode, countryCode: $countryCode, nsn: $nsn)';
+
+  Map<String, dynamic> toMap() {
+    return {
+      'isoCode': isoCode,
+      'nsn': nsn,
+    };
+  }
+
+  factory PhoneNumber.fromMap(Map<String, dynamic> map) {
+    return PhoneNumber(
+      isoCode: map['isoCode'] ?? '',
+      nsn: map['nsn'] ?? '',
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory PhoneNumber.fromJson(String source) =>
+      PhoneNumber.fromMap(json.decode(source));
 }
