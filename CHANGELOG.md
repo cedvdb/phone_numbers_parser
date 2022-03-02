@@ -1,3 +1,6 @@
+## 4.2.1
+  - make phone number json serializable
+
 ## 4.2.0
   - Fix incorrect parsing in some cases
   - fix validate length as it was incorrectly validating with pattern
