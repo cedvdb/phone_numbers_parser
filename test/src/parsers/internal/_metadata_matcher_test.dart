@@ -1,6 +1,5 @@
 import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_matcher.dart';
-import 'package:test/scaffolding.dart';
 import 'package:test/test.dart';
 
 void main() {
