@@ -1,15 +1,19 @@
 name: phone_numbers_parser
 description: Dart library for parsing phone numbers. Inspired by Google's libphonenumber and PhoneNumberKit for ios.
-version: 4.2.1
+version: 5.0.0
 homepage: https://github.com/cedvdb/phone_number_parser
 
 environment:
   sdk: ">=2.14.0 <3.0.0"
 
 dependencies:
-  phone_number_metadata: ^4.0.2
+  phone_number_metadata:
+    git:
+      url: https://github.com/cedvdb/dart_phone_metadata
+      ref: iso_code
   # for internal annotation, can be removed in v5.0.0
   meta: ^1.7.0
+  dart_countries: ^3.0.1
 
 dev_dependencies:
   pedantic: ^1.9.0

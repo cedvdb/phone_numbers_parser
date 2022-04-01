@@ -1,3 +1,4 @@
+import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_international_prefix_parser.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 import 'package:test/test.dart';
@@ -8,7 +9,9 @@ void main() {
 
     test('should remove + prefix in all cases', () {
       expect(fix('+654'), '654');
-      expect(fix('+654', metadata: MetadataFinder.getMetadataForIsoCode('US')),
+      expect(
+          fix('+654',
+              metadata: MetadataFinder.getMetadataForIsoCode(IsoCode.US)),
           '654');
     });
 
@@ -16,7 +19,9 @@ void main() {
         () {
       expect(fix('00654'), '654');
       expect(fix('011654'), '654');
-      expect(fix('00654', metadata: MetadataFinder.getMetadataForIsoCode('US')),
+      expect(
+          fix('00654',
+              metadata: MetadataFinder.getMetadataForIsoCode(IsoCode.US)),
           '00654');
     });
 
@@ -27,10 +32,12 @@ void main() {
 
     test('should remove prefix from metadata', () {
       expect(
-          fix('011654', metadata: MetadataFinder.getMetadataForIsoCode('US')),
+          fix('011654',
+              metadata: MetadataFinder.getMetadataForIsoCode(IsoCode.US)),
           '654');
       expect(
-          fix('0033654', metadata: MetadataFinder.getMetadataForIsoCode('FR')),
+          fix('0033654',
+              metadata: MetadataFinder.getMetadataForIsoCode(IsoCode.FR)),
           '33654');
     });
   });

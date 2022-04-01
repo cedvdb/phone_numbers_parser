@@ -1,3 +1,4 @@
+import 'package:phone_number_metadata/phone_number_metadata.dart';
 import 'package:phone_numbers_parser/src/models/phone_number.dart';
 import 'package:phone_numbers_parser/src/models/phone_number_type.dart';
 import 'package:phone_numbers_parser/src/parsers/_validator.dart';
@@ -13,25 +14,25 @@ void main() {
 
         expect(
           Validator.validateWithLength(
-            PhoneNumber(nsn: beValidMobilePhone, isoCode: BE),
+            PhoneNumber(nsn: beValidMobilePhone, isoCode: IsoCode.BE),
           ),
           isTrue,
         );
         expect(
             Validator.validateWithLength(
-                PhoneNumber(nsn: beValidMobilePhone, isoCode: BE),
+                PhoneNumber(nsn: beValidMobilePhone, isoCode: IsoCode.BE),
                 PhoneNumberType.mobile),
             isTrue);
         // not a fixed line
         expect(
             Validator.validateWithLength(
-                PhoneNumber(nsn: beValidMobilePhone, isoCode: BE),
+                PhoneNumber(nsn: beValidMobilePhone, isoCode: IsoCode.BE),
                 PhoneNumberType.fixedLine),
             isFalse);
         // and not a general
         expect(
             Validator.validateWithLength(
-              PhoneNumber(nsn: beInvalidMobilePhone, isoCode: BE),
+              PhoneNumber(nsn: beInvalidMobilePhone, isoCode: IsoCode.BE),
             ),
             isFalse);
       });
@@ -43,38 +44,40 @@ void main() {
         // invalid for US
         expect(
             Validator.validateWithLength(
-              PhoneNumber(nsn: invalidUs, isoCode: US),
+              PhoneNumber(nsn: invalidUs, isoCode: IsoCode.US),
             ),
             isFalse);
         expect(
             Validator.validateWithLength(
-                PhoneNumber(nsn: invalidUs, isoCode: US),
+                PhoneNumber(nsn: invalidUs, isoCode: IsoCode.US),
                 PhoneNumberType.fixedLine),
             isFalse);
         expect(
             Validator.validateWithLength(
-                PhoneNumber(nsn: invalidUs, isoCode: US),
+                PhoneNumber(nsn: invalidUs, isoCode: IsoCode.US),
                 PhoneNumberType.mobile),
             isFalse);
         // valid US
         expect(
             Validator.validateWithLength(
-                PhoneNumber(nsn: validUs, isoCode: US)),
+                PhoneNumber(nsn: validUs, isoCode: IsoCode.US)),
             isTrue);
         expect(
-            Validator.validateWithLength(PhoneNumber(nsn: validUs, isoCode: US),
+            Validator.validateWithLength(
+                PhoneNumber(nsn: validUs, isoCode: IsoCode.US),
                 PhoneNumberType.fixedLine),
             isTrue);
         expect(
             Validator.validateWithLength(
-                PhoneNumber(nsn: validUs, isoCode: US), PhoneNumberType.mobile),
+                PhoneNumber(nsn: validUs, isoCode: IsoCode.US),
+                PhoneNumberType.mobile),
             isTrue);
       });
 
       test('zeroes', () {
         expect(
           Validator.validateWithLength(
-              PhoneNumber(isoCode: 'GB', nsn: '7000000002')),
+              PhoneNumber(isoCode: IsoCode.GB, nsn: '7000000002')),
           isTrue,
         );
       });
@@ -82,56 +85,53 @@ void main() {
 
     group('ValidateWithPattern()', () {
       test('BE', () {
-        final BE = 'BE';
         final validMobileBE = '479889855';
         final validFixedBE = '64223344';
         expect(
             Validator.validateWithPattern(
-                PhoneNumber(isoCode: BE, nsn: validMobileBE),
+                PhoneNumber(isoCode: IsoCode.BE, nsn: validMobileBE),
                 PhoneNumberType.mobile),
             isTrue);
         expect(
             Validator.validateWithPattern(
-                PhoneNumber(isoCode: BE, nsn: validMobileBE),
+                PhoneNumber(isoCode: IsoCode.BE, nsn: validMobileBE),
                 PhoneNumberType.fixedLine),
             isFalse);
         // fixed
         expect(
             Validator.validateWithPattern(
-                PhoneNumber(isoCode: BE, nsn: validFixedBE),
+                PhoneNumber(isoCode: IsoCode.BE, nsn: validFixedBE),
                 PhoneNumberType.fixedLine),
             isTrue);
         expect(
             Validator.validateWithPattern(
-                PhoneNumber(isoCode: BE, nsn: validFixedBE),
+                PhoneNumber(isoCode: IsoCode.BE, nsn: validFixedBE),
                 PhoneNumberType.mobile),
             isFalse);
       });
 
       test('CA', () {
-        final CA = 'CA';
         expect(
             Validator.validateWithPattern(
-              PhoneNumber(isoCode: CA, nsn: '7205754713'),
+              PhoneNumber(isoCode: IsoCode.CA, nsn: '7205754713'),
             ),
             isFalse);
         expect(
             Validator.validateWithPattern(
-                PhoneNumber(isoCode: CA, nsn: '6135550165')),
+                PhoneNumber(isoCode: IsoCode.CA, nsn: '6135550165')),
             isTrue);
       });
 
       test('US', () {
-        final US = 'US';
         expect(
             Validator.validateWithPattern(
-              PhoneNumber(isoCode: US, nsn: '7205754713'),
+              PhoneNumber(isoCode: IsoCode.US, nsn: '7205754713'),
             ),
             isTrue);
 
         expect(
             Validator.validateWithPattern(
-                PhoneNumber(isoCode: US, nsn: '6135550165')),
+                PhoneNumber(isoCode: IsoCode.US, nsn: '6135550165')),
             isFalse);
       });
     });

@@ -1,3 +1,4 @@
+import 'package:phone_number_metadata/phone_number_metadata.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:test/test.dart';
 
@@ -5,7 +6,7 @@ void main() {
   group('Phone number formatter', () {
     test('should format nsn US', () {
       final format = (String phoneNumber) => PhoneNumberFormatter.formatNsn(
-            PhoneNumber.fromIsoCode('US', phoneNumber),
+            PhoneNumber.fromIsoCode(IsoCode.US, phoneNumber),
           );
 
       var testNumber = '';
@@ -34,7 +35,7 @@ void main() {
 
     test('should format nsn FR', () {
       final format = (String phoneNumber) => PhoneNumberFormatter.formatNsn(
-            PhoneNumber.fromIsoCode('FR', phoneNumber),
+            PhoneNumber.fromIsoCode(IsoCode.FR, phoneNumber),
           );
 
       var testNumber = '6';

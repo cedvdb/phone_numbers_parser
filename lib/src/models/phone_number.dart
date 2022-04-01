@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dart_countries/dart_countries.dart';
 import 'package:phone_numbers_parser/src/formatters/phone_number_formatter.dart';
 import 'package:phone_numbers_parser/src/models/phone_number_range.dart';
 import 'package:phone_numbers_parser/src/models/phone_number_type.dart';
@@ -18,7 +19,7 @@ class PhoneNumber {
   final String nsn;
 
   /// country alpha2 code example: 'FR', 'US', ...
-  final String isoCode;
+  final IsoCode isoCode;
 
   /// territory numerical code that precedes a phone number. Example 33 for france
   String get countryCode =>
@@ -42,14 +43,14 @@ class PhoneNumber {
   /// This is useful for when you know in advance that a phone
   /// number is a national version.
   /// For example in a phone number input with two inputs for the
-  /// country code and national number
+  /// iso code and national number
   ///
   /// alias for [PhoneParser.fromNational]
   static PhoneNumber fromNational(
-    String countryCode,
+    IsoCode isoCode,
     String national,
   ) =>
-      PhoneParser.fromNational(countryCode, national);
+      PhoneParser.fromNational(isoCode, national);
 
   /// Parses a [phoneNumber] given a [countryCode]
   ///
@@ -76,7 +77,7 @@ class PhoneNumber {
   ///
   /// throws a PhoneNumberException if the isoCode is invalid
   static PhoneNumber fromIsoCode(
-    String isoCode,
+    IsoCode isoCode,
     String phoneNumber,
   ) =>
       PhoneParser.fromIsoCode(isoCode, phoneNumber);
@@ -93,7 +94,7 @@ class PhoneNumber {
       PhoneParser.fromRaw(phoneNumber);
 
   /// reparse phone number with new values
-  PhoneNumber rebuildWith({String? isoCode, String? nsn}) =>
+  PhoneNumber rebuildWith({IsoCode? isoCode, String? nsn}) =>
       PhoneParser.fromIsoCode(
         isoCode ?? this.isoCode,
         nsn ?? this.nsn,
