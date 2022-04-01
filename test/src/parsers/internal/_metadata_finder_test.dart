@@ -5,22 +5,31 @@ import 'package:test/test.dart';
 void main() {
   group('MetadataFinder', () {
     test('should get metadata for iso code', () {
-      expect(MetadataFinder.getMetadataForIsoCode(IsoCode.US).isoCode, equals(IsoCode.US));
+      for (final isoCode in IsoCode.values) {
+        expect(MetadataFinder.getMetadataForIsoCode(isoCode).isoCode,
+            equals(isoCode));
+      }
     });
 
     test('should get patterns metadata for iso code', () {
-      expect(MetadataFinder.getMetadataPatternsForIsoCode(IsoCode.US),
-          isA<PhoneMetadataPatterns>());
+      for (final isoCode in IsoCode.values) {
+        expect(MetadataFinder.getMetadataPatternsForIsoCode(isoCode),
+            isA<PhoneMetadataPatterns>());
+      }
     });
 
     test('should get lengths metadata for iso code', () {
-      expect(MetadataFinder.getMetadataLengthForIsoCode(IsoCode.US),
-          isA<PhoneMetadataLengths>());
+      for (final isoCode in IsoCode.values) {
+        expect(MetadataFinder.getMetadataLengthForIsoCode(isoCode),
+            isA<PhoneMetadataLengths>());
+      }
     });
 
     test('should get formats metadata for iso code', () {
-      expect(MetadataFinder.getMetadataFormatsForIsoCode(IsoCode.US),
-          isA<PhoneMetadataFormats>());
+      for (final isoCode in IsoCode.values) {
+        expect(MetadataFinder.getMetadataFormatsForIsoCode(isoCode),
+            isA<PhoneMetadataFormats>());
+      }
     });
 
     test('should get metadata list for country calling code', () {

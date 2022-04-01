@@ -113,5 +113,10 @@ void main() {
           equals('499999999'));
       // expect()
     });
+
+    test('should parse incomplete raw phone numbers', () {
+      expect(PhoneParser.fromRaw('33').isoCode, equals(IsoCode.FR));
+      expect(PhoneParser.fromRaw('33').nsn, equals(''));
+    });
   });
 }

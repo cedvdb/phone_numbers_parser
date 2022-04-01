@@ -1,5 +1,6 @@
 ## 5.0.0
 - [Breaking] all iso code api now use IsoCode enum
+- fix for parseRaw when only country code is present.
 
 ## 4.2.1
   - make phone number json serializable

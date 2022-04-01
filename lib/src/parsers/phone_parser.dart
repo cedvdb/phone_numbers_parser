@@ -150,7 +150,8 @@ class PhoneParser {
       phoneNumber,
     );
     final countryCode = CountryCodeParser.extractCountryCode(phoneNumber);
-    return fromCountryCode(countryCode, phoneNumber);
+    return fromCountryCode(
+        countryCode, phoneNumber.substring(countryCode.length));
   }
 
   @Deprecated('use static method [PhoneNumber.fromRaw] instead')
