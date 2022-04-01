@@ -28,8 +28,6 @@ class PhoneNumber {
   /// international version of phone number
   String get international => '+' + countryCode + nsn;
 
-
-
   const PhoneNumber({
     required this.isoCode,
     required this.nsn,
@@ -114,7 +112,6 @@ class PhoneNumber {
   //  Validation
   //
 
-  
   /// validates a phone number by first checking its length then pattern matching
   bool validate({PhoneNumberType? type}) =>
       Validator.validateWithPattern(this, type);
@@ -222,14 +219,14 @@ class PhoneNumber {
 
   Map<String, dynamic> toMap() {
     return {
-      'isoCode': isoCode,
+      'isoCode': isoCode.name,
       'nsn': nsn,
     };
   }
 
   factory PhoneNumber.fromMap(Map<String, dynamic> map) {
     return PhoneNumber(
-      isoCode: map['isoCode'] ?? '',
+      isoCode: IsoCode.values.byName(map['isoCode']),
       nsn: map['nsn'] ?? '',
     );
   }
