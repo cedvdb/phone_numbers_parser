@@ -28,6 +28,8 @@ class PhoneNumber {
   /// international version of phone number
   String get international => '+' + countryCode + nsn;
 
+
+
   const PhoneNumber({
     required this.isoCode,
     required this.nsn,
@@ -112,6 +114,7 @@ class PhoneNumber {
   //  Validation
   //
 
+  
   /// validates a phone number by first checking its length then pattern matching
   bool validate({PhoneNumberType? type}) =>
       Validator.validateWithPattern(this, type);
