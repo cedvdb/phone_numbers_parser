@@ -8,10 +8,10 @@ environment:
 
 dependencies:
   phone_number_metadata: ^5.0.0
+  meta: ^1.7.0
   dart_countries: ^3.0.2
 
 dev_dependencies:
+  lints: ^1.0.1
   pedantic: ^1.9.0
-  xml: ^5.0.2
   test: any
-  path: ^1.8.0

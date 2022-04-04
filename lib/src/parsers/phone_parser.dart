@@ -1,4 +1,3 @@
-import 'package:dart_countries/dart_countries.dart';
 import 'package:meta/meta.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_country_code_parser.dart';
@@ -43,10 +42,6 @@ class PhoneParser {
     return PhoneNumber(isoCode: isoCode, nsn: national);
   }
 
-  @Deprecated('use static method [PhoneNumber.fromNational] instead')
-  PhoneNumber parseNational(IsoCode isoCode, String national) =>
-      PhoneParser.fromNational(isoCode, national);
-
   /// parses a [phoneNumber] given an [isoCode]
   ///
   /// {@macro phoneNumber}
@@ -88,10 +83,6 @@ class PhoneParser {
     return PhoneNumber(isoCode: isoCode, nsn: phoneNumber);
   }
 
-  @Deprecated('use static method [PhoneNumber.fromIsoCode] instead')
-  PhoneNumber parseWithIsoCode(IsoCode isoCode, String phoneNumber) =>
-      PhoneParser.fromIsoCode(isoCode, phoneNumber);
-
   /// parses a [phoneNumber] given a [countryCode]
   ///
   /// Use parseWithIsoCode when possible as multiple countries
@@ -128,13 +119,6 @@ class PhoneParser {
     return PhoneNumber(isoCode: metadata.isoCode, nsn: phoneNumber);
   }
 
-  @Deprecated('use static method [PhoneNumber.fromCountryCode] instead')
-  PhoneNumber parseWithCountryCode(
-    String countryCode,
-    String phoneNumber,
-  ) =>
-      PhoneParser.fromCountryCode(countryCode, phoneNumber);
-
   /// parses a [phoneNumber] given a [countryCode]
   ///
   /// Use parseWithIsoCode when possible as multiple countries
@@ -153,9 +137,6 @@ class PhoneParser {
     return fromCountryCode(
         countryCode, phoneNumber.substring(countryCode.length));
   }
-
-  @Deprecated('use static method [PhoneNumber.fromRaw] instead')
-  PhoneNumber parseRaw(String phoneNumber) => PhoneParser.fromRaw(phoneNumber);
 
   /// parse a phone number by providing an [isoCode] and the [national]
   /// this will transform the national from its local version to international

@@ -1,5 +1,4 @@
-import 'package:dart_countries/dart_countries.dart';
-import 'package:phone_numbers_parser/src/parsers/phone_parser.dart';
+import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:test/test.dart';
 
 import 'test_data.dart';
@@ -7,7 +6,7 @@ import 'test_data.dart';
 void main() {
   group('PhoneParser', () {
     test('should parse with the phone number in different formats', () {
-      final parse = (iso, n) => PhoneParser.fromIsoCode(iso, n);
+      PhoneNumber parse(iso, n) => PhoneParser.fromIsoCode(iso, n);
       final international = '+33686579014';
       // fr no transformation required except removing prefixes
       expect(
@@ -79,7 +78,7 @@ void main() {
     });
 
     test('should parse with country calling code', () {
-      final parse = (c, n) => PhoneParser.fromCountryCode(c, n);
+      PhoneNumber parse(c, n) => PhoneParser.fromCountryCode(c, n);
       // basic
       expect(parse('32', '479 995 533').international, equals('+32479995533'));
       // same country calling code
@@ -93,7 +92,7 @@ void main() {
     });
 
     test('should parse with raw phone number', () {
-      final parse = (n) => PhoneParser.fromRaw(n);
+      PhoneNumber parse(n) => PhoneParser.fromRaw(n);
       // basic
       expect(parse('+32 479 995 533').international, equals('+32479995533'));
       // same country calling code

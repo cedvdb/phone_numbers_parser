@@ -8,7 +8,7 @@ abstract class MetadataFinder {
     final metadata = p.metadataByIsoCode[isoCode];
     if (metadata == null) {
       throw PhoneNumberException(
-        code: Code.INVALID_ISO_CODE,
+        code: Code.invalidIsoCode,
         description: '$isoCode not found',
       );
     }
@@ -21,7 +21,7 @@ abstract class MetadataFinder {
     final metadata = p.metadataPatternsByIsoCode[isoCode];
     if (metadata == null) {
       throw PhoneNumberException(
-        code: Code.INVALID_ISO_CODE,
+        code: Code.invalidIsoCode,
         description: '$isoCode not found',
       );
     }
@@ -32,7 +32,7 @@ abstract class MetadataFinder {
     final metadata = p.metadataLenghtsByIsoCode[isoCode];
     if (metadata == null) {
       throw PhoneNumberException(
-        code: Code.INVALID_ISO_CODE,
+        code: Code.invalidIsoCode,
         description: 'isoCode "$isoCode" not found',
       );
     }
@@ -43,7 +43,7 @@ abstract class MetadataFinder {
     final metadata = p.metadataFormatsByIsoCode[isoCode];
     if (metadata == null) {
       throw PhoneNumberException(
-        code: Code.INVALID_ISO_CODE,
+        code: Code.invalidIsoCode,
         description: 'isoCode "$isoCode" not found',
       );
     }
@@ -60,7 +60,7 @@ abstract class MetadataFinder {
     final isoCodes = p.countryCodeToIsoCode[countryCode];
     if (isoCodes == null) {
       throw PhoneNumberException(
-        code: Code.INVALID_COUNTRY_CALLING_CODE,
+        code: Code.invalidCountryCallingCode,
         description: 'countryCode $countryCode not found',
       );
     }

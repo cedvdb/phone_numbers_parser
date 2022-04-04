@@ -8,7 +8,6 @@ void main() {
   group('_Validator', () {
     group('ValidateWithLength()', () {
       test('BE', () {
-        final BE = 'BE';
         final beValidMobilePhone = '479554265';
         final beInvalidMobilePhone = '4795542650';
 
@@ -38,7 +37,6 @@ void main() {
       });
 
       test('US', () {
-        final US = 'US';
         final validUs = '2025550128';
         final invalidUs = '479554265';
         // invalid for US
