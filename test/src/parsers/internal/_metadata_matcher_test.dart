@@ -1,3 +1,4 @@
+import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_matcher.dart';
 import 'package:test/test.dart';
@@ -10,7 +11,7 @@ void main() {
       final reduced = MetadataMatcher.reducePotentialMetadatasFits(
           nationalNumberWithLeadingDigits, fits);
       expect(reduced.length, equals(1));
-      expect(reduced[0].isoCode, equals('AG'));
+      expect(reduced[0].isoCode, equals(IsoCode.AG));
     });
 
     test('should find match based on pattern', () {
@@ -19,14 +20,14 @@ void main() {
           '2025550128',
           MetadataFinder.getMetadatasForCountryCode('1'),
         ).isoCode,
-        equals('US'),
+        equals(IsoCode.US),
       );
       expect(
         MetadataMatcher.getMatchUsingPatterns(
           '6135550165',
           MetadataFinder.getMetadatasForCountryCode('1'),
         ).isoCode,
-        equals('CA'),
+        equals(IsoCode.CA),
       );
     });
   });
