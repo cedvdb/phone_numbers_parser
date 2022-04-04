@@ -142,7 +142,7 @@ packages:
     source: hosted
     version: "0.12.11"
   meta:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: meta
       url: "https://pub.dartlang.org"
@@ -193,12 +193,10 @@ packages:
   phone_number_metadata:
     dependency: "direct main"
     description:
-      path: "."
-      ref: iso_code
-      resolved-ref: e8d08064d20ed37d615e19528a9929280a20eec8
-      url: "https://github.com/cedvdb/dart_phone_metadata"
-    source: git
-    version: "4.0.2"
+      name: phone_number_metadata
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.0"
   pool:
     dependency: transitive
     description:

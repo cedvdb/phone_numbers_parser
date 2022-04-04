@@ -2,11 +2,11 @@ import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 
 void main(List<String> arguments) {
   // creation
-  final frPhone = PhoneNumber.fromNational('fr', '655 5705 76');
+  final frPhone = PhoneNumber.fromNational(IsoCode.FR, '655 5705 76');
   final frPhone1 = PhoneNumber.fromRaw('+33 655 5705 76');
-  final frPhone2 = PhoneNumber.fromIsoCode('fr', '655 5705 76');
+  final frPhone2 = PhoneNumber.fromIsoCode(IsoCode.FR, '655 5705 76');
   final frPhone3 = PhoneNumber.fromCountryCode('33', '655 5705 76');
-  final frPhone4 = PhoneNumber.fromIsoCode('fr', '0655 5705 76');
+  final frPhone4 = PhoneNumber.fromIsoCode(IsoCode.FR, '0655 5705 76');
   final allSame = frPhone == frPhone1 &&
       frPhone == frPhone2 &&
       frPhone == frPhone3 &&
@@ -23,8 +23,8 @@ void main(List<String> arguments) {
 
   // changing the country
 
-  final esPhone =
-      frPhone1.rebuildWith(isoCode: 'ES'); // will reparse the nsn for new iso
+  final esPhone = frPhone1.rebuildWith(
+      isoCode: IsoCode.ES); // will reparse the nsn for new iso
   print('new country code: ' + esPhone.countryCode); // 34 // '+34655570576'
 
   // utils
@@ -36,7 +36,7 @@ void main(List<String> arguments) {
   // formatting is region dependent
   print('');
   print('Formatting:');
-  final phoneNumber = PhoneNumber.fromIsoCode('US', '2025550119');
+  final phoneNumber = PhoneNumber.fromIsoCode(IsoCode.US, '2025550119');
   final formattedNsn = phoneNumber.getFormattedNsn();
   print('formatted: $formattedNsn'); // 202-555-0119
 
