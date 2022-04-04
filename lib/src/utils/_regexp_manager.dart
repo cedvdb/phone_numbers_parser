@@ -24,7 +24,7 @@ class RegexpManager {
     }
 
     var transformed = transformRule;
-    final shouldContinueLoop = (int i) =>
+    bool shouldContinueLoop(int i) =>
         match.groupCount >= i &&
         match.group(i) != null &&
         transformed.contains('\$$i');

@@ -6,7 +6,6 @@ import 'package:phone_numbers_parser/src/parsers/_national_number_parser.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_matcher.dart';
 
-import '_iso_code_parser.dart';
 import '_text_parser.dart';
 import '_validator.dart';
 
@@ -35,8 +34,7 @@ class PhoneParser {
   /// For example in a phone number input with two inputs for the
   /// country code and national number
   @internal
-  static PhoneNumber fromNational(String isoCode, String national) {
-    isoCode = IsoCodeParser.normalizeIsoCode(isoCode);
+  static PhoneNumber fromNational(IsoCode isoCode, String national) {
     national = TextParser.normalize(national);
     final result = _parse(isoCode, national);
     // we only want to modify the national number when it is valid
@@ -44,18 +42,13 @@ class PhoneParser {
     return PhoneNumber(isoCode: isoCode, nsn: national);
   }
 
-  @Deprecated('use static method [PhoneNumber.fromNational] instead')
-  PhoneNumber parseNational(String isoCode, String national) =>
-      PhoneParser.fromNational(isoCode, national);
-
   /// parses a [phoneNumber] given an [isoCode]
   ///
   /// {@macro phoneNumber}
   ///
   /// throws a PhoneNumberException if the isoCode is invalid
   @internal
-  static PhoneNumber fromIsoCode(String isoCode, String phoneNumber) {
-    isoCode = IsoCodeParser.normalizeIsoCode(isoCode);
+  static PhoneNumber fromIsoCode(IsoCode isoCode, String phoneNumber) {
     phoneNumber = TextParser.normalize(phoneNumber);
     final metadata = MetadataFinder.getMetadataForIsoCode(isoCode);
     // we now have national which is the phone number that will be transformed
@@ -89,10 +82,6 @@ class PhoneParser {
     if (result.validate()) return result;
     return PhoneNumber(isoCode: isoCode, nsn: phoneNumber);
   }
-
-  @Deprecated('use static method [PhoneNumber.fromIsoCode] instead')
-  PhoneNumber parseWithIsoCode(String isoCode, String phoneNumber) =>
-      PhoneParser.fromIsoCode(isoCode, phoneNumber);
 
   /// parses a [phoneNumber] given a [countryCode]
   ///
@@ -130,13 +119,6 @@ class PhoneParser {
     return PhoneNumber(isoCode: metadata.isoCode, nsn: phoneNumber);
   }
 
-  @Deprecated('use static method [PhoneNumber.fromCountryCode] instead')
-  PhoneNumber parseWithCountryCode(
-    String countryCode,
-    String phoneNumber,
-  ) =>
-      PhoneParser.fromCountryCode(countryCode, phoneNumber);
-
   /// parses a [phoneNumber] given a [countryCode]
   ///
   /// Use parseWithIsoCode when possible as multiple countries
@@ -152,16 +134,14 @@ class PhoneParser {
       phoneNumber,
     );
     final countryCode = CountryCodeParser.extractCountryCode(phoneNumber);
-    return fromCountryCode(countryCode, phoneNumber);
+    return fromCountryCode(
+        countryCode, phoneNumber.substring(countryCode.length));
   }
-
-  @Deprecated('use static method [PhoneNumber.fromRaw] instead')
-  PhoneNumber parseRaw(String phoneNumber) => PhoneParser.fromRaw(phoneNumber);
 
   /// parse a phone number by providing an [isoCode] and the [national]
   /// this will transform the national from its local version to international
   /// this function assumes well formed params
-  static PhoneNumber _parse(String isoCode, String national) {
+  static PhoneNumber _parse(IsoCode isoCode, String national) {
     final metadata = MetadataFinder.getMetadataForIsoCode(isoCode);
     final nsn =
         NationalNumberParser.transformLocalNsnToInternationalUsingPatterns(

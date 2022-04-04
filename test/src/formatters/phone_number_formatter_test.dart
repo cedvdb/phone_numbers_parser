@@ -4,8 +4,8 @@ import 'package:test/test.dart';
 void main() {
   group('Phone number formatter', () {
     test('should format nsn US', () {
-      final format = (String phoneNumber) => PhoneNumberFormatter.formatNsn(
-            PhoneNumber.fromIsoCode('US', phoneNumber),
+      String format(String phoneNumber) => PhoneNumberFormatter.formatNsn(
+            PhoneNumber.fromIsoCode(IsoCode.US, phoneNumber),
           );
 
       var testNumber = '';
@@ -33,8 +33,8 @@ void main() {
     });
 
     test('should format nsn FR', () {
-      final format = (String phoneNumber) => PhoneNumberFormatter.formatNsn(
-            PhoneNumber.fromIsoCode('FR', phoneNumber),
+      String format(String phoneNumber) => PhoneNumberFormatter.formatNsn(
+            PhoneNumber.fromIsoCode(IsoCode.FR, phoneNumber),
           );
 
       var testNumber = '6';

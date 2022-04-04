@@ -14,21 +14,21 @@ class PhoneNumberException {
 
 enum Code {
   /// A phone number was not found
-  NOT_FOUND,
+  notFound,
 
   /// Invalid phone number
-  INVALID,
+  invalid,
 
   /// invalid country code
   ///
   /// Valid example: 33 for france
-  INVALID_COUNTRY_CALLING_CODE,
+  invalidCountryCallingCode,
 
   /// invalid alpha-2 code (example valid)
   ///
   /// Valid example: FR for france
-  INVALID_ISO_CODE,
+  invalidIsoCode,
 
   /// Input has reached the maximum limit
-  INPUT_IS_TOO_LONG
+  inputIsTooLong
 }

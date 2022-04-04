@@ -18,20 +18,20 @@ abstract class CountryCodeParser {
     // country code don't start with zero
     if (countryCode.startsWith('0')) {
       throw PhoneNumberException(
-          code: Code.INVALID_COUNTRY_CALLING_CODE,
+          code: Code.invalidCountryCallingCode,
           description:
               'country calling code do not start with 0, was $countryCode');
     }
     if (int.tryParse(countryCode) == null) {
       throw PhoneNumberException(
-          code: Code.INVALID_COUNTRY_CALLING_CODE,
+          code: Code.invalidCountryCallingCode,
           description: 'country calling code must be digits, was $countryCode. '
               'Maybe you wanted to parseWithIsoCode ?');
     }
-    if (countryCode.length < Constants.MIN_LENGTH_COUNTRY_CALLING_CODE ||
-        countryCode.length > Constants.MAX_LENGTH_COUNTRY_CALLING_CODE) {
+    if (countryCode.length < Constants.minLengthCountryCallingCode ||
+        countryCode.length > Constants.maxLengthCountryCallingCode) {
       throw PhoneNumberException(
-          code: Code.INVALID_COUNTRY_CALLING_CODE,
+          code: Code.invalidCountryCallingCode,
           description:
               'country calling code has an invalid length, was $countryCode');
     }
@@ -41,7 +41,7 @@ abstract class CountryCodeParser {
   /// tries to find a country calling code at the start of a phone number
   static String extractCountryCode(String phoneNumber) {
     final maxLength =
-        min(phoneNumber.length, Constants.MAX_LENGTH_COUNTRY_CALLING_CODE);
+        min(phoneNumber.length, Constants.maxLengthCountryCallingCode);
     var potentialCountryCode = phoneNumber.substring(0, maxLength);
     potentialCountryCode = normalizeCountryCode(potentialCountryCode);
     for (var i = 1; i <= potentialCountryCode.length; i++) {
@@ -53,7 +53,7 @@ abstract class CountryCodeParser {
       } catch (e) {}
     }
     throw PhoneNumberException(
-        code: Code.NOT_FOUND,
+        code: Code.notFound,
         description:
             'country calling code not found in phone number $phoneNumber');
   }
