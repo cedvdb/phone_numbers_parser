@@ -5,33 +5,42 @@ import 'package:test/test.dart';
 void main() {
   group('MetadataFinder', () {
     test('should get metadata for iso code', () {
-      expect(MetadataFinder.getMetadataForIsoCode('US').isoCode, equals('US'));
+      for (final isoCode in IsoCode.values) {
+        expect(MetadataFinder.getMetadataForIsoCode(isoCode).isoCode,
+            equals(isoCode));
+      }
     });
 
     test('should get patterns metadata for iso code', () {
-      expect(MetadataFinder.getMetadataPatternsForIsoCode('US'),
-          isA<PhoneMetadataPatterns>());
+      for (final isoCode in IsoCode.values) {
+        expect(MetadataFinder.getMetadataPatternsForIsoCode(isoCode),
+            isA<PhoneMetadataPatterns>());
+      }
     });
 
     test('should get lengths metadata for iso code', () {
-      expect(MetadataFinder.getMetadataLengthForIsoCode('US'),
-          isA<PhoneMetadataLengths>());
+      for (final isoCode in IsoCode.values) {
+        expect(MetadataFinder.getMetadataLengthForIsoCode(isoCode),
+            isA<PhoneMetadataLengths>());
+      }
     });
 
     test('should get formats metadata for iso code', () {
-      expect(MetadataFinder.getMetadataFormatsForIsoCode('US'),
-          isA<PhoneMetadataFormats>());
+      for (final isoCode in IsoCode.values) {
+        expect(MetadataFinder.getMetadataFormatsForIsoCode(isoCode),
+            isA<PhoneMetadataFormats>());
+      }
     });
 
     test('should get metadata list for country calling code', () {
       expect(MetadataFinder.getMetadatasForCountryCode('33').length, equals(1));
       expect(MetadataFinder.getMetadatasForCountryCode('33')[0].isoCode,
-          equals('FR'));
+          equals(IsoCode.FR));
 
       expect(MetadataFinder.getMetadatasForCountryCode('1').length,
           greaterThan(1));
       expect(MetadataFinder.getMetadatasForCountryCode('1')[0].isoCode,
-          equals('US'));
+          equals(IsoCode.US));
     });
   });
 }

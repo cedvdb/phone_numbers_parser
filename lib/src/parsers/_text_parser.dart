@@ -21,6 +21,6 @@ abstract class TextParser {
   /// It is possible that a match could be a date or anything else ressembling a phone number.
   /// To verify it is in fact a phone number you can parse it and check its validity
   static Iterable<Match> findPotentialPhoneNumbers(String text) {
-    return RegExp(Constants.POSSIBLE_PHONE_NUMBER).allMatches(text);
+    return RegExp(Constants.possiblePhoneNumber).allMatches(text);
   }
 }

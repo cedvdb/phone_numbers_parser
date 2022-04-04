@@ -48,7 +48,7 @@ abstract class Validator {
   ]) {
     final lengthMetadatas =
         MetadataFinder.getMetadataLengthForIsoCode(phoneNumber.isoCode);
-    if (phoneNumber.nsn.length < Constants.MIN_LENGTH_FOR_NSN) {
+    if (phoneNumber.nsn.length < Constants.minLengthNsn) {
       return false;
     }
     final lengths = _getPossibleLengths(lengthMetadatas, type);
