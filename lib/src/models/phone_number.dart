@@ -52,7 +52,7 @@ class PhoneNumber {
   ) =>
       PhoneParser.fromNational(isoCode, national);
 
-  /// Parses a [phoneNumber] given a [countryCode]
+  /// Parses a [phoneNumber] given a [countryCode] (ex: '33')
   ///
   /// Use [fromIsoCode] when possible as multiple countries
   /// use the same country calling code.
