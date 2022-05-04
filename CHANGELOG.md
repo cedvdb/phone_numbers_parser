@@ -1,3 +1,6 @@
+## 5.0.1
+- updated metadata
+
 ## 5.0.0
 - [Breaking] all iso code api now use IsoCode enum
 - fix for parseRaw when only country code is present.
