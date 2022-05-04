@@ -1,7 +1,6 @@
+import 'package:phone_number_metadata/phone_number_metadata.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:test/test.dart';
-
-import 'test_data.dart';
 
 void main() {
   group('PhoneParser', () {
@@ -37,16 +36,15 @@ void main() {
         PhoneParser.fromNational(IsoCode.FR, '06 86 57 90 14').international,
         equals('+33686579014'),
       );
-      for (var example in examples) {
+      for (var example in metadataExamplesByIsoCode.entries) {
         expect(
-          PhoneParser.fromNational(IsoCode.values.byName(example['isoCode']!),
-                  example['mobile']!)
+          PhoneParser.fromNational(example.key, example.value.mobile)
               .validate(),
           isTrue,
         );
         expect(
-          PhoneParser.fromNational(IsoCode.values.byName(example['isoCode']!),
-                  example['mobile']! + '9999999')
+          PhoneParser.fromNational(
+                  example.key, example.value.mobile + '9999999')
               .validate(),
           isFalse,
         );
@@ -54,16 +52,15 @@ void main() {
     });
 
     test('should parse with iso code', () {
-      for (var example in examples) {
-        final parsed = PhoneParser.fromIsoCode(
-            IsoCode.values.byName(example['isoCode']!), example['mobile']!);
+      for (var example in metadataExamplesByIsoCode.entries) {
+        final parsed =
+            PhoneParser.fromIsoCode(example.key, example.value.mobile);
         expect(
           parsed.validate(),
           isTrue,
         );
         expect(
-          PhoneParser.fromIsoCode(IsoCode.values.byName(example['isoCode']!),
-                  example['mobile']! + '9999999')
+          PhoneParser.fromIsoCode(example.key, example.value.mobile + '9999999')
               .validate(),
           isFalse,
         );
