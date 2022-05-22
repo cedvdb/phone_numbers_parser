@@ -1,3 +1,7 @@
+## 5.0.4
+- improved readme
+- upgraded deps
+
 ## 5.0.3
 - updated metadata
 

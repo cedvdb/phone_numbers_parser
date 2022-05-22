@@ -27,11 +27,11 @@ abstract class InternationalPrefixParser {
     // 4/5 of the world wide numbers start with 00 or 011
     // if a country code does not follow the international prefix
     // then we can assume it is not an international prefix
-    if (phoneNumber.startsWith('00' + countryCode)) {
+    if (phoneNumber.startsWith('00$countryCode')) {
       return phoneNumber.substring(2);
     }
 
-    if (phoneNumber.startsWith('011' + countryCode)) {
+    if (phoneNumber.startsWith('011$countryCode')) {
       return phoneNumber.substring(3);
     }
 

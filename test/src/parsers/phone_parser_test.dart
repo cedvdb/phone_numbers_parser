@@ -44,7 +44,7 @@ void main() {
         );
         expect(
           PhoneParser.fromNational(
-                  example.key, example.value.mobile + '9999999')
+                  example.key, '${example.value.mobile}9999999')
               .validate(),
           isFalse,
         );
@@ -60,7 +60,7 @@ void main() {
           isTrue,
         );
         expect(
-          PhoneParser.fromIsoCode(example.key, example.value.mobile + '9999999')
+          PhoneParser.fromIsoCode(example.key, '${example.value.mobile}9999999')
               .validate(),
           isFalse,
         );

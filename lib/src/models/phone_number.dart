@@ -26,7 +26,7 @@ class PhoneNumber {
       MetadataFinder.getMetadataForIsoCode(isoCode).countryCode;
 
   /// international version of phone number
-  String get international => '+' + countryCode + nsn;
+  String get international => '+$countryCode$nsn';
 
   const PhoneNumber({
     required this.isoCode,
@@ -175,10 +175,10 @@ class PhoneNumber {
   /// Returns true if this phone number is numerically greater
   /// than [other]
   bool operator >(PhoneNumber other) {
-    var self = BigInt.parse(international);
-    var _other = BigInt.parse(other.international);
+    var selfAsNum = BigInt.parse(international);
+    var otherAsNum = BigInt.parse(other.international);
 
-    return (self - _other).toInt() > 0;
+    return (selfAsNum - otherAsNum).toInt() > 0;
   }
 
   /// Returns true if this phone number is numerically greater

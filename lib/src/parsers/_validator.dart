@@ -66,8 +66,8 @@ abstract class Validator {
     PhoneNumberType? type,
   ) {
     if (type != null) {
-      final _lengths = _getLengths(lengthMetadatas, type);
-      return Set.from(_lengths);
+      final lengths = _getLengths(lengthMetadatas, type);
+      return Set.from(lengths);
     } else {
       // if the type is not specified it can be either mobile or fixedLine
       // so we return a set containing both

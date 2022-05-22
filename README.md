@@ -23,24 +23,18 @@ Use the class `PhoneNumber` as a starting point
 
 ```dart
   // creation
-  final frPhone = PhoneNumber.fromNational('fr', '655 5705 76');
-  final frPhone1 = PhoneNumber.fromRaw('+33 655 5705 76');
-  final frPhone2 = PhoneNumber.fromIsoCode('fr', '655 5705 76');
-  final frPhone3 = PhoneNumber.fromCountryCode('33', '655 5705 76');
-  final frPhone4 = PhoneNumber.fromIsoCode('fr', '0655 5705 76');
-  final allSame = frPhone == frPhone1 &&
+  final frPhone1 = PhoneNumber.fromNational(IsoCode.FR, '655 5705 76');
+  final frPhone2
+  final frPhone3 = PhoneNumber.fromRaw('+33 655 5705 76');
+  final frPhone4 = PhoneNumber.fromIsoCode(IsoCode.FR, '655 5705 76');
+  final frPhone5 = PhoneNumber.fromCountryCode('33', '655 5705 76');
+  final frPhone6 = PhoneNumber.fromIsoCode(IsoCode.FR, '0655 5705 76');
+
+  final allSame = frPhone1 == frPhone1 &&
       frPhone == frPhone2 &&
       frPhone == frPhone3 &&
       frPhone == frPhone4;
   print('allSame: $allSame'); // true
-
-  // validation
-  final valid = frPhone1.validate();
-  final validMobile = frPhone1.validate(type: PhoneNumberType.mobile);
-  final validFixed = frPhone1.validate(type: PhoneNumberType.fixedLine);
-  print('valid: $valid'); // true
-  print('valid mobile: $validMobile'); // true
-  print('valid fixed line: $validFixed'); // false
 
   // changing the country
 
@@ -54,13 +48,24 @@ Use the class `PhoneNumber` as a starting point
   print('found: ' + (found.first.group(0) ?? ''));
 ```
 
+# validation
+
+```dart
+  final valid = frPhone1.validate();
+  final validMobile = frPhone1.validate(type: PhoneNumberType.mobile);
+  final validFixed = frPhone1.validate(type: PhoneNumberType.fixedLine);
+  print('valid: $valid'); // true
+  print('valid mobile: $validMobile'); // true
+  print('valid fixed line: $validFixed'); // false
+```
+
 ### Formatting
 
 Formatting is region specific, so the formats will vary by iso code to accomodate
 for local formats.
 
 ```dart
-  final phoneNumber = PhoneNumber.fromIsoCode('US', '2025550119');
+  final phoneNumber = PhoneNumber.fromIsoCode(IsoCode.US, '2025550119');
   final formattedNsn = phoneNumber.getFormattedNsn();
   print('formatted: $formattedNsn'); // 202-555-0119
 ```
