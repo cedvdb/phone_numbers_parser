@@ -9,7 +9,6 @@ The advantage of this lib instead of libphonenumber is that it instantly support
 
  - Find phone numbers in a text
  - Validate a phone number
- - Find the country of a phone number (Geocoding available as separate package)
  - A light parser for size aware applications
  - Formatter
  - Phone ranges
