@@ -27,7 +27,7 @@ class PhoneParser {
   /// parses a [national] phone number given an iso code
   ///
   /// The difference with fromIsoCode is that here we assume that the phoneNumber
-  /// is a national one. Therefor some parsing steps are skipped.
+  /// is a national one. Therefore some parsing steps are skipped.
   ///
   /// This is useful for when you know in advance that a phone
   /// number is a national version.
@@ -149,7 +149,7 @@ class PhoneParser {
     return PhoneNumber(isoCode: metadata.isoCode, nsn: nsn);
   }
 
-  /// Validates a phone number using pattern mathing
+  /// Validates a phone number using pattern matching
   ///
   /// if a [type] is added, will validate against a specific type
   @internal

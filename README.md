@@ -12,7 +12,7 @@ The advantage of this lib instead of libphonenumber is that it instantly support
  - A light parser for size aware applications
  - Formatter
  - Phone ranges
- - Supports easthern arabic digits
+ - Supports eastern arabic digits
  - Uses best-in-class metadata from Google's libPhoneNumber project. 
 
 
@@ -59,7 +59,7 @@ Use the class `PhoneNumber` as a starting point
 
 ### Formatting
 
-Formatting is region specific, so the formats will vary by iso code to accomodate
+Formatting is region specific, so the formats will vary by iso code to accommodate
 for local formats.
 
 ```dart
