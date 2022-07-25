@@ -1,3 +1,6 @@
+## 6.0.0
+- [Breaking]: removed fromMap, toMap which have been replaced by fromJson(Map), toJson respectively.
+
 ## 5.0.5
 - improved readme
 
