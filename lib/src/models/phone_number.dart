@@ -13,7 +13,7 @@ import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 /// return a [PhoneNumber] that has been parsed to it's international version.
 ///
 class PhoneNumber {
-  /// National number in its internanational form
+  /// National number in its international form
   final String nsn;
 
   /// country alpha2 code example: 'FR', 'US', ...
@@ -69,7 +69,7 @@ class PhoneNumber {
   ) =>
       PhoneParser.fromCountryCode(countryCode, phoneNumber);
 
-  /// Parses a [phoneNumber] given an [isoCode]
+  /// Parses a [phoneNumber] given an [isoCode] when the number is known to be a national number
   ///
   /// {@macro phoneNumber}
   ///
@@ -79,6 +79,17 @@ class PhoneNumber {
     String phoneNumber,
   ) =>
       PhoneParser.fromIsoCode(isoCode, phoneNumber);
+
+  /// Parses a [phoneNumber] given an [isoCode] if it is unknown whether the number is a national or international one
+  ///
+  /// {@macro phoneNumber}
+  ///
+  /// throws a PhoneNumberException if the isoCode is invalid
+  static PhoneNumber fromLocale(
+      IsoCode isoCode,
+      String phoneNumber,
+      ) =>
+      PhoneParser.fromLocale(isoCode, phoneNumber);
 
   /// Parses a [phoneNumber] given a [countryCode]
   ///

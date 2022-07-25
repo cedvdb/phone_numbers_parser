@@ -42,6 +42,46 @@ class PhoneParser {
     return PhoneNumber(isoCode: isoCode, nsn: national);
   }
 
+  /// parses a [phoneNumber] given an [isoCode] when it is unknown whether the phone number is a local or an international one,
+  /// we just know it is specified in the country's locale
+  ///
+  /// {@macro phoneNumber}
+  ///
+  /// throws a PhoneNumberException if the isoCode is invalid
+  @internal
+  static PhoneNumber fromLocale(IsoCode isoCode, String phoneNumber) {
+    phoneNumber = TextParser.normalize(phoneNumber);
+    final metadata = MetadataFinder.getMetadataForIsoCode(isoCode);
+    // we first remove any international prefix to determine whether it's actually a local or international number
+    final withoutIntlPrefix =
+    InternationalPrefixParser.removeInternationalPrefix(
+      phoneNumber,
+      countryCode: metadata.countryCode,
+      metadata: metadata,
+    );
+    // if there was no prefix it is a national number and we proceed like in fromIsoCode
+    if (withoutIntlPrefix.length==phoneNumber.length) {
+      final withoutCountryCode = CountryCodeParser.removeCountryCode(
+          withoutIntlPrefix, metadata.countryCode);
+      var national = withoutCountryCode;
+      // if a country code did not immediately follow the international prefix
+      // then it was not an international prefix by definition
+      if (withoutIntlPrefix.length == withoutCountryCode.length) {
+        national = withoutCountryCode;
+      }
+
+      final result = _parse(isoCode, national);
+      // we only want to modify the national number when it is valid
+      if (result.validate()) return result;
+      return PhoneNumber(isoCode: isoCode, nsn: phoneNumber);
+    }
+    // otherwise we create the international format and pass it to fromRaw for country code extraction
+    else
+    {
+      return fromRaw("+$withoutIntlPrefix");
+    }
+  }
+
   /// parses a [phoneNumber] given an [isoCode]
   ///
   /// {@macro phoneNumber}

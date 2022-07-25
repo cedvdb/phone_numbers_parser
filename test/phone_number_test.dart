@@ -107,6 +107,20 @@ void main() {
         expect(PhoneParser.fromRaw('33').isoCode, equals(IsoCode.FR));
         expect(PhoneParser.fromRaw('33').nsn, equals(''));
       });
+
+      test('should parse international numbers in a national format',(){
+        expect(PhoneNumber.fromLocale(IsoCode.US, '011 33 655 5705 76').international,
+            equals('+33655570576'));
+        expect(PhoneNumber.fromLocale(IsoCode.DE, '+33 655 5705 76').international,
+            equals('+33655570576'));
+        expect(PhoneNumber.fromLocale(IsoCode.FR, '00 33 655 5705 76').international,
+            equals('+33655570576'));
+        expect(PhoneNumber.fromLocale(IsoCode.BY, '810 33 655 5705 76').international,
+            equals('+33655570576'));
+        expect(PhoneNumber.fromLocale(IsoCode.FR, '655 5705 76').international,
+            equals('+33655570576'));
+
+      });
     });
 
     group('Validity', () {
