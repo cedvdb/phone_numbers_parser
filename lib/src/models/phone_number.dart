@@ -80,17 +80,6 @@ class PhoneNumber {
   ) =>
       PhoneParser.fromIsoCode(isoCode, phoneNumber);
 
-  /// Parses a [phoneNumber] given an [isoCode] if it is unknown whether the number is a national or international one
-  ///
-  /// {@macro phoneNumber}
-  ///
-  /// throws a PhoneNumberException if the isoCode is invalid
-  static PhoneNumber fromLocale(
-      IsoCode isoCode,
-      String phoneNumber,
-      ) =>
-      PhoneParser.fromLocale(isoCode, phoneNumber);
-
   /// Parses a [phoneNumber] given a [countryCode]
   ///
   /// Use [fromIsoCode] when possible as multiple countries
@@ -99,8 +88,8 @@ class PhoneNumber {
   /// This method assumes the phone number starts with the country calling code
   ///
   /// throws a PhoneNumberException if the country calling code is invalid
-  static PhoneNumber fromRaw(String phoneNumber) =>
-      PhoneParser.fromRaw(phoneNumber);
+  static PhoneNumber fromRaw(String phoneNumber, { IsoCode? callerCountry, IsoCode? destinationCountry }) =>
+      PhoneParser.fromRaw(phoneNumber, callerCountry: callerCountry, destinationCountry: destinationCountry);
 
   /// reparse phone number with new values
   PhoneNumber rebuildWith({IsoCode? isoCode, String? nsn}) =>

@@ -108,18 +108,27 @@ void main() {
         expect(PhoneParser.fromRaw('33').nsn, equals(''));
       });
 
-      test('should parse international numbers in a national format',(){
-        expect(PhoneNumber.fromLocale(IsoCode.US, '011 33 655 5705 76').international,
+      test('should parse international numbers in a national or international format if given extra metadata for caller country',(){
+        expect(PhoneNumber.fromRaw('011 33 655 5705 76', callerCountry: IsoCode.US).international,
             equals('+33655570576'));
-        expect(PhoneNumber.fromLocale(IsoCode.DE, '+33 655 5705 76').international,
+        expect(PhoneNumber.fromRaw('+33 655 5705 76', callerCountry: IsoCode.DE).international,
             equals('+33655570576'));
-        expect(PhoneNumber.fromLocale(IsoCode.FR, '00 33 655 5705 76').international,
+        expect(PhoneNumber.fromRaw('00 33 655 5705 76', callerCountry: IsoCode.FR).international,
             equals('+33655570576'));
-        expect(PhoneNumber.fromLocale(IsoCode.BY, '810 33 655 5705 76').international,
+        expect(PhoneNumber.fromRaw('810 33 655 5705 76', callerCountry: IsoCode.BY).international,
             equals('+33655570576'));
-        expect(PhoneNumber.fromLocale(IsoCode.FR, '655 5705 76').international,
+        expect(PhoneNumber.fromRaw('655 5705 76', callerCountry: IsoCode.FR).international,
             equals('+33655570576'));
 
+      });
+      test('should respect given extra metadata for destination country',(){
+        expect(() => PhoneNumber.fromRaw('011 33 655 5705 76', callerCountry: IsoCode.US, destinationCountry: IsoCode.DE).international,
+            throwsA(TypeMatcher<PhoneNumberException>()));
+        expect(() => PhoneNumber.fromRaw('00 33 655 5705 76', callerCountry: IsoCode.FR, destinationCountry: IsoCode.BY).international,
+            throwsA(TypeMatcher<PhoneNumberException>()));
+        // expecting a local number to call a different country should fail
+        expect(() => PhoneNumber.fromRaw('655 5705 76', callerCountry: IsoCode.FR, destinationCountry: IsoCode.US).international,
+            throwsA(TypeMatcher<PhoneNumberException>()));
       });
     });
 
