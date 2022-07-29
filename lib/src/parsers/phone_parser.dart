@@ -130,18 +130,19 @@ class PhoneParser {
   @internal
   static PhoneNumber fromRaw(String phoneNumber, { IsoCode? callerCountry, IsoCode? destinationCountry }) {
     phoneNumber = TextParser.normalize(phoneNumber);
-    String withoutIntlPrefix;
+    String withoutIntlPrefix; // this shall contain the number without exit codes, starting with the country code. e.g. 49301234567
     if (callerCountry != null) {
-      // as we know the caller country, we can remove the prefix more exactly
-      var metadata = MetadataFinder.getMetadataForIsoCode(callerCountry);
+      // as we know the caller country, we can remove the possible international prefix (exit code)
+      var metaCallerCountry = MetadataFinder.getMetadataForIsoCode(callerCountry);
       withoutIntlPrefix =
           InternationalPrefixParser.removeInternationalPrefix(
-              phoneNumber, metadata: metadata);
+              phoneNumber, metadata: metaCallerCountry);
       if (withoutIntlPrefix.length == phoneNumber.length) {
-        // the given number was not an international number,
-        // but since we know the caller country we may reassemble this for further processing
-        withoutIntlPrefix = metadata.countryCode + NationalNumberParser.removeNationalPrefix(withoutIntlPrefix, metadata);
-        // no need to extract the destination country then
+        // no exit code was removed, so the given number was not an international number
+        // since we know the caller country we may assemble the number with leading country code for further processing
+        var nationalNumber = NationalNumberParser.removeNationalPrefix(withoutIntlPrefix, metaCallerCountry);
+        withoutIntlPrefix = metaCallerCountry.countryCode + nationalNumber;
+        // no need to extract the destination country then, it must be the same as the caller country
         destinationCountry ??= callerCountry;
       }
     } else {
@@ -150,16 +151,17 @@ class PhoneParser {
           InternationalPrefixParser.removeInternationalPrefix(
               phoneNumber);
     }
+    // withoutIntlPrefix now starts with a country code, regardless of the number format initially given
     late String countryCode;
     if (destinationCountry != null) {
       // if we are given a destination country we check if the country code in the phone number matches the destination country code
-      var metadata = MetadataFinder.getMetadataForIsoCode(destinationCountry);
-      if (metadata.countryCode != withoutIntlPrefix.substring(0,metadata.countryCode.length)) {
+      var metaDestinationCountry = MetadataFinder.getMetadataForIsoCode(destinationCountry);
+      if (metaDestinationCountry.countryCode != withoutIntlPrefix.substring(0,metaDestinationCountry.countryCode.length)) {
         throw PhoneNumberException(
             code: Code.invalidCountryCallingCode,
             description: "The country code in the given phone number does not match the expected destination country");
       } else {
-        countryCode = metadata.countryCode;
+        countryCode = metaDestinationCountry.countryCode;
       }
     } else {
       // we are not given a specific destination country, so extract the destination country code from the number
