@@ -117,8 +117,10 @@ void main() {
             equals('+33655570576'));
         expect(PhoneNumber.fromRaw('810 33 655 5705 76', callerCountry: IsoCode.BY).international,
             equals('+33655570576'));
-        expect(PhoneNumber.fromRaw('655 5705 76', callerCountry: IsoCode.FR).international,
+        expect(PhoneNumber.fromRaw('0 655 5705 76', callerCountry: IsoCode.FR).international,
             equals('+33655570576'));
+        expect(() => PhoneNumber.fromRaw('655 5705 76', callerCountry: IsoCode.FR).international,
+            throwsA(TypeMatcher<PhoneNumberException>()));
         expect(PhoneNumber.fromRaw('0301234567', callerCountry: IsoCode.DE).international,
             equals('+49301234567'));
         expect(PhoneNumber.fromRaw('0049301234567', callerCountry: IsoCode.DE).international,

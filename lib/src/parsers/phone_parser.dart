@@ -139,8 +139,12 @@ class PhoneParser {
               phoneNumber, metadata: metaCallerCountry);
       if (withoutIntlPrefix.length == phoneNumber.length) {
         // no exit code was removed, so the given number was not an international number
-        // since we know the caller country we may assemble the number with leading country code for further processing
         var nationalNumber = NationalNumberParser.removeNationalPrefix(withoutIntlPrefix, metaCallerCountry);
+        // if the national number does not start with a national prefix we cannot resume since we don't know the area code
+        if (nationalNumber.length == withoutIntlPrefix.length) {
+          throw PhoneNumberException(code: Code.invalid, description: "This number is neither international nor does it start with a national prefix");
+        }
+        // as we know the caller country we may assemble the number with leading country code for further processing
         withoutIntlPrefix = metaCallerCountry.countryCode + nationalNumber;
         // no need to extract the destination country then, it must be the same as the caller country
         destinationCountry ??= callerCountry;
