@@ -123,6 +123,8 @@ void main() {
             throwsA(TypeMatcher<PhoneNumberException>()));
         expect(PhoneNumber.fromRaw('0301234567', callerCountry: IsoCode.DE).international,
             equals('+49301234567'));
+        expect(PhoneNumber.fromRaw('0301234567', callerCountry: IsoCode.US, destinationCountry: IsoCode.DE).international,
+            equals('+49301234567'));
         expect(PhoneNumber.fromRaw('0049301234567', callerCountry: IsoCode.DE).international,
             equals('+49301234567'));
         expect(PhoneNumber.fromRaw('+49301234567', callerCountry: IsoCode.DE).international,

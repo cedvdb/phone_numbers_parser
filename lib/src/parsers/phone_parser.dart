@@ -139,15 +139,18 @@ class PhoneParser {
               phoneNumber, metadata: metaCallerCountry);
       if (withoutIntlPrefix.length == phoneNumber.length) {
         // no exit code was removed, so the given number was not an international number
-        var nationalNumber = NationalNumberParser.removeNationalPrefix(withoutIntlPrefix, metaCallerCountry);
+        // if a destination country was given we assume the national number to be in the destination country, otherwise
+        // destination country will be the same as the caller country
+        destinationCountry ??= callerCountry;
+        // get metadata and remove national prefix of the destination country
+        var metaDestinationCountry = MetadataFinder.getMetadataForIsoCode(destinationCountry);
+        var nationalNumber = NationalNumberParser.removeNationalPrefix(withoutIntlPrefix, metaDestinationCountry);
         // if the national number does not start with a national prefix we cannot resume since we don't know the area code
         if (nationalNumber.length == withoutIntlPrefix.length) {
           throw PhoneNumberException(code: Code.invalid, description: "This number is neither international nor does it start with a national prefix");
         }
-        // as we know the caller country we may assemble the number with leading country code for further processing
-        withoutIntlPrefix = metaCallerCountry.countryCode + nationalNumber;
-        // no need to extract the destination country then, it must be the same as the caller country
-        destinationCountry ??= callerCountry;
+        // as we know the destination country we may assemble the number with leading country code for further processing
+        withoutIntlPrefix = metaDestinationCountry.countryCode + nationalNumber;
       }
     } else {
       // we don't know the caller country, so we just make a best guess
