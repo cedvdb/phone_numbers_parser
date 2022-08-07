@@ -107,6 +107,39 @@ void main() {
         expect(PhoneParser.fromRaw('33').isoCode, equals(IsoCode.FR));
         expect(PhoneParser.fromRaw('33').nsn, equals(''));
       });
+
+      test('should parse international numbers in a national or international format if given extra metadata for caller country',(){
+        expect(PhoneNumber.fromRaw('011 33 655 5705 76', callerCountry: IsoCode.US).international,
+            equals('+33655570576'));
+        expect(PhoneNumber.fromRaw('+33 655 5705 76', callerCountry: IsoCode.DE).international,
+            equals('+33655570576'));
+        expect(PhoneNumber.fromRaw('00 33 655 5705 76', callerCountry: IsoCode.FR).international,
+            equals('+33655570576'));
+        expect(PhoneNumber.fromRaw('810 33 655 5705 76', callerCountry: IsoCode.BY).international,
+            equals('+33655570576'));
+        expect(PhoneNumber.fromRaw('0 655 5705 76', callerCountry: IsoCode.FR).international,
+            equals('+33655570576'));
+        expect(() => PhoneNumber.fromRaw('655 5705 76', callerCountry: IsoCode.FR).international,
+            throwsA(TypeMatcher<PhoneNumberException>()));
+        expect(PhoneNumber.fromRaw('0301234567', callerCountry: IsoCode.DE).international,
+            equals('+49301234567'));
+        expect(PhoneNumber.fromRaw('0301234567', callerCountry: IsoCode.US, destinationCountry: IsoCode.DE).international,
+            equals('+49301234567'));
+        expect(PhoneNumber.fromRaw('0049301234567', callerCountry: IsoCode.DE).international,
+            equals('+49301234567'));
+        expect(PhoneNumber.fromRaw('+49301234567', callerCountry: IsoCode.DE).international,
+            equals('+49301234567'));
+
+      });
+      test('should respect given extra metadata for destination country',(){
+        expect(() => PhoneNumber.fromRaw('011 33 655 5705 76', callerCountry: IsoCode.US, destinationCountry: IsoCode.DE).international,
+            throwsA(TypeMatcher<PhoneNumberException>()));
+        expect(() => PhoneNumber.fromRaw('00 33 655 5705 76', callerCountry: IsoCode.FR, destinationCountry: IsoCode.BY).international,
+            throwsA(TypeMatcher<PhoneNumberException>()));
+        // expecting a local number to call a different country should fail
+        expect(() => PhoneNumber.fromRaw('655 5705 76', callerCountry: IsoCode.FR, destinationCountry: IsoCode.US).international,
+            throwsA(TypeMatcher<PhoneNumberException>()));
+      });
     });
 
     group('Validity', () {
