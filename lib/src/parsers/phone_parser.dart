@@ -15,15 +15,15 @@ import 'package:phone_numbers_parser/src/utils/_metadata_matcher.dart';
 ///
 ///  1. Remove the international prefix / exit code
 ///    a. if caller is provided remove the international prefix / exit code
-///    b. if caller is not provided be a best guess is done with a possible destination
+///    b. if caller is not provided a best guess is done with a possible destination
 ///       country
 ///  2. Find destination country
-///    a. if no destination country was provided, the destination is assumed to be the
-///       same as the caller
-///    b. if no caller was provided a best guess is estimated by looking at
-///       the first digits to see if they match a country. Since multiple countries
-///       share the same country code, pattern matching might be used when there are
-///       multiple matches.
+///    a. if no destination country was provided, we check if the caller national prefix
+///       is there in which case it's the destination is the same as the caller country.
+///    b. else a best guess is estimated by looking at the first digits
+///       to see if they match a country.
+///       Since multiple countries share the same country code,
+///       pattern matching might be used when there are multiple matches.
 ///  3. Extract the country code with the country information
 ///  4. Transform a local NSN to an international version
 ///
