@@ -49,9 +49,9 @@ class PhoneNumberRange {
 
     var range = <PhoneNumber>[];
     for (var current = first; current <= last; current = current + BigInt.one) {
-      final next = PhoneNumber.fromCountryCode(
-        start.countryCode,
-        current.toString().substring(countryCode.length),
+      final next = PhoneNumber(
+        isoCode: start.isoCode,
+        nsn: current.toString().substring(countryCode.length),
       );
       range.add(next);
     }

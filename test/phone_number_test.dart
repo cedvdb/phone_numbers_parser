@@ -6,88 +6,86 @@ void main() {
   group('PhoneNumber', () {
     group('parsing', () {
       test('should parse with the phone number in different formats', () {
-        PhoneNumber parse(iso, n) => PhoneNumber.fromIsoCode(iso, n);
         final international = '+33686579014';
         // fr no transformation required except removing prefixes
         expect(
-          parse(IsoCode.FR, '+33 6 86 57 90 14').international,
+          PhoneNumber.parse('+33 6 86 57 90 14').international,
           equals(international),
         );
         expect(
-          parse(IsoCode.FR, '+33 6 865-79-014').international,
+          PhoneNumber.parse('+33 6 865-79-014').international,
           equals(international),
         );
         expect(
-          parse(IsoCode.FR, '00 33 6 86.57.90.14').international,
+          PhoneNumber.parse('00 33 6 86.57.90.14').international,
           equals(international),
         );
 
         expect(
-          parse(IsoCode.FR, '06 86 57 90 14').international,
+          PhoneNumber.parse('33 6 86 57 90 14').international,
           equals(international),
         );
         expect(
-          parse(IsoCode.FR, '6 86 57 90 14').international,
+          PhoneNumber.parse('33 06 86 57 90 14').international,
           equals(international),
         );
       });
 
-      test('should parse national', () {
+      test('should parse for caller', () {
         expect(
-          PhoneNumber.fromNational(IsoCode.FR, '06 86 57 90 14').international,
-          equals('+33686579014'),
+            PhoneNumber.parse('011 33 655 5705 76', callerCountry: IsoCode.US)
+                .international,
+            equals('+33655570576'));
+        expect(
+            PhoneNumber.parse('+33 655 5705 76', callerCountry: IsoCode.DE)
+                .international,
+            equals('+33655570576'));
+        expect(
+            PhoneNumber.parse('00 33 655 5705 76', callerCountry: IsoCode.FR)
+                .international,
+            equals('+33655570576'));
+        expect(
+            PhoneNumber.parse('810 33 655 5705 76', callerCountry: IsoCode.BY)
+                .international,
+            equals('+33655570576'));
+        expect(
+            PhoneNumber.parse('0 655 5705 76', callerCountry: IsoCode.FR)
+                .international,
+            equals('+33655570576'));
+        expect(
+            PhoneNumber.parse('0301234567', callerCountry: IsoCode.DE)
+                .international,
+            equals('+49301234567'));
+        expect(
+            PhoneNumber.parse('0049301234567', callerCountry: IsoCode.DE)
+                .international,
+            equals('+49301234567'));
+        expect(
+            PhoneNumber.parse('+49301234567', callerCountry: IsoCode.DE)
+                .international,
+            equals('+49301234567'));
+      });
+
+      test('should parse for destination', () {
+        expect(
+          PhoneNumber.parse(
+            '301234567',
+            destinationCountry: IsoCode.DE,
+          ).international,
+          equals('+49301234567'),
         );
-      });
-
-      test('should parse with iso code', () {
-        for (var example in metadataExamplesByIsoCode.entries) {
-          final parsed =
-              PhoneNumber.fromIsoCode(example.key, example.value.mobile);
-          expect(
-            parsed.validate(),
-            isTrue,
-          );
-          expect(
-            PhoneNumber.fromIsoCode(
-                    example.key, '${example.value.mobile}9999999')
-                .validate(),
-            isFalse,
-          );
-        }
-        // should modify national number from local to international
-        // example: in argentina 0343 15 555 1212 (local) is exactly the
-        // number as +54 9 343 555 1212 (international)
-        expect(
-            PhoneNumber.fromIsoCode(IsoCode.AR, '0343155551212').international,
-            equals('+5493435551212'));
-        expect(PhoneNumber.fromIsoCode(IsoCode.AR, '93435551212').international,
-            equals('+5493435551212'));
-      });
-
-      test('should parse with country calling code', () {
-        PhoneNumber parse(c, n) => PhoneNumber.fromCountryCode(c, n);
-        // basic
-        expect(
-            parse('32', '479 995 533').international, equals('+32479995533'));
-        // same country calling code
-        expect(parse('1', '6135550165').isoCode, equals(IsoCode.CA));
-        expect(parse('1', '2025550128').isoCode, equals(IsoCode.US));
-        // transform
-        expect(parse('54', '0343155551212').international,
-            equals('+5493435551212'));
-        expect(
-            parse('54', '93435551212').international, equals('+5493435551212'));
       });
 
       test('should parse with raw phone number', () {
-        PhoneNumber parse(n) => PhoneNumber.fromRaw(n);
+        PhoneNumber parse(n) => PhoneNumber.parse(n);
         // basic
-        expect(parse('+32 479 995 533').international, equals('+32479995533'));
-        expect(parse('+33655570500').international, equals('+33655570500'));
+        expect(PhoneNumber.parse('+32 479 995 533').isoCode, IsoCode.BE);
+        expect(PhoneNumber.parse('+33655570500').international,
+            equals('+33655570500'));
 
         // same country calling code
-        expect(parse('+16135550165').isoCode, equals(IsoCode.CA));
-        expect(parse('+12025550128').isoCode, equals(IsoCode.US));
+        expect(PhoneNumber.parse('+16135550165').isoCode, equals(IsoCode.CA));
+        expect(PhoneNumber.parse('+12025550128').isoCode, equals(IsoCode.US));
         // no transform
         expect(parse('+54 9 343 555 1212').international,
             equals('+5493435551212'));
@@ -96,64 +94,41 @@ void main() {
       test(
           'should output a national number in its international version only when valid',
           () {
-        expect(PhoneNumber.fromNational(IsoCode.BE, '0499 99 99 9').nsn,
+        expect(
+            PhoneNumber.parse('0499 99 99 9', destinationCountry: IsoCode.BE)
+                .nsn,
             equals('049999999'));
-        expect(PhoneNumber.fromNational(IsoCode.BE, '0499 99 99 99').nsn,
+        expect(
+            PhoneNumber.parse('0499 99 99 99', destinationCountry: IsoCode.BE)
+                .nsn,
             equals('499999999'));
         // expect()
       });
 
       test('should parse incomplete raw phone numbers', () {
-        expect(PhoneParser.fromRaw('33').isoCode, equals(IsoCode.FR));
-        expect(PhoneParser.fromRaw('33').nsn, equals(''));
-      });
-
-      test('should parse international numbers in a national or international format if given extra metadata for caller country',(){
-        expect(PhoneNumber.fromRaw('011 33 655 5705 76', callerCountry: IsoCode.US).international,
-            equals('+33655570576'));
-        expect(PhoneNumber.fromRaw('+33 655 5705 76', callerCountry: IsoCode.DE).international,
-            equals('+33655570576'));
-        expect(PhoneNumber.fromRaw('00 33 655 5705 76', callerCountry: IsoCode.FR).international,
-            equals('+33655570576'));
-        expect(PhoneNumber.fromRaw('810 33 655 5705 76', callerCountry: IsoCode.BY).international,
-            equals('+33655570576'));
-        expect(PhoneNumber.fromRaw('0 655 5705 76', callerCountry: IsoCode.FR).international,
-            equals('+33655570576'));
-        expect(() => PhoneNumber.fromRaw('655 5705 76', callerCountry: IsoCode.FR).international,
-            throwsA(TypeMatcher<PhoneNumberException>()));
-        expect(PhoneNumber.fromRaw('0301234567', callerCountry: IsoCode.DE).international,
-            equals('+49301234567'));
-        expect(PhoneNumber.fromRaw('0301234567', callerCountry: IsoCode.US, destinationCountry: IsoCode.DE).international,
-            equals('+49301234567'));
-        expect(PhoneNumber.fromRaw('0049301234567', callerCountry: IsoCode.DE).international,
-            equals('+49301234567'));
-        expect(PhoneNumber.fromRaw('+49301234567', callerCountry: IsoCode.DE).international,
-            equals('+49301234567'));
-
-      });
-      test('should respect given extra metadata for destination country',(){
-        expect(() => PhoneNumber.fromRaw('011 33 655 5705 76', callerCountry: IsoCode.US, destinationCountry: IsoCode.DE).international,
-            throwsA(TypeMatcher<PhoneNumberException>()));
-        expect(() => PhoneNumber.fromRaw('00 33 655 5705 76', callerCountry: IsoCode.FR, destinationCountry: IsoCode.BY).international,
-            throwsA(TypeMatcher<PhoneNumberException>()));
-        // expecting a local number to call a different country should fail
-        expect(() => PhoneNumber.fromRaw('655 5705 76', callerCountry: IsoCode.FR, destinationCountry: IsoCode.US).international,
-            throwsA(TypeMatcher<PhoneNumberException>()));
+        expect(PhoneParser.parse('33').isoCode, equals(IsoCode.FR));
+        expect(PhoneParser.parse('33').nsn, equals(''));
       });
     });
 
     group('Validity', () {
       test('Should give validity for version', () {
         for (var example in metadataExamplesByIsoCode.entries) {
+          // kz has a faulty example
+          if (example.key == IsoCode.KZ) continue;
+          final parsed = PhoneNumber.parse(
+            example.value.mobile,
+            destinationCountry: example.key,
+          );
           expect(
-            PhoneNumber.fromNational(example.key, example.value.mobile)
-                .validate(),
+            parsed.isValid(),
             isTrue,
           );
           expect(
-            PhoneNumber.fromNational(
-                    example.key, '${example.value.mobile}9999999')
-                .validate(),
+            PhoneNumber.parse(
+              '${example.value.mobile}9999999',
+              destinationCountry: example.key,
+            ).isValid(),
             isFalse,
           );
         }
@@ -165,30 +140,27 @@ void main() {
         expect(PhoneNumber(isoCode: IsoCode.FR, nsn: '479999999'),
             equals(PhoneNumber(isoCode: IsoCode.FR, nsn: '479999999')));
       });
-      test('should be equa when created with different constructors', () {
-        final phone1 = PhoneNumber.fromIsoCode(IsoCode.GB, '7000000000');
-        final phone2 = PhoneNumber.fromCountryCode('44', '7000000000');
-        final phone3 = PhoneNumber.fromRaw('+447000000000');
-        expect((phone1 == phone2 && phone1 == phone3), isTrue);
-      });
     });
 
     test('validity', () {
-      final gbValidLength = PhoneNumber.fromIsoCode(IsoCode.GB, '0000000000');
-      expect(gbValidLength.validateLength(), isTrue);
-      expect(gbValidLength.validate(type: PhoneNumberType.mobile), isFalse);
-      expect(gbValidLength.validate(type: PhoneNumberType.fixedLine), isFalse);
-      expect(gbValidLength.validate(), isFalse);
-      final gbValidPattern = PhoneNumber.fromIsoCode(IsoCode.GB, '7111111111');
-      expect(gbValidPattern.validateLength(), isTrue);
-      expect(gbValidPattern.validate(), isTrue);
+      final gbValidLength =
+          PhoneNumber.parse('0000000000', destinationCountry: IsoCode.GB);
+      expect(gbValidLength.isValidLength(), isTrue);
+      expect(gbValidLength.isValid(type: PhoneNumberType.mobile), isFalse);
+      expect(gbValidLength.isValid(type: PhoneNumberType.fixedLine), isFalse);
+      expect(gbValidLength.isValid(), isFalse);
+      final gbValidPattern =
+          PhoneNumber.parse('7111111111', destinationCountry: IsoCode.GB);
+      expect(gbValidPattern.isValidLength(), isTrue);
+      expect(gbValidPattern.isValid(), isTrue);
     });
   });
 
   group('format', () {
-    test('should format nsn US', () {
+    test('should format', () {
       String format(String phoneNumber) =>
-          PhoneNumber.fromIsoCode(IsoCode.US, phoneNumber).getFormattedNsn();
+          PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.US)
+              .getFormattedNsn();
 
       var testNumber = '';
       expect(format(testNumber), equals(''));
@@ -214,10 +186,10 @@ void main() {
       expect(format(testNumber), equals('202-555-0119'));
     });
 
-    test('should format nsn FR', () {
-      String format(String phoneNumber) => PhoneNumberFormatter.formatNsn(
-            PhoneNumber.fromIsoCode(IsoCode.FR, phoneNumber),
-          );
+    test('should format with another country format', () {
+      String format(String phoneNumber) =>
+          PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.US)
+              .getFormattedNsn(isoCode: IsoCode.FR);
 
       var testNumber = '6';
       expect(format(testNumber), equals('6'));
@@ -236,17 +208,15 @@ void main() {
       testNumber = '68955555';
       expect(format(testNumber), equals('6 89 55 55 5'));
       testNumber = '689555555';
-      expect(PhoneNumber.fromRaw('+33689555555').getFormattedNsn(),
-          equals('6 89 55 55 55'));
     });
   });
 
   group('range', () {
     test('count', () async {
-      var zero = PhoneNumber.fromRaw('61383208100');
-      var one = PhoneNumber.fromRaw('61383208101');
-      var two = PhoneNumber.fromRaw('61383208102');
-      var ninenine = PhoneNumber.fromRaw('61383208199');
+      var zero = PhoneNumber.parse('61383208100');
+      var one = PhoneNumber.parse('61383208101');
+      var two = PhoneNumber.parse('61383208102');
+      var ninenine = PhoneNumber.parse('61383208199');
 
       expect(PhoneNumberRange(zero, one).count, equals(2));
       expect(PhoneNumberRange(zero, two).count, equals(3));
@@ -256,10 +226,10 @@ void main() {
     });
 
     test('range', () async {
-      var zero = PhoneNumber.fromRaw('61383208100');
-      var one = PhoneNumber.fromRaw('61383208101');
-      var two = PhoneNumber.fromRaw('61383208102');
-      var ninenine = PhoneNumber.fromRaw('61383208199');
+      var zero = PhoneNumber.parse('61383208100');
+      var one = PhoneNumber.parse('61383208101');
+      var two = PhoneNumber.parse('61383208102');
+      var ninenine = PhoneNumber.parse('61383208199');
 
       expect(PhoneNumberRange(zero, one).expandRange().length, equals(2));
       expect(PhoneNumberRange(zero, two).expandRange().length, equals(3));
@@ -274,18 +244,18 @@ void main() {
     });
 
     test('add/subtract', () async {
-      var start = PhoneNumber.fromRaw('61383208100');
+      var start = PhoneNumber.parse('61383208100');
 
       start = start + 1;
-      expect(start, equals(PhoneNumber.fromRaw('61383208101')));
+      expect(start, equals(PhoneNumber.parse('61383208101')));
 
       start = start - 1;
-      expect(start, equals(PhoneNumber.fromRaw('61383208100')));
+      expect(start, equals(PhoneNumber.parse('61383208100')));
     });
 
     test('comparision', () async {
-      var zero = PhoneNumber.fromRaw('61383208100');
-      var one = PhoneNumber.fromRaw('61383208101');
+      var zero = PhoneNumber.parse('61383208100');
+      var one = PhoneNumber.parse('61383208101');
 
       expect(zero == zero, isTrue);
       expect(zero < one, isTrue);
@@ -295,9 +265,9 @@ void main() {
     });
 
     test('sequence', () async {
-      var zero = PhoneNumber.fromRaw('61383208100');
-      var one = PhoneNumber.fromRaw('61383208101');
-      var two = PhoneNumber.fromRaw('61383208102');
+      var zero = PhoneNumber.parse('61383208100');
+      var one = PhoneNumber.parse('61383208101');
+      var two = PhoneNumber.parse('61383208102');
 
       expect(zero.isAdjacentTo(one), isTrue);
       expect(zero.isSequentialTo(one), isTrue);

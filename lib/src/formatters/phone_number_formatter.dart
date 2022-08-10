@@ -1,20 +1,18 @@
 import 'dart:math';
 
 import 'package:phone_number_metadata/phone_number_metadata.dart';
-import 'package:phone_numbers_parser/src/models/phone_number.dart';
 import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 import 'package:phone_numbers_parser/src/utils/_regexp_manager.dart';
 
 class PhoneNumberFormatter {
   /// format national number for international use
-  static String formatNsn(PhoneNumber phoneNumber) {
-    if (phoneNumber.nsn.isEmpty) {
-      return phoneNumber.nsn;
+  static String formatNsn(String nsn, IsoCode isoCode) {
+    if (nsn.isEmpty) {
+      return nsn;
     }
-    final missingDigits = _getMissingDigits(phoneNumber);
-    final completePhoneNumber = phoneNumber.nsn + missingDigits;
-    final formatingRules =
-        MetadataFinder.getMetadataFormatsForIsoCode(phoneNumber.isoCode);
+    final missingDigits = _getMissingDigits(nsn, isoCode);
+    final completePhoneNumber = nsn + missingDigits;
+    final formatingRules = MetadataFinder.getMetadataFormatsForIsoCode(isoCode);
     final formatingRule = _getMatchingFormatRules(
       formatingRules: formatingRules,
       nsn: completePhoneNumber,
@@ -22,7 +20,7 @@ class PhoneNumberFormatter {
     // for incomplete phone number
 
     if (formatingRule == null) {
-      return phoneNumber.nsn;
+      return nsn;
     }
     var transformRule = formatingRule.format;
     // if there is an international format, we use it
@@ -61,15 +59,14 @@ class PhoneNumberFormatter {
   }
 
   /// returns 9's to have a valid length number
-  static String _getMissingDigits(PhoneNumber phoneNumber) {
-    final lengthRule =
-        MetadataFinder.getMetadataLengthForIsoCode(phoneNumber.isoCode);
+  static String _getMissingDigits(String nsn, IsoCode isoCode) {
+    final lengthRule = MetadataFinder.getMetadataLengthForIsoCode(isoCode);
 
     final minLength = max(lengthRule.fixedLine.first, lengthRule.mobile.first);
     // added digits so we match the pattern in case of an incomplete phone number
     var missingDigits = '';
 
-    while ((phoneNumber.nsn + missingDigits).length < minLength) {
+    while ((nsn + missingDigits).length < minLength) {
       missingDigits += '9';
     }
     return missingDigits;

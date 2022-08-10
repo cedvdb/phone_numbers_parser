@@ -1,7 +1,17 @@
-## 6.0.1
-- updated `fromRaw` method to take extra parameters `callerCountry` and `destinationCountry`
-- deprecated other factories in favor of `fromRaw` used with the appropriate params. 
+## 7.0.0
+This major introduces a more accurate parsing logic taking into account caller and destination country.
+
+
+- add `parse` method which takes as parameters `callerCountry` and `destinationCountry`
+- [Breaking]: removed most factory methods on `PhoneNumber` in favor of `parse`, see readme
+- [Breaking]: renamed `validate` and `validateWithLength` to `isValid` and `isValidateLength`
 - updated metadata
+- PhoneNumber.findPotentialPhoneNumbers now returns a list of phone number when scanning text.
+
+
+## 6.0.1
+- please use 6.0.0 or upgrade to 7.0.0, this is a faulty version.
+- deprecated factories
 
 ## 6.0.0
 - [Breaking]: removed fromMap, toMap which have been replaced by fromJson(Map), toJson respectively.

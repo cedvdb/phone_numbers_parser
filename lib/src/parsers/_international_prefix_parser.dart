@@ -20,10 +20,7 @@ abstract class InternationalPrefixParser {
     // if the caller country was provided it's easy, just remove the exit code
     // from the phone number
     if (callerCountryMetadata != null) {
-      return _removeInternationalPrefixWithMetadata(
-        phoneNumber,
-        callerCountryMetadata,
-      );
+      return _removeExitCodeWithMetadata(phoneNumber, callerCountryMetadata);
     }
     // if the caller country was not specified, a best guess is approximated.
     // 4/5 of the world wide numbers exit codes are 00 or 011
@@ -43,7 +40,7 @@ abstract class InternationalPrefixParser {
     return phoneNumber;
   }
 
-  static String _removeInternationalPrefixWithMetadata(
+  static String _removeExitCodeWithMetadata(
     String phoneNumber,
     PhoneMetadata metadata,
   ) {
