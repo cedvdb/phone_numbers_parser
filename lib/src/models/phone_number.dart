@@ -66,6 +66,10 @@ class PhoneNumber {
   String getFormattedNsn({IsoCode? isoCode}) =>
       PhoneNumberFormatter.formatNsn(nsn, isoCode ?? this.isoCode);
 
+  /// formats the number using the International Format.
+  String getFormattedIntl() =>
+      ('+' + countryCode + ' ' + getFormattedNsn()).trim();
+
   //
   //  Validation
   //
