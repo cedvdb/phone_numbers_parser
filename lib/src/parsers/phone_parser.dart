@@ -1,4 +1,7 @@
+import 'dart:html';
+
 import 'package:meta/meta.dart';
+import 'package:phone_number_metadata/phone_number_metadata.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_country_code_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_international_prefix_parser.dart';
@@ -61,8 +64,7 @@ class PhoneParser {
     // the below code will first assume that the leading 7 is the country code
     // then will realize the phone number is invalid when the 7 is removed
     // and will return a result with the original input, which is valid
-    final withoutIntlPrefix =
-        InternationalPrefixParser.removeInternationalPrefix(
+    final withoutIntlPrefix = InternationalPrefixParser.removeExitCode(
       phoneNumber,
       countryCode: metadata.countryCode,
       metadata: metadata,
@@ -98,8 +100,7 @@ class PhoneParser {
   ) {
     countryCode = CountryCodeParser.normalizeCountryCode(countryCode);
     phoneNumber = TextParser.normalize(phoneNumber);
-    final withoutIntlPrefix =
-        InternationalPrefixParser.removeInternationalPrefix(
+    final withoutIntlPrefix = InternationalPrefixParser.removeExitCode(
       phoneNumber,
       countryCode: countryCode,
     );
@@ -125,16 +126,83 @@ class PhoneParser {
     IsoCode? callerCountry,
     IsoCode? destinationCountry,
   }) {
-    // if neither caller nor destination country is provided, the phone number is parsed.
-    if (callerCountry == null && destinationCountry == null) {
-      return fromRaw(phoneNumber);
+    final callerMatadata = callerCountry != null
+        ? MetadataFinder.getMetadataForIsoCode(callerCountry)
+        : null;
+    var destinationMetadata = destinationCountry != null
+        ? MetadataFinder.getMetadataForIsoCode(destinationCountry)
+        : null;
+
+    final withoutExitCode = InternationalPrefixParser.removeExitCode(
+      phoneNumber,
+      destinationCountryMetadata: destinationMetadata,
+      callerCountryMetadata: callerMatadata,
+    );
+    // if no destination metadata was provided we have to find it,
+    // the same destination as the caller is assumed if caller is provided
+    destinationMetadata ??= callerMatadata ??
+        _findDestinationMetadata(phoneWithoutExitCode: withoutExitCode);
+    final countryCode = CountryCodeParser.removeCountryCode(
+        phoneNumber, destinationMetadata.countryCode);
+    final national = withoutExitCode.substring(countryCode.length);
+    var nsn = NationalNumberParser.removeNationalPrefix(
+      national,
+      destinationMetadata,
+    );
+    nsn = NationalNumberParser.transformLocalNsnToInternationalUsingPatterns(
+      nsn,
+      destinationMetadata,
+    );
+    return PhoneNumber(isoCode: destinationMetadata.isoCode, nsn: nsn);
+  }
+
+  // find destination of a normalized phone number, which supposedly
+  // starts with a country code.
+  static PhoneMetadata _findDestinationMetadata({
+    required String phoneWithoutExitCode,
+  }) {
+    final countryCode =
+        CountryCodeParser.extractCountryCode(phoneWithoutExitCode);
+    final national =
+        CountryCodeParser.removeCountryCode(phoneWithoutExitCode, countryCode);
+    // multiple countries use the same country code
+    final metadatas = MetadataFinder.getMetadatasForCountryCode(countryCode);
+    // if multiple countries share the same country code, patterns on the national number
+    // is used to find the correct country.
+    return MetadataMatcher.getMatchUsingPatterns(national, metadatas);
+  }
+
+  /// parses a [phoneNumber] given a [countryCode]
+  ///
+  /// Use parseWithIsoCode when possible as multiple countries
+  /// use the same country calling code.
+  ///
+  /// This assumes the phone number starts with the country calling code
+  ///
+  /// throws a PhoneNumberException if the country calling code is invalid
+  @internal
+  static PhoneNumber fromRaw(String phoneNumber) {
+    phoneNumber = TextParser.normalize(phoneNumber);
+    phoneNumber = InternationalPrefixParser.removeExitCode(phoneNumber);
+    final countryCode = CountryCodeParser.extractCountryCode(phoneNumber);
+    final withoutIntlPrefix = InternationalPrefixParser.removeExitCode(
+      phoneNumber,
+      countryCode: countryCode,
+    );
+    final withoutCountryCode =
+        CountryCodeParser.removeCountryCode(withoutIntlPrefix, countryCode);
+    var national = withoutCountryCode;
+    // if a country code did not immediately follow the international prefix
+    // then it was not an international prefix by definition
+    if (withoutIntlPrefix.length == withoutCountryCode.length) {
+      national = phoneNumber;
     }
-    if (destinationCountry == null) {
-      return fromCaller(callerCountry, phoneNumber);
-    }
-    if (callerCountry == null) {
-      return fromDestination();
-    }
+    final metadatas = MetadataFinder.getMetadatasForCountryCode(countryCode);
+    final metadata = MetadataMatcher.getMatchUsingPatterns(national, metadatas);
+    final result = _parse(metadata.isoCode, national);
+    // we only want to modify the national number when it is valid
+    if (result.validateLength()) return result;
+    return PhoneNumber(isoCode: metadata.isoCode, nsn: phoneNumber);
   }
 
   /// parses a [phoneNumber] given a [countryCode]
@@ -159,7 +227,7 @@ class PhoneParser {
       // as we know the caller country, we can remove the possible international prefix (exit code)
       final metaCallerCountry =
           MetadataFinder.getMetadataForIsoCode(callerCountry);
-      withoutIntlPrefix = InternationalPrefixParser.removeInternationalPrefix(
+      withoutIntlPrefix = InternationalPrefixParser.removeExitCode(
         phoneNumber,
         metadata: metaCallerCountry,
       );
@@ -185,8 +253,7 @@ class PhoneParser {
       }
     } else {
       // we don't know the caller country, so we just make a best guess
-      withoutIntlPrefix =
-          InternationalPrefixParser.removeInternationalPrefix(phoneNumber);
+      withoutIntlPrefix = InternationalPrefixParser.removeExitCode(phoneNumber);
     }
     // withoutIntlPrefix should now starts with a country code if no destination country is given
     if (destinationCountry == null) {

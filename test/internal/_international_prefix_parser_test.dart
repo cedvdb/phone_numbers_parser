@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 
 void main() {
   group('_InternationalPrefixParser', () {
-    final fix = InternationalPrefixParser.removeInternationalPrefix;
+    final fix = InternationalPrefixParser.removeExitCode;
 
     test('should remove + prefix in all cases', () {
       expect(fix('+654'), '654');

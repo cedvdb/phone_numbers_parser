@@ -8,25 +8,30 @@ abstract class InternationalPrefixParser {
   ///  if starts with 00 or 011
   ///  we consider those as internationalPrefix as
   ///  they cover 4/5 of the international prefix
-  static String removeInternationalPrefix(
+  static String removeExitCode(
     String phoneNumber, {
-    String countryCode = '',
-    PhoneMetadata? metadata,
+    PhoneMetadata? callerCountryMetadata,
+    PhoneMetadata? destinationCountryMetadata,
   }) {
     if (phoneNumber.startsWith('+')) {
       return phoneNumber.substring(1);
     }
 
-    if (metadata != null) {
+    // if the caller country was provided it's easy, just remove the exit code
+    // from the phone number
+    if (callerCountryMetadata != null) {
       return _removeInternationalPrefixWithMetadata(
         phoneNumber,
-        metadata,
-        countryCode,
+        callerCountryMetadata,
       );
     }
-    // 4/5 of the world wide numbers start with 00 or 011
+    // if the caller country was not specified, a best guess is approximated.
+    // 4/5 of the world wide numbers exit codes are 00 or 011
     // if a country code does not follow the international prefix
     // then we can assume it is not an international prefix
+    // if no metadata was provided for the destination country
+    // then no such check is made that a country code does not follow
+    final countryCode = destinationCountryMetadata?.countryCode ?? '';
     if (phoneNumber.startsWith('00$countryCode')) {
       return phoneNumber.substring(2);
     }
@@ -41,7 +46,6 @@ abstract class InternationalPrefixParser {
   static String _removeInternationalPrefixWithMetadata(
     String phoneNumber,
     PhoneMetadata metadata,
-    String countryCode,
   ) {
     final match =
         RegExp(metadata.internationalPrefix).matchAsPrefix(phoneNumber);
