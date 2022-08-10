@@ -9,9 +9,9 @@ import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
 
 /// represents a phone number
 ///
-/// Use one of the static method starting with 'from' in order to
-/// return a [PhoneNumber] that has been parsed to it's international version.
-///
+/// Use [PhoneNumber.parse] to compute a phone number.
+/// Use [PhoneNumber] if you know the phone number nsn and iso code
+/// you can use the default constructor, this won't run any computation.
 class PhoneNumber {
   /// National number in its international form
   final String nsn;
@@ -31,107 +31,65 @@ class PhoneNumber {
     required this.nsn,
   });
 
-  //
-  //  Creation
-  //
-
-  /// Parses a [phoneNumber] given a [countryCode]
+  /// {@template phoneNumber}
+  /// Parses a phone number given caller or destination information.
   ///
-  /// Use [callerCountry] or [destinationCountry] when possible to give more information
-  /// to the parser.
+  /// The logic is:
   ///
-  /// This method assumes the phone number starts with the country calling code
+  ///  1. Remove the international prefix / exit code
+  ///    a. if caller is provided remove the international prefix / exit code
+  ///    b. if caller is not provided be a best guess is done with a possible destination
+  ///       country
+  ///  2. Find destination country
+  ///    a. if no destination country was provided, the destination is assumed to be the
+  ///       same as the caller
+  ///    b. if no caller was provided a best guess is estimated by looking at
+  ///       the first digits to see if they match a country. Since multiple countries
+  ///       share the same country code, pattern matching might be used when there are
+  ///       multiple matches.
+  ///  3. Extract the country code with the country information
+  ///  4. Transform a local NSN to an international version
   ///
-  /// throws a PhoneNumberException if the country calling code is invalid
-  static PhoneNumber fromRaw(
+  /// {@endtemplate}
+  static PhoneNumber parse(
     String phoneNumber, {
     IsoCode? callerCountry,
     IsoCode? destinationCountry,
   }) =>
-      PhoneParser.fromRaw(phoneNumber,
-          callerCountry: callerCountry, destinationCountry: destinationCountry);
-
-  /// reparse phone number with new values
-  PhoneNumber rebuildWith({IsoCode? isoCode, String? nsn}) =>
-      PhoneParser.fromIsoCode(
-        isoCode ?? this.isoCode,
-        nsn ?? this.nsn,
+      PhoneParser.parse(
+        phoneNumber,
+        callerCountry: callerCountry,
+        destinationCountry: destinationCountry,
       );
 
-  /// Parses a [national] phone number given a country code and returns
-  /// a [PhoneNumber]
-  ///
-  /// This is useful for when you know in advance that a phone
-  /// number is a national version.
-  /// For example in a phone number input with two inputs for the
-  /// iso code and national number
-  ///
-  /// alias for [PhoneParser.fromNational]
-  @Deprecated('use fromRaw with either callerCountry or destinationCountry')
-  static PhoneNumber fromNational(
-    IsoCode isoCode,
-    String national,
-  ) =>
-      PhoneParser.fromNational(isoCode, national);
-
-  /// Parses a [phoneNumber] given a [countryCode] (ex: '33')
-  ///
-  /// Use [fromIsoCode] when possible as multiple countries
-  /// use the same country calling code.
-  ///
-  /// If you know the [phoneNumber] is a national number,
-  /// prefer [fromNational].
-  ///
-  /// {@macro phoneNumber}
-  ///
-  /// throws a PhoneNumberException if the country calling code is invalid
-  ///
-  /// alias for [PhoneParser.fromCountryCode]
-  @Deprecated('use fromRaw with either callerCountry or destinationCountry')
-  static PhoneNumber fromCountryCode(
-    String countryCode,
-    String phoneNumber,
-  ) =>
-      PhoneParser.fromCountryCode(countryCode, phoneNumber);
-
-  /// Parses a [phoneNumber] given an [isoCode] when the number is known to be a national number
-  ///
-  /// {@macro phoneNumber}
-  ///
-  /// throws a PhoneNumberException if the isoCode is invalid
-  @Deprecated('use fromRaw with either callerCountry or destinationCountry')
-  static PhoneNumber fromIsoCode(
-    IsoCode isoCode,
-    String phoneNumber,
-  ) =>
-      PhoneParser.fromIsoCode(isoCode, phoneNumber);
-
-  //
-  //  Formatting
-  //
-
-  /// formats the national phone number to the format expected by the iso code
-  /// region
-  String getFormattedNsn() => PhoneNumberFormatter.formatNsn(this);
+  /// formats the nsn, if no [isoCode] is provided the phone number region is used.
+  String getFormattedNsn({IsoCode? isoCode}) =>
+      PhoneNumberFormatter.formatNsn(nsn, isoCode ?? this.isoCode);
 
   //
   //  Validation
   //
 
   /// validates a phone number by first checking its length then pattern matching
-  bool validate({PhoneNumberType? type}) =>
+  bool isValid({PhoneNumberType? type}) =>
       Validator.validateWithPattern(this, type);
 
   /// validates a phone number by only checking its length
-  bool validateLength({PhoneNumberType? type}) =>
+  bool isValidLength({PhoneNumberType? type}) =>
       Validator.validateWithLength(this, type);
 
   //
   //  text
   //
 
-  static Iterable<Match> findPotentialPhoneNumbers(String text) =>
-      TextParser.findPotentialPhoneNumbers(text);
+  static Iterable<PhoneNumber> findPotentialPhoneNumbers(String text) =>
+      TextParser.findPotentialPhoneNumbers(text).map((match) {
+        try {
+          return PhoneNumber.parse(match.group(0)!);
+        } catch (e) {
+          return null;
+        }
+      }).whereType<PhoneNumber>();
 
   //
   //  inequalities

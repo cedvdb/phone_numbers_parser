@@ -58,6 +58,7 @@ abstract class CountryCodeParser {
             'country calling code not found in phone number $phoneNumber');
   }
 
+  // removes the country code at the start of a phone number
   static String removeCountryCode(String phoneNumber, String countryCode) {
     if (phoneNumber.startsWith(countryCode)) {
       return phoneNumber.substring(countryCode.length);
