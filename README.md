@@ -20,6 +20,11 @@ The advantage of this lib instead of libphonenumber is that it instantly support
 
 Use the class `PhoneNumber` as a starting point
 
+
+```dart
+// raw parsing
+PhoneNumber.fromRaw('655 5705 76', )
+
 ```dart
   // creation
   final frPhone1 = PhoneNumber.fromNational(IsoCode.FR, '655 5705 76');
@@ -35,7 +40,6 @@ Use the class `PhoneNumber` as a starting point
   print('allSame: $allSame'); // true
 
   // changing the country
-
   final esPhone = frPhone1.rebuildWith(
       isoCode: IsoCode.ES); // will reparse the nsn for new iso
   print('new country code: ${esPhone.countryCode}'); // 34 // '+34655570576'

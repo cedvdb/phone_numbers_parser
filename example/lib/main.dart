@@ -1,18 +1,19 @@
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 
 void main(List<String> arguments) {
-  // creation
-  final frPhone1 = PhoneNumber.fromNational(IsoCode.FR, '655 5705 76');
+  final frPhone0 = PhoneNumber.fromRaw('+33 655 5705 76');
+  // raw caller in france calling another person in france
+  final frPhone1 =
+      PhoneNumber.fromRaw('0 655 5705 76', callerCountry: IsoCode.FR);
+  // us calling to france
   final frPhone2 =
-      PhoneNumber.fromNational(IsoCode.values.byName('FR'), '0655 5705 76');
-  final frPhone3 = PhoneNumber.fromRaw('+33 655 5705 76');
-  final frPhone4 = PhoneNumber.fromIsoCode(IsoCode.FR, '0655 5705 76');
-  final frPhone5 = PhoneNumber.fromCountryCode('33', '655 5705 76');
-  final allSame = frPhone1 == frPhone2 &&
-      frPhone1 == frPhone3 &&
-      frPhone1 == frPhone4 &&
-      frPhone1 == frPhone5;
-  print('allSame: $allSame'); // true
+      PhoneNumber.fromRaw('011 33 655 5705 76', callerCountry: IsoCode.US);
+  final frPhone3 =
+      PhoneNumber.fromRaw('011 33 655 5705 76', destinationCountry: IsoCode.FR);
+  final isAllEqual =
+      frPhone0 == frPhone1 && frPhone0 == frPhone2 && frPhone0 == frPhone3;
+  print(frPhone1);
+  print('all raw same: $isAllEqual');
 
   // validation
   final valid = frPhone1.validate();

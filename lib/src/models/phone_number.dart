@@ -35,6 +35,29 @@ class PhoneNumber {
   //  Creation
   //
 
+  /// Parses a [phoneNumber] given a [countryCode]
+  ///
+  /// Use [callerCountry] or [destinationCountry] when possible to give more information
+  /// to the parser.
+  ///
+  /// This method assumes the phone number starts with the country calling code
+  ///
+  /// throws a PhoneNumberException if the country calling code is invalid
+  static PhoneNumber fromRaw(
+    String phoneNumber, {
+    IsoCode? callerCountry,
+    IsoCode? destinationCountry,
+  }) =>
+      PhoneParser.fromRaw(phoneNumber,
+          callerCountry: callerCountry, destinationCountry: destinationCountry);
+
+  /// reparse phone number with new values
+  PhoneNumber rebuildWith({IsoCode? isoCode, String? nsn}) =>
+      PhoneParser.fromIsoCode(
+        isoCode ?? this.isoCode,
+        nsn ?? this.nsn,
+      );
+
   /// Parses a [national] phone number given a country code and returns
   /// a [PhoneNumber]
   ///
@@ -44,6 +67,7 @@ class PhoneNumber {
   /// iso code and national number
   ///
   /// alias for [PhoneParser.fromNational]
+  @Deprecated('use fromRaw with either callerCountry or destinationCountry')
   static PhoneNumber fromNational(
     IsoCode isoCode,
     String national,
@@ -63,6 +87,7 @@ class PhoneNumber {
   /// throws a PhoneNumberException if the country calling code is invalid
   ///
   /// alias for [PhoneParser.fromCountryCode]
+  @Deprecated('use fromRaw with either callerCountry or destinationCountry')
   static PhoneNumber fromCountryCode(
     String countryCode,
     String phoneNumber,
@@ -74,29 +99,12 @@ class PhoneNumber {
   /// {@macro phoneNumber}
   ///
   /// throws a PhoneNumberException if the isoCode is invalid
+  @Deprecated('use fromRaw with either callerCountry or destinationCountry')
   static PhoneNumber fromIsoCode(
     IsoCode isoCode,
     String phoneNumber,
   ) =>
       PhoneParser.fromIsoCode(isoCode, phoneNumber);
-
-  /// Parses a [phoneNumber] given a [countryCode]
-  ///
-  /// Use [fromIsoCode] when possible as multiple countries
-  /// use the same country calling code.
-  ///
-  /// This method assumes the phone number starts with the country calling code
-  ///
-  /// throws a PhoneNumberException if the country calling code is invalid
-  static PhoneNumber fromRaw(String phoneNumber, { IsoCode? callerCountry, IsoCode? destinationCountry }) =>
-      PhoneParser.fromRaw(phoneNumber, callerCountry: callerCountry, destinationCountry: destinationCountry);
-
-  /// reparse phone number with new values
-  PhoneNumber rebuildWith({IsoCode? isoCode, String? nsn}) =>
-      PhoneParser.fromIsoCode(
-        isoCode ?? this.isoCode,
-        nsn ?? this.nsn,
-      );
 
   //
   //  Formatting

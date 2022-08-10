@@ -1,3 +1,8 @@
+## 6.0.1
+- updated `fromRaw` method to take extra parameters `callerCountry` and `destinationCountry`
+- deprecated other factories in favor of `fromRaw` used with the appropriate params. 
+- updated metadata
+
 ## 6.0.0
 - [Breaking]: removed fromMap, toMap which have been replaced by fromJson(Map), toJson respectively.
 
