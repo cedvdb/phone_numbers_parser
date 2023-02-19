@@ -1,12 +1,13 @@
 import 'package:meta/meta.dart';
 import 'package:phone_number_metadata/phone_number_metadata.dart';
-import 'package:phone_numbers_parser/phone_numbers_parser.dart';
-import 'package:phone_numbers_parser/src/parsers/_country_code_parser.dart';
-import 'package:phone_numbers_parser/src/parsers/_international_prefix_parser.dart';
-import 'package:phone_numbers_parser/src/parsers/_national_number_parser.dart';
-import 'package:phone_numbers_parser/src/parsers/_text_parser.dart';
-import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
-import 'package:phone_numbers_parser/src/utils/_metadata_matcher.dart';
+
+import '../../phone_numbers_parser.dart';
+import '../utils/_metadata_finder.dart';
+import '../utils/_metadata_matcher.dart';
+import '_country_code_parser.dart';
+import '_international_prefix_parser.dart';
+import '_national_number_parser.dart';
+import '_text_parser.dart';
 
 /// {@template phoneNumber}
 /// Parses a phone number given caller or destination information.
@@ -57,17 +58,22 @@ abstract class PhoneParser {
       withoutExitCode,
       destinationMetadata.countryCode,
     );
-    var nsn = NationalNumberParser.removeNationalPrefix(
-      national,
-      destinationMetadata,
-    );
-    nsn = NationalNumberParser.transformLocalNsnToInternationalUsingPatterns(
-      nsn,
-      destinationMetadata,
-    );
+    final containsCountryCode = national.length != withoutExitCode.length;
+    var nsn = national;
+    if (!containsCountryCode) {
+      nsn = NationalNumberParser.removeNationalPrefix(
+        national,
+        destinationMetadata,
+      );
+      nsn = NationalNumberParser.transformLocalNsnToInternationalUsingPatterns(
+        nsn,
+        destinationMetadata,
+      );
+    }
+
     // at this point we have the phone number that has been processed, but
     // if it is invalid, we remove the processing of the nsn part
-    // this allows for a better behavior in some input usages where the
+    // this allows for a better behavior in some widget input usages where the
     // text is changed on validity.
     final parsed = PhoneNumber(isoCode: destinationMetadata.isoCode, nsn: nsn);
     if (parsed.isValid()) return parsed;
