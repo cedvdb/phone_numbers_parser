@@ -1,4 +1,9 @@
 
+## 7.0.2
+
+- Changed behavior to not remove the country code from an incomplete phone number that did not start with an exit code.
+
+
 ## 7.0.1
 
 - Fix issue where international phone numbers would be transformed as if those were local ones.

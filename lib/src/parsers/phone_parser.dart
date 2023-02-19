@@ -49,15 +49,20 @@ abstract class PhoneParser {
       destinationCountryMetadata: destinationMetadata,
       callerCountryMetadata: callerMetadata,
     );
+    final containsExitCode = withoutExitCode.length != phoneNumber.length;
     // if no destination metadata was provided we have to find it,
     destinationMetadata ??= _findDestinationMetadata(
       phoneWithoutExitCode: withoutExitCode,
       callerMetadata: callerMetadata,
     );
-    final national = CountryCodeParser.removeCountryCode(
-      withoutExitCode,
-      destinationMetadata.countryCode,
-    );
+    var national = withoutExitCode;
+    // if there was no exit code then we assume we are dealing with a national number
+    if (containsExitCode) {
+      national = CountryCodeParser.removeCountryCode(
+        withoutExitCode,
+        destinationMetadata.countryCode,
+      );
+    }
     final containsCountryCode = national.length != withoutExitCode.length;
     // normally a phone number should not contain a national prefix after the country
     // code. However we let it slide to cover a wider range of incorrect input

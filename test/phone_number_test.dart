@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 void main() {
   group('PhoneNumber', () {
     group('parsing', () {
-      test('should parse with the phone number in different formats', () {
+      test('should parse the phone number in different formats', () {
         final international = '+33686579014';
         // fr no transformation required except removing prefixes
         expect(
@@ -20,14 +20,21 @@ void main() {
           PhoneNumber.parse('00 33 6 86.57.90.14').international,
           equals(international),
         );
+      });
+
+      test('should parse incomplete phone numbers', () {
+        // fr no transformation required except removing prefixes
+        expect(
+          // this phone number nsn should start with the same digits as the country code
+          PhoneNumber.parse('91', destinationCountry: IsoCode.IN).international,
+          equals('+9191'),
+        );
 
         expect(
-          PhoneNumber.parse('33 6 86 57 90 14').international,
-          equals(international),
-        );
-        expect(
-          PhoneNumber.parse('33 06 86 57 90 14').international,
-          equals(international),
+          // this should keep the "441" prefix despite having local transform rules
+          // because it is international
+          PhoneNumber.parse('+14412957').nsn,
+          equals('4412957'),
         );
       });
 
@@ -103,11 +110,6 @@ void main() {
                 .nsn,
             equals('499999999'));
         // expect()
-      });
-
-      test('should parse incomplete raw phone numbers', () {
-        expect(PhoneParser.parse('33').isoCode, equals(IsoCode.FR));
-        expect(PhoneParser.parse('33').nsn, equals(''));
       });
     });
 
