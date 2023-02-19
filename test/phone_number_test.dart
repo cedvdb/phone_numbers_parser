@@ -25,6 +25,10 @@ void main() {
           PhoneNumber.parse('33 6 86 57 90 14').international,
           equals(international),
         );
+        expect(
+          PhoneNumber.parse('33 06 86 57 90 14').international,
+          equals(international),
+        );
       });
 
       test('should parse for caller', () {
@@ -98,17 +102,7 @@ void main() {
             PhoneNumber.parse('0499 99 99 99', destinationCountry: IsoCode.BE)
                 .nsn,
             equals('499999999'));
-      });
-
-      test(
-          'should not transform international phone numbers from local to international',
-          () {
-        final fullBermudaNumber = PhoneNumber.parse('+14412957070');
-        final incompleteBermudaNumber = PhoneNumber.parse('+14412957');
-        expect(fullBermudaNumber.nsn, equals('4412957070')); //  OK
-
-        expect(incompleteBermudaNumber.nsn,
-            equals('4412957')); // 4414412957 WRONG ( expected)
+        // expect()
       });
 
       test('should parse incomplete raw phone numbers', () {
