@@ -1,5 +1,7 @@
-## 7.0.0+1
-- readme
+
+## 7.0.1
+
+- Fix issue where international phone numbers would be transformed as if those were local ones.
 
 ## 7.0.0
 This major introduces a more accurate parsing logic taking into account caller and destination country.
