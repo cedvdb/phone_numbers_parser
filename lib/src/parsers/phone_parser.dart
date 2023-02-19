@@ -59,12 +59,15 @@ abstract class PhoneParser {
       destinationMetadata.countryCode,
     );
     final containsCountryCode = national.length != withoutExitCode.length;
-    var nsn = national;
+    // normally a phone number should not contain a national prefix after the country
+    // code. However we let it slide to cover a wider range of incorrect input
+    var nsn = NationalNumberParser.removeNationalPrefix(
+      national,
+      destinationMetadata,
+    );
+    // if the phone number contained a country code, it should in its international form
+    // and we should not transform it
     if (!containsCountryCode) {
-      nsn = NationalNumberParser.removeNationalPrefix(
-        national,
-        destinationMetadata,
-      );
       nsn = NationalNumberParser.transformLocalNsnToInternationalUsingPatterns(
         nsn,
         destinationMetadata,
