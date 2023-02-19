@@ -4,6 +4,9 @@ Dart library for parsing phone numbers. Inspired by Google's libphonenumber and 
 
 The advantage of this lib instead of libphonenumber is that it instantly supports all platforms (no need for channeling).
 
+## Breaking Changes starting from version 7.0.0
+- Removed most factory methods on PhoneNumber in favor of `parse()` method, e.g. removed `fromRaw()` and substituted it with `parse()`, check the READ.ME
+- Renamed validate and validateWithLength to isValid and isValidateLength
 
 ## Features
 
@@ -19,11 +22,6 @@ The advantage of this lib instead of libphonenumber is that it instantly support
 ## Usage
 
 Use the class `PhoneNumber` as a starting point
-
-
-```dart
-// raw parsing
-PhoneNumber.fromRaw('655 5705 76', )
 
 ```dart
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
@@ -56,18 +54,18 @@ void main(List<String> arguments) {
       'hey my phone number is: +33 939 876 218, but you can call me on +33 939 876 999 too';
   final found = PhoneNumber.findPotentialPhoneNumbers(text);
   print('found: $found');
-
+}
 ```
 
 # validation
 
 ```dart
-  final valid = frPhone1.validate();
-  final validMobile = frPhone1.validate(type: PhoneNumberType.mobile);
-  final validFixed = frPhone1.validate(type: PhoneNumberType.fixedLine);
-  print('valid: $valid'); // true
-  print('valid mobile: $validMobile'); // true
-  print('valid fixed line: $validFixed'); // false
+final valid = frPhone1.validate();
+final validMobile = frPhone1.validate(type: PhoneNumberType.mobile);
+final validFixed = frPhone1.validate(type: PhoneNumberType.fixedLine);
+print('valid: $valid'); // true
+print('valid mobile: $validMobile'); // true
+print('valid fixed line: $validFixed'); // false
 ```
 
 ### Formatting
@@ -76,44 +74,41 @@ Formatting is region specific, so the formats will vary by iso code to accommoda
 for local formats.
 
 ```dart
-  final phoneNumber =
-      PhoneNumber.parse('2025550119', destinationCountry: IsoCode.US);
-  final formattedNsn = phoneNumber.getFormattedNsn();
-  print('formatted: $formattedNsn'); // 202-555-0119/ 202-555-0119
+final phoneNumber =
+    PhoneNumber.parse('2025550119', destinationCountry: IsoCode.US);
+final formattedNsn = phoneNumber.getFormattedNsn();
+print('formatted: $formattedNsn'); // 202-555-0119/ 202-555-0119
 ```
 
 ### Range 
 
 ```dart
-  print('Ranges:');
-  final first = PhoneNumber.parse('+33 655 5705 00');
-  final last = PhoneNumber.parse('+33 655 5705 03');
-  final range = PhoneNumber.getRange(first, last);
+print('Ranges:');
+final first = PhoneNumber.parse('+33 655 5705 00');
+final last = PhoneNumber.parse('+33 655 5705 03');
+final range = PhoneNumber.getRange(first, last);
 
-  print('Count: ${range.count}');
-  print('Expand: ${range.expandRange().join(',')}');
+print('Count: ${range.count}');
+print('Expand: ${range.expandRange().join(',')}');
 
-  if (first > last) {
-    print("this shouldn't be.");
-  }
+if (first > last) {
+  print("this shouldn't be.");
+}
 
-  final one = PhoneNumber.parse('+33 655 5705 01');
-  final two = PhoneNumber.parse('+33 655 5705 02');
+final one = PhoneNumber.parse('+33 655 5705 01');
+final two = PhoneNumber.parse('+33 655 5705 02');
 
-  if (one.isAdjacentTo(two)) {
-    print('We are together');
-  }
-  if (one.isSequentialTo(two)) {
-    print('$two comes after $one');
-  }
+if (one.isAdjacentTo(two)) {
+  print('We are together');
+}
+if (one.isSequentialTo(two)) {
+  print('$two comes after $one');
+}
 
-  /// treat the phone no. like an int
-  final three = two + 1;
-  print('Its still a phone No. $three');
-  two - 1 == one;
-  final another = one + 2;
-  print('$another == $three');
-
+/// treat the phone no. like an int
+final three = two + 1;
+print('Its still a phone No. $three');
+two - 1 == one;
+final another = one + 2;
+print('$another == $three');
 ```
-
-
