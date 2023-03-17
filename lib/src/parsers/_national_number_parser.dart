@@ -15,11 +15,11 @@ abstract class NationalNumberParser {
         MetadataFinder.getMetadataPatternsForIsoCode(metadata.isoCode);
 
     final nationalPrefix = metadata.nationalPrefix;
-    final leadingDigits = patterns.nationalPrefixTransformRule
+    final transformPrefix = patterns.nationalPrefixTransformRule
       ?..replaceAll(r'$1', '')
       ..replaceAll(r'$2', '');
 
-    if (nationalPrefix == null && metadata.leadingDigits == null) {
+    if (nationalPrefix == null && transformPrefix == null) {
       return nationalNumber;
     }
 
@@ -27,8 +27,8 @@ abstract class NationalNumberParser {
       nationalNumber = nationalNumber.substring(nationalPrefix.length);
     }
 
-    if (leadingDigits != null && nationalNumber.startsWith(leadingDigits)) {
-      final match = RegExp(leadingDigits).firstMatch(nationalNumber);
+    if (transformPrefix != null && nationalNumber.startsWith(transformPrefix)) {
+      final match = RegExp(transformPrefix).firstMatch(nationalNumber);
 
       if (match != null) {
         nationalNumber = nationalNumber.substring(match.group(0)!.length);
