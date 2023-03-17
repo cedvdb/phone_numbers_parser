@@ -16,8 +16,7 @@ abstract class NationalNumberParser {
 
     final nationalPrefix = metadata.nationalPrefix;
     final transformPrefix = patterns.nationalPrefixTransformRule
-      ?..replaceAll(r'$1', '')
-      ..replaceAll(r'$2', '');
+        ?.replaceAllMapped(RegExp(r'(\$\d)'), (_) => '');
 
     if (nationalPrefix == null && transformPrefix == null) {
       return nationalNumber;
