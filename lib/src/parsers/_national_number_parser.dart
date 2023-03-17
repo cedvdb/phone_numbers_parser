@@ -11,11 +11,30 @@ abstract class NationalNumberParser {
     String nationalNumber,
     PhoneMetadata metadata,
   ) {
+    final patterns =
+        MetadataFinder.getMetadataPatternsForIsoCode(metadata.isoCode);
+
     final nationalPrefix = metadata.nationalPrefix;
-    if (nationalPrefix == null) return nationalNumber;
-    if (nationalNumber.startsWith(nationalPrefix)) {
-      return nationalNumber.substring(nationalPrefix.length);
+    final leadingDigits = patterns.nationalPrefixTransformRule
+      ?..replaceAll(r'$1', '')
+      ..replaceAll(r'$2', '');
+
+    if (nationalPrefix == null && metadata.leadingDigits == null) {
+      return nationalNumber;
     }
+
+    if (nationalPrefix != null && nationalNumber.startsWith(nationalPrefix)) {
+      nationalNumber = nationalNumber.substring(nationalPrefix.length);
+    }
+
+    if (leadingDigits != null && nationalNumber.startsWith(leadingDigits)) {
+      final match = RegExp(leadingDigits).firstMatch(nationalNumber);
+
+      if (match != null) {
+        nationalNumber = nationalNumber.substring(match.group(0)!.length);
+      }
+    }
+
     return nationalNumber;
   }
 
