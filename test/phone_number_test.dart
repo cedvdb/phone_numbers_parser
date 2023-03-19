@@ -109,7 +109,6 @@ void main() {
             PhoneNumber.parse('0499 99 99 99', destinationCountry: IsoCode.BE)
                 .nsn,
             equals('499999999'));
-        // expect()
       });
     });
 
@@ -186,6 +185,17 @@ void main() {
       expect(format(testNumber), equals('202-555-011'));
       testNumber = '2025550119';
       expect(format(testNumber), equals('202-555-0119'));
+    });
+
+    test('should format countries with national codes', () {
+      String testNumber = '4416666';
+      expect(
+        PhoneNumber.parse(
+          testNumber,
+          destinationCountry: IsoCode.BM,
+        ).getFormattedNsn(),
+        equals('4416666'),
+      );
     });
 
     test('should format with another country format', () {

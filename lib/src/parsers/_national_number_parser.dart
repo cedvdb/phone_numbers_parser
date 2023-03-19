@@ -11,27 +11,14 @@ abstract class NationalNumberParser {
     String nationalNumber,
     PhoneMetadata metadata,
   ) {
-    final patterns =
-        MetadataFinder.getMetadataPatternsForIsoCode(metadata.isoCode);
-
     final nationalPrefix = metadata.nationalPrefix;
-    final transformPrefix = patterns.nationalPrefixTransformRule
-        ?.replaceAllMapped(RegExp(r'(\$\d)'), (_) => '');
 
-    if (nationalPrefix == null && transformPrefix == null) {
+    if (nationalPrefix == null) {
       return nationalNumber;
     }
 
-    if (nationalPrefix != null && nationalNumber.startsWith(nationalPrefix)) {
+    if (nationalNumber.startsWith(nationalPrefix)) {
       nationalNumber = nationalNumber.substring(nationalPrefix.length);
-    }
-
-    if (transformPrefix != null && nationalNumber.startsWith(transformPrefix)) {
-      final match = RegExp(transformPrefix).firstMatch(nationalNumber);
-
-      if (match != null) {
-        nationalNumber = nationalNumber.substring(match.group(0)!.length);
-      }
     }
 
     return nationalNumber;
@@ -52,6 +39,14 @@ abstract class NationalNumberParser {
         MetadataFinder.getMetadataPatternsForIsoCode(metadata.isoCode);
     final nationalPrefixForParsing = patterns.nationalPrefixForParsing;
     final transformRule = patterns.nationalPrefixTransformRule;
+
+    final transformPrefix = patterns.nationalPrefixTransformRule
+        ?.replaceAllMapped(RegExp(r'(\$\d)'), (_) => '');
+
+    // if we found transformPrefix, the number is transformed. Safe to exit.
+    if (transformPrefix != null && nationalNumber.startsWith(transformPrefix)) {
+      return removeNationalPrefix(nationalNumber, metadata);
+    }
 
     if (nationalPrefixForParsing != null) {
       final transformed = RegexpManager.applyTransformRules(

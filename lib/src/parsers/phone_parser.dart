@@ -70,6 +70,7 @@ abstract class PhoneParser {
       national,
       destinationMetadata,
     );
+
     // if the phone number contained a country code, it should in its international form
     // and we should not transform it
     if (!containsCountryCode) {
