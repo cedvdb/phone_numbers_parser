@@ -40,10 +40,16 @@ abstract class NationalNumberParser {
     final nationalPrefixForParsing = patterns.nationalPrefixForParsing;
     final transformRule = patterns.nationalPrefixTransformRule;
 
+    // Get the prefix that will be applied during a hypothetical transformation.
+    // Use of regex is not possible down the line, so we strip the $x bit
+    // from the `nationalPrefixTransformRule` to determine the pure prefix.
     final transformPrefix = patterns.nationalPrefixTransformRule
         ?.replaceAllMapped(RegExp(r'(\$\d)'), (_) => '');
 
     // if we found transformPrefix, the number is transformed. Safe to exit.
+    // This prevents double application of the transformation, which may
+    // result in unwanted additions to the phone number.
+    // for instance, 4416666 may turn into 4414416666.
     if (transformPrefix != null && nationalNumber.startsWith(transformPrefix)) {
       return removeNationalPrefix(nationalNumber, metadata);
     }
