@@ -2,6 +2,8 @@ import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 
 void main(List<String> arguments) {
   final frPhone0 = PhoneNumber.parse('+33 655 5705 76');
+  final inPhone0 = PhoneNumber.parse('+919955059057');
+  print(inPhone0);
   // raw caller in france calling another person in france
   final frPhone1 =
       PhoneNumber.parse('0 655 5705 76', callerCountry: IsoCode.FR);
