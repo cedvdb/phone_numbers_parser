@@ -1,5 +1,8 @@
-import 'package:phone_number_metadata/phone_number_metadata.dart';
-import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
+import 'package:phone_numbers_parser/phone_numbers_parser.dart';
+import 'package:phone_numbers_parser/src/metadata/metadata_finder.dart';
+import 'package:phone_numbers_parser/src/metadata/models/phone_metadata_formats.dart';
+import 'package:phone_numbers_parser/src/metadata/models/phone_metadata_lengths.dart';
+import 'package:phone_numbers_parser/src/metadata/models/phone_metadata_patterns.dart';
 import 'package:test/test.dart';
 
 void main() {

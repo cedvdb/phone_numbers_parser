@@ -4,10 +4,6 @@ Dart library for parsing phone numbers. Inspired by Google's libphonenumber and 
 
 The advantage of this lib instead of libphonenumber is that it instantly supports all platforms (no need for channeling).
 
-## Breaking Changes starting from version 7.0.0
-- Removed most factory methods on PhoneNumber in favor of `parse()` method, e.g. removed `fromRaw()` and substituted it with `parse()`, check the READ.ME
-- Renamed validate and validateWithLength to isValid and isValidateLength
-
 ## Features
 
  - Find phone numbers in a text
@@ -18,6 +14,10 @@ The advantage of this lib instead of libphonenumber is that it instantly support
  - Supports eastern arabic digits
  - Uses best-in-class metadata from Google's libPhoneNumber project. 
 
+
+## Contributing
+
+[Please read this to upgrade the metadata](CONTRIBUTING.md)
 
 ## Usage
 
@@ -112,3 +112,4 @@ two - 1 == one;
 final another = one + 2;
 print('$another == $three');
 ```
+

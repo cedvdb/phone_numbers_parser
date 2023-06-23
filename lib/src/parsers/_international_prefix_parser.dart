@@ -1,4 +1,4 @@
-import 'package:phone_number_metadata/phone_number_metadata.dart';
+import '../metadata/models/phone_metadata.dart';
 
 abstract class InternationalPrefixParser {
   ///  Removes the exit code from a phone number if present.

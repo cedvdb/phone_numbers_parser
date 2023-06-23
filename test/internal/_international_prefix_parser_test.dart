@@ -1,6 +1,6 @@
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:phone_numbers_parser/src/parsers/_international_prefix_parser.dart';
-import 'package:phone_numbers_parser/src/utils/_metadata_finder.dart';
+import 'package:phone_numbers_parser/src/metadata/metadata_finder.dart';
 import 'package:test/test.dart';
 
 void main() {

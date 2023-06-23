@@ -1,3 +1,9 @@
+## 8.0.0
+
+- made it easier to contribute
+- remove dependency on dart_countries and phone_number_metadata and instead work as a monorepo for easier contribution.
+- upgrade metadata
+
 
 ## 7.0.2
 
