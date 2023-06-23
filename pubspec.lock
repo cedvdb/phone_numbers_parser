@@ -73,14 +73,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
-  dart_countries:
-    dependency: "direct main"
-    description:
-      name: dart_countries
-      sha256: c42fc90c38d57c857960b793c45d9cf2ba227f5eeb43c69d25d9ea47a9d44553
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.3"
   file:
     dependency: transitive
     description:
@@ -201,14 +193,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
-  phone_number_metadata:
-    dependency: "direct main"
-    description:
-      name: phone_number_metadata
-      sha256: "5788320b6bc58d85b1151e6406f52caa9c7f879064ed11bd4f945d3ca5c88fda"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.4"
   pool:
     dependency: transitive
     description:
@@ -386,4 +370,4 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.19.0 <3.0.0"
+  dart: ">=3.0.0 <4.0.0"

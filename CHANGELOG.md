@@ -1,3 +1,14 @@
+## 8.0.0
+
+- made it easier to contribute
+- remove dependency on dart_countries and phone_number_metadata and instead work as a monorepo for easier contribution.
+- upgrade metadata
+
+
+## 7.0.2
+
+- Changed behavior to not remove the country code from an incomplete phone number that did not start with an exit code.
+
 
 ## 7.0.2
 

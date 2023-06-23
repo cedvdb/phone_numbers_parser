@@ -1,11 +1,19 @@
-import 'package:dart_countries/dart_countries.dart';
-import 'package:phone_number_metadata/phone_number_metadata.dart' as p;
+import 'generated/country_code_to_iso_code.dart';
+import 'generated/metadata_by_iso_code.dart';
+import 'generated/metadata_formats_by_iso_code.dart';
+import 'generated/metadata_lengths_by_iso_code.dart';
+import 'generated/metadata_patterns_by_iso_code.dart';
+import 'models/phone_metadata.dart';
+import 'models/phone_metadata_formats.dart';
+import 'models/phone_metadata_lengths.dart';
+import 'models/phone_metadata_patterns.dart';
+import '../models/iso_code.dart';
 import '../models/phone_number_exceptions.dart';
 
 abstract class MetadataFinder {
   /// expects a normalized iso code
-  static p.PhoneMetadata getMetadataForIsoCode(IsoCode isoCode) {
-    final metadata = p.metadataByIsoCode[isoCode];
+  static PhoneMetadata getMetadataForIsoCode(IsoCode isoCode) {
+    final metadata = metadataByIsoCode[isoCode];
     if (metadata == null) {
       throw PhoneNumberException(
         code: Code.invalidIsoCode,
@@ -16,9 +24,8 @@ abstract class MetadataFinder {
   }
 
   /// expects a normalized iso code
-  static p.PhoneMetadataPatterns getMetadataPatternsForIsoCode(
-      IsoCode isoCode) {
-    final metadata = p.metadataPatternsByIsoCode[isoCode];
+  static PhoneMetadataPatterns getMetadataPatternsForIsoCode(IsoCode isoCode) {
+    final metadata = metadataPatternsByIsoCode[isoCode];
     if (metadata == null) {
       throw PhoneNumberException(
         code: Code.invalidIsoCode,
@@ -28,8 +35,8 @@ abstract class MetadataFinder {
     return metadata;
   }
 
-  static p.PhoneMetadataLengths getMetadataLengthForIsoCode(IsoCode isoCode) {
-    final metadata = p.metadataLenghtsByIsoCode[isoCode];
+  static PhoneMetadataLengths getMetadataLengthForIsoCode(IsoCode isoCode) {
+    final metadata = metadataLenghtsByIsoCode[isoCode];
     if (metadata == null) {
       throw PhoneNumberException(
         code: Code.invalidIsoCode,
@@ -39,8 +46,8 @@ abstract class MetadataFinder {
     return metadata;
   }
 
-  static p.PhoneMetadataFormats getMetadataFormatsForIsoCode(IsoCode isoCode) {
-    final metadata = p.metadataFormatsByIsoCode[isoCode];
+  static PhoneMetadataFormats getMetadataFormatsForIsoCode(IsoCode isoCode) {
+    final metadata = metadataFormatsByIsoCode[isoCode];
     if (metadata == null) {
       throw PhoneNumberException(
         code: Code.invalidIsoCode,
@@ -51,13 +58,13 @@ abstract class MetadataFinder {
   }
 
   /// expects normalized countryCode
-  static List<p.PhoneMetadata> getMetadatasForCountryCode(String countryCode) {
+  static List<PhoneMetadata> getMetadatasForCountryCode(String countryCode) {
     final isoList = _getIsoCodesFromCountryCode(countryCode);
     return isoList.map((iso) => getMetadataForIsoCode(iso)).toList();
   }
 
   static List<IsoCode> _getIsoCodesFromCountryCode(String countryCode) {
-    final isoCodes = p.countryCodeToIsoCode[countryCode];
+    final isoCodes = countryCodeToIsoCode[countryCode];
     if (isoCodes == null) {
       throw PhoneNumberException(
         code: Code.invalidCountryCallingCode,
