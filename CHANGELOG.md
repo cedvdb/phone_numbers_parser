@@ -1,3 +1,7 @@
+## 8.0.1
+
+- upgrade metadata
+
 ## 8.0.0
 
 - made it easier to contribute
