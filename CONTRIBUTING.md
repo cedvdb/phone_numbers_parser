@@ -27,6 +27,6 @@ dart resources/data_sources/convert_metadata.dart
 This is the final step to turn the Metadata into Dart Files.
 
 ```
-pub get
+dart pub get
 dart resources/generate_files.dart && dart format lib/src && dart fix --apply
 ```
