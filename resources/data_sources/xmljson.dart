@@ -206,7 +206,7 @@ void main() {
             terDict["generalDesc"] = generalDescDict;
              dataList.add(terDict);
           }
-
+          
         }
       }
       print(terDict);
