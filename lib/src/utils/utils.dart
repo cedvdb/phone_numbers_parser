@@ -2,7 +2,7 @@ import 'package:phone_numbers_parser/src/metadata/generated/metadata_lengths_by_
 import 'package:phone_numbers_parser/src/models/iso_code.dart';
 import 'package:phone_numbers_parser/src/models/phone_number_type.dart';
 
-class Utils{
+class MaxMinUtils{
   static MaxMinLength getMaxMinLengthByIsoCode(IsoCode isoCode, PhoneNumberType phoneNumberType){
     if(phoneNumberType == PhoneNumberType.mobile) {
      final data = metadataLenghtsByIsoCode[isoCode]!.mobile;
