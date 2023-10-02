@@ -39,7 +39,7 @@ void main(List<String> arguments) {
       PhoneNumber.parse('2025550119', destinationCountry: IsoCode.US);
   final formattedNsn = phoneNumber.getFormattedNsn();
   print('formatted: $formattedNsn'); // 202-555-0119
-
+  print('international: ${phoneNumber.international}' );
   // Ranges
   print('');
   print('Ranges:');
