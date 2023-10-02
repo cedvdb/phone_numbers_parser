@@ -45,8 +45,9 @@ void main(List<String> arguments) {
   print('Ranges:');
   final first = PhoneNumber.parse('+33 655 5705 00');
   final last = PhoneNumber.parse('+33 655 5705 03');
+  print(first.isValid());
   final range = PhoneNumber.getRange(first, last);
-
+  print('nsn: ${first.nsn}');
   print('Count: ${range.count}');
   print('Expand: ${range.expandRange().join(',')}');
 
