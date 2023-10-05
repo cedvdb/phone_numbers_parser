@@ -77,7 +77,7 @@ for local formats.
 final phoneNumber =
     PhoneNumber.parse('2025550119', destinationCountry: IsoCode.US);
 final formattedNsn = phoneNumber.getFormattedNsn();
-print('formatted: $formattedNsn'); // 202-555-0119/ 202-555-0119
+print('formatted: $formattedNsn'); // 202-555-0119
 ```
 
 ### Range 

@@ -7,8 +7,9 @@ environment:
   sdk: ">=3.0.0"
 
 dependencies:
-  meta: ^1.7.0
+  meta: ^1.8.3
 
 dev_dependencies:
-  lints: ^2.0.0
+  xml: ^6.4.2
+  lints: ^2.1.1
   test: ^1.21.4
