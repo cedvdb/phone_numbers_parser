@@ -1934,7 +1934,7 @@ const metadataByIsoCode = {
   IsoCode.YT: PhoneMetadata(
     countryCode: r"262",
     isoCode: IsoCode.YT,
-    leadingDigits: r"269|63|9398",
+    leadingDigits: null,
     internationalPrefix: r"00",
     nationalPrefix: r"0",
     isMainCountryForDialCode: false,

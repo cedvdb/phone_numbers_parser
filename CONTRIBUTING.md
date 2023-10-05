@@ -1,18 +1,16 @@
 # Contributing
 
-## Regenerate metadata
+## MetaData
+phone_numbers_parser is using metadata from [Google's libphonenumber](https://github.com/googlei18n/libphonenumber).
+We try to keep the metadata of phone_numbers_parser up to date and making sure you are running on the latest release will be sufficient for most apps. However, you can also update the metadata youself by following these 3 steps:
 
-The metadata from [marmelroy/PhoneNumberKit](https://github.com/marmelroy/PhoneNumberKit) are used. That repo does a good job of keeping the Metadata from LibPhoneNumber up to date.
-
-This is a 3 step process:
-
-1. Fetch/Generate LibPhoneNumber Metadata in JSON Format
+1. Download the XML file
 2. Process the Metadata
 3. Generate the Dart files
 
 ## 1. Copy phone number metadata
 
-Copy this file https://github.com/marmelroy/PhoneNumberKit/blob/master/PhoneNumberKit/Resources/PhoneNumberMetadata.json into resources/data_sources/original_phone_number_metadata.json
+Copy this file https://github.com/googlei18n/libphonenumber/blob/master/resources/PhoneNumberMetadata.xml into resources/data_sources/PhoneNumberMetadata.xml
 
 ## 2. Process Metadata
 
@@ -27,6 +25,6 @@ dart resources/data_sources/convert_metadata.dart
 This is the final step to turn the Metadata into Dart Files.
 
 ```
-pub get
+dart pub get
 dart resources/generate_files.dart && dart format lib/src && dart fix --apply
 ```
