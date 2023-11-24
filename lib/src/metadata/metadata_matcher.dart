@@ -4,11 +4,11 @@ import 'package:phone_numbers_parser/src/parsers/_validator.dart';
 import 'models/phone_metadata.dart';
 
 abstract class MetadataMatcher {
-  static PhoneMetadata getMatchUsingPatterns(
+
+  static PhoneMetadata? getMatchUsingPatternsStrict(
     String nationalNumber,
-    List<PhoneMetadata> potentialFits,
+    List<PhoneMetadata> potentialFits
   ) {
-    if (potentialFits.length == 1) return potentialFits[0];
     potentialFits = reducePotentialMetadatasFits(nationalNumber, potentialFits);
     for (var fit in potentialFits) {
       final isValidForIso = Validator.validateWithPattern(
@@ -17,7 +17,14 @@ abstract class MetadataMatcher {
         return fit;
       }
     }
-    return potentialFits[0];
+    return null;
+  }
+
+  static PhoneMetadata getMatchUsingPatterns(
+    String nationalNumber,
+    List<PhoneMetadata> potentialFits,
+  ) {
+    return getMatchUsingPatternsStrict(nationalNumber, potentialFits) ?? potentialFits[0];
   }
 
   /// Given a list of metadata fits, return the ones that fit a national number

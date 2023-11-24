@@ -52,6 +52,7 @@ abstract class PhoneParser {
     final containsExitCode = withoutExitCode.length != phoneNumber.length;
     // if no destination metadata was provided we have to find it,
     destinationMetadata ??= _findDestinationMetadata(
+      phoneHadExitCode: containsExitCode,
       phoneWithoutExitCode: withoutExitCode,
       callerMetadata: callerMetadata,
     );
@@ -91,6 +92,7 @@ abstract class PhoneParser {
   // find destination of a normalized phone number, which supposedly
   // starts with a country code.
   static PhoneMetadata _findDestinationMetadata({
+    required bool phoneHadExitCode,
     required String phoneWithoutExitCode,
     required PhoneMetadata? callerMetadata,
   }) {
@@ -102,15 +104,34 @@ abstract class PhoneParser {
         phoneWithoutExitCode.startsWith(callerNationalPrefix)) {
       return callerMetadata;
     }
-    // if no caller was provided we need to make a best guess given the country code
-    final countryCode =
-        CountryCodeParser.extractCountryCode(phoneWithoutExitCode);
-    final national =
-        CountryCodeParser.removeCountryCode(phoneWithoutExitCode, countryCode);
-    // multiple countries use the same country code
+
+    final countryCode = CountryCodeParser.extractCountryCode(phoneWithoutExitCode);
+    final national = CountryCodeParser.removeCountryCode(phoneWithoutExitCode, countryCode);
     final metadatas = MetadataFinder.getMetadatasForCountryCode(countryCode);
-    // if multiple countries share the same country code, patterns on the national number
-    // is used to find the correct country.
-    return MetadataMatcher.getMatchUsingPatterns(national, metadatas);
+    final metadataMatch = MetadataMatcher.getMatchUsingPatternsStrict(national, metadatas);
+
+    if (phoneHadExitCode) {
+      // 1.
+      // if phone number has the exit code, we should use it 
+      // despite caller's metadata and phone number validity
+      return metadataMatch ?? metadatas[0];
+    }
+
+    // 2.
+    // if number has no exit code. Try to figure out if it
+    // starts with a country code
+    if (metadataMatch != null) {
+      return metadataMatch;
+    }
+
+    // 3.
+    // If any direct match was't found, use provided callerMetadata
+    if (callerMetadata != null) {
+      return callerMetadata;
+    }
+
+    // 4.
+    // The last resort. Use any of found metadatas ignoring validity
+    return metadatas[0];
   }
 }

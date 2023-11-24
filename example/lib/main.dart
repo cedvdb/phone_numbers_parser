@@ -71,4 +71,9 @@ void main(List<String> arguments) {
   two - 1 == one;
   final another = one + 2;
   print('$another == $three');
+
+  final usLocalNumber = PhoneNumber.parse("(707) 555-1854", callerCountry: IsoCode.US);
+  final usIntrnNumber = PhoneNumber.parse("+1 (707) 555-1854");
+
+  print("US local number $usLocalNumber equals US international number $usIntrnNumber - ${usLocalNumber == usIntrnNumber}"); // true
 }
