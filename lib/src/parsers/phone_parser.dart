@@ -105,23 +105,34 @@ abstract class PhoneParser {
       return callerMetadata;
     }
 
-    final countryCode = CountryCodeParser.extractCountryCode(phoneWithoutExitCode);
-    final national = CountryCodeParser.removeCountryCode(phoneWithoutExitCode, countryCode);
-    final metadatas = MetadataFinder.getMetadatasForCountryCode(countryCode);
-    final metadataMatch = MetadataMatcher.getMatchUsingPatternsStrict(national, metadatas);
+    String? countryCode;
+    Object? countryCodeException;
+    List<PhoneMetadata>? metadatas;
 
-    if (phoneHadExitCode) {
-      // 1.
-      // if phone number has the exit code, we should use it 
-      // despite caller's metadata and phone number validity
-      return metadataMatch ?? metadatas[0];
+    try {
+      countryCode = CountryCodeParser.extractCountryCode(phoneWithoutExitCode);
+    } catch(e) {
+      countryCodeException = e;
     }
 
-    // 2.
-    // if number has no exit code. Try to figure out if it
-    // starts with a country code
-    if (metadataMatch != null) {
-      return metadataMatch;
+    if (countryCode != null) {
+      metadatas = MetadataFinder.getMetadatasForCountryCode(countryCode);
+      final national = CountryCodeParser.removeCountryCode(phoneWithoutExitCode, countryCode);
+      final metadataMatch = MetadataMatcher.getMatchUsingPatternsStrict(national, metadatas);
+
+      if (phoneHadExitCode) {
+        // 1.
+        // if phone number has the exit code, we should use it 
+        // despite caller's metadata and phone number validity
+        return metadataMatch ?? metadatas.first;
+      }
+
+      // 2.
+      // if number has no exit code. Try to figure out if it
+      // starts with a country code
+      if (metadataMatch != null) {
+        return metadataMatch;
+      }
     }
 
     // 3.
@@ -130,8 +141,13 @@ abstract class PhoneParser {
       return callerMetadata;
     }
 
-    // 4.
-    // The last resort. Use any of found metadatas ignoring validity
-    return metadatas[0];
+    if (metadatas != null) {
+      // 4.
+      // The last resort. Use any of found metadatas ignoring validity
+      return metadatas.first;
+    }
+
+    // rethrow previously got error
+    throw countryCodeException!;
   }
 }
