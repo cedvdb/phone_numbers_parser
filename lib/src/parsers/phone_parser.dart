@@ -1,9 +1,9 @@
 import 'package:meta/meta.dart';
-import 'package:phone_number_metadata/phone_number_metadata.dart';
 
 import '../../phone_numbers_parser.dart';
-import '../utils/_metadata_finder.dart';
-import '../utils/_metadata_matcher.dart';
+import '../metadata/metadata_finder.dart';
+import '../metadata/models/phone_metadata.dart';
+import '../metadata/metadata_matcher.dart';
 import '_country_code_parser.dart';
 import '_international_prefix_parser.dart';
 import '_national_number_parser.dart';
