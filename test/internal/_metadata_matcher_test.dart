@@ -19,14 +19,14 @@ void main() {
         MetadataMatcher.getMatchUsingPatterns(
           '2025550128',
           MetadataFinder.getMetadatasForCountryCode('1'),
-        ).isoCode,
+        )!.isoCode,
         equals(IsoCode.US),
       );
       expect(
         MetadataMatcher.getMatchUsingPatterns(
           '6135550165',
           MetadataFinder.getMetadatasForCountryCode('1'),
-        ).isoCode,
+        )!.isoCode,
         equals(IsoCode.CA),
       );
     });

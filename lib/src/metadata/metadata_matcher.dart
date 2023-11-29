@@ -5,7 +5,7 @@ import 'models/phone_metadata.dart';
 
 abstract class MetadataMatcher {
 
-  static PhoneMetadata? getMatchUsingPatternsStrict(
+  static PhoneMetadata? getMatchUsingPatterns(
     String nationalNumber,
     List<PhoneMetadata> potentialFits
   ) {
@@ -18,13 +18,6 @@ abstract class MetadataMatcher {
       }
     }
     return null;
-  }
-
-  static PhoneMetadata getMatchUsingPatterns(
-    String nationalNumber,
-    List<PhoneMetadata> potentialFits,
-  ) {
-    return getMatchUsingPatternsStrict(nationalNumber, potentialFits) ?? potentialFits[0];
   }
 
   /// Given a list of metadata fits, return the ones that fit a national number

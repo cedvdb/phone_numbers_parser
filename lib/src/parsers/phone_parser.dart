@@ -118,7 +118,7 @@ abstract class PhoneParser {
     if (countryCode != null) {
       metadatas = MetadataFinder.getMetadatasForCountryCode(countryCode);
       final national = CountryCodeParser.removeCountryCode(phoneWithoutExitCode, countryCode);
-      final metadataMatch = MetadataMatcher.getMatchUsingPatternsStrict(national, metadatas);
+      final metadataMatch = MetadataMatcher.getMatchUsingPatterns(national, metadatas);
 
       if (phoneHadExitCode) {
         // 1.
