@@ -122,8 +122,9 @@ abstract class PhoneParser {
 
       if (phoneHadExitCode) {
         // 1.
-        // if phone number has the exit code, we should use it 
-        // despite caller's metadata and phone number validity
+        // if phone number has the exit code, we use the first 
+        // digits as country code despite caller's metadata
+        // and phone number validity
         return metadataMatch ?? metadatas.first;
       }
 
