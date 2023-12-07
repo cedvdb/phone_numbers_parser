@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:phone_numbers_parser/src/parsers/_validator.dart';
 
 import '../../phone_numbers_parser.dart';
 import '../metadata/metadata_finder.dart';
@@ -58,10 +59,31 @@ abstract class PhoneParser {
       callerMetadata: callerMetadata,
     );
     var national = withoutExitCode;
-    // if there was no exit code then we assume we are dealing with a national number
+    // if there was an exit code then it is an international number followed by
+    // a country code.
+    // otherwise if the phone number starts with a country code, we check
+    // if the phone number is valid as is and use that, other wise if it is valid
+    // without the country code we remove the country code.
+    final countryCode = destinationMetadata.countryCode;
     if (exitCode.isNotEmpty) {
-      national = national.substring(destinationMetadata.countryCode.length);
+      national = national.substring(countryCode.length);
+    } else if (national.startsWith(countryCode)) {
+      final withoutCountryCode = national.substring(countryCode.length);
+      final (_, newNational) = NationalNumberParser.extractNationalPrefix(
+        withoutCountryCode,
+        destinationMetadata,
+      );
+      final isValid =
+          Validator.validateWithPattern(destinationMetadata.isoCode, national);
+      final isValidWithoutCountryCode = Validator.validateWithPattern(
+        destinationMetadata.isoCode,
+        newNational,
+      );
+      if (!isValid && isValidWithoutCountryCode) {
+        national = newNational;
+      }
     }
+
     final containsCountryCode = national.length != withoutExitCode.length;
     // normally a phone number should not contain a national prefix after the country
     // code. However we let it slide to cover a wider range of incorrect input
