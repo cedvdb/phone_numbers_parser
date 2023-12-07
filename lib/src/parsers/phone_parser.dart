@@ -35,7 +35,7 @@ abstract class PhoneParser {
     IsoCode? callerCountry,
     IsoCode? destinationCountry,
   }) {
-    phoneNumber = TextParser.normalize(phoneNumber);
+    phoneNumber = TextParser.normalizePhoneNumber(phoneNumber);
     final callerMetadata = callerCountry != null
         ? MetadataFinder.findMetadataForIsoCode(callerCountry)
         : null;

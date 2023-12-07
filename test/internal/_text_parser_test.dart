@@ -20,9 +20,9 @@ void main() {
     });
 
     test('should normalize phone number', () {
-      expect(
-          TextParser.normalize('(+49 02.44/433-43)'), equals('+49024443343'));
-      expect(TextParser.normalize('＋۹۹۹۹'), equals('+9999'));
+      expect(TextParser.normalizePhoneNumber('(+49 02.44/433-43)'),
+          equals('+49024443343'));
+      expect(TextParser.normalizePhoneNumber('＋۹۹۹۹'), equals('+9999'));
     });
   });
 }

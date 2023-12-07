@@ -9,7 +9,7 @@ abstract class TextParser {
   /// Example:
   /// [unformatedPhoneNumber]: (+32) 0489/99.99.99
   /// Returns: +320489999999
-  static String normalize(String unformatedPhoneNumber) {
+  static String normalizePhoneNumber(String unformatedPhoneNumber) {
     return unformatedPhoneNumber
         .split('')
         .map((char) => Constants.allNormalizationMappings[char] ?? '')
