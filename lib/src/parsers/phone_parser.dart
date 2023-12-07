@@ -35,10 +35,11 @@ abstract class PhoneParser {
     IsoCode? callerCountry,
     IsoCode? destinationCountry,
   }) {
-    phoneNumber = TextParser.normalize(phoneNumber);
+    phoneNumber = TextParser.normalizePhoneNumber(phoneNumber);
     final callerMetadata = callerCountry != null
         ? MetadataFinder.findMetadataForIsoCode(callerCountry)
         : null;
+
     var destinationMetadata = destinationCountry != null
         ? MetadataFinder.findMetadataForIsoCode(destinationCountry)
         : null;
@@ -49,8 +50,10 @@ abstract class PhoneParser {
       destinationCountryMetadata: destinationMetadata,
       callerCountryMetadata: callerMetadata,
     );
+
     // if no destination metadata was provided we have to find it,
     destinationMetadata ??= _findDestinationMetadata(
+      exitCode: exitCode,
       phoneWithoutExitCode: withoutExitCode,
       callerMetadata: callerMetadata,
     );
@@ -87,15 +90,12 @@ abstract class PhoneParser {
   // find destination of a normalized phone number, which supposedly
   // starts with a country code.
   static PhoneMetadata _findDestinationMetadata({
+    required String exitCode,
     required String phoneWithoutExitCode,
     required PhoneMetadata? callerMetadata,
   }) {
-    final callerNationalPrefix = callerMetadata?.nationalPrefix;
-    // if it starts with the national prefix of the caller then we can safely
-    // assume that the caller calls in the same country
-    if (callerMetadata != null &&
-        callerNationalPrefix != null &&
-        (phoneWithoutExitCode.startsWith(callerNationalPrefix))) {
+    // if there was not an exit code then we can use the caller metadata to
+    if (exitCode.isEmpty && callerMetadata != null) {
       return callerMetadata;
     }
     // if no caller was provided we need to make a best guess given the country code
@@ -107,6 +107,7 @@ abstract class PhoneParser {
 
     return metadata ??
         callerMetadata ??
+        // default if nothing was found.
         MetadataFinder.findMetadataForIsoCode(IsoCode.US);
   }
 }
