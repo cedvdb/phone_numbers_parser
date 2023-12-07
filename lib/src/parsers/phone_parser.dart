@@ -94,7 +94,8 @@ abstract class PhoneParser {
     required String phoneWithoutExitCode,
     required PhoneMetadata? callerMetadata,
   }) {
-    // if there was not an exit code then we can use the caller metadata to
+    // if there was not an exit code then we can use the caller metadata
+    // since we did not exit
     if (exitCode.isEmpty && callerMetadata != null) {
       return callerMetadata;
     }
