@@ -7,16 +7,19 @@ abstract class NationalNumberParser {
   /// this method assumes that the national number is in its international
   /// form with a national prefix in front. It does not transform the national
   /// number (except for removing the national prefix). See [transformLocalNsnToInternationalUsingPatterns].
-  static String removeNationalPrefix(
+  static (String nationalPrefix, String nsn) extractNationalPrefix(
     String nationalNumber,
     PhoneMetadata metadata,
   ) {
     final nationalPrefix = metadata.nationalPrefix;
-    if (nationalPrefix == null) return nationalNumber;
+    if (nationalPrefix == null) return ('', nationalNumber);
     if (nationalNumber.startsWith(nationalPrefix)) {
-      return nationalNumber.substring(nationalPrefix.length);
+      return (
+        nationalPrefix,
+        nationalNumber.substring(nationalPrefix.length),
+      );
     }
-    return nationalNumber;
+    return ('', nationalNumber);
   }
 
   /// extract the national prefix from the phone number and convert
@@ -31,7 +34,7 @@ abstract class NationalNumberParser {
     PhoneMetadata metadata,
   ) {
     final patterns =
-        MetadataFinder.getMetadataPatternsForIsoCode(metadata.isoCode);
+        MetadataFinder.findMetadataPatternsForIsoCode(metadata.isoCode);
     final nationalPrefixForParsing = patterns.nationalPrefixForParsing;
     final transformRule = patterns.nationalPrefixTransformRule;
 
@@ -43,7 +46,8 @@ abstract class NationalNumberParser {
       );
       return transformed;
     } else {
-      return removeNationalPrefix(nationalNumber, metadata);
+      final (_, nsn) = extractNationalPrefix(nationalNumber, metadata);
+      return nsn;
     }
   }
 

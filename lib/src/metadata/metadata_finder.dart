@@ -14,7 +14,7 @@ import '../models/phone_number_exceptions.dart';
 /// Helper to find metadata
 abstract class MetadataFinder {
   /// expects a normalized iso code
-  static PhoneMetadata getMetadataForIsoCode(IsoCode isoCode) {
+  static PhoneMetadata findMetadataForIsoCode(IsoCode isoCode) {
     final metadata = metadataByIsoCode[isoCode];
     if (metadata == null) {
       throw PhoneNumberException(
@@ -26,7 +26,7 @@ abstract class MetadataFinder {
   }
 
   /// expects a normalized iso code
-  static PhoneMetadataPatterns getMetadataPatternsForIsoCode(IsoCode isoCode) {
+  static PhoneMetadataPatterns findMetadataPatternsForIsoCode(IsoCode isoCode) {
     final metadata = metadataPatternsByIsoCode[isoCode];
     if (metadata == null) {
       throw PhoneNumberException(
@@ -37,7 +37,7 @@ abstract class MetadataFinder {
     return metadata;
   }
 
-  static PhoneMetadataLengths getMetadataLengthForIsoCode(IsoCode isoCode) {
+  static PhoneMetadataLengths findMetadataLengthForIsoCode(IsoCode isoCode) {
     final metadata = metadataLenghtsByIsoCode[isoCode];
     if (metadata == null) {
       throw PhoneNumberException(
@@ -48,7 +48,7 @@ abstract class MetadataFinder {
     return metadata;
   }
 
-  static PhoneMetadataFormats getMetadataFormatsForIsoCode(IsoCode isoCode) {
+  static PhoneMetadataFormats findMetadataFormatsForIsoCode(IsoCode isoCode) {
     final metadata = metadataFormatsByIsoCode[isoCode];
     if (metadata == null) {
       throw PhoneNumberException(
@@ -60,18 +60,27 @@ abstract class MetadataFinder {
   }
 
   /// expects normalized countryCode
-  static PhoneMetadata getMetadatasForCountryCode(String countryCode) {
+  static PhoneMetadata? findMetadataForCountryCode(
+    String countryCode,
+    String nationalNumber,
+  ) {
     final isoList = _getIsoCodesFromCountryCode(countryCode);
-    final metadata = isoList.map((iso) => getMetadataForIsoCode(iso)).toList();
+    // country code can have multiple metadata because multiple iso code
+    // share the same country code.
+    final allMatchingMetadata =
+        isoList.map((iso) => findMetadataForIsoCode(iso)).toList();
+
+    if (allMatchingMetadata.isEmpty) {
+      return null;
+    }
+    final match = _getMatchUsingPatterns(nationalNumber, allMatchingMetadata);
+    return match;
   }
 
   static List<IsoCode> _getIsoCodesFromCountryCode(String countryCode) {
     final isoCodes = countryCodeToIsoCode[countryCode];
     if (isoCodes == null) {
-      throw PhoneNumberException(
-        code: Code.invalidCountryCallingCode,
-        description: 'countryCode $countryCode not found',
-      );
+      return [];
     }
     return isoCodes;
   }
@@ -81,8 +90,7 @@ abstract class MetadataFinder {
     List<PhoneMetadata> potentialFits,
   ) {
     if (potentialFits.length == 1) return potentialFits[0];
-    potentialFits =
-        _reducePotentialMetadatasFits(nationalNumber, potentialFits);
+    // if the phone number is valid for a metadata return that metadata
     for (var fit in potentialFits) {
       final isValidForIso =
           Validator.validateWithPattern(fit.isoCode, nationalNumber);
@@ -90,29 +98,15 @@ abstract class MetadataFinder {
         return fit;
       }
     }
-    return potentialFits[0];
-  }
-
-  /// Given a list of metadata fits, return the ones that fit a national number
-  ///
-  /// Expects a normalized [nationalNumber] that is in its international form
-  static List<PhoneMetadata> _reducePotentialMetadatasFits(
-    String nationalNumber,
-    List<PhoneMetadata> potentialFits,
-  ) {
-    if (potentialFits.length == 1) {
-      return potentialFits;
-    }
-
+    // otherwise the phone number starts with leading digits of metadata
     for (var fit in potentialFits) {
-      // if multiple fits, check leading digits to see if there is a fit
       final leadingDigits = fit.leadingDigits;
-
       if (leadingDigits != null && nationalNumber.startsWith(leadingDigits)) {
-        return [fit];
+        return fit;
       }
     }
 
-    return potentialFits;
+    // best guess here
+    return potentialFits[0];
   }
 }

@@ -22,7 +22,7 @@ class PhoneNumber {
 
   /// territory numerical code that precedes a phone number. Example 33 for france
   String get countryCode =>
-      MetadataFinder.getMetadataForIsoCode(isoCode).countryCode;
+      MetadataFinder.findMetadataForIsoCode(isoCode).countryCode;
 
   /// international version of phone number
   String get international => '+$countryCode$nsn';

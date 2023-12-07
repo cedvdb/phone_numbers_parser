@@ -18,9 +18,9 @@ abstract class Validator {
     String national, [
     PhoneNumberType? type,
   ]) {
-    final metadata = MetadataFinder.getMetadataForIsoCode(isoCode);
+    final metadata = MetadataFinder.findMetadataForIsoCode(isoCode);
     final patternMetadatas =
-        MetadataFinder.getMetadataPatternsForIsoCode(metadata.isoCode);
+        MetadataFinder.findMetadataPatternsForIsoCode(metadata.isoCode);
     // if it's not matching the length it won't match the pattern
     if (!validateWithLength(isoCode, national)) {
       return false;
@@ -48,7 +48,8 @@ abstract class Validator {
     String national, [
     PhoneNumberType? type,
   ]) {
-    final lengthMetadatas = MetadataFinder.getMetadataLengthForIsoCode(isoCode);
+    final lengthMetadatas =
+        MetadataFinder.findMetadataLengthForIsoCode(isoCode);
     if (national.length < Constants.minLengthNsn) {
       return false;
     }

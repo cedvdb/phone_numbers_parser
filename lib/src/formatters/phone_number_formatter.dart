@@ -15,7 +15,8 @@ class PhoneNumberFormatter {
     }
     final missingDigits = _getMissingDigits(nsn, isoCode);
     final completePhoneNumber = nsn + missingDigits;
-    final formatingRules = MetadataFinder.getMetadataFormatsForIsoCode(isoCode);
+    final formatingRules =
+        MetadataFinder.findMetadataFormatsForIsoCode(isoCode);
     final formatingRule = _getMatchingFormatRules(
       formatingRules: formatingRules,
       nsn: completePhoneNumber,
@@ -63,7 +64,7 @@ class PhoneNumberFormatter {
 
   /// returns 9's to have a valid length number
   static String _getMissingDigits(String nsn, IsoCode isoCode) {
-    final lengthRule = MetadataFinder.getMetadataLengthForIsoCode(isoCode);
+    final lengthRule = MetadataFinder.findMetadataLengthForIsoCode(isoCode);
 
     final minLength = max(lengthRule.fixedLine.first, lengthRule.mobile.first);
     // added digits so we match the pattern in case of an incomplete phone number
