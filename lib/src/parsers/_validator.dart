@@ -1,5 +1,5 @@
-import 'package:phone_numbers_parser/src/models/phone_number.dart';
 import 'package:phone_numbers_parser/src/metadata/metadata_finder.dart';
+import 'package:phone_numbers_parser/src/models/iso_code.dart';
 import 'package:phone_numbers_parser/src/regex/regexp_manager.dart';
 
 import '../constants/constants.dart';
@@ -14,14 +14,15 @@ abstract class Validator {
   /// [nsn] national number without country code,
   /// international prefix, or national prefix
   static bool validateWithPattern(
-    PhoneNumber phoneNumber, [
+    IsoCode isoCode,
+    String national, [
     PhoneNumberType? type,
   ]) {
-    final metadata = MetadataFinder.getMetadataForIsoCode(phoneNumber.isoCode);
+    final metadata = MetadataFinder.getMetadataForIsoCode(isoCode);
     final patternMetadatas =
         MetadataFinder.getMetadataPatternsForIsoCode(metadata.isoCode);
     // if it's not matching the length it won't match the pattern
-    if (!validateWithLength(phoneNumber)) {
+    if (!validateWithLength(isoCode, national)) {
       return false;
     }
     final patterns = <String>[];
@@ -36,7 +37,7 @@ abstract class Validator {
       patterns.add(_getPatterns(patternMetadatas, type));
     }
     return patterns
-        .any((r) => RegexpManager.matchEntirely(r, phoneNumber.nsn) != null);
+        .any((r) => RegexpManager.matchEntirely(r, national) != null);
   }
 
   /// Returns whether or not a national number is viable using length
@@ -44,16 +45,16 @@ abstract class Validator {
   /// [nsn] national number without country code,
   /// international prefix, or national prefix
   static bool validateWithLength(
-    PhoneNumber phoneNumber, [
+    IsoCode isoCode,
+    String national, [
     PhoneNumberType? type,
   ]) {
-    final lengthMetadatas =
-        MetadataFinder.getMetadataLengthForIsoCode(phoneNumber.isoCode);
-    if (phoneNumber.nsn.length < Constants.minLengthNsn) {
+    final lengthMetadatas = MetadataFinder.getMetadataLengthForIsoCode(isoCode);
+    if (national.length < Constants.minLengthNsn) {
       return false;
     }
     final lengths = _getPossibleLengths(lengthMetadatas, type);
-    final isRightLength = lengths.contains(phoneNumber.nsn.length);
+    final isRightLength = lengths.contains(national.length);
     // if we don't have length information we will do pattern matching
     // or if the length is correct we do pattern matching too
     if (isRightLength) {

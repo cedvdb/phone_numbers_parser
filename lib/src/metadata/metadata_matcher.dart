@@ -1,4 +1,3 @@
-import 'package:phone_numbers_parser/src/models/phone_number.dart';
 import 'package:phone_numbers_parser/src/parsers/_validator.dart';
 
 import 'models/phone_metadata.dart';
@@ -11,8 +10,8 @@ abstract class MetadataMatcher {
     if (potentialFits.length == 1) return potentialFits[0];
     potentialFits = reducePotentialMetadatasFits(nationalNumber, potentialFits);
     for (var fit in potentialFits) {
-      final isValidForIso = Validator.validateWithPattern(
-          PhoneNumber(nsn: nationalNumber, isoCode: fit.isoCode));
+      final isValidForIso =
+          Validator.validateWithPattern(fit.isoCode, nationalNumber);
       if (isValidForIso) {
         return fit;
       }

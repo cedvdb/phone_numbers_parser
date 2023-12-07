@@ -73,11 +73,11 @@ class PhoneNumber {
 
   /// validates a phone number by first checking its length then pattern matching
   bool isValid({PhoneNumberType? type}) =>
-      Validator.validateWithPattern(this, type);
+      Validator.validateWithPattern(isoCode, nsn, type);
 
   /// validates a phone number by only checking its length
   bool isValidLength({PhoneNumberType? type}) =>
-      Validator.validateWithLength(this, type);
+      Validator.validateWithLength(isoCode, nsn, type);
 
   //
   //  text

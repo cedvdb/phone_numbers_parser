@@ -8,6 +8,7 @@ import '_country_code_parser.dart';
 import '_international_prefix_parser.dart';
 import '_national_number_parser.dart';
 import '_text_parser.dart';
+import '_validator.dart';
 
 /// {@template phoneNumber}
 /// Parses a phone number given caller or destination information.
@@ -99,7 +100,9 @@ abstract class PhoneParser {
     // assume that the caller calls in the same country
     if (callerMetadata != null &&
         callerNationalPrefix != null &&
-        phoneWithoutExitCode.startsWith(callerNationalPrefix)) {
+        (phoneWithoutExitCode.startsWith(callerNationalPrefix) ||
+            Validator.validateWithPattern(
+                callerMetadata.isoCode, phoneWithoutExitCode))) {
       return callerMetadata;
     }
     // if no caller was provided we need to make a best guess given the country code
