@@ -13,6 +13,8 @@ class PhoneNumberFormatter {
     if (nsn.isEmpty) {
       return nsn;
     }
+    // since the phone number might be incomplete, fake digits
+    // are temporarily added to format a complete number.
     final missingDigits = _getMissingDigits(nsn, isoCode);
     final completePhoneNumber = nsn + missingDigits;
     final formatingRules =
