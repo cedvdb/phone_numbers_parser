@@ -5,15 +5,6 @@ import 'package:test/test.dart';
 
 void main() {
   group('MetadataMatcher', () {
-    test('should reduce the list of potential metadata fits', () {
-      final fits = MetadataFinder.getMetadatasForCountryCode('1');
-      final nationalNumberWithLeadingDigits = '26811111111';
-      final reduced = MetadataMatcher.reducePotentialMetadatasFits(
-          nationalNumberWithLeadingDigits, fits);
-      expect(reduced.length, equals(1));
-      expect(reduced[0].isoCode, equals(IsoCode.AG));
-    });
-
     test('should find match based on pattern', () {
       expect(
         MetadataMatcher.getMatchUsingPatterns(

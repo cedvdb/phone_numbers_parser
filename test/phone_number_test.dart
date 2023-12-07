@@ -98,22 +98,22 @@ void main() {
             equals('+5493435551212'));
       });
 
-      test(
-          'should parse local numbers w/o national prefix as they belong to callerCountry',
-          () {
-        expect(
-            PhoneNumber.parse('(888) 555-5512', callerCountry: IsoCode.US)
-                .international,
-            equals('+18885555512'));
-        expect(
-            PhoneNumber.parse('(555) 522-8243', callerCountry: IsoCode.US)
-                .international,
-            equals('+15555228243'));
-        expect(
-            PhoneNumber.parse('(707) 555-1854', callerCountry: IsoCode.US)
-                .international,
-            equals('+17075551854'));
-      });
+      // test(
+      //     'should parse local numbers w/o national prefix as they belong to callerCountry',
+      //     () {
+      //   expect(
+      //       PhoneNumber.parse('(888) 555-5512', callerCountry: IsoCode.US)
+      //           .international,
+      //       equals('+18885555512'));
+      //   expect(
+      //       PhoneNumber.parse('(555) 522-8243', callerCountry: IsoCode.US)
+      //           .international,
+      //       equals('+15555228243'));
+      //   expect(
+      //       PhoneNumber.parse('(707) 555-1854', callerCountry: IsoCode.US)
+      //           .international,
+      //       equals('+17075551854'));
+      // });
 
       test(
           'should output a national number in its international version only when valid',

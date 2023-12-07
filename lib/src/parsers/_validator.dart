@@ -1,6 +1,6 @@
 import 'package:phone_numbers_parser/src/metadata/metadata_finder.dart';
 import 'package:phone_numbers_parser/src/models/iso_code.dart';
-import 'package:phone_numbers_parser/src/regex/regexp_manager.dart';
+import 'package:phone_numbers_parser/src/regex/match_entirely_extension.dart';
 
 import '../constants/constants.dart';
 import '../metadata/models/phone_metadata_lengths.dart';
@@ -36,8 +36,7 @@ abstract class Validator {
     } else {
       patterns.add(_getPatterns(patternMetadatas, type));
     }
-    return patterns
-        .any((r) => RegexpManager.matchEntirely(r, national) != null);
+    return patterns.any((r) => r.matchEntirely(national) != null);
   }
 
   /// Returns whether or not a national number is viable using length

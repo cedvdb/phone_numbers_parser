@@ -6,7 +6,7 @@ import 'package:phone_numbers_parser/src/parsers/_validator.dart';
 import 'package:phone_numbers_parser/src/parsers/phone_parser.dart';
 import 'package:phone_numbers_parser/src/metadata/metadata_finder.dart';
 
-import 'iso_code.dart';
+import 'models/iso_code.dart';
 
 /// represents a phone number
 ///

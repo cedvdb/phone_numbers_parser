@@ -1,7 +1,8 @@
 import 'dart:math';
 
 import 'package:phone_numbers_parser/src/metadata/metadata_finder.dart';
-import 'package:phone_numbers_parser/src/regex/regexp_manager.dart';
+import 'package:phone_numbers_parser/src/parsers/_national_number_parser.dart';
+import 'package:phone_numbers_parser/src/regex/match_entirely_extension.dart';
 
 import '../metadata/models/phone_metadata_formats.dart';
 import '../models/iso_code.dart';
@@ -31,7 +32,7 @@ class PhoneNumberFormatter {
       transformRule = intlFormat;
     }
 
-    var formatted = RegexpManager.applyTransformRules(
+    var formatted = NationalNumberParser.applyTransformRules(
       appliedTo: completePhoneNumber,
       pattern: formatingRule.pattern,
       transformRule: transformRule,
@@ -91,7 +92,7 @@ class PhoneNumberFormatter {
       // phonenumberkit seems to be using the last leading digit pattern
       // from the list of pattern so that's what we are going to do here as well
       final matchLeading = RegExp(rules.leadingDigits.last).matchAsPrefix(nsn);
-      final matchPattern = RegexpManager.matchEntirely(rules.pattern, nsn);
+      final matchPattern = rules.pattern.matchEntirely(nsn);
       if (matchLeading != null && matchPattern != null) {
         return rules;
       }

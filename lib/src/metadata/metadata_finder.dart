@@ -1,3 +1,4 @@
+import '../parsers/_validator.dart';
 import 'generated/country_code_to_iso_code.dart';
 import 'generated/metadata_by_iso_code.dart';
 import 'generated/metadata_formats_by_iso_code.dart';
@@ -10,6 +11,7 @@ import 'models/phone_metadata_patterns.dart';
 import '../models/iso_code.dart';
 import '../models/phone_number_exceptions.dart';
 
+/// Helper to find metadata
 abstract class MetadataFinder {
   /// expects a normalized iso code
   static PhoneMetadata getMetadataForIsoCode(IsoCode isoCode) {
@@ -58,9 +60,9 @@ abstract class MetadataFinder {
   }
 
   /// expects normalized countryCode
-  static List<PhoneMetadata> getMetadatasForCountryCode(String countryCode) {
+  static PhoneMetadata getMetadatasForCountryCode(String countryCode) {
     final isoList = _getIsoCodesFromCountryCode(countryCode);
-    return isoList.map((iso) => getMetadataForIsoCode(iso)).toList();
+    final metadata = isoList.map((iso) => getMetadataForIsoCode(iso)).toList();
   }
 
   static List<IsoCode> _getIsoCodesFromCountryCode(String countryCode) {
@@ -72,5 +74,45 @@ abstract class MetadataFinder {
       );
     }
     return isoCodes;
+  }
+
+  static PhoneMetadata _getMatchUsingPatterns(
+    String nationalNumber,
+    List<PhoneMetadata> potentialFits,
+  ) {
+    if (potentialFits.length == 1) return potentialFits[0];
+    potentialFits =
+        _reducePotentialMetadatasFits(nationalNumber, potentialFits);
+    for (var fit in potentialFits) {
+      final isValidForIso =
+          Validator.validateWithPattern(fit.isoCode, nationalNumber);
+      if (isValidForIso) {
+        return fit;
+      }
+    }
+    return potentialFits[0];
+  }
+
+  /// Given a list of metadata fits, return the ones that fit a national number
+  ///
+  /// Expects a normalized [nationalNumber] that is in its international form
+  static List<PhoneMetadata> _reducePotentialMetadatasFits(
+    String nationalNumber,
+    List<PhoneMetadata> potentialFits,
+  ) {
+    if (potentialFits.length == 1) {
+      return potentialFits;
+    }
+
+    for (var fit in potentialFits) {
+      // if multiple fits, check leading digits to see if there is a fit
+      final leadingDigits = fit.leadingDigits;
+
+      if (leadingDigits != null && nationalNumber.startsWith(leadingDigits)) {
+        return [fit];
+      }
+    }
+
+    return potentialFits;
   }
 }

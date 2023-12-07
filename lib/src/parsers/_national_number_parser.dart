@@ -1,5 +1,4 @@
 import 'package:phone_numbers_parser/src/metadata/metadata_finder.dart';
-import 'package:phone_numbers_parser/src/regex/regexp_manager.dart';
 
 import '../metadata/models/phone_metadata.dart';
 
@@ -37,7 +36,7 @@ abstract class NationalNumberParser {
     final transformRule = patterns.nationalPrefixTransformRule;
 
     if (nationalPrefixForParsing != null) {
-      final transformed = RegexpManager.applyTransformRules(
+      final transformed = applyTransformRules(
         appliedTo: nationalNumber,
         pattern: nationalPrefixForParsing,
         transformRule: transformRule,
@@ -46,5 +45,36 @@ abstract class NationalNumberParser {
     } else {
       return removeNationalPrefix(nationalNumber, metadata);
     }
+  }
+
+  static String applyTransformRules({
+    required String appliedTo,
+    required String pattern,
+    required String? transformRule,
+  }) {
+    // match as prefix because we are only replacing the group and keeping
+    // the end intact
+    final match = RegExp(pattern).matchAsPrefix(appliedTo);
+
+    if (match == null) {
+      return appliedTo;
+    }
+    // if there is no group caught there is no need to transform
+    // it is possible for a group to be null despite the group count being 1
+    if (transformRule == null ||
+        match.groupCount == 0 ||
+        match.group(1) == null) {
+      return appliedTo.substring(match.end);
+    }
+
+    var transformed = transformRule;
+    bool shouldContinueLoop(int i) =>
+        match.groupCount >= i &&
+        match.group(i) != null &&
+        transformed.contains('\$$i');
+    for (var i = 1; shouldContinueLoop(i); i++) {
+      transformed = transformed.replaceFirst('\$$i', match.group(i)!);
+    }
+    return transformed + appliedTo.substring(match.end);
   }
 }
