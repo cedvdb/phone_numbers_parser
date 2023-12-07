@@ -22,22 +22,6 @@ void main() {
         );
       });
 
-      test('should parse incomplete phone numbers', () {
-        // fr no transformation required except removing prefixes
-        expect(
-          // this phone number nsn should start with the same digits as the country code
-          PhoneNumber.parse('91', destinationCountry: IsoCode.IN).international,
-          equals('+9191'),
-        );
-
-        expect(
-          // this should keep the "441" prefix despite having local transform rules
-          // because it is international
-          PhoneNumber.parse('+14412957').nsn,
-          equals('4412957'),
-        );
-      });
-
       test('should parse for caller', () {
         expect(
             PhoneNumber.parse('011 33 655 5705 76', callerCountry: IsoCode.US)
@@ -96,6 +80,89 @@ void main() {
         // no transform
         expect(parse('+54 9 343 555 1212').international,
             equals('+5493435551212'));
+      });
+
+      test(
+          'should parse local numbers w/o national prefix as they belong to caller country',
+          () {
+        expect(
+            PhoneNumber.parse('(888) 555-5512', callerCountry: IsoCode.US)
+                .international,
+            equals('+18885555512'));
+        expect(
+            PhoneNumber.parse('(555) 522-8243', callerCountry: IsoCode.US)
+                .international,
+            equals('+15555228243'));
+        expect(
+            PhoneNumber.parse('(707) 555-1854', callerCountry: IsoCode.US)
+                .international,
+            equals('+17075551854'));
+      });
+
+      test(
+          'should parse phone numbers without exit code but with a country code if caller or destination country is provided',
+          () async {
+        // issue https://github.com/cedvdb/phone_numbers_parser/issues/39
+        var expected = '+64211234567';
+        testParse(String phoneNumber) {
+          expect(
+            PhoneNumber.parse(
+              phoneNumber,
+              destinationCountry: IsoCode.NZ,
+            ).international,
+            expected,
+          );
+          expect(
+            PhoneNumber.parse(
+              phoneNumber,
+              callerCountry: IsoCode.NZ,
+            ).international,
+            expected,
+          );
+          expect(
+            PhoneNumber.parse(
+              phoneNumber,
+              destinationCountry: IsoCode.NZ,
+              callerCountry: IsoCode.NZ,
+            ).international,
+            expected,
+          );
+        }
+
+        // (with exit code)
+        testParse('021 123 4567');
+        testParse('+640211234567');
+        testParse('+64211234567');
+        // (just nsn)
+        testParse('211234567');
+        testParse('21 1234 567');
+        // Actual test: no exit code but starts with country code
+        // it should remove the country code if it is valid without.
+        expect(
+          PhoneNumber(isoCode: IsoCode.NZ, nsn: '211234567').isValid(),
+          isTrue,
+        );
+        expect(
+          PhoneNumber(isoCode: IsoCode.NZ, nsn: '64211234567').isValid(),
+          isFalse,
+        );
+        testParse('640211234567');
+      });
+
+      test('should parse incomplete phone numbers', () {
+        // fr no transformation required except removing prefixes
+        expect(
+          // this phone number nsn should start with the same digits as the country code
+          PhoneNumber.parse('91', destinationCountry: IsoCode.IN).international,
+          equals('+9191'),
+        );
+
+        expect(
+          // this should keep the "441" prefix despite having local transform rules
+          // because it is international
+          PhoneNumber.parse('+14412957').nsn,
+          equals('4412957'),
+        );
       });
 
       test(

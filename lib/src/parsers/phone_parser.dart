@@ -1,9 +1,9 @@
 import 'package:meta/meta.dart';
+import 'package:phone_numbers_parser/src/parsers/_validator.dart';
 
 import '../../phone_numbers_parser.dart';
 import '../metadata/metadata_finder.dart';
 import '../metadata/models/phone_metadata.dart';
-import '../metadata/metadata_matcher.dart';
 import '_country_code_parser.dart';
 import '_international_prefix_parser.dart';
 import '_national_number_parser.dart';
@@ -36,37 +36,58 @@ abstract class PhoneParser {
     IsoCode? callerCountry,
     IsoCode? destinationCountry,
   }) {
-    phoneNumber = TextParser.normalize(phoneNumber);
+    phoneNumber = TextParser.normalizePhoneNumber(phoneNumber);
     final callerMetadata = callerCountry != null
-        ? MetadataFinder.getMetadataForIsoCode(callerCountry)
-        : null;
-    var destinationMetadata = destinationCountry != null
-        ? MetadataFinder.getMetadataForIsoCode(destinationCountry)
+        ? MetadataFinder.findMetadataForIsoCode(callerCountry)
         : null;
 
-    final withoutExitCode = InternationalPrefixParser.removeExitCode(
+    var destinationMetadata = destinationCountry != null
+        ? MetadataFinder.findMetadataForIsoCode(destinationCountry)
+        : null;
+
+    final (exitCode, withoutExitCode) =
+        InternationalPrefixParser.extractExitCode(
       phoneNumber,
       destinationCountryMetadata: destinationMetadata,
       callerCountryMetadata: callerMetadata,
     );
-    final containsExitCode = withoutExitCode.length != phoneNumber.length;
+
     // if no destination metadata was provided we have to find it,
     destinationMetadata ??= _findDestinationMetadata(
+      exitCode: exitCode,
       phoneWithoutExitCode: withoutExitCode,
       callerMetadata: callerMetadata,
     );
     var national = withoutExitCode;
-    // if there was no exit code then we assume we are dealing with a national number
-    if (containsExitCode) {
-      national = CountryCodeParser.removeCountryCode(
-        withoutExitCode,
-        destinationMetadata.countryCode,
+    // if there was an exit code then it is an international number followed by
+    // a country code.
+    // otherwise if the phone number starts with a country code, we check
+    // if the phone number is valid as is and use that, other wise if it is valid
+    // without the country code we remove the country code.
+    final countryCode = destinationMetadata.countryCode;
+    if (exitCode.isNotEmpty) {
+      national = national.substring(countryCode.length);
+    } else if (national.startsWith(countryCode)) {
+      final withoutCountryCode = national.substring(countryCode.length);
+      final (_, newNational) = NationalNumberParser.extractNationalPrefix(
+        withoutCountryCode,
+        destinationMetadata,
       );
+      final isValid =
+          Validator.validateWithPattern(destinationMetadata.isoCode, national);
+      final isValidWithoutCountryCode = Validator.validateWithPattern(
+        destinationMetadata.isoCode,
+        newNational,
+      );
+      if (!isValid && isValidWithoutCountryCode) {
+        national = newNational;
+      }
     }
+
     final containsCountryCode = national.length != withoutExitCode.length;
     // normally a phone number should not contain a national prefix after the country
     // code. However we let it slide to cover a wider range of incorrect input
-    var nsn = NationalNumberParser.removeNationalPrefix(
+    var (_, nsn) = NationalNumberParser.extractNationalPrefix(
       national,
       destinationMetadata,
     );
@@ -91,26 +112,25 @@ abstract class PhoneParser {
   // find destination of a normalized phone number, which supposedly
   // starts with a country code.
   static PhoneMetadata _findDestinationMetadata({
+    required String exitCode,
     required String phoneWithoutExitCode,
     required PhoneMetadata? callerMetadata,
   }) {
-    final callerNationalPrefix = callerMetadata?.nationalPrefix;
-    // if it starts with the national prefix of the caller then we can safely
-    // assume that the caller calls in the same country
-    if (callerMetadata != null &&
-        callerNationalPrefix != null &&
-        phoneWithoutExitCode.startsWith(callerNationalPrefix)) {
+    // if there was not an exit code then we can use the caller metadata
+    // since we did not exit
+    if (exitCode.isEmpty && callerMetadata != null) {
       return callerMetadata;
     }
     // if no caller was provided we need to make a best guess given the country code
-    final countryCode =
+    final (countryCode, nsn) =
         CountryCodeParser.extractCountryCode(phoneWithoutExitCode);
-    final national =
-        CountryCodeParser.removeCountryCode(phoneWithoutExitCode, countryCode);
     // multiple countries use the same country code
-    final metadatas = MetadataFinder.getMetadatasForCountryCode(countryCode);
-    // if multiple countries share the same country code, patterns on the national number
-    // is used to find the correct country.
-    return MetadataMatcher.getMatchUsingPatterns(national, metadatas);
+    final metadata =
+        MetadataFinder.findMetadataForCountryCode(countryCode, nsn);
+
+    return metadata ??
+        callerMetadata ??
+        // default if nothing was found.
+        MetadataFinder.findMetadataForIsoCode(IsoCode.US);
   }
 }

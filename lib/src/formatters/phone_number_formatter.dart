@@ -1,7 +1,8 @@
 import 'dart:math';
 
 import 'package:phone_numbers_parser/src/metadata/metadata_finder.dart';
-import 'package:phone_numbers_parser/src/regex/regexp_manager.dart';
+import 'package:phone_numbers_parser/src/parsers/_national_number_parser.dart';
+import 'package:phone_numbers_parser/src/regex/match_entirely_extension.dart';
 
 import '../metadata/models/phone_metadata_formats.dart';
 import '../models/iso_code.dart';
@@ -12,9 +13,12 @@ class PhoneNumberFormatter {
     if (nsn.isEmpty) {
       return nsn;
     }
+    // since the phone number might be incomplete, fake digits
+    // are temporarily added to format a complete number.
     final missingDigits = _getMissingDigits(nsn, isoCode);
     final completePhoneNumber = nsn + missingDigits;
-    final formatingRules = MetadataFinder.getMetadataFormatsForIsoCode(isoCode);
+    final formatingRules =
+        MetadataFinder.findMetadataFormatsForIsoCode(isoCode);
     final formatingRule = _getMatchingFormatRules(
       formatingRules: formatingRules,
       nsn: completePhoneNumber,
@@ -31,7 +35,7 @@ class PhoneNumberFormatter {
       transformRule = intlFormat;
     }
 
-    var formatted = RegexpManager.applyTransformRules(
+    var formatted = NationalNumberParser.applyTransformRules(
       appliedTo: completePhoneNumber,
       pattern: formatingRule.pattern,
       transformRule: transformRule,
@@ -62,7 +66,7 @@ class PhoneNumberFormatter {
 
   /// returns 9's to have a valid length number
   static String _getMissingDigits(String nsn, IsoCode isoCode) {
-    final lengthRule = MetadataFinder.getMetadataLengthForIsoCode(isoCode);
+    final lengthRule = MetadataFinder.findMetadataLengthForIsoCode(isoCode);
 
     final minLength = max(lengthRule.fixedLine.first, lengthRule.mobile.first);
     // added digits so we match the pattern in case of an incomplete phone number
@@ -91,7 +95,7 @@ class PhoneNumberFormatter {
       // phonenumberkit seems to be using the last leading digit pattern
       // from the list of pattern so that's what we are going to do here as well
       final matchLeading = RegExp(rules.leadingDigits.last).matchAsPrefix(nsn);
-      final matchPattern = RegexpManager.matchEntirely(rules.pattern, nsn);
+      final matchPattern = rules.pattern.matchEntirely(nsn);
       if (matchLeading != null && matchPattern != null) {
         return rules;
       }

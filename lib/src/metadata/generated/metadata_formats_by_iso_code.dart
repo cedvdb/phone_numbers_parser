@@ -600,7 +600,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{4})(\d{4})",
       nationalPrefixFormattingRule: null,
-      leadingDigits: ["[13679]|8[047]"],
+      leadingDigits: ["[13679]|8[02-4679]"],
       format: r"$1 $2",
       intlFormat: null,
     )
@@ -748,7 +748,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{3})(\d{4})",
       nationalPrefixFormattingRule: null,
-      leadingDigits: ["[24-6]|3[15-79]"],
+      leadingDigits: ["[24-6]|3[15-9]"],
       format: r"$1 $2",
       intlFormat: null,
     ),
@@ -1204,7 +1204,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d)(\d{7})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["5"],
+      leadingDigits: ["[56]"],
       format: r"$1 $2",
       intlFormat: null,
     ),
@@ -1373,16 +1373,16 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
       intlFormat: null,
     ),
     PhoneMetadataFormat(
-      pattern: r"(\d{5})(\d{6})",
+      pattern: r"(\d{4})(\d{7})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["15[0568]"],
+      leadingDigits: ["15[1279]"],
       format: r"$1 $2",
       intlFormat: null,
     ),
     PhoneMetadataFormat(
-      pattern: r"(\d{4})(\d{7})",
+      pattern: r"(\d{5})(\d{6})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["15[1279]"],
+      leadingDigits: ["15[03568]", "15(?:[0568]|31)"],
       format: r"$1 $2",
       intlFormat: null,
     ),
@@ -1539,8 +1539,15 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{3})(\d{3})(\d{4})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["[189]"],
+      leadingDigits: ["[89]"],
       format: r"$1 $2 $3",
+      intlFormat: null,
+    ),
+    PhoneMetadataFormat(
+      pattern: r"(\d{2})(\d{8})",
+      nationalPrefixFormattingRule: r"$NP$FG",
+      leadingDigits: ["1"],
+      format: r"$1 $2",
       intlFormat: null,
     )
   ],
@@ -1602,10 +1609,10 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
       intlFormat: r"NA",
     ),
     PhoneMetadataFormat(
-      pattern: r"(\d)(\d{4,9})",
+      pattern: r"(\d{5})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["[2568][1-8]|3(?:0[1-9]|[1-9])|9"],
-      format: r"$1 $2",
+      leadingDigits: ["20[2-59]"],
+      format: r"$1",
       intlFormat: null,
     ),
     PhoneMetadataFormat(
@@ -1618,14 +1625,14 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{3})(\d{3,7})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["[12]00|[368]|70[07-9]"],
+      leadingDigits: ["(?:[1-3]0|[68])0|70[07-9]"],
       format: r"$1 $2",
       intlFormat: null,
     ),
     PhoneMetadataFormat(
       pattern: r"(\d{2})(\d{4,8})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["[1245]|7[135]"],
+      leadingDigits: ["[14]|2[09]|50|7[135]"],
       format: r"$1 $2",
       intlFormat: null,
     ),
@@ -1633,6 +1640,13 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
       pattern: r"(\d{2})(\d{6,10})",
       nationalPrefixFormattingRule: r"$NP$FG",
       leadingDigits: ["7"],
+      format: r"$1 $2",
+      intlFormat: null,
+    ),
+    PhoneMetadataFormat(
+      pattern: r"(\d)(\d{4,9})",
+      nationalPrefixFormattingRule: r"$NP$FG",
+      leadingDigits: ["(?:1[3-79]|[2568])[1-8]|3(?:0[1-9]|[1-9])|9"],
       format: r"$1 $2",
       intlFormat: null,
     )
@@ -1969,7 +1983,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{4})(\d{4})",
       nationalPrefixFormattingRule: null,
-      leadingDigits: ["[2-7]"],
+      leadingDigits: ["[2-8]"],
       format: r"$1 $2",
       intlFormat: null,
     ),
@@ -2002,7 +2016,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{3})(\d{4})",
       nationalPrefixFormattingRule: null,
-      leadingDigits: ["[2-46-9]"],
+      leadingDigits: ["[2-9]"],
       format: r"$1 $2",
       intlFormat: null,
     )
@@ -2661,9 +2675,9 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
       pattern: r"(\d{4})(\d)(\d{4})",
       nationalPrefixFormattingRule: r"$NP$FG",
       leadingDigits: [
-        "1(?:26|3[79]|4[56]|5[4-68]|6[3-5])|499|5(?:76|97)|746|8(?:3[89]|47|51|63)|9(?:80|9[16])",
-        "1(?:267|3(?:7[247]|9[278])|466|5(?:47|58|64)|6(?:3[245]|48|5[4-68]))|499[2468]|5(?:76|97)9|7468|8(?:3(?:8[7-9]|96)|477|51[2-9]|636)|9(?:802|9(?:1[23]|69))|1(?:45|58)[67]",
-        "1(?:267|3(?:7[247]|9[278])|466|5(?:47|58|64)|6(?:3[245]|48|5[4-68]))|499[2468]|5(?:769|979[2-69])|7468|8(?:3(?:8[7-9]|96[2457-9])|477|51[2-9]|636[457-9])|9(?:802|9(?:1[23]|69))|1(?:45|58)[67]"
+        "1(?:26|3[79]|4[56]|5[4-68]|6[3-5])|499|5(?:76|97)|746|8(?:3[89]|47|51)|9(?:80|9[16])",
+        "1(?:267|3(?:7[247]|9[278])|466|5(?:47|58|64)|6(?:3[245]|48|5[4-68]))|499[2468]|5(?:76|97)9|7468|8(?:3(?:8[7-9]|96)|477|51[2-9])|9(?:802|9(?:1[23]|69))|1(?:45|58)[67]",
+        "1(?:267|3(?:7[247]|9[278])|466|5(?:47|58|64)|6(?:3[245]|48|5[4-68]))|499[2468]|5(?:769|979[2-69])|7468|8(?:3(?:8[7-9]|96[2457-9])|477|51[2-9])|9(?:802|9(?:1[23]|69))|1(?:45|58)[67]"
       ],
       format: r"$1-$2-$3",
       intlFormat: null,
@@ -2689,10 +2703,9 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
       pattern: r"(\d{2})(\d{3})(\d{4})",
       nationalPrefixFormattingRule: r"$NP$FG",
       leadingDigits: [
-        "1(?:1|5[45]|77|88|9[69])|2(?:2[1-37]|3[0-269]|4[59]|5|6[24]|7[1-358]|8[1369]|9[0-38])|4(?:[28][1-9]|3[0-57]|[45]|6[248]|7[2-579]|9[29])|5(?:2|3[045]|4[0-369]|5[29]|8[02389]|9[0-389])|7(?:2[02-46-9]|34|[58]|6[0249]|7[57]|9[2-6])|8(?:2[124589]|3[27-9]|49|51|6|7[0-468]|8[68]|9[019])|9(?:[23][1-9]|4[15]|5[138]|6[1-3]|7[156]|8[189]|9[1-489])",
-        "1(?:1|5(?:4[018]|5[017])|77|88|9[69])|2(?:2(?:[127]|3[014-9])|3[0-269]|4[59]|5(?:[1-3]|5[0-69]|9[19])|62|7(?:[1-35]|8[0189])|8(?:[16]|3[0134]|9[0-5])|9(?:[028]|17))|4(?:2(?:[13-79]|8[014-6])|3[0-57]|[45]|6[248]|7[2-47]|8[1-9])|5(?:2|3[045]|4[0-369]|8[02389]|9[0-3])|7(?:2[02-46-9]|34|[58]|6[0249]|7[57]|9(?:[23]|4[0-59]|5[01569]|6[0167]))|8(?:2(?:[1258]|4[0-39]|9[0-2469])|49|51|6(?:[0-24]|36|5[0-3589]|72|9[01459])|7[0-468]|8[68])|9(?:[23][1-9]|4[15]|5[138]|6[1-3]|7[156]|8[189]|9(?:[1289]|3[34]|4[0178]))|(?:49|55|83)[29]|(?:264|837)[016-9]|2(?:57|93)[015-9]|(?:25[0468]|422|838)[01]|(?:47[59]|59[89]|8(?:6[68]|9))[019]",
-        "1(?:1|5(?:4[018]|5[017])|77|88|9[69])|2(?:2[127]|3[0-269]|4[59]|5(?:[1-3]|5[0-69]|9(?:17|99))|6(?:2|4[016-9])|7(?:[1-35]|8[0189])|8(?:[16]|3[0134]|9[0-5])|9(?:[028]|17))|4(?:2(?:[13-79]|8[014-6])|3[0-57]|[45]|6[248]|7[2-47]|9[29])|5(?:2|3[045]|4[0-369]|5[29]|8[02389]|9[0-3])|7(?:2[02-46-9]|34|[58]|6[0249]|7[57]|9(?:[23]|4[0-59]|5[01569]|6[0167]))|8(?:2(?:[1258]|4[0-39]|9[0169])|3(?:[29]|7(?:[017-9]|6[6-8]))|49|51|6(?:[0-24]|36[23]|5(?:[0-389]|5[23])|6(?:[01]|9[178])|72|9[0145])|7[0-468]|8[68])|9(?:4[15]|5[138]|7[156]|8[189]|9(?:[1289]|3(?:31|4[357])|4[0178]))|(?:8294|96)[1-3]|2(?:57|93)[015-9]|(?:223|8699)[014-9]|(?:25[0468]|422|838)[01]|(?:48|8292|9[23])[1-9]|(?:47[59]|59[89]|8(?:68|9))[019]",
-        "1(?:1|5(?:4[018]|5[017])|77|88|9[69])|2(?:2[127]|3[0-269]|4[59]|5(?:[1-3]|5[0-69]|7[015-9]|9(?:17|99))|6(?:2|4[016-9])|7(?:[1-35]|8[0189])|8(?:[16]|3[0134]|9[0-5])|9(?:[028]|17|3[015-9]))|4(?:2(?:[13-79]|8[014-6])|3[0-57]|[45]|6[248]|7[2-47]|9[29])|5(?:2|3[045]|4[0-369]|5[29]|8[02389]|9[0-3])|7(?:2[02-46-9]|34|[58]|6[0249]|7[57]|9(?:[23]|4[0-59]|5[01569]|6[0167]))|8(?:2(?:[1258]|4[0-39]|9(?:[019]|4[1-3]|6(?:[0-47-9]|5[01346-9])))|3(?:[29]|7(?:[017-9]|6[6-8]))|49|51|6(?:[0-24]|36[23]|5(?:[0-389]|5[23])|6(?:[01]|9[178])|72|9[0145])|7[0-468]|8[68])|9(?:4[15]|5[138]|6[1-3]|7[156]|8[189]|9(?:[1289]|3(?:31|4[357])|4[0178]))|(?:223|8699)[014-9]|(?:25[0468]|422|838)[01]|(?:48|829(?:2|66)|9[23])[1-9]|(?:47[59]|59[89]|8(?:68|9))[019]"
+        "1(?:1|5[45]|77|88|9[69])|2(?:2[1-37]|3[0-269]|4[59]|5|6[24]|7[1-358]|8[1369]|9[0-38])|4(?:[28][1-9]|3[0-57]|[45]|6[248]|7[2-579]|9[29])|5(?:2|3[0459]|4[0-369]|5[29]|8[02389]|9[0-389])|7(?:2[02-46-9]|34|[58]|6[0249]|7[57]|9[2-6])|8(?:2[124589]|3[26-9]|49|51|6|7[0-468]|8[68]|9[019])|9(?:[23][1-9]|4[15]|5[138]|6[1-3]|7[156]|8[189]|9[1-489])",
+        "1(?:1|5(?:4[018]|5[017])|77|88|9[69])|2(?:2(?:[127]|3[014-9])|3[0-269]|4[59]|5(?:[1-3]|5[0-69]|9[19])|62|7(?:[1-35]|8[0189])|8(?:[16]|3[0134]|9[0-5])|9(?:[028]|17))|4(?:2(?:[13-79]|8[014-6])|3[0-57]|[45]|6[248]|7[2-47]|8[1-9]|9[29])|5(?:2|3(?:[045]|9[0-8])|4[0-369]|5[29]|8[02389]|9[0-3])|7(?:2[02-46-9]|34|[58]|6[0249]|7[57]|9(?:[23]|4[0-59]|5[01569]|6[0167]))|8(?:2(?:[1258]|4[0-39]|9[0-2469])|3(?:[29]|60)|49|51|6(?:[0-24]|36|5[0-3589]|7[23]|9[01459])|7[0-468]|8[68])|9(?:[23][1-9]|4[15]|5[138]|6[1-3]|7[156]|8[189]|9(?:[1289]|3[34]|4[0178]))|(?:264|837)[016-9]|2(?:57|93)[015-9]|(?:25[0468]|422|838)[01]|(?:47[59]|59[89]|8(?:6[68]|9))[019]",
+        "1(?:1|5(?:4[018]|5[017])|77|88|9[69])|2(?:2[127]|3[0-269]|4[59]|5(?:[1-3]|5[0-69]|9(?:17|99))|6(?:2|4[016-9])|7(?:[1-35]|8[0189])|8(?:[16]|3[0134]|9[0-5])|9(?:[028]|17))|4(?:2(?:[13-79]|8[014-6])|3[0-57]|[45]|6[248]|7[2-47]|9[29])|5(?:2|3(?:[045]|9(?:[0-58]|6[4-9]|7[0-35689]))|4[0-369]|5[29]|8[02389]|9[0-3])|7(?:2[02-46-9]|34|[58]|6[0249]|7[57]|9(?:[23]|4[0-59]|5[01569]|6[0167]))|8(?:2(?:[1258]|4[0-39]|9[0169])|3(?:[29]|60|7(?:[017-9]|6[6-8]))|49|51|6(?:[0-24]|36[2-57-9]|5(?:[0-389]|5[23])|6(?:[01]|9[178])|7(?:2[2-468]|3[78])|9[0145])|7[0-468]|8[68])|9(?:4[15]|5[138]|7[156]|8[189]|9(?:[1289]|3(?:31|4[357])|4[0178]))|(?:8294|96)[1-3]|2(?:57|93)[015-9]|(?:223|8699)[014-9]|(?:25[0468]|422|838)[01]|(?:48|8292|9[23])[1-9]|(?:47[59]|59[89]|8(?:68|9))[019]"
       ],
       format: r"$1-$2-$3",
       intlFormat: null,
@@ -3191,17 +3204,6 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
   ],
   IsoCode.MA: [
     PhoneMetadataFormat(
-      pattern: r"(\d{5})(\d{4})",
-      nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: [
-        "5(?:29|38)",
-        "5(?:29[1289]|389)",
-        "529(?:1[1-46-9]|2[013-8]|90)|5(?:298|389)[0-46-9]"
-      ],
-      format: r"$1-$2",
-      intlFormat: null,
-    ),
-    PhoneMetadataFormat(
       pattern: r"(\d{3})(\d{2})(\d{2})(\d{2})",
       nationalPrefixFormattingRule: r"$NP$FG",
       leadingDigits: ["5[45]"],
@@ -3212,8 +3214,8 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
       pattern: r"(\d{4})(\d{5})",
       nationalPrefixFormattingRule: r"$NP$FG",
       leadingDigits: [
-        "5(?:2[2-489]|3[5-9]|9)|892",
-        "5(?:2(?:[2-49]|8[235-9])|3[5-9]|9)|892"
+        "5(?:2[2-489]|3[5-9]|9)|8(?:0[89]|92)",
+        "5(?:2(?:[2-49]|8[235-9])|3[5-9]|9)|8(?:0[89]|92)"
       ],
       format: r"$1-$2",
       intlFormat: null,
@@ -3941,14 +3943,14 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{2})(\d{3,8})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["8[1-579]"],
+      leadingDigits: ["8[1-79]"],
       format: r"$1 $2",
       intlFormat: null,
     ),
     PhoneMetadataFormat(
       pattern: r"(\d{3})(\d{2})(\d{2,3})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["50[036-8]|[89]0", "50(?:[0367]|88)|[89]0"],
+      leadingDigits: ["50[036-8]|8|90", "50(?:[0367]|88)|8|90"],
       format: r"$1 $2 $3",
       intlFormat: null,
     ),
@@ -3962,7 +3964,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{3})(\d{3})(\d{3,4})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["2(?:10|74)|[59]|80"],
+      leadingDigits: ["2(?:10|74)|[589]"],
       format: r"$1 $2 $3",
       intlFormat: null,
     ),
@@ -3976,7 +3978,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{2})(\d{3})(\d{3,5})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["2(?:[169]|7[0-35-9])|7|86"],
+      leadingDigits: ["2(?:[169]|7[0-35-9])|7"],
       format: r"$1 $2 $3",
       intlFormat: null,
     )
@@ -4385,7 +4387,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{3})(\d{6})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["9(?:[5-79]|8[1-6])"],
+      leadingDigits: ["9(?:[5-79]|8[1-7])"],
       format: r"$1 $2",
       intlFormat: null,
     ),
@@ -4454,7 +4456,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{3})(\d{3})(\d{3})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["[237-9]"],
+      leadingDigits: ["[236-9]"],
       format: r"$1 $2 $3",
       intlFormat: null,
     )
@@ -4537,15 +4539,15 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     ),
     PhoneMetadataFormat(
       pattern: r"(\d{3})(\d{3})(\d{3})",
-      nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["[7-9]"],
+      nationalPrefixFormattingRule: null,
+      leadingDigits: ["2"],
       format: r"$1 $2 $3",
       intlFormat: null,
     ),
     PhoneMetadataFormat(
       pattern: r"(\d{3})(\d{3})(\d{3})",
-      nationalPrefixFormattingRule: null,
-      leadingDigits: ["2"],
+      nationalPrefixFormattingRule: r"$NP$FG",
+      leadingDigits: ["[7-9]"],
       format: r"$1 $2 $3",
       intlFormat: null,
     )
@@ -4715,7 +4717,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{4})(\d{4})",
       nationalPrefixFormattingRule: null,
-      leadingDigits: ["[369]|8(?:0[1-6]|[1-9])"],
+      leadingDigits: ["[369]|8(?:0[1-8]|[1-9])"],
       format: r"$1 $2",
       intlFormat: null,
     ),
@@ -4897,14 +4899,14 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{3})(\d{3})(\d{3})",
       nationalPrefixFormattingRule: null,
-      leadingDigits: ["[3478]|64|90"],
+      leadingDigits: ["[348]|64|79|90"],
       format: r"$1 $2 $3",
       intlFormat: null,
     ),
     PhoneMetadataFormat(
       pattern: r"(\d{2})(\d{5,7})",
       nationalPrefixFormattingRule: null,
-      leadingDigits: ["1|28|6[0-35-9]|9[2-9]"],
+      leadingDigits: ["1|28|6[0-35-9]|77|9[2-9]"],
       format: r"$1 $2",
       intlFormat: null,
     )
@@ -5060,7 +5062,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{3})(\d{2})(\d{4})",
       nationalPrefixFormattingRule: null,
-      leadingDigits: ["[34]7|91[78]"],
+      leadingDigits: ["44[02-479]|[34]7"],
       format: r"$1 $2 $3",
       intlFormat: null,
     ),
@@ -5169,7 +5171,11 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{3})(\d{3})(\d{2})(\d{2})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["5(?:[0-59]|61)", "5(?:[0-59]|616)", "5(?:[0-59]|6161)"],
+      leadingDigits: [
+        "5(?:[0-59]|61)",
+        "5(?:[0-59]|61[06])",
+        "5(?:[0-59]|61[06]1)"
+      ],
       format: r"$1 $2 $3 $4",
       intlFormat: null,
     ),
@@ -5366,9 +5372,16 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
   ],
   IsoCode.UY: [
     PhoneMetadataFormat(
+      pattern: r"(\d{3})(\d{3,4})",
+      nationalPrefixFormattingRule: null,
+      leadingDigits: ["0"],
+      format: r"$1 $2",
+      intlFormat: null,
+    ),
+    PhoneMetadataFormat(
       pattern: r"(\d{3})(\d{4})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["405|8|90"],
+      leadingDigits: ["[49]0|8"],
       format: r"$1 $2",
       intlFormat: null,
     ),
@@ -5387,14 +5400,14 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
       intlFormat: null,
     ),
     PhoneMetadataFormat(
-      pattern: r"(\d{3})(\d{3})(\d{4})",
-      nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["4"],
+      pattern: r"(\d{3})(\d{3})(\d{2,4})",
+      nationalPrefixFormattingRule: null,
+      leadingDigits: ["0"],
       format: r"$1 $2 $3",
       intlFormat: null,
     ),
     PhoneMetadataFormat(
-      pattern: r"(\d{3})(\d{3})(\d{3})(\d{4})",
+      pattern: r"(\d{3})(\d{3})(\d{3})(\d{2,4})",
       nationalPrefixFormattingRule: null,
       leadingDigits: ["0"],
       format: r"$1 $2 $3 $4",
@@ -5405,7 +5418,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{2})(\d{3})(\d{2})(\d{2})",
       nationalPrefixFormattingRule: r"$NP $FG",
-      leadingDigits: ["[35-9]"],
+      leadingDigits: ["[235-9]"],
       format: r"$1 $2 $3 $4",
       intlFormat: null,
     )
@@ -5455,14 +5468,14 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{2})(\d{3})(\d{2})(\d{2})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["[69]"],
+      leadingDigits: ["6"],
       format: r"$1 $2 $3 $4",
       intlFormat: null,
     ),
     PhoneMetadataFormat(
       pattern: r"(\d{3})(\d{3})(\d{3})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["[3578]"],
+      leadingDigits: ["[357-9]"],
       format: r"$1 $2 $3",
       intlFormat: null,
     ),

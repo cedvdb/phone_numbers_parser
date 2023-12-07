@@ -2,6 +2,8 @@ import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 
 void main(List<String> arguments) {
   final frPhone0 = PhoneNumber.parse('+33 655 5705 76');
+  final inPhone0 = PhoneNumber.parse('+919955059057');
+  print(inPhone0);
   // raw caller in france calling another person in france
   final frPhone1 =
       PhoneNumber.parse('0 655 5705 76', callerCountry: IsoCode.FR);
@@ -37,14 +39,15 @@ void main(List<String> arguments) {
       PhoneNumber.parse('2025550119', destinationCountry: IsoCode.US);
   final formattedNsn = phoneNumber.getFormattedNsn();
   print('formatted: $formattedNsn'); // 202-555-0119
-
+  print('international: ${phoneNumber.international}' );
   // Ranges
   print('');
   print('Ranges:');
   final first = PhoneNumber.parse('+33 655 5705 00');
   final last = PhoneNumber.parse('+33 655 5705 03');
+  print(first.isValid());
   final range = PhoneNumber.getRange(first, last);
-
+  print('nsn: ${first.nsn}');
   print('Count: ${range.count}');
   print('Expand: ${range.expandRange().join(',')}');
 

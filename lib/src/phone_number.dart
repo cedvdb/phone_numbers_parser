@@ -6,7 +6,7 @@ import 'package:phone_numbers_parser/src/parsers/_validator.dart';
 import 'package:phone_numbers_parser/src/parsers/phone_parser.dart';
 import 'package:phone_numbers_parser/src/metadata/metadata_finder.dart';
 
-import 'iso_code.dart';
+import 'models/iso_code.dart';
 
 /// represents a phone number
 ///
@@ -22,7 +22,7 @@ class PhoneNumber {
 
   /// territory numerical code that precedes a phone number. Example 33 for france
   String get countryCode =>
-      MetadataFinder.getMetadataForIsoCode(isoCode).countryCode;
+      MetadataFinder.findMetadataForIsoCode(isoCode).countryCode;
 
   /// international version of phone number
   String get international => '+$countryCode$nsn';
@@ -73,11 +73,11 @@ class PhoneNumber {
 
   /// validates a phone number by first checking its length then pattern matching
   bool isValid({PhoneNumberType? type}) =>
-      Validator.validateWithPattern(this, type);
+      Validator.validateWithPattern(isoCode, nsn, type);
 
   /// validates a phone number by only checking its length
   bool isValidLength({PhoneNumberType? type}) =>
-      Validator.validateWithLength(this, type);
+      Validator.validateWithLength(isoCode, nsn, type);
 
   //
   //  text

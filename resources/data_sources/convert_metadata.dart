@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'xml_to_json.dart';
+
 void main() async {
+  await convertXMLToJson();
   await convertPhoneNumberMetadata();
 }
 
