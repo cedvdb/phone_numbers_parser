@@ -1,3 +1,11 @@
+## 8.1.0
+- updated metadata
+- fix for local phone numbers not parsing accurately (issue 46)
+- phone numbers starting with the country code of the destination country will now return the phone number
+  without the country code if the phone number is valid without it.
+- refactor some internal
+
+
 ## 8.0.0
 
 - made it easier to contribute
