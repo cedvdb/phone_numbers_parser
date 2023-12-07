@@ -65,14 +65,15 @@ abstract class MetadataFinder {
     String nationalNumber,
   ) {
     final isoList = _getIsoCodesFromCountryCode(countryCode);
+
+    if (isoList.isEmpty) {
+      return null;
+    }
     // country code can have multiple metadata because multiple iso code
     // share the same country code.
     final allMatchingMetadata =
         isoList.map((iso) => findMetadataForIsoCode(iso)).toList();
 
-    if (allMatchingMetadata.isEmpty) {
-      return null;
-    }
     final match = _getMatchUsingPatterns(nationalNumber, allMatchingMetadata);
     return match;
   }
@@ -107,6 +108,9 @@ abstract class MetadataFinder {
     }
 
     // best guess here
-    return potentialFits[0];
+    return potentialFits.firstWhere(
+      (fit) => fit.isMainCountryForDialCode,
+      orElse: () => potentialFits[0],
+    );
   }
 }
