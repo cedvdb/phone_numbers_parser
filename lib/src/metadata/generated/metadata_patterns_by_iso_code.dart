@@ -243,10 +243,8 @@ const metadataPatternsByIsoCode = {
     nationalPrefixTransformRule: r"$2",
     general:
         r"(?:[1-46-9]\d\d|5(?:[0-46-9]\d|5[0-46-9]))\d{8}|[1-9]\d{9}|[3589]\d{8}|[34]\d{7}",
-    mobile:
-        r"(?:[14689][1-9]|2[12478]|3[1-578]|5[13-5]|7[13-579])(?:7|9\d)\d{7}",
-    fixedLine:
-        r"(?:[14689][1-9]|2[12478]|3[1-578]|5[13-5]|7[13-579])[2-5]\d{7}",
+    mobile: r"\d{11}",
+    fixedLine: r"\d{10}",
   ),
   IsoCode.BS: PhoneMetadataPatterns(
     nationalPrefixForParsing: r"([3-8]\d{6})$|1",
