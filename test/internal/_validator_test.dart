@@ -5,6 +5,25 @@ import 'package:test/test.dart';
 void main() {
   group('_Validator', () {
     group('ValidateWithLength()', () {
+      test('BR', () {
+        final beValidMobilePhone = '31975228038';
+        final beInvalidMobilePhone = '3175228038';
+        expect(
+          Validator.validateWithLength(
+            IsoCode.BR,
+            beValidMobilePhone,
+            PhoneNumberType.mobile,
+          ),
+          isTrue,
+        );
+        expect(
+            Validator.validateWithLength(
+              IsoCode.BR,
+              beInvalidMobilePhone,
+              PhoneNumberType.mobile,
+            ),
+            isFalse);
+      });
       test('BE', () {
         final beValidMobilePhone = '479554265';
         final beInvalidMobilePhone = '4795542650';
@@ -79,6 +98,18 @@ void main() {
     });
 
     group('ValidateWithPattern()', () {
+      test('BR', () {
+        final validMobileBR = '31972727272';
+        final invalidMobileBR = '3172727272';
+        expect(
+            Validator.validateWithPattern(
+                IsoCode.BR, validMobileBR, PhoneNumberType.mobile),
+            isTrue);
+        expect(
+            Validator.validateWithPattern(
+                IsoCode.BR, invalidMobileBR, PhoneNumberType.mobile),
+            isFalse);
+      });
       test('BE', () {
         final validMobileBE = '479889855';
         final validFixedBE = '64223344';
