@@ -1,3 +1,6 @@
+## 8.1.1
+- updated metadata
+
 ## 8.1.0
 - updated metadata
 - fix for local phone numbers not parsing accurately (issue 46)

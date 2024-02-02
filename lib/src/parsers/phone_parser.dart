@@ -65,7 +65,7 @@ abstract class PhoneParser {
     // if the phone number is valid as is and use that, other wise if it is valid
     // without the country code we remove the country code.
     final countryCode = destinationMetadata.countryCode;
-    if (exitCode.isNotEmpty) {
+    if (exitCode.isNotEmpty && national.length >= countryCode.length) {
       national = national.substring(countryCode.length);
     } else if (national.startsWith(countryCode)) {
       final withoutCountryCode = national.substring(countryCode.length);
