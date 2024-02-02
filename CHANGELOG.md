@@ -1,3 +1,6 @@
+## 8.1.2
+- lower meta dependency version for flutter compat
+
 ## 8.1.1
 - updated metadata
 
