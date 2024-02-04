@@ -229,7 +229,7 @@ void main() {
     test('should format', () {
       String format(String phoneNumber) =>
           PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.US)
-              .getFormattedNsn();
+              .formatNsn();
 
       var testNumber = '';
       expect(format(testNumber), equals(''));
@@ -258,7 +258,7 @@ void main() {
     test('should format with another country format', () {
       String format(String phoneNumber) =>
           PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.US)
-              .getFormattedNsn(isoCode: IsoCode.FR);
+              .formatNsn(isoCode: IsoCode.FR);
 
       var testNumber = '6';
       expect(format(testNumber), equals('6'));

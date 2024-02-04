@@ -1,3 +1,6 @@
+## 8.1.3
+- deprectate `getFormattedNsn` in favor of `formatNsn`
+
 ## 8.1.2
 - lower meta dependency version for flutter compat
 
