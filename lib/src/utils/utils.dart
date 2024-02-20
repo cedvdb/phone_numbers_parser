@@ -15,6 +15,11 @@ class MinMaxUtils {
       if (data.isNotEmpty) {
         return MinMaxLength(data.first, data.last);
       }
+    } else if (phoneNumberType == PhoneNumberType.voip) {
+      final data = metadataLenghtsByIsoCode[isoCode]!.voip;
+      if (data.isNotEmpty) {
+        return MinMaxLength(data.first, data.last);
+      }
     }
     return MinMaxLength(15, 15);
   }

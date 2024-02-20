@@ -31,7 +31,8 @@ abstract class Validator {
     if (type == null) {
       patterns.addAll([
         _getPatterns(patternMetadatas, PhoneNumberType.fixedLine),
-        _getPatterns(patternMetadatas, PhoneNumberType.mobile)
+        _getPatterns(patternMetadatas, PhoneNumberType.mobile),
+        _getPatterns(patternMetadatas, PhoneNumberType.voip)
       ]);
     } else {
       patterns.add(_getPatterns(patternMetadatas, type));
@@ -71,12 +72,13 @@ abstract class Validator {
       final lengths = _getLengths(lengthMetadatas, type);
       return Set.from(lengths);
     } else {
-      // if the type is not specified it can be either mobile or fixedLine
+      // if the type is not specified it can be either mobile, fixedLine or voip
       // so we return a set containing both
       final rulesFixed =
           _getLengths(lengthMetadatas, PhoneNumberType.fixedLine);
       final rulesMobile = _getLengths(lengthMetadatas, PhoneNumberType.mobile);
-      return {...rulesFixed, ...rulesMobile};
+      final rulesVoip = _getLengths(lengthMetadatas, PhoneNumberType.voip);
+      return {...rulesFixed, ...rulesMobile, ...rulesVoip};
     }
   }
 
@@ -89,6 +91,8 @@ abstract class Validator {
         return lengthMetadatas.mobile;
       case PhoneNumberType.fixedLine:
         return lengthMetadatas.fixedLine;
+      case PhoneNumberType.voip:
+        return lengthMetadatas.voip;
       default:
         return lengthMetadatas.general;
     }
@@ -103,6 +107,8 @@ abstract class Validator {
         return patternMetadatas.mobile;
       case PhoneNumberType.fixedLine:
         return patternMetadatas.fixedLine;
+      case PhoneNumberType.voip:
+        return patternMetadatas.voip;
       default:
         return patternMetadatas.general;
     }

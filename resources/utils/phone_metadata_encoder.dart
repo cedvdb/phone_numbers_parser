@@ -24,6 +24,7 @@ String encodePatterns(PhoneMetadataPatterns metadata) {
       general: ${_enc(metadata.general)}, 
       mobile: ${_enc(metadata.mobile)}, 
       fixedLine: ${_enc(metadata.fixedLine)}, 
+      voip: ${_enc(metadata.voip)}, 
     )''';
 }
 
@@ -32,6 +33,7 @@ String encodeLengths(PhoneMetadataLengths lengths) {
       general: ${_enc(lengths.general)}, 
       mobile: ${_enc(lengths.mobile)}, 
       fixedLine: ${_enc(lengths.fixedLine)}, 
+      voip: ${_enc(lengths.voip)}, 
     )''';
 }
 
@@ -49,6 +51,7 @@ String encodeExamples(PhoneMetadataExamples examples) {
   return '''PhoneMetadataExamples(
       fixedLine: ${_enc(examples.fixedLine)},
       mobile: ${_enc(examples.mobile)},
+      voip: ${_enc(examples.voip)},
     )''';
 }
 

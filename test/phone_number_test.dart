@@ -44,6 +44,10 @@ void main() {
                 .international,
             equals('+33655570576'));
         expect(
+            PhoneNumber.parse('09 67 49 76 70', callerCountry: IsoCode.FR)
+                .international,
+            equals('+33967497670'));
+        expect(
             PhoneNumber.parse('0301234567', callerCountry: IsoCode.DE)
                 .international,
             equals('+49301234567'));
@@ -71,8 +75,11 @@ void main() {
         PhoneNumber parse(n) => PhoneNumber.parse(n);
         // basic
         expect(PhoneNumber.parse('+32 479 995 533').isoCode, IsoCode.BE);
+        expect(PhoneNumber.parse('+33 9 67 49 76 70').isoCode, IsoCode.FR);
         expect(PhoneNumber.parse('+33655570500').international,
             equals('+33655570500'));
+        expect(PhoneNumber.parse('+33967497670').international,
+            equals('+33967497670'));
 
         // same country calling code
         expect(PhoneNumber.parse('+16135550165').isoCode, equals(IsoCode.CA));
@@ -217,6 +224,7 @@ void main() {
       expect(gbValidLength.isValidLength(), isTrue);
       expect(gbValidLength.isValid(type: PhoneNumberType.mobile), isFalse);
       expect(gbValidLength.isValid(type: PhoneNumberType.fixedLine), isFalse);
+      expect(gbValidLength.isValid(type: PhoneNumberType.voip), isFalse);
       expect(gbValidLength.isValid(), isFalse);
       final gbValidPattern =
           PhoneNumber.parse('7111111111', destinationCountry: IsoCode.GB);
