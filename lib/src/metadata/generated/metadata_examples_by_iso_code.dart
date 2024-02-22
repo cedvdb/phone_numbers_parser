@@ -5,981 +5,1226 @@ const metadataExamplesByIsoCode = {
   IsoCode.AC: PhoneMetadataExamples(
     fixedLine: r"62889",
     mobile: r"40123",
+    voip: r"",
   ),
   IsoCode.AD: PhoneMetadataExamples(
     fixedLine: r"712345",
     mobile: r"312345",
+    voip: r"",
   ),
   IsoCode.AE: PhoneMetadataExamples(
     fixedLine: r"22345678",
     mobile: r"501234567",
+    voip: r"",
   ),
   IsoCode.AF: PhoneMetadataExamples(
     fixedLine: r"234567890",
     mobile: r"701234567",
+    voip: r"",
   ),
   IsoCode.AG: PhoneMetadataExamples(
     fixedLine: r"2684601234",
     mobile: r"2684641234",
+    voip: r"2684801234",
   ),
   IsoCode.AI: PhoneMetadataExamples(
     fixedLine: r"2644612345",
     mobile: r"2642351234",
+    voip: r"",
   ),
   IsoCode.AL: PhoneMetadataExamples(
     fixedLine: r"22345678",
     mobile: r"672123456",
+    voip: r"",
   ),
   IsoCode.AM: PhoneMetadataExamples(
     fixedLine: r"10123456",
     mobile: r"77123456",
+    voip: r"60271234",
   ),
   IsoCode.AO: PhoneMetadataExamples(
     fixedLine: r"222123456",
     mobile: r"923123456",
+    voip: r"",
   ),
   IsoCode.AR: PhoneMetadataExamples(
     fixedLine: r"1123456789",
     mobile: r"91123456789",
+    voip: r"",
   ),
   IsoCode.AS: PhoneMetadataExamples(
     fixedLine: r"6846221234",
     mobile: r"6847331234",
+    voip: r"",
   ),
   IsoCode.AT: PhoneMetadataExamples(
     fixedLine: r"1234567890",
     mobile: r"664123456",
+    voip: r"780123456",
   ),
   IsoCode.AU: PhoneMetadataExamples(
     fixedLine: r"212345678",
     mobile: r"412345678",
+    voip: r"147101234",
   ),
   IsoCode.AW: PhoneMetadataExamples(
     fixedLine: r"5212345",
     mobile: r"5601234",
+    voip: r"5011234",
   ),
   IsoCode.AX: PhoneMetadataExamples(
     fixedLine: r"181234567",
     mobile: r"412345678",
+    voip: r"",
   ),
   IsoCode.AZ: PhoneMetadataExamples(
     fixedLine: r"123123456",
     mobile: r"401234567",
+    voip: r"",
   ),
   IsoCode.BA: PhoneMetadataExamples(
     fixedLine: r"30212345",
     mobile: r"61123456",
+    voip: r"",
   ),
   IsoCode.BB: PhoneMetadataExamples(
     fixedLine: r"2464123456",
     mobile: r"2462501234",
+    voip: r"2463101234",
   ),
   IsoCode.BD: PhoneMetadataExamples(
     fixedLine: r"27111234",
     mobile: r"1812345678",
+    voip: r"9604123456",
   ),
   IsoCode.BE: PhoneMetadataExamples(
     fixedLine: r"12345678",
     mobile: r"470123456",
+    voip: r"",
   ),
   IsoCode.BF: PhoneMetadataExamples(
     fixedLine: r"20491234",
     mobile: r"70123456",
+    voip: r"",
   ),
   IsoCode.BG: PhoneMetadataExamples(
     fixedLine: r"2123456",
     mobile: r"43012345",
+    voip: r"",
   ),
   IsoCode.BH: PhoneMetadataExamples(
     fixedLine: r"17001234",
     mobile: r"36001234",
+    voip: r"",
   ),
   IsoCode.BI: PhoneMetadataExamples(
     fixedLine: r"22201234",
     mobile: r"79561234",
+    voip: r"",
   ),
   IsoCode.BJ: PhoneMetadataExamples(
     fixedLine: r"20211234",
     mobile: r"90011234",
+    voip: r"85751234",
   ),
   IsoCode.BL: PhoneMetadataExamples(
     fixedLine: r"590271234",
     mobile: r"690001234",
+    voip: r"976012345",
   ),
   IsoCode.BM: PhoneMetadataExamples(
     fixedLine: r"4414123456",
     mobile: r"4413701234",
+    voip: r"",
   ),
   IsoCode.BN: PhoneMetadataExamples(
     fixedLine: r"2345678",
     mobile: r"7123456",
+    voip: r"5345678",
   ),
   IsoCode.BO: PhoneMetadataExamples(
     fixedLine: r"22123456",
     mobile: r"71234567",
+    voip: r"",
   ),
   IsoCode.BQ: PhoneMetadataExamples(
     fixedLine: r"7151234",
     mobile: r"3181234",
+    voip: r"",
   ),
   IsoCode.BR: PhoneMetadataExamples(
     fixedLine: r"1123456789",
     mobile: r"11961234567",
+    voip: r"",
   ),
   IsoCode.BS: PhoneMetadataExamples(
     fixedLine: r"2423456789",
     mobile: r"2423591234",
+    voip: r"",
   ),
   IsoCode.BT: PhoneMetadataExamples(
     fixedLine: r"2345678",
     mobile: r"17123456",
+    voip: r"",
   ),
   IsoCode.BW: PhoneMetadataExamples(
     fixedLine: r"2401234",
     mobile: r"71123456",
+    voip: r"79101234",
   ),
   IsoCode.BY: PhoneMetadataExamples(
     fixedLine: r"152450911",
     mobile: r"294911911",
+    voip: r"249123456",
   ),
   IsoCode.BZ: PhoneMetadataExamples(
     fixedLine: r"2221234",
     mobile: r"6221234",
+    voip: r"",
   ),
   IsoCode.CA: PhoneMetadataExamples(
     fixedLine: r"5062345678",
     mobile: r"5062345678",
+    voip: r"6002012345",
   ),
   IsoCode.CC: PhoneMetadataExamples(
     fixedLine: r"891621234",
     mobile: r"412345678",
+    voip: r"147101234",
   ),
   IsoCode.CD: PhoneMetadataExamples(
     fixedLine: r"1234567",
     mobile: r"991234567",
+    voip: r"",
   ),
   IsoCode.CF: PhoneMetadataExamples(
     fixedLine: r"21612345",
     mobile: r"70012345",
+    voip: r"",
   ),
   IsoCode.CG: PhoneMetadataExamples(
     fixedLine: r"222123456",
     mobile: r"061234567",
+    voip: r"",
   ),
   IsoCode.CH: PhoneMetadataExamples(
     fixedLine: r"212345678",
     mobile: r"781234567",
+    voip: r"",
   ),
   IsoCode.CI: PhoneMetadataExamples(
     fixedLine: r"2123456789",
     mobile: r"0123456789",
+    voip: r"",
   ),
   IsoCode.CK: PhoneMetadataExamples(
     fixedLine: r"21234",
     mobile: r"71234",
+    voip: r"",
   ),
   IsoCode.CL: PhoneMetadataExamples(
     fixedLine: r"221234567",
     mobile: r"221234567",
+    voip: r"441234567",
   ),
   IsoCode.CM: PhoneMetadataExamples(
     fixedLine: r"222123456",
     mobile: r"671234567",
+    voip: r"",
   ),
   IsoCode.CN: PhoneMetadataExamples(
     fixedLine: r"1012345678",
     mobile: r"13123456789",
+    voip: r"",
   ),
   IsoCode.CO: PhoneMetadataExamples(
     fixedLine: r"6012345678",
     mobile: r"3211234567",
+    voip: r"",
   ),
   IsoCode.CR: PhoneMetadataExamples(
     fixedLine: r"22123456",
     mobile: r"83123456",
+    voip: r"40001234",
   ),
   IsoCode.CU: PhoneMetadataExamples(
     fixedLine: r"71234567",
     mobile: r"51234567",
+    voip: r"",
   ),
   IsoCode.CV: PhoneMetadataExamples(
     fixedLine: r"2211234",
     mobile: r"9911234",
+    voip: r"3401234",
   ),
   IsoCode.CW: PhoneMetadataExamples(
     fixedLine: r"94351234",
     mobile: r"95181234",
+    voip: r"",
   ),
   IsoCode.CX: PhoneMetadataExamples(
     fixedLine: r"891641234",
     mobile: r"412345678",
+    voip: r"147101234",
   ),
   IsoCode.CY: PhoneMetadataExamples(
     fixedLine: r"22345678",
     mobile: r"96123456",
+    voip: r"",
   ),
   IsoCode.CZ: PhoneMetadataExamples(
     fixedLine: r"212345678",
     mobile: r"601123456",
+    voip: r"910123456",
   ),
   IsoCode.DE: PhoneMetadataExamples(
     fixedLine: r"30123456",
     mobile: r"15123456789",
+    voip: r"",
   ),
   IsoCode.DJ: PhoneMetadataExamples(
     fixedLine: r"21360003",
     mobile: r"77831001",
+    voip: r"",
   ),
   IsoCode.DK: PhoneMetadataExamples(
     fixedLine: r"32123456",
     mobile: r"32123456",
+    voip: r"",
   ),
   IsoCode.DM: PhoneMetadataExamples(
     fixedLine: r"7674201234",
     mobile: r"7672251234",
+    voip: r"",
   ),
   IsoCode.DO: PhoneMetadataExamples(
     fixedLine: r"8092345678",
     mobile: r"8092345678",
+    voip: r"",
   ),
   IsoCode.DZ: PhoneMetadataExamples(
     fixedLine: r"12345678",
     mobile: r"551234567",
+    voip: r"983123456",
   ),
   IsoCode.EC: PhoneMetadataExamples(
     fixedLine: r"22123456",
     mobile: r"991234567",
+    voip: r"28901234",
   ),
   IsoCode.EE: PhoneMetadataExamples(
     fixedLine: r"3212345",
     mobile: r"51234567",
+    voip: r"",
   ),
   IsoCode.EG: PhoneMetadataExamples(
     fixedLine: r"234567890",
     mobile: r"1001234567",
+    voip: r"",
   ),
   IsoCode.EH: PhoneMetadataExamples(
     fixedLine: r"528812345",
     mobile: r"650123456",
+    voip: r"592401234",
   ),
   IsoCode.ER: PhoneMetadataExamples(
     fixedLine: r"8370362",
     mobile: r"7123456",
+    voip: r"",
   ),
   IsoCode.ES: PhoneMetadataExamples(
     fixedLine: r"810123456",
     mobile: r"612345678",
+    voip: r"",
   ),
   IsoCode.ET: PhoneMetadataExamples(
     fixedLine: r"111112345",
     mobile: r"911234567",
+    voip: r"",
   ),
   IsoCode.FI: PhoneMetadataExamples(
     fixedLine: r"131234567",
     mobile: r"412345678",
+    voip: r"",
   ),
   IsoCode.FJ: PhoneMetadataExamples(
     fixedLine: r"3212345",
     mobile: r"7012345",
+    voip: r"",
   ),
   IsoCode.FK: PhoneMetadataExamples(
     fixedLine: r"31234",
     mobile: r"51234",
+    voip: r"",
   ),
   IsoCode.FM: PhoneMetadataExamples(
     fixedLine: r"3201234",
     mobile: r"3501234",
+    voip: r"",
   ),
   IsoCode.FO: PhoneMetadataExamples(
     fixedLine: r"201234",
     mobile: r"211234",
+    voip: r"601234",
   ),
   IsoCode.FR: PhoneMetadataExamples(
     fixedLine: r"123456789",
     mobile: r"612345678",
+    voip: r"912345678",
   ),
   IsoCode.GA: PhoneMetadataExamples(
     fixedLine: r"01441234",
     mobile: r"06031234",
+    voip: r"",
   ),
   IsoCode.GB: PhoneMetadataExamples(
     fixedLine: r"1212345678",
     mobile: r"7400123456",
+    voip: r"5612345678",
   ),
   IsoCode.GD: PhoneMetadataExamples(
     fixedLine: r"4732691234",
     mobile: r"4734031234",
+    voip: r"",
   ),
   IsoCode.GE: PhoneMetadataExamples(
     fixedLine: r"322123456",
     mobile: r"555123456",
+    voip: r"706123456",
   ),
   IsoCode.GF: PhoneMetadataExamples(
     fixedLine: r"594101234",
     mobile: r"694201234",
+    voip: r"976012345",
   ),
   IsoCode.GG: PhoneMetadataExamples(
     fixedLine: r"1481256789",
     mobile: r"7781123456",
+    voip: r"5612345678",
   ),
   IsoCode.GH: PhoneMetadataExamples(
     fixedLine: r"302345678",
     mobile: r"231234567",
+    voip: r"",
   ),
   IsoCode.GI: PhoneMetadataExamples(
     fixedLine: r"20012345",
     mobile: r"57123456",
+    voip: r"",
   ),
   IsoCode.GL: PhoneMetadataExamples(
     fixedLine: r"321000",
     mobile: r"221234",
+    voip: r"381234",
   ),
   IsoCode.GM: PhoneMetadataExamples(
     fixedLine: r"5661234",
     mobile: r"3012345",
+    voip: r"",
   ),
   IsoCode.GN: PhoneMetadataExamples(
     fixedLine: r"30241234",
     mobile: r"601123456",
+    voip: r"722123456",
   ),
   IsoCode.GP: PhoneMetadataExamples(
     fixedLine: r"590201234",
     mobile: r"690001234",
+    voip: r"976012345",
   ),
   IsoCode.GQ: PhoneMetadataExamples(
     fixedLine: r"333091234",
     mobile: r"222123456",
+    voip: r"",
   ),
   IsoCode.GR: PhoneMetadataExamples(
     fixedLine: r"2123456789",
     mobile: r"6912345678",
+    voip: r"",
   ),
   IsoCode.GT: PhoneMetadataExamples(
     fixedLine: r"22456789",
     mobile: r"51234567",
+    voip: r"",
   ),
   IsoCode.GU: PhoneMetadataExamples(
     fixedLine: r"6713001234",
     mobile: r"6713001234",
+    voip: r"",
   ),
   IsoCode.GW: PhoneMetadataExamples(
     fixedLine: r"443201234",
     mobile: r"955012345",
+    voip: r"4012345",
   ),
   IsoCode.GY: PhoneMetadataExamples(
     fixedLine: r"2201234",
     mobile: r"6091234",
+    voip: r"5151234",
   ),
   IsoCode.HK: PhoneMetadataExamples(
     fixedLine: r"21234567",
     mobile: r"51234567",
+    voip: r"",
   ),
   IsoCode.HN: PhoneMetadataExamples(
     fixedLine: r"22123456",
     mobile: r"91234567",
+    voip: r"",
   ),
   IsoCode.HR: PhoneMetadataExamples(
     fixedLine: r"12345678",
     mobile: r"921234567",
+    voip: r"",
   ),
   IsoCode.HT: PhoneMetadataExamples(
     fixedLine: r"22453300",
     mobile: r"34101234",
+    voip: r"98901234",
   ),
   IsoCode.HU: PhoneMetadataExamples(
     fixedLine: r"12345678",
     mobile: r"201234567",
+    voip: r"211234567",
   ),
   IsoCode.ID: PhoneMetadataExamples(
     fixedLine: r"218350123",
     mobile: r"812345678",
+    voip: r"",
   ),
   IsoCode.IE: PhoneMetadataExamples(
     fixedLine: r"2212345",
     mobile: r"850123456",
+    voip: r"761234567",
   ),
   IsoCode.IL: PhoneMetadataExamples(
     fixedLine: r"21234567",
     mobile: r"502345678",
+    voip: r"771234567",
   ),
   IsoCode.IM: PhoneMetadataExamples(
     fixedLine: r"1624756789",
     mobile: r"7924123456",
+    voip: r"5612345678",
   ),
   IsoCode.IN: PhoneMetadataExamples(
     fixedLine: r"7410410123",
     mobile: r"8123456789",
+    voip: r"",
   ),
   IsoCode.IO: PhoneMetadataExamples(
     fixedLine: r"3709100",
     mobile: r"3801234",
+    voip: r"",
   ),
   IsoCode.IQ: PhoneMetadataExamples(
     fixedLine: r"12345678",
     mobile: r"7912345678",
+    voip: r"",
   ),
   IsoCode.IR: PhoneMetadataExamples(
     fixedLine: r"2123456789",
     mobile: r"9123456789",
+    voip: r"",
   ),
   IsoCode.IS: PhoneMetadataExamples(
     fixedLine: r"4101234",
     mobile: r"6111234",
+    voip: r"4921234",
   ),
   IsoCode.IT: PhoneMetadataExamples(
     fixedLine: r"0212345678",
     mobile: r"3123456789",
+    voip: r"5512345678",
   ),
   IsoCode.JE: PhoneMetadataExamples(
     fixedLine: r"1534456789",
     mobile: r"7797712345",
+    voip: r"5612345678",
   ),
   IsoCode.JM: PhoneMetadataExamples(
     fixedLine: r"8765230123",
     mobile: r"8762101234",
+    voip: r"",
   ),
   IsoCode.JO: PhoneMetadataExamples(
     fixedLine: r"62001234",
     mobile: r"790123456",
+    voip: r"",
   ),
   IsoCode.JP: PhoneMetadataExamples(
     fixedLine: r"312345678",
     mobile: r"9012345678",
+    voip: r"5012345678",
   ),
   IsoCode.KE: PhoneMetadataExamples(
     fixedLine: r"202012345",
     mobile: r"712123456",
+    voip: r"",
   ),
   IsoCode.KG: PhoneMetadataExamples(
     fixedLine: r"312123456",
     mobile: r"700123456",
+    voip: r"",
   ),
   IsoCode.KH: PhoneMetadataExamples(
     fixedLine: r"23756789",
     mobile: r"91234567",
+    voip: r"",
   ),
   IsoCode.KI: PhoneMetadataExamples(
     fixedLine: r"31234",
     mobile: r"72001234",
+    voip: r"30010000",
   ),
   IsoCode.KM: PhoneMetadataExamples(
     fixedLine: r"7712345",
     mobile: r"3212345",
+    voip: r"",
   ),
   IsoCode.KN: PhoneMetadataExamples(
     fixedLine: r"8692361234",
     mobile: r"8697652917",
+    voip: r"",
   ),
   IsoCode.KP: PhoneMetadataExamples(
     fixedLine: r"21234567",
     mobile: r"1921234567",
+    voip: r"",
   ),
   IsoCode.KR: PhoneMetadataExamples(
     fixedLine: r"22123456",
     mobile: r"1020000000",
+    voip: r"7012345678",
   ),
   IsoCode.KW: PhoneMetadataExamples(
     fixedLine: r"22345678",
     mobile: r"50012345",
+    voip: r"",
   ),
   IsoCode.KY: PhoneMetadataExamples(
     fixedLine: r"3452221234",
     mobile: r"3453231234",
+    voip: r"",
   ),
   IsoCode.KZ: PhoneMetadataExamples(
     fixedLine: r"7123456789",
     mobile: r"7710009998",
+    voip: r"7511234567",
   ),
   IsoCode.LA: PhoneMetadataExamples(
     fixedLine: r"21212862",
     mobile: r"2023123456",
+    voip: r"",
   ),
   IsoCode.LB: PhoneMetadataExamples(
     fixedLine: r"1123456",
     mobile: r"71123456",
+    voip: r"",
   ),
   IsoCode.LC: PhoneMetadataExamples(
     fixedLine: r"7584305678",
     mobile: r"7582845678",
+    voip: r"",
   ),
   IsoCode.LI: PhoneMetadataExamples(
     fixedLine: r"2345678",
     mobile: r"660234567",
+    voip: r"",
   ),
   IsoCode.LK: PhoneMetadataExamples(
     fixedLine: r"112345678",
     mobile: r"712345678",
+    voip: r"",
   ),
   IsoCode.LR: PhoneMetadataExamples(
     fixedLine: r"21234567",
     mobile: r"770123456",
+    voip: r"",
   ),
   IsoCode.LS: PhoneMetadataExamples(
     fixedLine: r"22123456",
     mobile: r"50123456",
+    voip: r"",
   ),
   IsoCode.LT: PhoneMetadataExamples(
     fixedLine: r"31234567",
     mobile: r"61234567",
+    voip: r"80123456",
   ),
   IsoCode.LU: PhoneMetadataExamples(
     fixedLine: r"27123456",
     mobile: r"628123456",
+    voip: r"20201234",
   ),
   IsoCode.LV: PhoneMetadataExamples(
     fixedLine: r"63123456",
     mobile: r"21234567",
+    voip: r"",
   ),
   IsoCode.LY: PhoneMetadataExamples(
     fixedLine: r"212345678",
     mobile: r"912345678",
+    voip: r"",
   ),
   IsoCode.MA: PhoneMetadataExamples(
     fixedLine: r"520123456",
     mobile: r"650123456",
+    voip: r"592401234",
   ),
   IsoCode.MC: PhoneMetadataExamples(
     fixedLine: r"99123456",
     mobile: r"612345678",
+    voip: r"",
   ),
   IsoCode.MD: PhoneMetadataExamples(
     fixedLine: r"22212345",
     mobile: r"62112345",
+    voip: r"30123456",
   ),
   IsoCode.ME: PhoneMetadataExamples(
     fixedLine: r"30234567",
     mobile: r"67622901",
+    voip: r"78108780",
   ),
   IsoCode.MF: PhoneMetadataExamples(
     fixedLine: r"590271234",
     mobile: r"690001234",
+    voip: r"976012345",
   ),
   IsoCode.MG: PhoneMetadataExamples(
     fixedLine: r"202123456",
     mobile: r"321234567",
+    voip: r"221234567",
   ),
   IsoCode.MH: PhoneMetadataExamples(
     fixedLine: r"2471234",
     mobile: r"2351234",
+    voip: r"6351234",
   ),
   IsoCode.MK: PhoneMetadataExamples(
     fixedLine: r"22012345",
     mobile: r"72345678",
+    voip: r"",
   ),
   IsoCode.ML: PhoneMetadataExamples(
     fixedLine: r"20212345",
     mobile: r"65012345",
+    voip: r"",
   ),
   IsoCode.MM: PhoneMetadataExamples(
     fixedLine: r"1234567",
     mobile: r"92123456",
+    voip: r"13331234",
   ),
   IsoCode.MN: PhoneMetadataExamples(
     fixedLine: r"53123456",
     mobile: r"88123456",
+    voip: r"75123456",
   ),
   IsoCode.MO: PhoneMetadataExamples(
     fixedLine: r"28212345",
     mobile: r"66123456",
+    voip: r"",
   ),
   IsoCode.MP: PhoneMetadataExamples(
     fixedLine: r"6702345678",
     mobile: r"6702345678",
+    voip: r"",
   ),
   IsoCode.MQ: PhoneMetadataExamples(
     fixedLine: r"596301234",
     mobile: r"696201234",
+    voip: r"976612345",
   ),
   IsoCode.MR: PhoneMetadataExamples(
     fixedLine: r"35123456",
     mobile: r"22123456",
+    voip: r"",
   ),
   IsoCode.MS: PhoneMetadataExamples(
     fixedLine: r"6644912345",
     mobile: r"6644923456",
+    voip: r"",
   ),
   IsoCode.MT: PhoneMetadataExamples(
     fixedLine: r"21001234",
     mobile: r"96961234",
+    voip: r"35501234",
   ),
   IsoCode.MU: PhoneMetadataExamples(
     fixedLine: r"54480123",
     mobile: r"52512345",
+    voip: r"3201234",
   ),
   IsoCode.MV: PhoneMetadataExamples(
     fixedLine: r"6701234",
     mobile: r"7712345",
+    voip: r"",
   ),
   IsoCode.MW: PhoneMetadataExamples(
     fixedLine: r"1234567",
     mobile: r"991234567",
+    voip: r"",
   ),
   IsoCode.MX: PhoneMetadataExamples(
     fixedLine: r"2001234567",
     mobile: r"12221234567",
+    voip: r"",
   ),
   IsoCode.MY: PhoneMetadataExamples(
     fixedLine: r"323856789",
     mobile: r"123456789",
+    voip: r"1546012345",
   ),
   IsoCode.MZ: PhoneMetadataExamples(
     fixedLine: r"21123456",
     mobile: r"821234567",
+    voip: r"",
   ),
   IsoCode.NA: PhoneMetadataExamples(
     fixedLine: r"61221234",
     mobile: r"811234567",
+    voip: r"88612345",
   ),
   IsoCode.NC: PhoneMetadataExamples(
     fixedLine: r"201234",
     mobile: r"751234",
+    voip: r"",
   ),
   IsoCode.NE: PhoneMetadataExamples(
     fixedLine: r"20201234",
     mobile: r"93123456",
+    voip: r"",
   ),
   IsoCode.NF: PhoneMetadataExamples(
     fixedLine: r"106609",
     mobile: r"381234",
+    voip: r"",
   ),
   IsoCode.NG: PhoneMetadataExamples(
     fixedLine: r"18040123",
     mobile: r"8021234567",
+    voip: r"",
   ),
   IsoCode.NI: PhoneMetadataExamples(
     fixedLine: r"21234567",
     mobile: r"81234567",
+    voip: r"",
   ),
   IsoCode.NL: PhoneMetadataExamples(
     fixedLine: r"101234567",
     mobile: r"612345678",
+    voip: r"851234567",
   ),
   IsoCode.NO: PhoneMetadataExamples(
     fixedLine: r"21234567",
     mobile: r"40612345",
+    voip: r"85012345",
   ),
   IsoCode.NP: PhoneMetadataExamples(
     fixedLine: r"14567890",
     mobile: r"9841234567",
+    voip: r"",
   ),
   IsoCode.NR: PhoneMetadataExamples(
     fixedLine: r"4441234",
     mobile: r"5551234",
+    voip: r"",
   ),
   IsoCode.NU: PhoneMetadataExamples(
     fixedLine: r"7012",
     mobile: r"8884012",
+    voip: r"",
   ),
   IsoCode.NZ: PhoneMetadataExamples(
     fixedLine: r"32345678",
     mobile: r"211234567",
+    voip: r"",
   ),
   IsoCode.OM: PhoneMetadataExamples(
     fixedLine: r"23123456",
     mobile: r"92123456",
+    voip: r"",
   ),
   IsoCode.PA: PhoneMetadataExamples(
     fixedLine: r"2001234",
     mobile: r"61234567",
+    voip: r"",
   ),
   IsoCode.PE: PhoneMetadataExamples(
     fixedLine: r"11234567",
     mobile: r"912345678",
+    voip: r"",
   ),
   IsoCode.PF: PhoneMetadataExamples(
     fixedLine: r"40412345",
     mobile: r"87123456",
+    voip: r"49901234",
   ),
   IsoCode.PG: PhoneMetadataExamples(
     fixedLine: r"3123456",
     mobile: r"70123456",
+    voip: r"2751234",
   ),
   IsoCode.PH: PhoneMetadataExamples(
     fixedLine: r"232345678",
     mobile: r"9051234567",
+    voip: r"",
   ),
   IsoCode.PK: PhoneMetadataExamples(
     fixedLine: r"2123456789",
     mobile: r"3012345678",
+    voip: r"",
   ),
   IsoCode.PL: PhoneMetadataExamples(
     fixedLine: r"123456789",
     mobile: r"512345678",
+    voip: r"391234567",
   ),
   IsoCode.PM: PhoneMetadataExamples(
     fixedLine: r"430123",
     mobile: r"551234",
+    voip: r"",
   ),
   IsoCode.PR: PhoneMetadataExamples(
     fixedLine: r"7872345678",
     mobile: r"7872345678",
+    voip: r"",
   ),
   IsoCode.PS: PhoneMetadataExamples(
     fixedLine: r"22234567",
     mobile: r"599123456",
+    voip: r"",
   ),
   IsoCode.PT: PhoneMetadataExamples(
     fixedLine: r"212345678",
     mobile: r"912345678",
+    voip: r"301234567",
   ),
   IsoCode.PW: PhoneMetadataExamples(
     fixedLine: r"2771234",
     mobile: r"6201234",
+    voip: r"",
   ),
   IsoCode.PY: PhoneMetadataExamples(
     fixedLine: r"212345678",
     mobile: r"961456789",
+    voip: r"870012345",
   ),
   IsoCode.QA: PhoneMetadataExamples(
     fixedLine: r"44123456",
     mobile: r"33123456",
+    voip: r"",
   ),
   IsoCode.RE: PhoneMetadataExamples(
     fixedLine: r"262161234",
     mobile: r"692123456",
+    voip: r"939901234",
   ),
   IsoCode.RO: PhoneMetadataExamples(
     fixedLine: r"211234567",
     mobile: r"712034567",
+    voip: r"",
   ),
   IsoCode.RS: PhoneMetadataExamples(
     fixedLine: r"10234567",
     mobile: r"601234567",
+    voip: r"",
   ),
   IsoCode.RU: PhoneMetadataExamples(
     fixedLine: r"3011234567",
     mobile: r"9123456789",
+    voip: r"",
   ),
   IsoCode.RW: PhoneMetadataExamples(
     fixedLine: r"250123456",
     mobile: r"720123456",
+    voip: r"",
   ),
   IsoCode.SA: PhoneMetadataExamples(
     fixedLine: r"112345678",
     mobile: r"512345678",
+    voip: r"",
   ),
   IsoCode.SB: PhoneMetadataExamples(
     fixedLine: r"40123",
     mobile: r"7421234",
+    voip: r"51123",
   ),
   IsoCode.SC: PhoneMetadataExamples(
     fixedLine: r"4217123",
     mobile: r"2510123",
+    voip: r"6412345",
   ),
   IsoCode.SD: PhoneMetadataExamples(
     fixedLine: r"153123456",
     mobile: r"911231234",
+    voip: r"",
   ),
   IsoCode.SE: PhoneMetadataExamples(
     fixedLine: r"8123456",
     mobile: r"701234567",
+    voip: r"",
   ),
   IsoCode.SG: PhoneMetadataExamples(
     fixedLine: r"61234567",
     mobile: r"81234567",
+    voip: r"31234567",
   ),
   IsoCode.SH: PhoneMetadataExamples(
     fixedLine: r"22158",
     mobile: r"51234",
+    voip: r"26212",
   ),
   IsoCode.SI: PhoneMetadataExamples(
     fixedLine: r"12345678",
     mobile: r"31234567",
+    voip: r"59012345",
   ),
   IsoCode.SJ: PhoneMetadataExamples(
     fixedLine: r"79123456",
     mobile: r"41234567",
+    voip: r"85012345",
   ),
   IsoCode.SK: PhoneMetadataExamples(
     fixedLine: r"221234567",
     mobile: r"912123456",
+    voip: r"690123456",
   ),
   IsoCode.SL: PhoneMetadataExamples(
     fixedLine: r"22221234",
     mobile: r"25123456",
+    voip: r"",
   ),
   IsoCode.SM: PhoneMetadataExamples(
     fixedLine: r"0549886377",
     mobile: r"66661212",
+    voip: r"58001110",
   ),
   IsoCode.SN: PhoneMetadataExamples(
     fixedLine: r"301012345",
     mobile: r"701234567",
+    voip: r"933301234",
   ),
   IsoCode.SO: PhoneMetadataExamples(
     fixedLine: r"4012345",
     mobile: r"71123456",
+    voip: r"",
   ),
   IsoCode.SR: PhoneMetadataExamples(
     fixedLine: r"211234",
     mobile: r"7412345",
+    voip: r"561234",
   ),
   IsoCode.SS: PhoneMetadataExamples(
     fixedLine: r"181234567",
     mobile: r"977123456",
+    voip: r"",
   ),
   IsoCode.ST: PhoneMetadataExamples(
     fixedLine: r"2221234",
     mobile: r"9812345",
+    voip: r"",
   ),
   IsoCode.SV: PhoneMetadataExamples(
     fixedLine: r"21234567",
     mobile: r"70123456",
+    voip: r"",
   ),
   IsoCode.SX: PhoneMetadataExamples(
     fixedLine: r"7215425678",
     mobile: r"7215205678",
+    voip: r"",
   ),
   IsoCode.SY: PhoneMetadataExamples(
     fixedLine: r"112345678",
     mobile: r"944567890",
+    voip: r"",
   ),
   IsoCode.SZ: PhoneMetadataExamples(
     fixedLine: r"22171234",
     mobile: r"76123456",
+    voip: r"70012345",
   ),
   IsoCode.TA: PhoneMetadataExamples(
     fixedLine: r"8999",
     mobile: r"8999",
+    voip: r"",
   ),
   IsoCode.TC: PhoneMetadataExamples(
     fixedLine: r"6497121234",
     mobile: r"6492311234",
+    voip: r"6497101234",
   ),
   IsoCode.TD: PhoneMetadataExamples(
     fixedLine: r"22501234",
     mobile: r"63012345",
+    voip: r"",
   ),
   IsoCode.TG: PhoneMetadataExamples(
     fixedLine: r"22212345",
     mobile: r"90112345",
+    voip: r"",
   ),
   IsoCode.TH: PhoneMetadataExamples(
     fixedLine: r"21234567",
     mobile: r"812345678",
+    voip: r"601234567",
   ),
   IsoCode.TJ: PhoneMetadataExamples(
     fixedLine: r"372123456",
     mobile: r"917123456",
+    voip: r"",
   ),
   IsoCode.TK: PhoneMetadataExamples(
     fixedLine: r"3101",
     mobile: r"7290",
+    voip: r"",
   ),
   IsoCode.TL: PhoneMetadataExamples(
     fixedLine: r"2112345",
     mobile: r"77212345",
+    voip: r"",
   ),
   IsoCode.TM: PhoneMetadataExamples(
     fixedLine: r"12345678",
     mobile: r"66123456",
+    voip: r"",
   ),
   IsoCode.TN: PhoneMetadataExamples(
     fixedLine: r"30010123",
     mobile: r"20123456",
+    voip: r"",
   ),
   IsoCode.TO: PhoneMetadataExamples(
     fixedLine: r"20123",
     mobile: r"7715123",
+    voip: r"5510123",
   ),
   IsoCode.TR: PhoneMetadataExamples(
     fixedLine: r"2123456789",
     mobile: r"5012345678",
+    voip: r"8500123456",
   ),
   IsoCode.TT: PhoneMetadataExamples(
     fixedLine: r"8682211234",
     mobile: r"8682911234",
+    voip: r"",
   ),
   IsoCode.TV: PhoneMetadataExamples(
     fixedLine: r"20123",
     mobile: r"901234",
+    voip: r"",
   ),
   IsoCode.TW: PhoneMetadataExamples(
     fixedLine: r"221234567",
     mobile: r"912345678",
+    voip: r"7012345678",
   ),
   IsoCode.TZ: PhoneMetadataExamples(
     fixedLine: r"222345678",
     mobile: r"621234567",
+    voip: r"412345678",
   ),
   IsoCode.UA: PhoneMetadataExamples(
     fixedLine: r"311234567",
     mobile: r"501234567",
+    voip: r"891234567",
   ),
   IsoCode.UG: PhoneMetadataExamples(
     fixedLine: r"312345678",
     mobile: r"712345678",
+    voip: r"",
   ),
   IsoCode.US: PhoneMetadataExamples(
     fixedLine: r"2015550123",
     mobile: r"2015550123",
+    voip: r"",
   ),
   IsoCode.UY: PhoneMetadataExamples(
     fixedLine: r"21231234",
     mobile: r"94231234",
+    voip: r"",
   ),
   IsoCode.UZ: PhoneMetadataExamples(
     fixedLine: r"669050123",
     mobile: r"912345678",
+    voip: r"",
   ),
   IsoCode.VA: PhoneMetadataExamples(
     fixedLine: r"0669812345",
     mobile: r"3123456789",
+    voip: r"5512345678",
   ),
   IsoCode.VC: PhoneMetadataExamples(
     fixedLine: r"7842661234",
     mobile: r"7844301234",
+    voip: r"7845101234",
   ),
   IsoCode.VE: PhoneMetadataExamples(
     fixedLine: r"2121234567",
     mobile: r"4121234567",
+    voip: r"",
   ),
   IsoCode.VG: PhoneMetadataExamples(
     fixedLine: r"2842291234",
     mobile: r"2843001234",
+    voip: r"",
   ),
   IsoCode.VI: PhoneMetadataExamples(
     fixedLine: r"3406421234",
     mobile: r"3406421234",
+    voip: r"",
   ),
   IsoCode.VN: PhoneMetadataExamples(
     fixedLine: r"2101234567",
     mobile: r"912345678",
+    voip: r"672012345",
   ),
   IsoCode.VU: PhoneMetadataExamples(
     fixedLine: r"22123",
     mobile: r"5912345",
+    voip: r"9010123",
   ),
   IsoCode.WF: PhoneMetadataExamples(
     fixedLine: r"721234",
     mobile: r"821234",
+    voip: r"",
   ),
   IsoCode.WS: PhoneMetadataExamples(
     fixedLine: r"22123",
     mobile: r"7212345",
+    voip: r"",
   ),
   IsoCode.XK: PhoneMetadataExamples(
     fixedLine: r"28012345",
     mobile: r"43201234",
+    voip: r"",
   ),
   IsoCode.YE: PhoneMetadataExamples(
     fixedLine: r"1234567",
     mobile: r"712345678",
+    voip: r"",
   ),
   IsoCode.YT: PhoneMetadataExamples(
     fixedLine: r"269601234",
     mobile: r"639012345",
+    voip: r"939801234",
   ),
   IsoCode.ZA: PhoneMetadataExamples(
     fixedLine: r"101234567",
     mobile: r"711234567",
+    voip: r"871234567",
   ),
   IsoCode.ZM: PhoneMetadataExamples(
     fixedLine: r"211234567",
     mobile: r"955123456",
+    voip: r"630123456",
   ),
   IsoCode.ZW: PhoneMetadataExamples(
     fixedLine: r"1312345",
     mobile: r"712345678",
+    voip: r"8686123456",
   ),
 };

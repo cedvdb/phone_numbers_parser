@@ -7,6 +7,7 @@ class PhoneMetadataPatterns {
   final String general;
   final String mobile;
   final String fixedLine;
+  final String voip;
 
   const PhoneMetadataPatterns({
     this.nationalPrefixForParsing,
@@ -14,6 +15,7 @@ class PhoneMetadataPatterns {
     required this.general,
     required this.mobile,
     required this.fixedLine,
+    required this.voip,
   });
 
   Map<String, dynamic> toMap() {
@@ -23,6 +25,7 @@ class PhoneMetadataPatterns {
       'general': general,
       'mobile': mobile,
       'fixedLine': fixedLine,
+      'voip': voip,
     };
   }
 
@@ -33,6 +36,7 @@ class PhoneMetadataPatterns {
       general: map['general'],
       mobile: map['mobile'],
       fixedLine: map['fixedLine'],
+      voip: map['voip'],
     );
   }
 
@@ -43,6 +47,6 @@ class PhoneMetadataPatterns {
 
   @override
   String toString() {
-    return 'PhoneMetadataPatterns(nationalPrefixForParsing: $nationalPrefixForParsing, nationalPrefixTransformRule: $nationalPrefixTransformRule, general: $general, mobile: $mobile, fixedLine: $fixedLine)';
+    return 'PhoneMetadataPatterns(nationalPrefixForParsing: $nationalPrefixForParsing, nationalPrefixTransformRule: $nationalPrefixTransformRule, general: $general, mobile: $mobile, fixedLine: $fixedLine, voip: $voip)';
   }
 }

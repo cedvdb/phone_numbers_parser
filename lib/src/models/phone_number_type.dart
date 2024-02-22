@@ -1,1 +1,5 @@
-enum PhoneNumberType { mobile, fixedLine }
+enum PhoneNumberType {
+  mobile,
+  fixedLine,
+  voip,
+}

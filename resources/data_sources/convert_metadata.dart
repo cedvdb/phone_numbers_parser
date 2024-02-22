@@ -28,6 +28,7 @@ Future convertPhoneNumberMetadata() async {
 }
 
 Map convertTerritory(Map<String, dynamic> territory) {
+  final voip = territory['voip'];
   return {
     'isoCode': territory['id'],
     'countryCode': territory['countryCode'],
@@ -43,6 +44,7 @@ Map convertTerritory(Map<String, dynamic> territory) {
       // a read on wikipedia
       'mobile':
           getPossibleLengths(territory['mobile'] ?? territory['fixedLine']),
+      'voip': voip == null ? const [] : getPossibleLengths(voip),
     },
     'patterns': {
       'nationalPrefixForParsing': territory['nationalPrefixForParsing'],
@@ -51,12 +53,14 @@ Map convertTerritory(Map<String, dynamic> territory) {
       'fixedLine': getPattern(territory['fixedLine']),
       // see comment on lengths
       'mobile': getPattern(territory['mobile'] ?? territory['fixedLine']),
+      'voip': voip == null ? '' : getPattern(voip),
     },
     'examples': {
       'fixedLine': territory['fixedLine']['exampleNumber'],
       // see comment on lengths
       'mobile':
           (territory['mobile'] ?? territory['fixedLine'])['exampleNumber'],
+      'voip': voip == null ? null : voip['exampleNumber'],
     },
     'formats': getFormats(territory['availableFormats']?['numberFormat']),
   };
