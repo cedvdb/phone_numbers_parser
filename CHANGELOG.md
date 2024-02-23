@@ -1,5 +1,6 @@
 ## 8.2.0
 - added VOIP support
+- udpated metadata
 
 ## 8.1.3
 - deprectate `getFormattedNsn` in favor of `formatNsn`
