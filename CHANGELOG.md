@@ -1,3 +1,6 @@
+## 8.2.1
+- udpated metadata
+
 ## 8.2.0
 - added VOIP support
 
