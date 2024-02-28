@@ -1,4 +1,4 @@
-import "../../models/iso_code.dart";
+import "../../iso_codes/iso_code.dart";
 import "../models/phone_metadata_lengths.dart";
 
 const metadataLenghtsByIsoCode = {

@@ -5,7 +5,7 @@ import 'package:phone_numbers_parser/src/metadata/models/phone_metadata_examples
 import 'package:phone_numbers_parser/src/metadata/models/phone_metadata_formats.dart';
 import 'package:phone_numbers_parser/src/metadata/models/phone_metadata_lengths.dart';
 import 'package:phone_numbers_parser/src/metadata/models/phone_metadata_patterns.dart';
-import 'package:phone_numbers_parser/src/models/iso_code.dart';
+import 'package:phone_numbers_parser/src/iso_codes/iso_code.dart';
 
 import 'data_sources/read_metadata.dart';
 import 'utils/map_builder.dart';

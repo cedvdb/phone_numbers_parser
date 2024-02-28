@@ -1,4 +1,4 @@
-import '../constants/constants.dart';
+import '../regex/constants.dart';
 
 /// responsible of normalizing and finding phone numbers in text
 abstract class TextParser {

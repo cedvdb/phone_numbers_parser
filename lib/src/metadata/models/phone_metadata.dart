@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../../models/iso_code.dart';
+import '../../iso_codes/iso_code.dart';
 
 /// phone metadata
 ///

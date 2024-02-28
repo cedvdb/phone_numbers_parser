@@ -5,7 +5,7 @@ import 'package:phone_numbers_parser/src/parsers/_national_number_parser.dart';
 import 'package:phone_numbers_parser/src/regex/match_entirely_extension.dart';
 
 import '../metadata/models/phone_metadata_formats.dart';
-import '../models/iso_code.dart';
+import '../iso_codes/iso_code.dart';
 
 class PhoneNumberFormatter {
   /// format national number for international use

@@ -1,4 +1,4 @@
-import "../../models/iso_code.dart";
+import "../../iso_codes/iso_code.dart";
 
 const countryCodeToIsoCode = {
   '247': [IsoCode.AC],

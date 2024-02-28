@@ -1,5 +1,5 @@
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
-import 'package:phone_numbers_parser/src/parsers/_validator.dart';
+import 'package:phone_numbers_parser/src/validation/validator.dart';
 import 'package:test/test.dart';
 
 void main() {

@@ -1,5 +1,5 @@
 import 'package:phone_numbers_parser/src/metadata/models/phone_metadata.dart';
-import 'package:phone_numbers_parser/src/models/iso_code.dart';
+import 'package:phone_numbers_parser/src/iso_codes/iso_code.dart';
 
 Map<String, List<IsoCode>> countryCodeToIsoCodeMap(
   Map<IsoCode, PhoneMetadata> allMetadatas,

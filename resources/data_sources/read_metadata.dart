@@ -6,7 +6,7 @@ import 'package:phone_numbers_parser/src/metadata/models/phone_metadata_examples
 import 'package:phone_numbers_parser/src/metadata/models/phone_metadata_formats.dart';
 import 'package:phone_numbers_parser/src/metadata/models/phone_metadata_lengths.dart';
 import 'package:phone_numbers_parser/src/metadata/models/phone_metadata_patterns.dart';
-import 'package:phone_numbers_parser/src/models/iso_code.dart';
+import 'package:phone_numbers_parser/src/iso_codes/iso_code.dart';
 
 /// reads the json file of country names which is an array of country information
 Future<Map<IsoCode, PhoneMetadata>> getMetadata() async {

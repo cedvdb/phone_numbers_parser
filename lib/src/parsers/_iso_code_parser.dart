@@ -1,4 +1,4 @@
-import 'package:phone_numbers_parser/src/models/phone_number_exceptions.dart';
+import 'package:phone_numbers_parser/src/parsers/phone_number_exceptions.dart';
 
 abstract class IsoCodeParser {
   /// normalize an iso code to be what the lib expects, mainly uppercases it

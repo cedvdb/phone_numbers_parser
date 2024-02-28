@@ -1,5 +1,5 @@
 import 'package:meta/meta.dart';
-import 'package:phone_numbers_parser/src/parsers/_validator.dart';
+import 'package:phone_numbers_parser/src/validation/validator.dart';
 
 import '../../phone_numbers_parser.dart';
 import '../metadata/metadata_finder.dart';

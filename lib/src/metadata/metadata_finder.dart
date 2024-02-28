@@ -1,4 +1,4 @@
-import '../parsers/_validator.dart';
+import '../validation/validator.dart';
 import 'generated/country_code_to_iso_code.dart';
 import 'generated/metadata_by_iso_code.dart';
 import 'generated/metadata_formats_by_iso_code.dart';
@@ -8,8 +8,8 @@ import 'models/phone_metadata.dart';
 import 'models/phone_metadata_formats.dart';
 import 'models/phone_metadata_lengths.dart';
 import 'models/phone_metadata_patterns.dart';
-import '../models/iso_code.dart';
-import '../models/phone_number_exceptions.dart';
+import '../iso_codes/iso_code.dart';
+import '../parsers/phone_number_exceptions.dart';
 
 /// Helper to find metadata
 abstract class MetadataFinder {
