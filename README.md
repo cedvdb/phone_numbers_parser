@@ -6,11 +6,10 @@ The advantage of this lib instead of libphonenumber is that it instantly support
 
 ## Features
 
+ - Validation: Validate based on type (mobile, fixed line, voip)
+ - Formatting: Format phone number for a specific country
+ - Phone ranges: find all phone numbers in a range of phone numbers
  - Find phone numbers in a text
- - Validate a phone number
- - A light parser for size aware applications
- - Formatter
- - Phone ranges
  - Supports eastern arabic digits
  - Uses best-in-class metadata from Google's libPhoneNumber project. 
 
