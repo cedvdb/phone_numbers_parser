@@ -52,7 +52,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 label: Text('Phone number'),
               ),
               onChanged: (value) {
-                setState(() => this.phoneNumber = PhoneNumber.parse(value));
+                try {
+                  setState(() => this.phoneNumber = PhoneNumber.parse(value));
+                } catch (e) {
+                  setState(() => this.phoneNumber = null);
+                }
               },
             ),
             const SizedBox(height: 12),

@@ -13,6 +13,9 @@ The advantage of this lib instead of libphonenumber is that it instantly support
  - Supports eastern arabic digits
  - Uses best-in-class metadata from Google's libPhoneNumber project. 
 
+## Demo
+
+[demo](https://cedvdb.github.io/phone_numbers_parser/)
 
 ## Contributing
 
