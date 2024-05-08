@@ -600,7 +600,7 @@ const metadataByIsoCode = {
     isoCode: IsoCode.GA,
     leadingDigits: null,
     internationalPrefix: r"00",
-    nationalPrefix: r"0",
+    nationalPrefix: null,
     isMainCountryForDialCode: false,
   ),
   IsoCode.GB: PhoneMetadata(
@@ -1040,7 +1040,7 @@ const metadataByIsoCode = {
     isoCode: IsoCode.LT,
     leadingDigits: null,
     internationalPrefix: r"00",
-    nationalPrefix: r"0",
+    nationalPrefix: r"8",
     isMainCountryForDialCode: false,
   ),
   IsoCode.LU: PhoneMetadata(
