@@ -13,7 +13,7 @@ import 'utils/map_builder.dart';
 import 'utils/phone_metadata_encoder.dart';
 
 const baseFolder = 'lib/src/metadata/generated';
-const isoCodeImport = 'import "../../models/iso_code.dart";';
+const isoCodeImport = 'import "../../iso_codes/iso_code.dart";';
 
 void main() async {
   final metadatas = await getMetadata();
