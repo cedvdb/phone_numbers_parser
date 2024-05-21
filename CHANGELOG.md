@@ -1,3 +1,6 @@
+## 8.2.2
+- update metadata
+
 ## 8.2.1
 - add demo link in readme
 
