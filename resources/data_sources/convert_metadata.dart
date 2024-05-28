@@ -29,6 +29,13 @@ Future convertPhoneNumberMetadata() async {
 
 Map convertTerritory(Map<String, dynamic> territory) {
   final voip = territory['voip'];
+  final tollFree = territory['tollFree'];
+  final premiumRate = territory['premiumRate'];
+  final sharedCost = territory['sharedCost'];
+  final personalNumber = territory['personalNumber'];
+  final uan = territory['uan'];
+  final pager = territory['pager'];
+  final voiceMail = territory['voiceMail'];
   return {
     'isoCode': territory['id'],
     'countryCode': territory['countryCode'],
@@ -44,7 +51,15 @@ Map convertTerritory(Map<String, dynamic> territory) {
       // a read on wikipedia
       'mobile':
           getPossibleLengths(territory['mobile'] ?? territory['fixedLine']),
-      'voip': voip == null ? const [] : getPossibleLengths(voip),
+      if (voip != null) 'voip': getPossibleLengths(voip),
+      if (tollFree != null) 'tollFree': getPossibleLengths(tollFree),
+      if (premiumRate != null) 'premiumRate': getPossibleLengths(premiumRate),
+      if (sharedCost != null) 'sharedCost': getPossibleLengths(sharedCost),
+      if (personalNumber != null)
+        'personalNumber': getPossibleLengths(personalNumber),
+      if (uan != null) 'uan': getPossibleLengths(uan),
+      if (pager != null) 'pager': getPossibleLengths(pager),
+      if (voiceMail != null) 'voiceMail': getPossibleLengths(voiceMail),
     },
     'patterns': {
       'nationalPrefixForParsing': territory['nationalPrefixForParsing'],
@@ -53,14 +68,29 @@ Map convertTerritory(Map<String, dynamic> territory) {
       'fixedLine': getPattern(territory['fixedLine']),
       // see comment on lengths
       'mobile': getPattern(territory['mobile'] ?? territory['fixedLine']),
-      'voip': voip == null ? '' : getPattern(voip),
+      if (voip != null) 'voip': getPattern(voip),
+      if (tollFree != null) 'tollFree': getPattern(tollFree),
+      if (premiumRate != null) 'premiumRate': getPattern(premiumRate),
+      if (sharedCost != null) 'sharedCost': getPattern(sharedCost),
+      if (personalNumber != null) 'personalNumber': getPattern(personalNumber),
+      if (uan != null) 'uan': getPattern(uan),
+      if (pager != null) 'pager': getPattern(pager),
+      if (voiceMail != null) 'voiceMail': getPattern(voiceMail),
     },
     'examples': {
       'fixedLine': territory['fixedLine']['exampleNumber'],
       // see comment on lengths
       'mobile':
           (territory['mobile'] ?? territory['fixedLine'])['exampleNumber'],
-      'voip': voip == null ? null : voip['exampleNumber'],
+      if (voip != null) 'voip': voip['exampleNumber'],
+      if (tollFree != null) 'tollFree': tollFree['exampleNumber'],
+      if (premiumRate != null) 'premiumRate': premiumRate['exampleNumber'],
+      if (sharedCost != null) 'sharedCost': sharedCost['exampleNumber'],
+      if (personalNumber != null)
+        'personalNumber': personalNumber['exampleNumber'],
+      if (uan != null) 'uan': uan['exampleNumber'],
+      if (pager != null) 'pager': pager['exampleNumber'],
+      if (voiceMail != null) 'voiceMail': voiceMail['exampleNumber'],
     },
     'formats': getFormats(territory['availableFormats']?['numberFormat']),
   };
