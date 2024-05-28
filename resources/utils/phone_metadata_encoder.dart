@@ -25,6 +25,13 @@ String encodePatterns(PhoneMetadataPatterns metadata) {
       mobile: ${_enc(metadata.mobile)}, 
       fixedLine: ${_enc(metadata.fixedLine)}, 
       voip: ${_enc(metadata.voip)}, 
+      tollFree: ${_enc(metadata.tollFree)},
+      premiumRate: ${_enc(metadata.premiumRate)},
+      sharedCost: ${_enc(metadata.sharedCost)},
+      personalNumber: ${_enc(metadata.personalNumber)},
+      uan: ${_enc(metadata.uan)},
+      pager: ${_enc(metadata.pager)},
+      voiceMail: ${_enc(metadata.voiceMail)},
     )''';
 }
 
@@ -34,6 +41,13 @@ String encodeLengths(PhoneMetadataLengths lengths) {
       mobile: ${_enc(lengths.mobile)}, 
       fixedLine: ${_enc(lengths.fixedLine)}, 
       voip: ${_enc(lengths.voip)}, 
+      tollFree: ${_enc(lengths.tollFree)},
+      premiumRate: ${_enc(lengths.premiumRate)},
+      sharedCost: ${_enc(lengths.sharedCost)},
+      personalNumber: ${_enc(lengths.personalNumber)},
+      uan: ${_enc(lengths.uan)},
+      pager: ${_enc(lengths.pager)},
+      voiceMail: ${_enc(lengths.voiceMail)},
     )''';
 }
 
@@ -52,6 +66,13 @@ String encodeExamples(PhoneMetadataExamples examples) {
       fixedLine: ${_enc(examples.fixedLine)},
       mobile: ${_enc(examples.mobile)},
       voip: ${_enc(examples.voip)},
+      tollFree: ${_enc(examples.tollFree)},
+      premiumRate: ${_enc(examples.premiumRate)},
+      sharedCost: ${_enc(examples.sharedCost)},
+      personalNumber: ${_enc(examples.personalNumber)},
+      uan: ${_enc(examples.uan)},
+      pager: ${_enc(examples.pager)},
+      voiceMail: ${_enc(examples.voiceMail)},
     )''';
 }
 

@@ -8,6 +8,13 @@ class PhoneMetadataPatterns {
   final String mobile;
   final String fixedLine;
   final String voip;
+  final String tollFree;
+  final String premiumRate;
+  final String sharedCost;
+  final String personalNumber;
+  final String uan;
+  final String pager;
+  final String voiceMail;
 
   const PhoneMetadataPatterns({
     this.nationalPrefixForParsing,
@@ -16,6 +23,13 @@ class PhoneMetadataPatterns {
     required this.mobile,
     required this.fixedLine,
     required this.voip,
+    required this.tollFree,
+    required this.premiumRate,
+    required this.sharedCost,
+    required this.personalNumber,
+    required this.uan,
+    required this.pager,
+    required this.voiceMail,
   });
 
   Map<String, dynamic> toMap() {
@@ -26,6 +40,13 @@ class PhoneMetadataPatterns {
       'mobile': mobile,
       'fixedLine': fixedLine,
       'voip': voip,
+      'tollFree': tollFree,
+      'premiumRate': premiumRate,
+      'sharedCost': sharedCost,
+      'personalNumber': personalNumber,
+      'uan': uan,
+      'pager': pager,
+      'voiceMail': voiceMail,
     };
   }
 
@@ -36,7 +57,14 @@ class PhoneMetadataPatterns {
       general: map['general'],
       mobile: map['mobile'],
       fixedLine: map['fixedLine'],
-      voip: map['voip'],
+      voip: map['voip'] ?? '',
+      tollFree: map['tollFree'] ?? '',
+      premiumRate: map['premiumRate'] ?? '',
+      sharedCost: map['sharedCost'] ?? '',
+      personalNumber: map['personalNumber'] ?? '',
+      uan: map['uan'] ?? '',
+      pager: map['pager'] ?? '',
+      voiceMail: map['voiceMail'] ?? '',
     );
   }
 
@@ -47,6 +75,6 @@ class PhoneMetadataPatterns {
 
   @override
   String toString() {
-    return 'PhoneMetadataPatterns(nationalPrefixForParsing: $nationalPrefixForParsing, nationalPrefixTransformRule: $nationalPrefixTransformRule, general: $general, mobile: $mobile, fixedLine: $fixedLine, voip: $voip)';
+    return 'PhoneMetadataPatterns(nationalPrefixForParsing: $nationalPrefixForParsing, nationalPrefixTransformRule: $nationalPrefixTransformRule, general: $general, mobile: $mobile, fixedLine: $fixedLine, voip: $voip, tollFree: $tollFree, premiumRate: $premiumRate, sharedCost: $sharedCost, personalNumber: $personalNumber, uan: $uan, pager: $pager, voiceMail: $voiceMail)';
   }
 }
