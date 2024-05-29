@@ -32,7 +32,22 @@ abstract class Validator {
       patterns.addAll([
         _getPatterns(patternMetadatas, PhoneNumberType.fixedLine),
         _getPatterns(patternMetadatas, PhoneNumberType.mobile),
-        _getPatterns(patternMetadatas, PhoneNumberType.voip)
+        if (patternMetadatas.voip.isNotEmpty)
+          _getPatterns(patternMetadatas, PhoneNumberType.voip),
+        if (patternMetadatas.tollFree.isNotEmpty)
+          _getPatterns(patternMetadatas, PhoneNumberType.tollFree),
+        if (patternMetadatas.premiumRate.isNotEmpty)
+          _getPatterns(patternMetadatas, PhoneNumberType.premiumRate),
+        if (patternMetadatas.sharedCost.isNotEmpty)
+          _getPatterns(patternMetadatas, PhoneNumberType.sharedCost),
+        if (patternMetadatas.personalNumber.isNotEmpty)
+          _getPatterns(patternMetadatas, PhoneNumberType.personalNumber),
+        if (patternMetadatas.uan.isNotEmpty)
+          _getPatterns(patternMetadatas, PhoneNumberType.uan),
+        if (patternMetadatas.pager.isNotEmpty)
+          _getPatterns(patternMetadatas, PhoneNumberType.pager),
+        if (patternMetadatas.voiceMail.isNotEmpty)
+          _getPatterns(patternMetadatas, PhoneNumberType.voiceMail),
       ]);
     } else {
       patterns.add(_getPatterns(patternMetadatas, type));
@@ -72,13 +87,20 @@ abstract class Validator {
       final lengths = _getLengths(lengthMetadatas, type);
       return Set.from(lengths);
     } else {
-      // if the type is not specified it can be either mobile, fixedLine or voip
-      // so we return a set containing both
-      final rulesFixed =
-          _getLengths(lengthMetadatas, PhoneNumberType.fixedLine);
-      final rulesMobile = _getLengths(lengthMetadatas, PhoneNumberType.mobile);
-      final rulesVoip = _getLengths(lengthMetadatas, PhoneNumberType.voip);
-      return {...rulesFixed, ...rulesMobile, ...rulesVoip};
+      // if the type is not specified it can be any of them
+      // so we return a set containing all their possible lengths
+      return {
+        ..._getLengths(lengthMetadatas, PhoneNumberType.fixedLine),
+        ..._getLengths(lengthMetadatas, PhoneNumberType.mobile),
+        ..._getLengths(lengthMetadatas, PhoneNumberType.voip),
+        ..._getLengths(lengthMetadatas, PhoneNumberType.tollFree),
+        ..._getLengths(lengthMetadatas, PhoneNumberType.premiumRate),
+        ..._getLengths(lengthMetadatas, PhoneNumberType.sharedCost),
+        ..._getLengths(lengthMetadatas, PhoneNumberType.personalNumber),
+        ..._getLengths(lengthMetadatas, PhoneNumberType.uan),
+        ..._getLengths(lengthMetadatas, PhoneNumberType.pager),
+        ..._getLengths(lengthMetadatas, PhoneNumberType.voiceMail),
+      };
     }
   }
 
@@ -93,6 +115,20 @@ abstract class Validator {
         return lengthMetadatas.fixedLine;
       case PhoneNumberType.voip:
         return lengthMetadatas.voip;
+      case PhoneNumberType.tollFree:
+        return lengthMetadatas.tollFree;
+      case PhoneNumberType.premiumRate:
+        return lengthMetadatas.premiumRate;
+      case PhoneNumberType.sharedCost:
+        return lengthMetadatas.sharedCost;
+      case PhoneNumberType.personalNumber:
+        return lengthMetadatas.personalNumber;
+      case PhoneNumberType.uan:
+        return lengthMetadatas.uan;
+      case PhoneNumberType.pager:
+        return lengthMetadatas.pager;
+      case PhoneNumberType.voiceMail:
+        return lengthMetadatas.voiceMail;
       default:
         return lengthMetadatas.general;
     }
@@ -109,6 +145,20 @@ abstract class Validator {
         return patternMetadatas.fixedLine;
       case PhoneNumberType.voip:
         return patternMetadatas.voip;
+      case PhoneNumberType.tollFree:
+        return patternMetadatas.tollFree;
+      case PhoneNumberType.premiumRate:
+        return patternMetadatas.premiumRate;
+      case PhoneNumberType.sharedCost:
+        return patternMetadatas.sharedCost;
+      case PhoneNumberType.personalNumber:
+        return patternMetadatas.personalNumber;
+      case PhoneNumberType.uan:
+        return patternMetadatas.uan;
+      case PhoneNumberType.pager:
+        return patternMetadatas.pager;
+      case PhoneNumberType.voiceMail:
+        return patternMetadatas.voiceMail;
       default:
         return patternMetadatas.general;
     }

@@ -1,3 +1,4 @@
+import 'package:phone_numbers_parser/metadata.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:phone_numbers_parser/src/validation/validator.dart';
 import 'package:test/test.dart';
@@ -76,6 +77,150 @@ void main() {
           isTrue,
         );
       });
+
+      // Portugal supports all phone types
+      test('PT', () {
+        final isoCode = IsoCode.PT;
+        final examples = metadataExamplesByIsoCode[isoCode]!;
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.mobile,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.mobile,
+            PhoneNumberType.mobile,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.fixedLine,
+            PhoneNumberType.fixedLine,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.voip,
+            PhoneNumberType.voip,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.tollFree,
+            PhoneNumberType.tollFree,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.premiumRate,
+            PhoneNumberType.premiumRate,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.sharedCost,
+            PhoneNumberType.sharedCost,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.personalNumber,
+            PhoneNumberType.personalNumber,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.uan,
+            PhoneNumberType.uan,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.pager,
+            PhoneNumberType.pager,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.voiceMail,
+            PhoneNumberType.voiceMail,
+          ),
+          isTrue,
+        );
+      });
+
+      // Italy has different lengths for different formats
+      test('IT', () {
+        final isoCode = IsoCode.IT;
+        final examples = metadataExamplesByIsoCode[isoCode]!;
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.sharedCost, // Can be 6 or 9
+            PhoneNumberType.voip, // Can be 10
+          ),
+          isFalse,
+        );
+
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.voip, // Can be 10
+            PhoneNumberType.sharedCost, // Can be 6 or 9
+          ),
+          isFalse,
+        );
+
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.voiceMail, // Can be 11 or 12
+            PhoneNumberType.personalNumber, // Can be 9 or 10
+          ),
+          isFalse,
+        );
+
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.personalNumber, // Can be 9 or 10
+            PhoneNumberType.voiceMail, // Can be 11 or 12
+          ),
+          isFalse,
+        );
+      });
     });
 
     group('ValidateWithPattern()', () {
@@ -112,6 +257,109 @@ void main() {
 
         expect(
             Validator.validateWithPattern(IsoCode.US, '6135550165'), isFalse);
+      });
+
+      // Portugal supports all phone types
+      test('PT', () {
+        final isoCode = IsoCode.PT;
+        final examples = metadataExamplesByIsoCode[isoCode]!;
+        expect(
+          Validator.validateWithPattern(
+            isoCode,
+            examples.mobile,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithPattern(
+            isoCode,
+            examples.mobile,
+            PhoneNumberType.mobile,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithPattern(
+            isoCode,
+            examples.fixedLine,
+            PhoneNumberType.fixedLine,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithPattern(
+            isoCode,
+            examples.voip,
+            PhoneNumberType.voip,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithPattern(
+            isoCode,
+            examples.tollFree,
+            PhoneNumberType.tollFree,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithPattern(
+            isoCode,
+            examples.premiumRate,
+            PhoneNumberType.premiumRate,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithPattern(
+            isoCode,
+            examples.sharedCost,
+            PhoneNumberType.sharedCost,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithPattern(
+            isoCode,
+            examples.personalNumber,
+            PhoneNumberType.personalNumber,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithPattern(
+            isoCode,
+            examples.uan,
+            PhoneNumberType.uan,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithPattern(
+            isoCode,
+            examples.pager,
+            PhoneNumberType.pager,
+          ),
+          isTrue,
+        );
+
+        expect(
+          Validator.validateWithPattern(
+            isoCode,
+            examples.voiceMail,
+            PhoneNumberType.voiceMail,
+          ),
+          isTrue,
+        );
       });
     });
   });

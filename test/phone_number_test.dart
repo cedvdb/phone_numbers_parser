@@ -225,6 +225,16 @@ void main() {
       expect(gbValidLength.isValid(type: PhoneNumberType.mobile), isFalse);
       expect(gbValidLength.isValid(type: PhoneNumberType.fixedLine), isFalse);
       expect(gbValidLength.isValid(type: PhoneNumberType.voip), isFalse);
+      expect(gbValidLength.isValid(type: PhoneNumberType.tollFree), isFalse);
+      expect(gbValidLength.isValid(type: PhoneNumberType.premiumRate), isFalse);
+      expect(gbValidLength.isValid(type: PhoneNumberType.sharedCost), isFalse);
+      expect(
+        gbValidLength.isValid(type: PhoneNumberType.personalNumber),
+        isFalse,
+      );
+      expect(gbValidLength.isValid(type: PhoneNumberType.uan), isFalse);
+      expect(gbValidLength.isValid(type: PhoneNumberType.pager), isFalse);
+      expect(gbValidLength.isValid(type: PhoneNumberType.voiceMail), isFalse);
       expect(gbValidLength.isValid(), isFalse);
       final gbValidPattern =
           PhoneNumber.parse('7111111111', destinationCountry: IsoCode.GB);
