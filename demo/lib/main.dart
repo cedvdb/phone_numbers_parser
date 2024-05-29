@@ -60,59 +60,127 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             const SizedBox(height: 12),
-            ListTile(
-              title: const Text('international'),
-              trailing: phoneNumber != null
-                  ? Text(phoneNumber.international)
-                  : const Text('-'),
-            ),
-            ListTile(
-              title: const Text('Formatted national'),
-              trailing: phoneNumber != null
-                  ? Text(phoneNumber.formatNsn())
-                  : const Text('-'),
-            ),
-            ListTile(
-              title: const Text('Iso code'),
-              trailing: phoneNumber != null
-                  ? Text(phoneNumber.isoCode.name)
-                  : const Text('-'),
-            ),
-            ListTile(
-              title: const Text('Country Dial Code'),
-              trailing: phoneNumber != null
-                  ? Text(phoneNumber.countryCode)
-                  : const Text('-'),
-            ),
-            ListTile(
-              title: const Text('Is Valid'),
-              trailing: phoneNumber != null
-                  ? Text(phoneNumber.isValid().toString())
-                  : const Text('-'),
-            ),
-            ListTile(
-              title: const Text('Is Valid Mobile'),
-              trailing: phoneNumber != null
-                  ? Text(phoneNumber
-                      .isValid(type: PhoneNumberType.mobile)
-                      .toString())
-                  : const Text('-'),
-            ),
-            ListTile(
-              title: const Text('Is Valid Fixed Line'),
-              trailing: phoneNumber != null
-                  ? Text(phoneNumber
-                      .isValid(type: PhoneNumberType.fixedLine)
-                      .toString())
-                  : const Text('-'),
-            ),
-            ListTile(
-              title: const Text('Is Valid Voip'),
-              trailing: phoneNumber != null
-                  ? Text(phoneNumber
-                      .isValid(type: PhoneNumberType.voip)
-                      .toString())
-                  : const Text('-'),
+            Expanded(
+              child: CustomScrollView(
+                slivers: [
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        ListTile(
+                          title: const Text('international'),
+                          trailing: phoneNumber != null
+                              ? Text(phoneNumber.international)
+                              : const Text('-'),
+                        ),
+                        ListTile(
+                          title: const Text('Formatted national'),
+                          trailing: phoneNumber != null
+                              ? Text(phoneNumber.formatNsn())
+                              : const Text('-'),
+                        ),
+                        ListTile(
+                          title: const Text('Iso code'),
+                          trailing: phoneNumber != null
+                              ? Text(phoneNumber.isoCode.name)
+                              : const Text('-'),
+                        ),
+                        ListTile(
+                          title: const Text('Country Dial Code'),
+                          trailing: phoneNumber != null
+                              ? Text(phoneNumber.countryCode)
+                              : const Text('-'),
+                        ),
+                        ListTile(
+                          title: const Text('Is Valid'),
+                          trailing: phoneNumber != null
+                              ? Text(phoneNumber.isValid().toString())
+                              : const Text('-'),
+                        ),
+                        ListTile(
+                          title: const Text('Is Valid Mobile'),
+                          trailing: phoneNumber != null
+                              ? Text(phoneNumber
+                                  .isValid(type: PhoneNumberType.mobile)
+                                  .toString())
+                              : const Text('-'),
+                        ),
+                        ListTile(
+                          title: const Text('Is Valid Fixed Line'),
+                          trailing: phoneNumber != null
+                              ? Text(phoneNumber
+                                  .isValid(type: PhoneNumberType.fixedLine)
+                                  .toString())
+                              : const Text('-'),
+                        ),
+                        ListTile(
+                          title: const Text('Is Valid Voip'),
+                          trailing: phoneNumber != null
+                              ? Text(phoneNumber
+                                  .isValid(type: PhoneNumberType.voip)
+                                  .toString())
+                              : const Text('-'),
+                        ),
+                        ListTile(
+                          title: const Text('Is Valid Toll-Free'),
+                          trailing: phoneNumber != null
+                              ? Text(phoneNumber
+                                  .isValid(type: PhoneNumberType.tollFree)
+                                  .toString())
+                              : const Text('-'),
+                        ),
+                        ListTile(
+                          title: const Text('Is Valid Premium Rate'),
+                          trailing: phoneNumber != null
+                              ? Text(phoneNumber
+                                  .isValid(type: PhoneNumberType.premiumRate)
+                                  .toString())
+                              : const Text('-'),
+                        ),
+                        ListTile(
+                          title: const Text('Is Valid Shared Cost'),
+                          trailing: phoneNumber != null
+                              ? Text(phoneNumber
+                                  .isValid(type: PhoneNumberType.sharedCost)
+                                  .toString())
+                              : const Text('-'),
+                        ),
+                        ListTile(
+                          title: const Text('Is Valid Personal Number'),
+                          trailing: phoneNumber != null
+                              ? Text(phoneNumber
+                                  .isValid(type: PhoneNumberType.personalNumber)
+                                  .toString())
+                              : const Text('-'),
+                        ),
+                        ListTile(
+                          title: const Text('Is Valid UAN'),
+                          trailing: phoneNumber != null
+                              ? Text(phoneNumber
+                                  .isValid(type: PhoneNumberType.uan)
+                                  .toString())
+                              : const Text('-'),
+                        ),
+                        ListTile(
+                          title: const Text('Is Valid Pager'),
+                          trailing: phoneNumber != null
+                              ? Text(phoneNumber
+                                  .isValid(type: PhoneNumberType.pager)
+                                  .toString())
+                              : const Text('-'),
+                        ),
+                        ListTile(
+                          title: const Text('Is Valid Voice Mail'),
+                          trailing: phoneNumber != null
+                              ? Text(phoneNumber
+                                  .isValid(type: PhoneNumberType.voiceMail)
+                                  .toString())
+                              : const Text('-'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
