@@ -180,6 +180,47 @@ void main() {
           isTrue,
         );
       });
+
+      // Italy has different lengths for different formats
+      test('IT', () {
+        final isoCode = IsoCode.IT;
+        final examples = metadataExamplesByIsoCode[isoCode]!;
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.sharedCost, // Can be 6 or 9
+            PhoneNumberType.voip, // Can be 10
+          ),
+          isFalse,
+        );
+
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.voip, // Can be 10
+            PhoneNumberType.sharedCost, // Can be 6 or 9
+          ),
+          isFalse,
+        );
+
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.voiceMail, // Can be 11 or 12
+            PhoneNumberType.personalNumber, // Can be 9 or 10
+          ),
+          isFalse,
+        );
+
+        expect(
+          Validator.validateWithLength(
+            isoCode,
+            examples.personalNumber, // Can be 9 or 10
+            PhoneNumberType.voiceMail, // Can be 11 or 12
+          ),
+          isFalse,
+        );
+      });
     });
 
     group('ValidateWithPattern()', () {
