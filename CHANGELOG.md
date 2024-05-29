@@ -1,3 +1,6 @@
+## 8.3.0
+- added support for remaining phoneNumberTypes (thanks @cottonman132 )
+
 ## 8.2.2
 - update metadata
 
