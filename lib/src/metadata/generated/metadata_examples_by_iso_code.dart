@@ -1840,7 +1840,7 @@ const metadataExamplesByIsoCode = {
   ),
   IsoCode.MX: PhoneMetadataExamples(
     fixedLine: r"2001234567",
-    mobile: r"12221234567",
+    mobile: r"2221234567",
     voip: r"",
     tollFree: r"8001234567",
     premiumRate: r"9001234567",
@@ -2729,7 +2729,7 @@ const metadataExamplesByIsoCode = {
   IsoCode.US: PhoneMetadataExamples(
     fixedLine: r"2015550123",
     mobile: r"2015550123",
-    voip: r"",
+    voip: r"3052090123",
     tollFree: r"8002345678",
     premiumRate: r"9002345678",
     sharedCost: r"",

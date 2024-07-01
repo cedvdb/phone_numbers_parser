@@ -1993,7 +1993,7 @@ const metadataLenghtsByIsoCode = {
   ),
   IsoCode.MX: PhoneMetadataLengths(
     general: [],
-    mobile: [10, 11],
+    mobile: [10],
     fixedLine: [10],
     voip: [],
     tollFree: [10],
@@ -2957,7 +2957,7 @@ const metadataLenghtsByIsoCode = {
     general: [],
     mobile: [10],
     fixedLine: [10],
-    voip: [],
+    voip: [10],
     tollFree: [10],
     premiumRate: [10],
     sharedCost: [],
