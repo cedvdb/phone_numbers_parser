@@ -341,7 +341,7 @@ const metadataExamplesByIsoCode = {
   IsoCode.BO: PhoneMetadataExamples(
     fixedLine: r"22123456",
     mobile: r"71234567",
-    voip: r"",
+    voip: r"50123456",
     tollFree: r"800171234",
     premiumRate: r"",
     sharedCost: r"",
@@ -2287,7 +2287,7 @@ const metadataExamplesByIsoCode = {
     mobile: r"2510123",
     voip: r"6412345",
     tollFree: r"8000000",
-    premiumRate: r"",
+    premiumRate: r"8512345",
     sharedCost: r"",
     personalNumber: r"",
     uan: r"",

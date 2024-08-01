@@ -638,7 +638,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d)(\d{7})",
       nationalPrefixFormattingRule: null,
-      leadingDigits: ["[23]|4[46]"],
+      leadingDigits: ["[235]|4[46]"],
       format: r"$1 $2",
       intlFormat: null,
     ),
@@ -1028,9 +1028,9 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
       pattern: r"(\d{5,6})",
       nationalPrefixFormattingRule: null,
       leadingDigits: [
-        "1(?:00|2[13])|95",
-        "1(?:00|2(?:11|39))|95",
-        "1(?:00|2(?:110|395))|95"
+        "1(?:00|2[13])|9[56]",
+        "1(?:00|2(?:1|39))|9[56]",
+        "1(?:00|2(?:1|395))|9[56]"
       ],
       format: r"$1",
       intlFormat: r"NA",
@@ -1038,7 +1038,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{5,6})",
       nationalPrefixFormattingRule: null,
-      leadingDigits: ["10|96"],
+      leadingDigits: ["10"],
       format: r"$1",
       intlFormat: r"NA",
     ),
@@ -2913,7 +2913,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{2})(\d{3})(\d{4})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["60|8"],
+      leadingDigits: ["[36]0|8"],
       format: r"$1-$2-$3",
       intlFormat: null,
     ),
@@ -2989,7 +2989,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{2})(\d{2})(\d{2})(\d{3})",
       nationalPrefixFormattingRule: r"$NP$FG",
-      leadingDigits: ["30[013-9]"],
+      leadingDigits: ["30[0135-9]"],
       format: r"$1 $2 $3 $4",
       intlFormat: null,
     ),
@@ -5077,7 +5077,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{
     PhoneMetadataFormat(
       pattern: r"(\d{4})(\d)(\d{4})",
       nationalPrefixFormattingRule: null,
-      leadingDigits: ["3[1-5]"],
+      leadingDigits: ["3(?:[1245]|3[12])"],
       format: r"$1 $2 $3",
       intlFormat: null,
     ),
