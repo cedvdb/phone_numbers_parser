@@ -1,3 +1,7 @@
+## 9.0.0
+- Added a format parameter to choose between international and national format
+- Format now uses the national format by default
+
 ## 8.3.0
 - added support for remaining phoneNumberTypes (thanks @cottonman132 )
 

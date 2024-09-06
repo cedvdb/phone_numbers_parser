@@ -7,9 +7,18 @@ import 'package:phone_numbers_parser/src/regex/match_entirely_extension.dart';
 import '../metadata/models/phone_metadata_formats.dart';
 import '../iso_codes/iso_code.dart';
 
+enum NsnFormat {
+  national,
+  international,
+}
+
 class PhoneNumberFormatter {
   /// format national number for international use
-  static String formatNsn(String nsn, IsoCode isoCode) {
+  static String formatNsn(
+    String nsn,
+    IsoCode isoCode, [
+    NsnFormat format = NsnFormat.national,
+  ]) {
     if (nsn.isEmpty) {
       return nsn;
     }
@@ -31,7 +40,9 @@ class PhoneNumberFormatter {
     var transformRule = formatingRule.format;
     // if there is an international format, we use it
     final intlFormat = formatingRule.intlFormat;
-    if (intlFormat != null && intlFormat != 'NA') {
+    if (format == NsnFormat.international &&
+        intlFormat != null &&
+        intlFormat != 'NA') {
       transformRule = intlFormat;
     }
 
@@ -78,7 +89,9 @@ class PhoneNumberFormatter {
     return missingDigits;
   }
 
-  /// gets the matching format rule
+  /// gets the matching format rule,
+  /// if there is only one formatting rule return it,
+  /// else finds the formatting rule that better matches the phone number
   static PhoneMetadataFormat? _getMatchingFormatRules({
     required PhoneMetadataFormats formatingRules,
     required String nsn,

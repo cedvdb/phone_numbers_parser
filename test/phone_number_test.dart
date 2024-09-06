@@ -244,10 +244,39 @@ void main() {
   });
 
   group('format', () {
-    test('should format', () {
+    test('should format with the national format by default', () {
       String format(String phoneNumber) =>
           PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.US)
               .formatNsn();
+
+      var testNumber = '';
+      expect(format(testNumber), equals(''));
+      testNumber = '2';
+      expect(format(testNumber), equals('(2'));
+      testNumber = '20';
+      expect(format(testNumber), equals('(20'));
+      testNumber = '202';
+      expect(format(testNumber), equals('(202)'));
+      testNumber = '2025';
+      expect(format(testNumber), equals('(202) 5'));
+      testNumber = '20255';
+      expect(format(testNumber), equals('(202) 55'));
+      testNumber = '202555';
+      expect(format(testNumber), equals('(202) 555'));
+      testNumber = '2025550';
+      expect(format(testNumber), equals('(202) 555-0'));
+      testNumber = '20255501';
+      expect(format(testNumber), equals('(202) 555-01'));
+      testNumber = '202555011';
+      expect(format(testNumber), equals('(202) 555-011'));
+      testNumber = '2025550119';
+      expect(format(testNumber), equals('(202) 555-0119'));
+    });
+
+    test('should format with the international format when specified', () {
+      String format(String phoneNumber) =>
+          PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.US)
+              .formatNsn(format: NsnFormat.international);
 
       var testNumber = '';
       expect(format(testNumber), equals(''));
