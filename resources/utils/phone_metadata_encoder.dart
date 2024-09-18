@@ -51,6 +51,19 @@ String encodeLengths(PhoneMetadataLengths lengths) {
     )''';
 }
 
+String encodeFormatDefinition(PhoneMetadataFormatDefinition definition) {
+  if (definition is PhoneMetadataFormatReferenceDefinition) {
+    return '''PhoneMetadataFormatReferenceDefinition(
+      referenceIsoCode: ${definition.referenceIsoCode},
+    )''';
+  } else if (definition is PhoneMetadataFormatListDefinition) {
+    return '''PhoneMetadataFormatListDefinition(
+      formats: [${definition.formats.map(encodeFormats).join(', ')}],
+    )''';
+  }
+  throw ArgumentError('Unknown definition type: $definition');
+}
+
 String encodeFormats(PhoneMetadataFormat formats) {
   return '''PhoneMetadataFormat(
       pattern: ${_enc(formats.pattern)},

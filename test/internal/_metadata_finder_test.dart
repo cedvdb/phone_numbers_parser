@@ -35,6 +35,12 @@ void main() {
       }
     });
 
+    test('should get formats metadata for iso code going through references',
+        () {
+      expect(MetadataFinder.findMetadataFormatsForIsoCode(IsoCode.CA),
+          equals(MetadataFinder.findMetadataFormatsForIsoCode(IsoCode.US)));
+    });
+
     test('should get metadata for country calling code', () {
       expect(MetadataFinder.findMetadataForCountryCode('33', '123456')?.isoCode,
           equals(IsoCode.FR));

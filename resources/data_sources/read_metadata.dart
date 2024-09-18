@@ -28,15 +28,28 @@ Future<Map<IsoCode, PhoneMetadataLengths>> getMetadataLengths() async {
       PhoneMetadataLengths.fromMap(value['lengths'])));
 }
 
-Future<Map<IsoCode, PhoneMetadataFormats>> getMetadataFormats() async {
+Future<Map<IsoCode, PhoneMetadataFormatDefinition>> getMetadataFormats() async {
   final info = await readMetadataJson();
+  final referencesByCountryCode = <String, IsoCode>{};
+  info.forEach((key, value) {
+    if (value['isMainCountryForDialCode']) {
+      referencesByCountryCode[value['countryCode']] =
+          IsoCode.values.byName(key.toUpperCase());
+    }
+  });
   return info.map((key, value) {
-    PhoneMetadataFormats converted;
-    converted = (value['formats'] as List)
-        .map((v) => PhoneMetadataFormat.fromMap(v))
-        .toList();
+    PhoneMetadataFormatDefinition formatDefinition;
+    String countryCode = value['countryCode'];
+    bool isMainCountryForDialCode = value['isMainCountryForDialCode'];
+    if (!isMainCountryForDialCode &&
+        referencesByCountryCode.containsKey(countryCode)) {
+      formatDefinition = PhoneMetadataFormatReferenceDefinition(
+          referenceIsoCode: referencesByCountryCode[countryCode]!);
+    } else {
+      formatDefinition = PhoneMetadataFormatListDefinition.fromMap(value);
+    }
 
-    return MapEntry(IsoCode.values.byName(key.toUpperCase()), converted);
+    return MapEntry(IsoCode.values.byName(key.toUpperCase()), formatDefinition);
   });
 }
 
