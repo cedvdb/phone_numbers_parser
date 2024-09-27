@@ -91,13 +91,14 @@ Future writeLenghtsMapFile(Map<IsoCode, PhoneMetadataLengths> metadata) async {
   await file.writeAsString(content);
 }
 
-Future writeFormatsMapFile(Map<IsoCode, PhoneMetadataFormats> metadata) async {
+Future writeFormatsMapFile(
+    Map<IsoCode, PhoneMetadataFormatDefinition> metadata) async {
   var content = '$isoCodeImport'
       'import "../models/phone_metadata_formats.dart";'
-      'const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormats>{%%};';
+      'const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormatDefinition>{%%};';
   var body = '';
   metadata.forEach((key, value) {
-    body += '$key: [${(value).map((f) => encodeFormats(f)).join(',')}],';
+    body += '$key: ${encodeFormatDefinition(value)},';
   });
   content = content.replaceFirst('%%', body);
   final file = await File('$baseFolder/metadata_formats_by_iso_code.dart')

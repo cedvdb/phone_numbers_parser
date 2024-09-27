@@ -325,6 +325,15 @@ void main() {
       expect(format(testNumber), equals('6 89 55 55 5'));
       testNumber = '689555555';
     });
+
+    test('should format through a format reference', () {
+      String format(String phoneNumber) =>
+          PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.CA)
+              .formatNsn(isoCode: IsoCode.CA);
+
+      var testNumber = '4185551212';
+      expect(format(testNumber), equals('(418) 555-1212'));
+    });
   });
 
   group('range', () {

@@ -49,14 +49,24 @@ abstract class MetadataFinder {
   }
 
   static PhoneMetadataFormats findMetadataFormatsForIsoCode(IsoCode isoCode) {
-    final metadata = metadataFormatsByIsoCode[isoCode];
+    var metadata = metadataFormatsByIsoCode[isoCode];
+    if (metadata is PhoneMetadataFormatReferenceDefinition) {
+      metadata = metadataFormatsByIsoCode[metadata.referenceIsoCode];
+    }
     if (metadata == null) {
       throw PhoneNumberException(
         code: Code.invalidIsoCode,
         description: 'isoCode "$isoCode" not found',
       );
     }
-    return metadata;
+    if (metadata is! PhoneMetadataFormatListDefinition) {
+      throw PhoneNumberException(
+        code: Code.invalidIsoCode,
+        description:
+            'isoCode "$isoCode" reference not a format list: $metadata',
+      );
+    }
+    return metadata.formats;
   }
 
   /// expects normalized countryCode

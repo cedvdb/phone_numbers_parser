@@ -1,6 +1,35 @@
 import 'dart:convert';
 
+import '../../iso_codes/iso_code.dart';
+
 typedef PhoneMetadataFormats = List<PhoneMetadataFormat>;
+
+abstract class PhoneMetadataFormatDefinition {}
+
+class PhoneMetadataFormatReferenceDefinition
+    implements PhoneMetadataFormatDefinition {
+  final IsoCode referenceIsoCode;
+
+  const PhoneMetadataFormatReferenceDefinition({
+    required this.referenceIsoCode,
+  });
+}
+
+class PhoneMetadataFormatListDefinition
+    implements PhoneMetadataFormatDefinition {
+  final PhoneMetadataFormats formats;
+
+  const PhoneMetadataFormatListDefinition({
+    required this.formats,
+  });
+
+  factory PhoneMetadataFormatListDefinition.fromMap(Map<String, dynamic> map) {
+    return PhoneMetadataFormatListDefinition(
+      formats: List<PhoneMetadataFormat>.from(
+          map['formats']?.map((x) => PhoneMetadataFormat.fromMap(x))),
+    );
+  }
+}
 
 class PhoneMetadataFormat {
   final String pattern;
