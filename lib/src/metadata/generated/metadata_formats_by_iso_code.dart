@@ -1277,6 +1277,13 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormatDefinition>{
   IsoCode.CO: PhoneMetadataFormatListDefinition(
     formats: [
       PhoneMetadataFormat(
+        pattern: r"(\d{4})(\d{4})",
+        nationalPrefixFormattingRule: null,
+        leadingDigits: ["46"],
+        format: r"$1 $2",
+        intlFormat: null,
+      ),
+      PhoneMetadataFormat(
         pattern: r"(\d{3})(\d{7})",
         nationalPrefixFormattingRule: r"($FG)",
         leadingDigits: ["6|90"],
@@ -3688,7 +3695,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormatDefinition>{
         pattern: r"(\d{2})(\d{2})(\d{3})",
         nationalPrefixFormattingRule: r"$NP$FG",
         leadingDigits: [
-          "[45]|6(?:0[23]|[1-689]|7[235-7])|7(?:[0-4]|5[2-7])|8[1-6]"
+          "4(?:[2-46]|5[3-5])|5|6(?:[1-689]|7[235-7])|7(?:[0-4]|5[2-7])|8[1-5]|(?:60|86)[23]"
         ],
         format: r"$1 $2 $3",
         intlFormat: null,
@@ -3696,7 +3703,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormatDefinition>{
       PhoneMetadataFormat(
         pattern: r"(\d)(\d{3})(\d{3,4})",
         nationalPrefixFormattingRule: r"$NP$FG",
-        leadingDigits: ["[12]"],
+        leadingDigits: ["[12]|452|678|86", "[12]|452|6788|86"],
         format: r"$1 $2 $3",
         intlFormat: null,
       ),
@@ -3812,7 +3819,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormatDefinition>{
       PhoneMetadataFormat(
         pattern: r"(\d{3})(\d{2})(\d{2})(\d{2})",
         nationalPrefixFormattingRule: r"$NP$FG",
-        leadingDigits: ["[569]"],
+        leadingDigits: ["[569]|8(?:0[6-9]|[36])"],
         format: r"$1 $2 $3 $4",
         intlFormat: null,
       ),
@@ -6006,7 +6013,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormatDefinition>{
       PhoneMetadataFormat(
         pattern: r"(\d{2})(\d{2})(\d{2})",
         nationalPrefixFormattingRule: null,
-        leadingDigits: ["[478]"],
+        leadingDigits: ["[47-9]"],
         format: r"$1 $2 $3",
         intlFormat: null,
       ),
