@@ -407,4 +407,51 @@ void main() {
       expect(zero.isSequentialTo(two), isFalse);
     });
   });
+  group(
+      'format national phone number if transformRule does not start with \$1. example: (\$2 15-\$3-\$4)(AR)',
+      () {
+    test('should return the formated phone number not the transformRule string',
+        () {
+      String format(String phoneNumber) =>
+          PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.AR)
+              .formatNsn();
+      var testNumber = '';
+      expect(format(testNumber), equals(''));
+      testNumber = '5';
+      expect(format(testNumber), equals('5'));
+      testNumber = '54';
+      expect(format(testNumber), equals('54'));
+      testNumber = '549';
+      expect(format(testNumber), equals('549'));
+      testNumber = '5492';
+      expect(format(testNumber), equals('5492'));
+      testNumber = '54926';
+      expect(format(testNumber), equals('54926'));
+      testNumber = '549261';
+      expect(format(testNumber), equals('549261'));
+      testNumber = '5492615';
+      expect(format(testNumber), equals('5492615'));
+      testNumber = '54926153';
+      expect(format(testNumber), equals('54926153'));
+      testNumber = '549261532';
+      expect(format(testNumber), equals('549261532'));
+      testNumber = '5492615325';
+      expect(format(testNumber), equals('5492615325'));
+
+      testNumber = '54926153256';
+      expect(format(testNumber), equals('54926153256'));
+      testNumber = '549261532565';
+      expect(format(testNumber), equals('549261532565'));
+      testNumber = '5492615325656';
+      expect(format(testNumber), equals('261 15-532-5656'));
+      testNumber = '+5492615325656';
+      expect(format(testNumber), equals('261 15-532-5656'));
+      testNumber = '54 9 261-5325 656';
+      expect(format(testNumber), equals('261 15-532-5656'));
+      testNumber = '54-9-261-5325-656';
+      expect(format(testNumber), equals('261 15-532-5656'));
+      testNumber = '54.9.261.5325.656';
+      expect(format(testNumber), equals('261 15-532-5656'));
+    });
+  });
 }
