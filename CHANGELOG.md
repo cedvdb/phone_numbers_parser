@@ -1,3 +1,6 @@
+## 9.0.2
+- Fix format for argentinian phone number 
+
 ## 9.0.1
 - Fix wrong format for some countries 
 
