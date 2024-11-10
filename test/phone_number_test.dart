@@ -410,8 +410,7 @@ void main() {
   group(
       'format national phone number if transformRule does not start with \$1. example: (\$2 15-\$3-\$4)(AR)',
       () {
-    test('should return the formated phone number not the transformRule string',
-        () {
+    test('should format argentinian phone numbers', () {
       String format(String phoneNumber) =>
           PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.AR)
               .formatNsn();
