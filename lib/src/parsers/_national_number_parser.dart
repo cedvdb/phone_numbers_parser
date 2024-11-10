@@ -73,9 +73,7 @@ abstract class NationalNumberParser {
 
     var transformed = transformRule;
     bool shouldContinueLoop(int i) =>
-        match.groupCount >= i &&
-        match.group(i) != null &&
-        transformed.contains('\$$i');
+        match.groupCount >= i && match.group(i) != null;
     for (var i = 1; shouldContinueLoop(i); i++) {
       transformed = transformed.replaceFirst('\$$i', match.group(i)!);
     }
