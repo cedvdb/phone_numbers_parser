@@ -1,5 +1,4 @@
-name: Update Metadata
-
+name: Update Metadata and Publish
 on:
   schedule:
     # At 12:00 AM, on day 1 of each month
@@ -7,31 +6,49 @@ on:
   workflow_dispatch:
 
 jobs:
-  generate:
+  update-and-publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: dart-lang/setup-dart@v1
-
+      
       - name: Install dependencies
         run: dart pub get
-
+      
       - name: Fetch LibPhoneNumber Metadata
         run: curl -o resources/data_sources/PhoneNumberMetadata.xml https://raw.githubusercontent.com/google/libphonenumber/master/resources/PhoneNumberMetadata.xml
-
+      
       - name: Process Metadata
         run: dart resources/data_sources/convert_metadata.dart
-
+      
       - name: Generate Files
         run: |
           dart pub get
           dart resources/generate_files.dart && dart format lib/src && dart fix --apply
-
+      
+      - name: Update Version
+        run: |
+          # Read the current version from pubspec.yaml
+          CURRENT_VERSION=$(grep 'version:' pubspec.yaml | sed 's/version: //')
+          # Increment the patch version
+          NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
+          # Update pubspec.yaml with new version
+          sed -i "s/version: $CURRENT_VERSION/version: $NEW_VERSION/" pubspec.yaml
+      
       - name: Commit and Push Updated Files
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add .
-          git commit -m "Update Metadata" || echo "Nothing to commit!"
+          git commit -m "Update Metadata and bump version" || echo "Nothing to commit!"
           git push
+      
+      - name: Publish to pub.dev
+        env:
+          PUB_CREDENTIALS: ${{ secrets.PUB_CREDENTIALS }}
+        run: |
+          # Create credentials file
+          mkdir -p ~/.pub-cache
+          echo "$PUB_CREDENTIALS" > ~/.pub-cache/credentials.json
+          # Publish package
+          dart pub publish --force
