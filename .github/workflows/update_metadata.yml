@@ -32,12 +32,11 @@ jobs:
       
       - name: Update Version and Create Tag
         run: |
-          # Read the current version from pubspec.yaml
-          CURRENT_VERSION=$(grep 'version:' pubspec.yaml | sed 's/version: //')
-          # Increment the patch version
-          NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
-          # Update pubspec.yaml with new version
-          sed -i "s/version: $CURRENT_VERSION/version: $NEW_VERSION/" pubspec.yaml
+          # Bump version
+          dart pub bump patch
+          
+          # Get the new version for the commit message
+          NEW_VERSION=$(grep 'version:' pubspec.yaml | sed 's/version: //')
           
           # Commit and push changes
           git config --global user.name "GitHub Actions"
