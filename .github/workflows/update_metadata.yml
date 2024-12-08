@@ -15,7 +15,9 @@ jobs:
           fetch-depth: 0  # Needed for git describe
       
       - uses: dart-lang/setup-dart@v1
-      
+        # using beta channel for the time being for using the `dart pub bump` command
+        with:
+          sdk: 'beta'
       - name: Install dependencies
         run: dart pub get
       
