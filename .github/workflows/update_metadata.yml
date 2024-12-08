@@ -7,31 +7,44 @@ on:
   workflow_dispatch:
 
 jobs:
-  generate:
+  update:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0  # Needed for git describe
+      
       - uses: dart-lang/setup-dart@v1
-
+      
       - name: Install dependencies
         run: dart pub get
-
+      
       - name: Fetch LibPhoneNumber Metadata
         run: curl -o resources/data_sources/PhoneNumberMetadata.xml https://raw.githubusercontent.com/google/libphonenumber/master/resources/PhoneNumberMetadata.xml
-
+      
       - name: Process Metadata
         run: dart resources/data_sources/convert_metadata.dart
-
+      
       - name: Generate Files
         run: |
           dart pub get
           dart resources/generate_files.dart && dart format lib/src && dart fix --apply
-
-      - name: Commit and Push Updated Files
+      
+      - name: Update Version and Create Tag
         run: |
+          # Bump version
+          dart pub bump patch
+          
+          # Get the new version for the commit message
+          NEW_VERSION=$(grep 'version:' pubspec.yaml | sed 's/version: //')
+          
+          # Commit and push changes
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add .
-          git commit -m "Update Metadata" || echo "Nothing to commit!"
+          git commit -m "Update Metadata and bump version to $NEW_VERSION" || exit 0
           git push
+          
+          # Create and push tag
+          git tag "v$NEW_VERSION"
+          git push origin "v$NEW_VERSION"
