@@ -441,7 +441,7 @@ const metadataExamplesByIsoCode = {
     tollFree: r"8002123456",
     premiumRate: r"9002123456",
     sharedCost: r"",
-    personalNumber: r"5002345678",
+    personalNumber: r"5219023456",
     uan: r"3101234",
     pager: r"",
     voiceMail: r"",
@@ -1451,7 +1451,7 @@ const metadataExamplesByIsoCode = {
     sharedCost: r"",
     personalNumber: r"5002345678",
     uan: r"",
-    pager: r"3458491234",
+    pager: r"",
     voiceMail: r"",
   ),
   IsoCode.KZ: PhoneMetadataExamples(

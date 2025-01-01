@@ -1572,7 +1572,7 @@ const metadataLenghtsByIsoCode = {
     sharedCost: [],
     personalNumber: [10],
     uan: [],
-    pager: [10],
+    pager: [],
     voiceMail: [],
   ),
   IsoCode.KZ: PhoneMetadataLengths(
