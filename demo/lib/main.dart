@@ -87,6 +87,17 @@ class _MyHomePageState extends State<MyHomePage> {
                               : const Text('-'),
                         ),
                         ListTile(
+                          title: const Text('Formatted with country code'),
+                          trailing: phoneNumber != null
+                              ? Text(
+                                  phoneNumber.formatNsn(
+                                    format: NsnFormat.international,
+                                    showCountyCode: true,
+                                  ),
+                                )
+                              : const Text('-'),
+                        ),
+                        ListTile(
                           title: const Text('Iso code'),
                           trailing: phoneNumber != null
                               ? Text(phoneNumber.isoCode.name)

@@ -64,8 +64,8 @@ class PhoneNumber {
       );
 
   /// formats the nsn, if no [isoCode] is provided the phone number region is used.
-  String formatNsn({IsoCode? isoCode, NsnFormat format = NsnFormat.national}) =>
-      PhoneNumberFormatter.formatNsn(nsn, isoCode ?? this.isoCode, format);
+  String formatNsn({IsoCode? isoCode, NsnFormat format = NsnFormat.national, bool showCountyCode = false}) =>
+      PhoneNumberFormatter.formatNsn(nsn, isoCode ?? this.isoCode, format, showCountyCode);
 
   @Deprecated('Use [formatNsn] instead')
   String getFormattedNsn({IsoCode? isoCode}) => formatNsn(isoCode: isoCode);
