@@ -90,9 +90,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           title: const Text('Formatted with country code'),
                           trailing: phoneNumber != null
                               ? Text(
-                                  phoneNumber.formatNsn(
+                                  phoneNumber.format(
                                     format: NsnFormat.international,
-                                    showCountyCode: true,
                                   ),
                                 )
                               : const Text('-'),

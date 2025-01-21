@@ -18,7 +18,6 @@ class PhoneNumberFormatter {
     String nsn,
     IsoCode isoCode, [
     NsnFormat format = NsnFormat.national,
-    bool showCountyCode = false,
   ]) {
     if (nsn.isEmpty) {
       return nsn;
@@ -54,10 +53,6 @@ class PhoneNumberFormatter {
     );
 
     formatted = _removeMissingDigits(formatted, missingDigits);
-
-    if (showCountyCode) {
-      formatted = '+${MetadataFinder.findMetadataForIsoCode(isoCode).countryCode} $formatted';
-    }
 
     return formatted;
   }
