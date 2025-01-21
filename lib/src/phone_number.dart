@@ -68,10 +68,7 @@ class PhoneNumber {
       PhoneNumberFormatter.formatNsn(nsn, isoCode ?? this.isoCode, format);
 
   String format({IsoCode? isoCode, NsnFormat format = NsnFormat.national}) {
-    final countryCode = '+${MetadataFinder.findMetadataForIsoCode(isoCode ?? this.isoCode).countryCode}';
-    final formatted = formatNsn(isoCode: isoCode, format: format);
-
-    return '$countryCode $formatted';
+    return '+$countryCode ${formatNsn(isoCode: isoCode, format: format)}';
   }
 
   @Deprecated('Use [formatNsn] instead')
