@@ -1230,7 +1230,7 @@ const metadataLenghtsByIsoCode = {
     fixedLine: [8, 9],
     voip: [],
     tollFree: [7, 8, 9],
-    premiumRate: [6, 7, 8],
+    premiumRate: [7, 8],
     sharedCost: [],
     personalNumber: [8],
     uan: [8, 9],
@@ -1962,7 +1962,7 @@ const metadataLenghtsByIsoCode = {
     sharedCost: [],
     personalNumber: [],
     uan: [],
-    pager: [],
+    pager: [7],
     voiceMail: [],
   ),
   IsoCode.MV: PhoneMetadataLengths(
@@ -2085,7 +2085,7 @@ const metadataLenghtsByIsoCode = {
   IsoCode.NG: PhoneMetadataLengths(
     general: [],
     mobile: [10],
-    fixedLine: [8, 10],
+    fixedLine: [10],
     voip: [],
     tollFree: [10, 11, 12, 13, 14],
     premiumRate: [],

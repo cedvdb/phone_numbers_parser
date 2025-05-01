@@ -2176,6 +2176,25 @@
             )6|
             51|
             6(?:
+              48|
+              5[0-3579]|
+              [6-9]
+            )|
+            7(?:
+              20|
+              32|
+              8
+            )|
+            [89]
+          </leadingDigits>
+          <leadingDigits>
+            (?:
+              31|
+              4
+            )6|
+            51|
+            6(?:
+              485|
               5[0-3579]|
               [6-9]
             )|
@@ -2244,13 +2263,14 @@
           )|
           (?:
             316|
-            463|
-            (?:
-              51|
-              66|
-              73
-            )2
+            463
           )\d{3,10}|
+          648[34]\d{3,9}|
+          (?:
+            51|
+            66|
+            73
+          )2\d{3,10}|
           (?:
             2(?:
               1[467]|
@@ -2285,7 +2305,7 @@
             6(?:
               13|
               2[1-47]|
-              4[135-8]|
+              4[135-7]|
               5[468]
             )|
             7(?:
@@ -2305,10 +2325,13 @@
         <exampleNumber>664123456</exampleNumber>
         <nationalNumberPattern>
           6(?:
-            5[0-3579]|
-            6[013-9]|
-            [7-9]\d
-          )\d{4,10}
+            485|
+            (?:
+              5[0-3579]|
+              6[013-9]|
+              [7-9]\d
+            )\d
+          )\d{3,9}
         </nationalNumberPattern>
       </mobile>
       <tollFree>
@@ -4057,6 +4080,7 @@
         <possibleLengths national="8"/>
         <exampleNumber>79561234</exampleNumber>
         <nationalNumberPattern>
+          64[0-2]\d{5}|
           (?:
             29|
             [67][125-9]
@@ -4593,15 +4617,20 @@
             300|
             4(?:
               0[02]|
-              37
+              37|
+              86
             )
           </leadingDigits>
           <leadingDigits>
+            300|
             4(?:
-              02|
-              37
-            )0|
-            [34]00
+              0(?:
+                0|
+                20
+              )|
+              370|
+              864
+            )
           </leadingDigits>
           <format>$1-$2</format>
         </numberFormat>
@@ -4662,30 +4691,31 @@
       </availableFormats>
       <generalDesc>
         <nationalNumberPattern>
+          [1-467]\d{9,10}|
+          55[0-46-9]\d{8}|
+          [34]\d{7}|
+          55\d{7,8}|
           (?:
-            [1-46-9]\d\d|
-            5(?:
-              [0-46-9]\d|
-              5[0-46-9]
-            )
-          )\d{8}|
-          [1-9]\d{9}|
-          [3589]\d{8}|
-          [34]\d{7}
+            5[0-46-9]|
+            [89]\d
+          )\d{7,9}
         </nationalNumberPattern>
       </generalDesc>
       <noInternationalDialling>
         <possibleLengths national="[8-10]"/>
         <nationalNumberPattern>
-          30(?:
-            0\d{5,7}|
-            3\d{7}
-          )|
-          40(?:
-            0\d|
-            20
+          (?:
+            30[03]\d{3}|
+            4(?:
+              0(?:
+                0\d|
+                20
+              )|
+              864
+            )
           )\d{4}|
-          800\d{6,7}
+          800\d{6,7}|
+          300\d{5}
         </nationalNumberPattern>
       </noInternationalDialling>
       <!-- 52 is not added as an area code even though ITU mentions it, since it is not yet
@@ -4730,13 +4760,10 @@
       </tollFree>
       <premiumRate>
         <possibleLengths national="9,10"/>
-        <exampleNumber>300123456</exampleNumber>
-        <nationalNumberPattern>
-          300\d{6}|
-          [59]00\d{6,7}
-        </nationalNumberPattern>
+        <exampleNumber>500123456</exampleNumber>
+        <nationalNumberPattern>[59]00\d{6,7}</nationalNumberPattern>
       </premiumRate>
-      <!-- Supported 4370 as shared cost based on user report. -->
+      <!-- Supported 4370 & 4864 as shared cost based on user report. -->
       <sharedCost>
         <possibleLengths national="8,10"/>
         <exampleNumber>40041234</exampleNumber>
@@ -4748,7 +4775,8 @@
                 0\d|
                 20
               )|
-              370
+              370|
+              864
             )
           )\d{4}|
           300\d{5}
@@ -11747,7 +11775,7 @@
               [06]8|
               3[5-9]|
               4[0-4]|
-              5[579]|
+              5[59]|
               73|
               90
             )|
@@ -11771,7 +11799,7 @@
               1[04-9]|
               2[0-5]|
               49|
-              5[68]
+              5[6-8]
             )|
             5(?:
               2[01]|
@@ -13333,8 +13361,8 @@
                 6[0-4]
               )|
               7(?:
-                4[0-28]|
-                6[0-5]
+                [26][0-5]|
+                4[0-28]
               )
             )|
             5(?:
@@ -13343,7 +13371,8 @@
             )|
             6(?:
               26[013-8]|
-              66[0-3]
+              66[0-3]|
+              78[0-5]
             )|
             70(?:
               7[1-8]|
@@ -13591,8 +13620,8 @@
     <territory id="HR" countryCode="385" internationalPrefix="00" nationalPrefix="0"
                mobileNumberPortableRegion="true">
       <availableFormats>
-        <!-- For 6 and 7 digit numbers of premium rate. -->
-        <numberFormat pattern="(\d{2})(\d{2})(\d{2,3})" nationalPrefixFormattingRule="$NP$FG">
+        <!-- For 7 digit numbers of premium rate. -->
+        <numberFormat pattern="(\d{2})(\d{2})(\d{3})" nationalPrefixFormattingRule="$NP$FG">
           <leadingDigits>6[01]</leadingDigits>
           <format>$1 $2 $3</format>
         </numberFormat>
@@ -13631,13 +13660,10 @@
       </availableFormats>
       <generalDesc>
         <nationalNumberPattern>
-          (?:
-            [24-69]\d|
-            3[0-79]
-          )\d{7}|
+          [2-69]\d{8}|
           80\d{5,7}|
           [1-79]\d{7}|
-          6\d{5,6}
+          6\d{6}
         </nationalNumberPattern>
       </generalDesc>
       <fixedLine>
@@ -13682,11 +13708,11 @@
         <nationalNumberPattern>80\d{5,7}</nationalNumberPattern>
       </tollFree>
       <premiumRate>
-        <possibleLengths national="[6-8]"/>
-        <exampleNumber>611234</exampleNumber>
+        <possibleLengths national="7,8"/>
+        <exampleNumber>6001234</exampleNumber>
         <nationalNumberPattern>
           6[01459]\d{6}|
-          6[01]\d{4,5}
+          6[01]\d{5}
         </nationalNumberPattern>
       </premiumRate>
       <personalNumber>
@@ -19111,7 +19137,7 @@
         <nationalNumberPattern>
           7(?:
             62|
-            8[0-7]|
+            8[0-6]|
             9[04-9]
           )\d{4}|
           (?:
@@ -19131,10 +19157,7 @@
         <possibleLengths national="7,8"/>
         <exampleNumber>71123456</exampleNumber>
         <nationalNumberPattern>
-          793(?:
-            [01]\d|
-            2[0-4]
-          )\d{3}|
+          787\d{4}|
           (?:
             (?:
               3|
@@ -19144,7 +19167,7 @@
               [01]\d|
               6[013-9]|
               8[89]|
-              9[12]
+              9[1-3]
             )
           )\d{5}
         </nationalNumberPattern>
@@ -21914,7 +21937,7 @@
 
     <!-- Mauritius (MU) -->
     <!-- Preferred international prefix is expected to standardize on just '00' -->
-    <!-- http://www.icta.mu/telecommunications/numbering.htm -->
+    <!-- https://www.icta.mu/telecom-numbering/ -->
     <territory id="MU" countryCode="230" preferredInternationalPrefix="020"
                internationalPrefix="0(?:0|[24-7]0|3[03])">
       <availableFormats>
@@ -21952,7 +21975,7 @@
           (?:
             2(?:
               [0346-8]\d|
-              1[0-7]
+              1[0-8]
             )|
             4(?:
               [013568]\d|
@@ -21992,12 +22015,17 @@
               9[0-8]
             )|
             7(?:
-              0[0-4]|
+              0[0-6]|
               3[013]
             )
           )\d{5}
         </nationalNumberPattern>
       </mobile>
+      <pager>
+        <possibleLengths national="7"/>
+        <exampleNumber>2190123</exampleNumber>
+        <nationalNumberPattern>219\d{4}</nationalNumberPattern>
+      </pager>
       <!-- Prefix 802 is added based on user report. -->
       <tollFree>
         <possibleLengths national="7,10"/>
@@ -22203,7 +22231,6 @@
         <possibleLengths national="10" localOnly="7,8"/>
         <exampleNumber>2001234567</exampleNumber>
         <nationalNumberPattern>
-          657[12]\d{6}|
           (?:
             2(?:
               0[01]|
@@ -22237,7 +22264,7 @@
             6(?:
               1[2-68]|
               [2-4][1-9]|
-              5[1-3689]|
+              5[1-36-9]|
               6[0-57-9]|
               7[1-7]|
               8[67]|
@@ -22277,7 +22304,6 @@
         <possibleLengths national="10" localOnly="7,8"/>
         <exampleNumber>2221234567</exampleNumber>
         <nationalNumberPattern>
-          657[12]\d{6}|
           (?:
             2(?:
               2\d|
@@ -22310,7 +22336,7 @@
             6(?:
               1[2-68]|
               [2-4][1-9]|
-              5[1-3689]|
+              5[1-36-9]|
               6[0-57-9]|
               7[1-7]|
               8[67]|
@@ -22985,11 +23011,6 @@
     <territory id="NG" countryCode="234" internationalPrefix="009" nationalPrefix="0"
                mobileNumberPortableRegion="true">
       <availableFormats>
-        <!-- Fixed line format for 2 digit area code -->
-        <numberFormat pattern="(\d{2})(\d{3})(\d{2,3})" nationalPrefixFormattingRule="$NP$FG">
-          <leadingDigits>3</leadingDigits>
-          <format>$1 $2 $3</format>
-        </numberFormat>
         <numberFormat pattern="(\d{3})(\d{3})(\d{3,4})" nationalPrefixFormattingRule="$NP$FG">
           <leadingDigits>[7-9]</leadingDigits>
           <format>$1 $2 $3</format>
@@ -23015,28 +23036,24 @@
       </availableFormats>
       <generalDesc>
         <nationalNumberPattern>
-          38\d{6}|
-          [78]\d{9,13}|
           (?:
             20|
             9\d
-          )\d{8}
+          )\d{8}|
+          [78]\d{9,13}
         </nationalNumberPattern>
       </generalDesc>
       <fixedLine>
-        <possibleLengths national="8,10" localOnly="6,7"/>
+        <possibleLengths national="10" localOnly="6,7"/>
         <exampleNumber>2033123456</exampleNumber>
         <nationalNumberPattern>
-          (?:
-            20(?:
-              [1259]\d|
-              3[013-9]|
-              4[1-8]|
-              6[024-689]|
-              7[1-79]|
-              8[2-9]
-            )|
-            38
+          20(?:
+            [1259]\d|
+            3[013-9]|
+            4[1-8]|
+            6[024-689]|
+            7[1-79]|
+            8[2-9]
           )\d{6}
         </nationalNumberPattern>
       </fixedLine>
@@ -25691,7 +25708,7 @@
               2\d\d|
               3(?:
                 [06][0-6]|
-                1[013]|
+                1[0-3]|
                 2[0-2]|
                 3[0-39]|
                 4\d|
@@ -26882,12 +26899,12 @@
         <possibleLengths national="8"/>
         <exampleNumber>81234567</exampleNumber>
         <nationalNumberPattern>
-          896[0-8]\d{4}|
+          8970\d{4}|
           (?:
             8(?:
               0[1-9]|
               [1-8]\d|
-              9[0-5]
+              9[0-6]
             )|
             9[0-8]\d
           )\d{5}
@@ -27956,21 +27973,18 @@
       <availableFormats>
         <numberFormat pattern="(\d{2})(\d{3})(\d{3,4})" nationalPrefixFormattingRule="$NP$FG"
                       nationalPrefixOptionalWhenFormatting="true">
-          <leadingDigits>
-            [1-4]|
-            5[1-3]
-          </leadingDigits>
+          <leadingDigits>[1-5]</leadingDigits>
           <format>$1 $2 $3</format>
         </numberFormat>
         <numberFormat pattern="(\d{3})(\d{3})(\d{3})" nationalPrefixFormattingRule="$NP$FG"
                       nationalPrefixOptionalWhenFormatting="true">
-          <leadingDigits>[59]</leadingDigits>
+          <leadingDigits>9</leadingDigits>
           <format>$1 $2 $3</format>
         </numberFormat>
       </availableFormats>
       <generalDesc>
         <nationalNumberPattern>
-          [1-359]\d{8}|
+          [1-39]\d{8}|
           [1-5]\d{7}
         </nationalNumberPattern>
       </generalDesc>
@@ -28000,12 +28014,7 @@
       <mobile>
         <possibleLengths national="9"/>
         <exampleNumber>944567890</exampleNumber>
-        <nationalNumberPattern>
-          (?:
-            50|
-            9[1-689]
-          )\d{7}
-        </nationalNumberPattern>
+        <nationalNumberPattern>9[1-9]\d{7}</nationalNumberPattern>
       </mobile>
     </territory>
 
