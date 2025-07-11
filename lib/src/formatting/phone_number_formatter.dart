@@ -51,7 +51,9 @@ class PhoneNumberFormatter {
       pattern: formatingRule.pattern,
       transformRule: transformRule,
     );
+
     formatted = _removeMissingDigits(formatted, missingDigits);
+
     return formatted;
   }
 
