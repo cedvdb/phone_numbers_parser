@@ -453,4 +453,8 @@ void main() {
       expect(format(testNumber), equals('261 15-532-5656'));
     });
   });
+  test('Invalid phone number throws exception', () {
+    expect(() => PhoneNumber.parse('bad'),
+        throwsA(allOf([isA<Exception>(), isA<PhoneNumberException>()])));
+  });
 }
