@@ -1,4 +1,4 @@
-class PhoneNumberException {
+class PhoneNumberException implements Exception {
   final Code code;
   final String? description;
 
