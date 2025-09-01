@@ -2746,7 +2746,7 @@ const metadataExamplesByIsoCode = {
     premiumRate: r"9001234",
     sharedCost: r"",
     personalNumber: r"",
-    uan: r"",
+    uan: r"21123",
     pager: r"",
     voiceMail: r"",
   ),

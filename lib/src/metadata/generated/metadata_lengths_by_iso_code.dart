@@ -2631,7 +2631,7 @@ const metadataLenghtsByIsoCode = {
   IsoCode.SR: PhoneMetadataLengths(
     general: [],
     mobile: [7],
-    fixedLine: [6, 7],
+    fixedLine: [6],
     voip: [6],
     tollFree: [7],
     premiumRate: [7],
@@ -2975,7 +2975,7 @@ const metadataLenghtsByIsoCode = {
     premiumRate: [7],
     sharedCost: [],
     personalNumber: [],
-    uan: [],
+    uan: [4, 5],
     pager: [],
     voiceMail: [],
   ),
