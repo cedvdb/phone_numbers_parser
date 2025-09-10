@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-metadata:
+  update-workflow:
     runs-on: ubuntu-latest
     steps:
       - name: 🛎️ Checkout
@@ -30,15 +30,18 @@ jobs:
         run: dart resources/data_sources/convert_metadata.dart
 
       - name: 🔍 Detect changes in metadata
+        id: metadata_changes
         run: |
           if git diff --quiet; then
-            echo "✅ No metadata changes detected, finishing workflow."
-            exit 0
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "✅ No metadata changes detected."
           else
+            echo "changed=true" >> $GITHUB_OUTPUT
             echo "⚠️ Metadata changes detected, continuing..."
           fi
 
       - name: ⚙️ Generate Files
+        if: steps.metadata_changes.outputs.changed == 'true'
         run: |
           dart pub get
           dart resources/generate_files.dart
@@ -46,6 +49,7 @@ jobs:
           dart fix --apply
 
       - name: ⬆️ Bump Version
+        if: steps.metadata_changes.outputs.changed == 'true'
         id: bump
         run: |
           dart pub bump patch
@@ -54,13 +58,13 @@ jobs:
           echo "📦 Bumped to version $NEW_VERSION"
 
       - name: 📝 Update CHANGELOG.md
+        if: steps.metadata_changes.outputs.changed == 'true'
         run: |
           NEW_VERSION=${{ steps.bump.outputs.new_version }}
           TEMP_FILE=$(mktemp)
 
-          echo "## [$NEW_VERSION]" > $TEMP_FILE
+          echo "## $NEW_VERSION" > $TEMP_FILE
           echo "- Upgrade metadata" >> $TEMP_FILE
-          echo "" >> $TEMP_FILE
           echo "" >> $TEMP_FILE
           cat CHANGELOG.md >> $TEMP_FILE
           mv $TEMP_FILE CHANGELOG.md
@@ -68,6 +72,7 @@ jobs:
           echo "🆕 Added changelog entry for $NEW_VERSION"
 
       - name: 🌿 Create Branch, Commit & Push
+        if: steps.metadata_changes.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
@@ -85,6 +90,7 @@ jobs:
           echo "🌿 Created and pushed branch $BRANCH"
 
       - name: 🚀 Create Pull Request
+        if: steps.metadata_changes.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
@@ -100,6 +106,7 @@ jobs:
           echo "✅ Pull request created for branch $BRANCH"
 
       - name: 🤝 Merge Pull Request
+        if: steps.metadata_changes.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
