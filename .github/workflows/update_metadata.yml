@@ -10,43 +10,110 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Needed for git describe
-      
-      - uses: dart-lang/setup-dart@v1
-        # using beta channel for the time being for using the `dart pub bump` command
+          fetch-depth: 0
+
+      - name: 🛠️ Setup Dart
+        uses: dart-lang/setup-dart@v1
         with:
-          sdk: 'beta'
-      - name: Install dependencies
+          sdk: "beta"
+
+      - name: 📦 Install dependencies
         run: dart pub get
-      
-      - name: Fetch LibPhoneNumber Metadata
-        run: curl -o resources/data_sources/PhoneNumberMetadata.xml https://raw.githubusercontent.com/google/libphonenumber/master/resources/PhoneNumberMetadata.xml
-      
-      - name: Process Metadata
+
+      - name: 📥 Fetch LibPhoneNumber Metadata
+        run: curl -s -o resources/data_sources/PhoneNumberMetadata.xml https://raw.githubusercontent.com/google/libphonenumber/master/resources/PhoneNumberMetadata.xml
+
+      - name: 🔄 Process Metadata
         run: dart resources/data_sources/convert_metadata.dart
-      
-      - name: Generate Files
+
+      - name: 🔍 Detect changes in metadata
+        id: metadata_changes
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "✅ No metadata changes detected, finishing workflow."
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "⚠️ Metadata changes detected, continuing..."
+          fi
+
+      - name: 🛑 Stop if no metadata changes
+        if: steps.metadata_changes.outputs.changed == 'false'
+        run: exit 0
+
+      - name: ⚙️ Generate Files
         run: |
           dart pub get
-          dart resources/generate_files.dart && dart format lib/src && dart fix --apply
-      
-      - name: Update Version and Create Tag
+          dart resources/generate_files.dart
+          dart format lib/src
+          dart fix --apply
+
+      - name: ⬆️ Bump Version
+        id: bump
         run: |
-          # Bump version
           dart pub bump patch
-          
-          # Get the new version for the commit message
           NEW_VERSION=$(grep 'version:' pubspec.yaml | sed 's/version: //')
-          
-          # Commit and push changes
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "📦 Bumped to version $NEW_VERSION"
+
+      - name: 📝 Update CHANGELOG.md
+        run: |
+          NEW_VERSION=${{ steps.bump.outputs.new_version }}
+          TEMP_FILE=$(mktemp)
+
+          echo "## [$NEW_VERSION]" > $TEMP_FILE
+          echo "- Upgrade metadata" >> $TEMP_FILE
+          echo "" >> $TEMP_FILE
+          echo "" >> $TEMP_FILE
+          cat CHANGELOG.md >> $TEMP_FILE
+          mv $TEMP_FILE CHANGELOG.md
+
+          echo "🆕 Added changelog entry for $NEW_VERSION"
+
+      - name: 🌿 Create Branch, Commit & Push
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          NEW_VERSION=${{ steps.bump.outputs.new_version }}
+          BRANCH="update-metadata-$NEW_VERSION"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git checkout -b "$BRANCH"
           git add .
-          git commit -m "Update Metadata and bump version to $NEW_VERSION" || exit 0
-          git push
-          
-          # Create and push tag
-          git tag "v$NEW_VERSION"
-          git push origin "v$NEW_VERSION"
+          git commit -m "🔄 Update metadata and bump version to $NEW_VERSION"
+          git push origin "$BRANCH"
+
+          echo "🌿 Created and pushed branch $BRANCH"
+
+      - name: 🚀 Create Pull Request
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          NEW_VERSION=${{ steps.bump.outputs.new_version }}
+          BRANCH="update-metadata-$NEW_VERSION"
+
+          PR_URL=$(gh pr create \
+            --title "🔄 Update metadata and bump version to $NEW_VERSION" \
+            --body "This PR updates the metadata and bumps the package version to $NEW_VERSION." \
+            --base main \
+            --head "$BRANCH" \
+            --json url -q .url)
+
+          echo "pr_url=$PR_URL" >> $GITHUB_OUTPUT
+          echo "✅ Pull request created: $PR_URL"
+
+      - name: 🤝 Merge Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          PR_URL=${{ steps.pr.outputs.pr_url }}
+
+          echo "🔄 Attempting to merge PR: $PR_URL"
+          gh pr merge "$PR_URL" --squash --admin --delete-branch
+          echo "🎉 Pull request merged successfully!"

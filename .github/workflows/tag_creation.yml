@@ -1,0 +1,71 @@
+name: Create Tag from pubspec.yaml
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # needed to push tags
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read version from pubspec.yaml
+        id: version
+        run: |
+          VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "📦 Detected version: $VERSION"
+
+      - name: Fail if tag already exists
+        run: |
+          VERSION=v${{ steps.version.outputs.version }}
+          if git ls-remote --tags origin | grep -q "refs/tags/$VERSION$"; then
+            echo "❌ Tag $VERSION already exists on remote. Failing workflow."
+            exit 1
+          fi
+
+      - name: Check if version exists in CHANGELOG.md
+        run: |
+          VERSION=${{ steps.version.outputs.version }}
+          if ! grep -q "##\s*$VERSION" CHANGELOG.md; then
+            echo "❌ CHANGELOG.md does not contain an entry for version $VERSION"
+            echo "👉 Please add a changelog entry before tagging."
+            exit 1
+          fi
+          echo "✅ Found changelog entry for $VERSION"
+
+      - name: Create and push tag with gh + PAT
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          VERSION: v${{ steps.version.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          echo "🏷️ Creating tag: $VERSION"
+          git tag "$VERSION"
+
+          echo "⬆️ Pushing tag with gh CLI"
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            /repos/${GITHUB_REPOSITORY}/git/refs \
+            -f ref="refs/tags/$VERSION" \
+            -f sha="$(git rev-parse HEAD)"
+
+          echo "✅ Tag $VERSION pushed successfully!"
+
+      # 🔍 Debugging step
+      - name: Debug GitHub event payload
+        run: |
+          echo "🚀 Event name: $GITHUB_EVENT_NAME"
+          echo "🔖 Ref: $GITHUB_REF"
+          echo "📦 Repo: $GITHUB_REPOSITORY"
+          echo "📂 Event path: $GITHUB_EVENT_PATH"
+          cat $GITHUB_EVENT_PATH
+          echo "👤 Actor: $GITHUB_ACTOR"
