@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  update:
+  update-metadata:
     runs-on: ubuntu-latest
     steps:
       - name: 🛎️ Checkout
@@ -30,19 +30,13 @@ jobs:
         run: dart resources/data_sources/convert_metadata.dart
 
       - name: 🔍 Detect changes in metadata
-        id: metadata_changes
         run: |
           if git diff --quiet; then
-            echo "changed=false" >> $GITHUB_OUTPUT
             echo "✅ No metadata changes detected, finishing workflow."
+            exit 0
           else
-            echo "changed=true" >> $GITHUB_OUTPUT
             echo "⚠️ Metadata changes detected, continuing..."
           fi
-
-      - name: 🛑 Stop if no metadata changes
-        if: steps.metadata_changes.outputs.changed == 'false'
-        run: exit 0
 
       - name: ⚙️ Generate Files
         run: |
@@ -91,29 +85,27 @@ jobs:
           echo "🌿 Created and pushed branch $BRANCH"
 
       - name: 🚀 Create Pull Request
-        id: pr
         env:
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           NEW_VERSION=${{ steps.bump.outputs.new_version }}
           BRANCH="update-metadata-$NEW_VERSION"
 
-          PR_URL=$(gh pr create \
+          gh pr create \
             --title "🔄 Update metadata and bump version to $NEW_VERSION" \
             --body "This PR updates the metadata and bumps the package version to $NEW_VERSION." \
             --base main \
-            --head "$BRANCH" \
-            --json url -q .url)
+            --head "$BRANCH"
 
-          echo "pr_url=$PR_URL" >> $GITHUB_OUTPUT
-          echo "✅ Pull request created: $PR_URL"
+          echo "✅ Pull request created for branch $BRANCH"
 
       - name: 🤝 Merge Pull Request
         env:
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-          PR_URL=${{ steps.pr.outputs.pr_url }}
+          NEW_VERSION=${{ steps.bump.outputs.new_version }}
+          BRANCH="update-metadata-$NEW_VERSION"
 
-          echo "🔄 Attempting to merge PR: $PR_URL"
-          gh pr merge "$PR_URL" --squash --admin --delete-branch
+          echo "🔄 Attempting to merge PR for branch: $BRANCH"
+          gh pr merge "$BRANCH" --squash --admin --delete-branch
           echo "🎉 Pull request merged successfully!"
