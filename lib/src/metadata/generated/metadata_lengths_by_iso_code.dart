@@ -1383,7 +1383,7 @@ const metadataLenghtsByIsoCode = {
   IsoCode.IT: PhoneMetadataLengths(
     general: [],
     mobile: [9, 10],
-    fixedLine: [6, 7, 8, 9, 10, 11],
+    fixedLine: [6, 7, 8, 9, 10, 11, 12],
     voip: [10],
     tollFree: [6, 9],
     premiumRate: [6, 8, 9, 10],
