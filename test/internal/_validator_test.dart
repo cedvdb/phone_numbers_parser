@@ -361,6 +361,18 @@ void main() {
           isTrue,
         );
       });
+
+      test('MY', () {
+        expect(
+            Validator.validateWithPattern(
+                IsoCode.MY, '123456789', PhoneNumberType.mobile),
+            isTrue);
+
+        expect(
+            Validator.validateWithPattern(
+                IsoCode.MY, '1234567890', PhoneNumberType.mobile),
+            isTrue);
+      });
     });
   });
 }
