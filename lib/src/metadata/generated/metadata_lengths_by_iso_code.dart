@@ -316,8 +316,8 @@ const metadataLenghtsByIsoCode = {
   ),
   IsoCode.BJ: PhoneMetadataLengths(
     general: [],
-    mobile: [8, 10],
-    fixedLine: [8, 10],
+    mobile: [10],
+    fixedLine: [10],
     voip: [8],
     tollFree: [],
     premiumRate: [],
