@@ -2699,14 +2699,14 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormatDefinition>{
       PhoneMetadataFormat(
         pattern: r"(\d{5})(\d{5})",
         nationalPrefixFormattingRule: r"$NP$FG",
-        leadingDigits: ["[6-9]"],
+        leadingDigits: ["16|[6-9]"],
         format: r"$1 $2",
         intlFormat: null,
       ),
       PhoneMetadataFormat(
         pattern: r"(\d{4})(\d{2,4})(\d{4})",
         nationalPrefixFormattingRule: null,
-        leadingDigits: ["1(?:6|8[06])", "1(?:6|8[06]0)"],
+        leadingDigits: ["18[06]", "18[06]0"],
         format: r"$1 $2 $3",
         intlFormat: null,
       ),
