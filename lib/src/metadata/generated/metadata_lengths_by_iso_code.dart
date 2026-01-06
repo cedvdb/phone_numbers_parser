@@ -1,7 +1,7 @@
 import "../../iso_codes/iso_code.dart";
 import "../models/phone_metadata_lengths.dart";
 
-const metadataLenghtsByIsoCode = {
+final Map<IsoCode, PhoneMetadataLengths> metadataLenghtsByIsoCode = {
   IsoCode.AC: PhoneMetadataLengths(
     general: [],
     mobile: [5],

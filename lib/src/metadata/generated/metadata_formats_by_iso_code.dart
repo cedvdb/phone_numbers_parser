@@ -1,7 +1,7 @@
 import "../../iso_codes/iso_code.dart";
 import "../models/phone_metadata_formats.dart";
 
-const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormatDefinition>{
+final Map<IsoCode, PhoneMetadataFormatDefinition> metadataFormatsByIsoCode = {
   IsoCode.AC: PhoneMetadataFormatListDefinition(
     formats: [],
   ),
