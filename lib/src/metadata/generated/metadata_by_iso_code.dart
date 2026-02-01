@@ -518,7 +518,7 @@ const metadataByIsoCode = {
   IsoCode.EH: PhoneMetadata(
     countryCode: r"212",
     isoCode: IsoCode.EH,
-    leadingDigits: r"528[89]",
+    leadingDigits: null,
     internationalPrefix: r"00",
     nationalPrefix: r"0",
     isMainCountryForDialCode: false,
@@ -1070,7 +1070,7 @@ const metadataByIsoCode = {
   IsoCode.MA: PhoneMetadata(
     countryCode: r"212",
     isoCode: IsoCode.MA,
-    leadingDigits: null,
+    leadingDigits: r"[5-8]",
     internationalPrefix: r"00",
     nationalPrefix: r"0",
     isMainCountryForDialCode: true,
