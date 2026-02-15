@@ -67,6 +67,10 @@ class PhoneNumber {
   String formatNsn({IsoCode? isoCode, NsnFormat format = NsnFormat.national}) =>
       PhoneNumberFormatter.formatNsn(nsn, isoCode ?? this.isoCode, format);
 
+  String format({IsoCode? isoCode, NsnFormat format = NsnFormat.national}) {
+    return '+$countryCode ${formatNsn(isoCode: isoCode, format: format)}';
+  }
+
   @Deprecated('Use [formatNsn] instead')
   String getFormattedNsn({IsoCode? isoCode}) => formatNsn(isoCode: isoCode);
 
