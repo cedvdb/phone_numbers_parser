@@ -2060,7 +2060,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormatDefinition>{
       PhoneMetadataFormat(
         pattern: r"(\d{3})(\d{2})(\d{2})(\d{2})",
         nationalPrefixFormattingRule: r"$NP$FG",
-        leadingDigits: ["[5-7]|9[47]"],
+        leadingDigits: ["[5-7]|80[6-9]|9[47]"],
         format: r"$1 $2 $3 $4",
         intlFormat: null,
       ),
@@ -2095,7 +2095,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormatDefinition>{
       PhoneMetadataFormat(
         pattern: r"(\d{2})(\d{3})(\d{4})",
         nationalPrefixFormattingRule: r"$NP$FG",
-        leadingDigits: ["[235]"],
+        leadingDigits: ["[2358]"],
         format: r"$1 $2 $3",
         intlFormat: null,
       )
@@ -2157,7 +2157,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormatDefinition>{
       PhoneMetadataFormat(
         pattern: r"(\d{3})(\d{2})(\d{2})(\d{2})",
         nationalPrefixFormattingRule: r"$NP$FG",
-        leadingDigits: ["[5-79]"],
+        leadingDigits: ["[5-79]|80[6-9]"],
         format: r"$1 $2 $3 $4",
         intlFormat: null,
       ),
@@ -4638,8 +4638,8 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormatDefinition>{
         pattern: r"(\d{2})(\d{2})(\d{3})",
         nationalPrefixFormattingRule: null,
         leadingDigits: [
-          "(?:1[2-8]|2[2-69]|3[2-4]|4[1-468]|5[24-689]|6[1-3578]|7[14-7]|8[1-79]|9[145])1",
-          "(?:1[2-8]|2[2-69]|3[2-4]|4[1-468]|5[24-689]|6[1-3578]|7[14-7]|8[1-79]|9[145])19"
+          "30|(?:1[2-8]|2[2-69]|3[2-4]|4[1-468]|5[24-689]|6[1-3578]|7[14-7]|8[1-79]|9[145])1",
+          "30|(?:1[2-8]|2[2-69]|3[2-4]|4[1-468]|5[24-689]|6[1-3578]|7[14-7]|8[1-79]|9[145])19"
         ],
         format: r"$1 $2 $3",
         intlFormat: null,
@@ -4679,7 +4679,7 @@ const metadataFormatsByIsoCode = <IsoCode, PhoneMetadataFormatDefinition>{
       PhoneMetadataFormat(
         pattern: r"(\d{2})(\d{2})(\d{2})",
         nationalPrefixFormattingRule: r"$NP$FG",
-        leadingDigits: ["[45]"],
+        leadingDigits: ["[2-9]"],
         format: r"$1 $2 $3",
         intlFormat: null,
       ),
