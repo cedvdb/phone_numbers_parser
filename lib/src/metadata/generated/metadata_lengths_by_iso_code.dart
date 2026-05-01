@@ -2632,7 +2632,7 @@ const metadataLenghtsByIsoCode = {
     general: [],
     mobile: [7],
     fixedLine: [6],
-    voip: [6],
+    voip: [6, 7],
     tollFree: [7],
     premiumRate: [7],
     sharedCost: [],
