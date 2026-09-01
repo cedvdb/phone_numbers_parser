@@ -1,3 +1,6 @@
+## 9.0.26
+- Upgrade metadata
+
 ## 9.0.25
 - Upgrade metadata
 
