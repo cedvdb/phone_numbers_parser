@@ -799,7 +799,7 @@ const metadataByIsoCode = {
     countryCode: r"972",
     isoCode: IsoCode.IL,
     leadingDigits: null,
-    internationalPrefix: r"0(?:0|1[2-9])",
+    internationalPrefix: r"0(?:0|1(?:05|[2-9]))",
     nationalPrefix: r"0",
     isMainCountryForDialCode: false,
   ),
