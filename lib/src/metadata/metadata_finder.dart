@@ -38,7 +38,7 @@ abstract class MetadataFinder {
   }
 
   static PhoneMetadataLengths findMetadataLengthForIsoCode(IsoCode isoCode) {
-    final metadata = metadataLenghtsByIsoCode[isoCode];
+    final metadata = metadataLengthsByIsoCode[isoCode];
     if (metadata == null) {
       throw PhoneNumberException(
         code: Code.invalidIsoCode,

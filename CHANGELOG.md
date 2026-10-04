@@ -1,3 +1,20 @@
+## 9.0.28
+
+- Fix multi digit group references (`$10`, `$11`, ...) being corrupted when a
+  national number is transformed (a `$10` reference used to be partially
+  replaced by the `$1` reference).
+- Throw a `PhoneNumberException` with `Code.inputIsTooLong` when a phone number
+  contains more digits than the maximum supported length (country calling code
+  plus national significant number).
+- Throw a `PhoneNumberException` with `Code.invalid` instead of `Code.notFound`
+  when a phone number contains no digit at all.
+- Remove the unreachable fallback in the destination metadata lookup.
+- Rename the generated `metadataLenghtsByIsoCode` map to
+  `metadataLengthsByIsoCode` (the misspelled name is kept as a deprecated alias).
+- Remove the unused `Constants.slashSeparatedDates`.
+- Add a round trip test suite covering every metadata example number, and a test
+  asserting no country calling code is the prefix of another one.
+
 ## 9.0.27
 - Upgrade metadata
 

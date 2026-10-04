@@ -6,6 +6,11 @@ abstract class TextParser {
   ///
   /// It also converts easthern arabic digits to westhern arabic.
   ///
+  /// Note that any character that is not a digit, a `+` sign or one of the
+  /// accepted separators (whitespace, parentheses, brackets, dash, dot, slash)
+  /// is dropped. Passing a phone number containing letters will therefore
+  /// silently drop those letters, e.g. `1-800-FLOWERS` normalizes to `1800`.
+  ///
   /// Example:
   /// [unformatedPhoneNumber]: (+32) 0489/99.99.99
   /// Returns: +320489999999

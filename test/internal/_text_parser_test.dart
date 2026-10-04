@@ -24,5 +24,18 @@ void main() {
           equals('+49024443343'));
       expect(TextParser.normalizePhoneNumber('＋۹۹۹۹'), equals('+9999'));
     });
+
+    test('should drop characters that are not part of a phone number', () {
+      // letters are not normalized, they are dropped (known limitation)
+      expect(TextParser.normalizePhoneNumber('1-800-FLOWERS'), equals('1800'));
+      expect(TextParser.normalizePhoneNumber('not a phone'), equals(''));
+      expect(TextParser.normalizePhoneNumber('   '), equals(''));
+    });
+
+    test('should only find numbers of at least 7 digits', () {
+      expect(TextParser.findPotentialPhoneNumbers('12345').isEmpty, isTrue);
+      expect(TextParser.findPotentialPhoneNumbers('123456').isEmpty, isTrue);
+      expect(TextParser.findPotentialPhoneNumbers('1234567').isEmpty, isFalse);
+    });
   });
 }

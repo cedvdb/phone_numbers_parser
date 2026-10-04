@@ -9,6 +9,12 @@ abstract class CountryCodeParser {
   static (String countryCode, String nsn) extractCountryCode(
     String phoneNumber,
   ) {
+    if (phoneNumber.isEmpty) {
+      throw PhoneNumberException(
+        code: Code.invalid,
+        description: 'no digits found in the phone number',
+      );
+    }
     final maxCountryCodeLength = min(
       phoneNumber.length,
       Constants.maxLengthCountryCallingCode,

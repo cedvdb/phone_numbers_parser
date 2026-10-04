@@ -454,7 +454,60 @@ void main() {
     });
   });
   test('Invalid phone number throws exception', () {
-    expect(() => PhoneNumber.parse('bad'),
-        throwsA(allOf([isA<Exception>(), isA<PhoneNumberException>()])));
+    expect(
+      () => PhoneNumber.parse('bad'),
+      throwsA(
+        allOf([
+          isA<Exception>(),
+          isA<PhoneNumberException>()
+              .having((e) => e.code, 'code', Code.invalid),
+        ]),
+      ),
+    );
+  });
+
+  group('robustness', () {
+    /// A phone number can never exceed the maximum country calling code length
+    /// plus the maximum national significant number length (3 + 17 = 20).
+    const maxDigits = 20;
+
+    test('throws inputIsTooLong for an excessive amount of digits', () {
+      final tooLong = '1${'2' * (maxDigits + 5)}';
+      expect(
+        () => PhoneNumber.parse(tooLong, callerCountry: IsoCode.US),
+        throwsA(
+          isA<PhoneNumberException>()
+              .having((e) => e.code, 'code', Code.inputIsTooLong),
+        ),
+      );
+    });
+
+    test('does not throw for a number at the maximum length', () {
+      final atMax = '1${'2' * (maxDigits - 1)}';
+      expect(atMax.length, equals(maxDigits));
+      expect(
+        () => PhoneNumber.parse(atMax, callerCountry: IsoCode.US),
+        returnsNormally,
+      );
+    });
+
+    test('throws invalid when the input contains no digits', () {
+      expect(
+        () => PhoneNumber.parse('not a phone number'),
+        throwsA(
+          isA<PhoneNumberException>()
+              .having((e) => e.code, 'code', Code.invalid),
+        ),
+      );
+    });
+
+    test('does not throw when no digits are provided but a country is known',
+        () {
+      // this is important for progressive input where the text is emptied
+      expect(
+        () => PhoneNumber.parse('', destinationCountry: IsoCode.AR),
+        returnsNormally,
+      );
+    });
   });
 }

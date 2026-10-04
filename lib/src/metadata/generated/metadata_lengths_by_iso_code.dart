@@ -1,7 +1,7 @@
 import "../../iso_codes/iso_code.dart";
 import "../models/phone_metadata_lengths.dart";
 
-const metadataLenghtsByIsoCode = {
+const metadataLengthsByIsoCode = {
   IsoCode.AC: PhoneMetadataLengths(
     general: [],
     mobile: [5],
@@ -3188,3 +3188,6 @@ const metadataLenghtsByIsoCode = {
     voiceMail: [],
   ),
 };
+// ignore: constant_identifier_names
+@Deprecated('Use metadataLengthsByIsoCode instead')
+const metadataLenghtsByIsoCode = metadataLengthsByIsoCode;

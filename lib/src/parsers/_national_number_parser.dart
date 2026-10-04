@@ -71,10 +71,19 @@ abstract class NationalNumberParser {
       return appliedTo.substring(match.end);
     }
 
+    // replace the group references from the highest group to the lowest one.
+    // Doing so prevents a multi digit reference such as `$10` from being
+    // partially replaced by the `$1` replacement (which would turn `$10` into
+    // `<group1>0` instead of `<group10>`).
     var transformed = transformRule;
-    bool shouldContinueLoop(int i) =>
-        match.groupCount >= i && match.group(i) != null;
-    for (var i = 1; shouldContinueLoop(i); i++) {
+    var highestGroup = 0;
+    for (var i = 1; i <= match.groupCount; i++) {
+      // a group can be null despite the group count being higher,
+      // in that case the reference is left untouched (as before).
+      if (match.group(i) == null) break;
+      highestGroup = i;
+    }
+    for (var i = highestGroup; i >= 1; i--) {
       transformed = transformed.replaceFirst('\$$i', match.group(i)!);
     }
     return transformed + appliedTo.substring(match.end);

@@ -70,13 +70,8 @@ abstract class Validator {
       return false;
     }
     final lengths = _getPossibleLengths(lengthMetadatas, type);
-    final isRightLength = lengths.contains(national.length);
-    // if we don't have length information we will do pattern matching
-    // or if the length is correct we do pattern matching too
-    if (isRightLength) {
-      return true;
-    }
-    return false;
+    // a valid national number must have one of the possible lengths
+    return lengths.contains(national.length);
   }
 
   static Set<int> _getPossibleLengths(

@@ -1,6 +1,27 @@
+import 'dart:io';
+
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 
-void main(List<String> arguments) {
+void main(List<String> arguments) async {
+  print('Memory before allocations: ${ProcessInfo.currentRss ~/ 1024} KB');
+  exampleUsage();
+  await Future.delayed(Duration(seconds: 1));
+  await Future.delayed(Duration(seconds: 1));
+  await Future.delayed(Duration(seconds: 1));
+  await Future.delayed(Duration(seconds: 1));
+  await Future.delayed(Duration(seconds: 1));
+  await Future.delayed(Duration(seconds: 1));
+  await Future.delayed(Duration(seconds: 1));
+  await Future.delayed(Duration(seconds: 1));
+  await Future.delayed(Duration(seconds: 1));
+
+  await Future.delayed(Duration(seconds: 100));
+  stdin.readLineSync();
+
+  print('Memory after allocations: ${ProcessInfo.currentRss ~/ 1024} KB');
+}
+
+void exampleUsage() {
   final frPhone0 = PhoneNumber.parse('+33 655 5705 76');
   final inPhone0 = PhoneNumber.parse('+919955059057');
   print(inPhone0);
@@ -71,4 +92,6 @@ void main(List<String> arguments) {
   two - 1 == one;
   final another = one + 2;
   print('$another == $three');
+
+  print('Memory after allocations: ${ProcessInfo.currentRss ~/ 1024} KB');
 }

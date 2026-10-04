@@ -8,7 +8,7 @@ import '_text_parser.dart';
 ///  478 88 88 88
 /// {@endtemplate}
 
-/// base class for PhoneParser and LightPhoneParser
+/// base class for phone number parsers
 abstract class BasePhoneParser {
   /// parses a [phoneNumber] given an [isoCode]
   ///

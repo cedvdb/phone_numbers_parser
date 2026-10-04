@@ -1,3 +1,4 @@
+import 'package:phone_numbers_parser/metadata.dart';
 import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 import 'package:phone_numbers_parser/src/metadata/metadata_finder.dart';
 import 'package:phone_numbers_parser/src/metadata/models/phone_metadata_formats.dart';
@@ -26,6 +27,18 @@ void main() {
         expect(MetadataFinder.findMetadataLengthForIsoCode(isoCode),
             isA<PhoneMetadataLengths>());
       }
+    });
+
+    test('should expose lengths metadata under the corrected name', () {
+      expect(
+        metadataLengthsByIsoCode[IsoCode.FR],
+        equals(MetadataFinder.findMetadataLengthForIsoCode(IsoCode.FR)),
+      );
+    });
+
+    test('should keep the misspelled lengths metadata name as an alias', () {
+      // ignore: deprecated_member_use_from_same_package
+      expect(metadataLenghtsByIsoCode, equals(metadataLengthsByIsoCode));
     });
 
     test('should get formats metadata for iso code', () {

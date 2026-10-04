@@ -4,6 +4,7 @@ import 'package:phone_numbers_parser/src/validation/validator.dart';
 import '../../phone_numbers_parser.dart';
 import '../metadata/metadata_finder.dart';
 import '../metadata/models/phone_metadata.dart';
+import '../regex/constants.dart';
 import '_country_code_parser.dart';
 import '_international_prefix_parser.dart';
 import '_national_number_parser.dart';
@@ -37,6 +38,18 @@ abstract class PhoneParser {
     IsoCode? destinationCountry,
   }) {
     phoneNumber = TextParser.normalizePhoneNumber(phoneNumber);
+    // a phone number can never be longer than the maximum country calling code
+    // length plus the maximum national significant number length.
+    final maxLength =
+        Constants.maxLengthCountryCallingCode + Constants.maxLengthNsn;
+    final digitCount = phoneNumber.replaceAll('+', '').length;
+    if (digitCount > maxLength) {
+      throw PhoneNumberException(
+        code: Code.inputIsTooLong,
+        description:
+            'phone number has $digitCount digits, maximum is $maxLength',
+      );
+    }
     final callerMetadata = callerCountry != null
         ? MetadataFinder.findMetadataForIsoCode(callerCountry)
         : null;
@@ -124,13 +137,12 @@ abstract class PhoneParser {
     // if no caller was provided we need to make a best guess given the country code
     final (countryCode, nsn) =
         CountryCodeParser.extractCountryCode(phoneWithoutExitCode);
-    // multiple countries use the same country code
+    // extractCountryCode only returns once it has found metadata matching both
+    // the country code and the national number, so this lookup is guaranteed to
+    // find metadata as well.
     final metadata =
         MetadataFinder.findMetadataForCountryCode(countryCode, nsn);
-
-    return metadata ??
-        callerMetadata ??
-        // default if nothing was found.
-        MetadataFinder.findMetadataForIsoCode(IsoCode.US);
+    assert(metadata != null, 'no metadata found for country code $countryCode');
+    return metadata!;
   }
 }
