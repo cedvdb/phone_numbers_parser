@@ -401,7 +401,7 @@ const metadataExamplesByIsoCode = {
   IsoCode.BW: PhoneMetadataExamples(
     fixedLine: r"2401234",
     mobile: r"71123456",
-    voip: r"79101234",
+    voip: r"",
     tollFree: r"0800012345",
     premiumRate: r"9012345",
     sharedCost: r"",

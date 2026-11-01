@@ -435,7 +435,7 @@ const metadataLengthsByIsoCode = {
     general: [],
     mobile: [8],
     fixedLine: [7],
-    voip: [8],
+    voip: [],
     tollFree: [10],
     premiumRate: [7],
     sharedCost: [],
@@ -3188,6 +3188,5 @@ const metadataLengthsByIsoCode = {
     voiceMail: [],
   ),
 };
-// ignore: constant_identifier_names
 @Deprecated('Use metadataLengthsByIsoCode instead')
 const metadataLenghtsByIsoCode = metadataLengthsByIsoCode;
