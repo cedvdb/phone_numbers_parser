@@ -1558,7 +1558,7 @@ const metadataByIsoCode = {
   IsoCode.SH: PhoneMetadata(
     countryCode: r"290",
     isoCode: IsoCode.SH,
-    leadingDigits: r"[256]",
+    leadingDigits: r"[2569]",
     internationalPrefix: r"00",
     nationalPrefix: null,
     isMainCountryForDialCode: true,
