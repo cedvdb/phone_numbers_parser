@@ -1,0 +1,417 @@
+name: Review
+
+# A second reader for every pull request, so that a solo maintainer is not the only one who has
+# looked before a change lands.
+#
+# `pull_request_target`, deliberately. Contributions here arrive from forks, and a workflow triggered
+# by plain `pull_request` cannot read `secrets.GEMINI_API_KEY` there — the reviewer would be silent
+# for exactly the pull requests it exists for. What makes
+# `pull_request_target` safe here is what this job does *not* do: it checks out the base commit
+# (`github.event.pull_request.base.sha`, i.e. `main`'s tree, never the fork's), it never runs the
+# pull request's code, and it reads the change through the API as text.
+#
+# Do not add a checkout of `github.event.pull_request.head.sha` or of `refs/pull/*/merge` to this
+# file. That single line is the difference between a reviewer and a hole: a fork could then edit
+# `.github/agent/triage.py` and have it executed with a write token.
+#
+# What it decides is written in `.github/agent/review-prompt.md`; what it does with the answer is
+# `.github/agent/triage.py`. It writes one comment (and edits that comment on later pushes) and
+# applies one label. Merging is off unless `vars.AUTO_MERGE` says otherwise — see
+# `.github/agent/README.md` — because an automerger with no required checks merges before CI runs.
+#
+# Three ways in: a pull request that opens or is pushed to, a comment that starts with `/review`
+# from someone with write access, and `gh workflow run review.yml -f pr=355`. All three end in the
+# same place, and none of them reads the pull request's tree.
+#
+# The call is one HTTPS request to an OpenAI-compatible endpoint. Gemini Flash is the default
+# because its free tier costs nothing and this job does not need a better model: bounded criteria, a
+# capped diff, one fixed output shape, no tool use. `vars.REVIEW_ENDPOINT` and `vars.REVIEW_MODEL`
+# override the endpoint and the model; every provider below takes `Authorization: Bearer <key>`:
+#
+# The default is the *stable* Flash line rather than the newest one, deliberately: the newest is the
+# one most in demand, and `503 This model is currently experiencing high demand` is exactly what made
+# the first reviews return nothing.
+#
+#   Gemini      https://generativelanguage.googleapis.com/v1beta/openai/chat/completions
+#   DeepSeek    https://api.deepseek.com/chat/completions          (deepseek-chat)
+#   OpenRouter  https://openrouter.ai/api/v1/chat/completions      (whatever it lists)
+#   Ollama      http://localhost:11434/v1/chat/completions         (a self-hosted runner)
+#
+# Without `secrets.GEMINI_API_KEY` the job still runs, says so in the log, and does nothing: a
+# repository with no key is a repository that verifies exactly as it did before.
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+  # A comment that starts with `/review` on a pull request reads it again — the way to ask for a
+  # second look at something already open, or to re-run a review that could not reach an answer.
+  # Anyone can comment on a public repository, so the job below only listens to someone with write
+  # access; otherwise this would be an open model endpoint that also posts on other people's work.
+  issue_comment:
+    types: [created]
+  # The same thing without a comment, for a run started from the Actions tab or a script:
+  # `gh workflow run review.yml -f pr=355`.
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: The number of the pull request to review
+        required: true
+        type: string
+
+concurrency:
+  group: review-${{ inputs.pr || github.event.pull_request.number || github.event.issue.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  review:
+    name: Read the change against the rules
+    # A draft is not asking to be read, and a bot is not the audience (Dependabot's pull requests
+    # would otherwise be told they are missing a test). A dispatched run is explicit, and a
+    # `/review` comment is only obeyed from someone with write access, so neither is filtered here.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'issue_comment' &&
+       github.event.issue.pull_request != null &&
+       github.event.issue.state == 'open' &&
+       startsWith(github.event.comment.body, '/review') &&
+       (github.event.comment.author_association == 'OWNER' ||
+        github.event.comment.author_association == 'MEMBER' ||
+        github.event.comment.author_association == 'COLLABORATOR')) ||
+      (github.event_name == 'pull_request_target' &&
+       github.event.pull_request.draft == false &&
+       github.event.pull_request.user.type != 'Bot')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      PR_NUMBER: ${{ inputs.pr || github.event.pull_request.number || github.event.issue.number }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.base.sha || github.event.repository.default_branch }}
+          persist-credentials: false
+
+      # The whole safety of the `pull_request_target` trigger in one assertion: the tree has to be
+      # the base commit, never the fork's. A dispatched run has no pull request in its event, so
+      # there is nothing to compare against and the checkout already took the default branch.
+      - name: Check that this is the base branch, not the fork
+        env:
+          EXPECTED: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          got=$(git rev-parse HEAD)
+          if [ -n "${HEAD_SHA:-}" ] && [ "$got" = "$HEAD_SHA" ]; then
+            echo "::error title=Wrong tree::The tree is the pull request's head ($HEAD_SHA). This job runs the base branch's scripts."
+            exit 1
+          fi
+          if [ -n "${EXPECTED:-}" ] && [ "$got" != "$EXPECTED" ]; then
+            echo "::error title=Wrong tree::Expected the base commit $EXPECTED, the tree is $got. Remove any checkout of the pull request's head."
+            exit 1
+          fi
+
+      # Both triggers end here, so everything below reads `$PR` and `$BASE` and does not care which
+      # way the run was started.
+      - name: Resolve the pull request
+        env:
+          COMMENT: ${{ github.event.comment.id }}
+        run: |
+          set -euo pipefail
+          pr=$(gh pr view "$PR_NUMBER" --repo "$REPO" --json number --jq .number)
+          base=$(gh pr view "$PR_NUMBER" --repo "$REPO" --json baseRefName --jq .baseRefName)
+          echo "PR=$pr" >> "$GITHUB_ENV"
+          echo "BASE=$base" >> "$GITHUB_ENV"
+
+          # A comment that asked for the review gets an acknowledgement: the answer takes a minute,
+          # and silence for a minute reads as nothing having happened.
+          if [ -n "${COMMENT:-}" ]; then
+            gh api -X POST "repos/$REPO/issues/comments/$COMMENT/reactions" \
+              -f content=eyes >/dev/null 2>&1 || true
+          fi
+
+          echo "reviewing #$pr against $base"
+
+      # The bot's own rules are unit-tested before they are allowed to label anything: a broken
+      # guard should be a red step in front of the maintainer, not a wrong verdict on a stranger's
+      # pull request.
+      - name: Check the reviewer's own rules
+        run: python3 .github/agent/triage.py --self-test
+
+      - name: Is a reviewer configured?
+        id: configured
+        env:
+          KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -n "${KEY}" ]; then
+            echo 'yes=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'yes=false' >> "$GITHUB_OUTPUT"
+            echo '::notice title=No reviewer configured::Set GEMINI_API_KEY to have every pull request read against .github/agent/review-prompt.md. The tests still run.'
+          fi
+
+      # A label GitHub does not have is silently not applied, and the pull request then looks
+      # reviewed when nobody has said anything. Creating them here makes the job self-contained.
+      - name: Create the labels this job applies
+        if: steps.configured.outputs.yes == 'true'
+        run: |
+          set -euo pipefail
+          add() { gh label create "$1" --description "$2" --color "$3" >/dev/null 2>&1 || true; }
+          add 'ai:accepted'          'Read by the review bot: in scope and ready to merge'      0e8a16
+          add 'ai:changes-requested' 'Read by the review bot: something has to change first'    fbca04
+          add 'ai:out-of-scope'      'Read by the review bot: belongs in another repository'    b60205
+          add 'ai:needs-review'      'Read by the review bot: it could not decide, a human should' 6e7781
+
+      # A one-word request first. Without it a wrong key, an unknown model and a slow answer all look
+      # the same — three minutes of silence — and the log says only that curl gave up. This asks the
+      # cheapest possible question, so the failure names itself in seconds.
+      - name: Can the reviewer be reached?
+        id: ping
+        if: steps.configured.outputs.yes == 'true'
+        env:
+          KEY: ${{ secrets.GEMINI_API_KEY }}
+          ENDPOINT: ${{ vars.REVIEW_ENDPOINT || 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions' }}
+          MODEL: ${{ vars.REVIEW_MODEL || 'gemini-3.6-flash' }}
+        run: |
+          set -euo pipefail
+          echo 'ok=false' >> "$GITHUB_OUTPUT"
+
+          # 512 rather than 16: this model spends output tokens thinking before it says anything, and
+          # a budget of 16 is spent entirely before the first word of the answer.
+          jq -n --arg model "$MODEL" \
+                '{model: $model, max_tokens: 512, messages: [
+                   {role: "user", content: "Reply with the single word: ready"}
+                 ]}' > "$RUNNER_TEMP/ping.json"
+
+          # The connection is the uncertain part, not the question. One run had HTTP/1.1 hang after
+          # the handshake — `tls 0.03s, first byte 0.000000` — while the default protocol answered in
+          # the same breath, so the two are asked in turn and whichever answers is the one the real
+          # request uses. HTTP/1.1 goes first only because nothing here needs multiplexing.
+          #
+          # An answer is an answer even when it is a 503: that says the transport works and the
+          # service refused, which is a different problem with a different fix, so the status is kept
+          # and reported rather than being read as an empty reply.
+          CODE=000
+          ask() {
+            local flag="$1" label="$2" line
+            CODE=000
+            if ! line=$(curl -sS ${flag:-} --connect-timeout 10 --max-time 30 \
+                         -o "$RUNNER_TEMP/ping-response.json" \
+                         -w '%{http_code} %{time_total} %{http_version} %{time_connect} %{time_appconnect} %{time_starttransfer}' \
+                         -H "Authorization: Bearer $KEY" \
+                         -H 'content-type: application/json' \
+                         --data @"$RUNNER_TEMP/ping.json" "$ENDPOINT"); then
+              echo "ping over $label: no answer"
+              return 1
+            fi
+            read -r CODE TOTAL VERSION CONNECT TLS FIRST <<<"$line"
+            echo "ping over $label: HTTP $CODE over http/$VERSION in ${TOTAL}s (connect $CONNECT, tls $TLS, first byte $FIRST)"
+            return 0
+          }
+
+          if ask '--http1.1' 'HTTP/1.1'; then
+            echo 'protocol=--http1.1' >> "$GITHUB_OUTPUT"
+          elif ask '' 'the default protocol'; then
+            echo 'protocol=' >> "$GITHUB_OUTPUT"
+          else
+            echo '::warning title=The reviewer could not be reached::Neither HTTP/1.1 nor the default protocol got an answer, so the change was not sent. Check secrets.GEMINI_API_KEY, vars.REVIEW_ENDPOINT and vars.REVIEW_MODEL.'
+            exit 0
+          fi
+
+          if [ "$CODE" != "200" ]; then
+            # The message inside the body is the reason, and it is worth more than the raw JSON: the
+            # 503 that stopped the first reviews said "this model is currently experiencing high
+            # demand", which is neither the workflow nor the key being wrong.
+            reason=$(jq -r '.error.message // empty' "$RUNNER_TEMP/ping-response.json" 2>/dev/null || true)
+            [ -n "$reason" ] || reason=$(head -c 300 "$RUNNER_TEMP/ping-response.json" 2>/dev/null | tr '\n' ' ' || true)
+            echo "::warning title=The endpoint answered $CODE::${reason:-no body} — retrying later, or pointing vars.REVIEW_MODEL at another model, is the fix."
+            exit 0
+          fi
+
+          error=$(jq -r 'if .error then (.error.message // (.error | tostring)) else empty end' \
+                    "$RUNNER_TEMP/ping-response.json" 2>/dev/null || true)
+          if [ -n "$error" ]; then
+            echo "::warning title=The reviewer refused a one-word request::$error"
+            exit 0
+          fi
+
+          answer=$(jq -r '.choices[0].message.content // empty' "$RUNNER_TEMP/ping-response.json" 2>/dev/null || true)
+          finish=$(jq -r '.choices[0].finish_reason // "none"' "$RUNNER_TEMP/ping-response.json" 2>/dev/null || true)
+          if [ -z "$answer" ]; then
+            # A thinking model can spend a whole small budget before it speaks: `finish_reason: length`
+            # with no text. That still proves the key, the model and the connection, which is what this
+            # probe is for, so the review is attempted with the room it actually has.
+            echo "::notice title=The reviewer answered with no text::finish_reason: $finish. The key, the model and the connection work; the review itself asks for more room."
+            echo 'ok=true' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "the reviewer answered: $answer"
+          echo 'ok=true' >> "$GITHUB_OUTPUT"
+
+      # The prompt is a file, so there is one copy of it and it reads as prose. The change is
+      # gathered here rather than fetched by the model, so the question is the same on every run —
+      # ordered, and capped, because a diff with thirty `.arb` files in it is not worth paying for.
+      - name: Read the change
+        if: steps.configured.outputs.yes == 'true'
+        run: |
+          python3 .github/agent/collect.py \
+            --out-md "$RUNNER_TEMP/change.md" \
+            --out-meta "$RUNNER_TEMP/meta.json"
+
+      - name: Ask
+        id: ask
+        if: steps.ping.outputs.ok == 'true'
+        env:
+          KEY: ${{ secrets.GEMINI_API_KEY }}
+          ENDPOINT: ${{ vars.REVIEW_ENDPOINT || 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions' }}
+          MODEL: ${{ vars.REVIEW_MODEL || 'gemini-3.6-flash' }}
+          # Whichever protocol answered the one-word request; empty means curl's default.
+          PROTOCOL: ${{ steps.ping.outputs.protocol }}
+        run: |
+          set -euo pipefail
+          echo 'answered=false' >> "$GITHUB_OUTPUT"
+
+          # `max_tokens` is generous on purpose: the model thinks before it answers, and a budget that
+          # only covers the answer comes back empty with `finish_reason: length`. 8000 is room for the
+          # thinking plus a few hundred words of JSON; it is a cap, not a request, so it costs nothing
+          # when it is not used.
+          jq -n --arg model "$MODEL" \
+                --rawfile rules .github/agent/review-prompt.md \
+                --rawfile change "$RUNNER_TEMP/change.md" \
+                '{model: $model, temperature: 0, max_tokens: 8000, messages: [
+                   {role: "system", content: $rules},
+                   {role: "user", content: $change}
+                 ]}' > "$RUNNER_TEMP/request.json"
+
+          # `--retry` is for a busy service, not for the network: the one-word probe has already
+          # established that bytes come back, so a 429 or a 5xx here is the model's answer to a
+          # request that arrived, and a second attempt usually gets a better one.
+          if ! line=$(curl -sS ${PROTOCOL:-} --connect-timeout 15 --max-time 300 \
+                        --retry 2 --retry-delay 3 \
+                        -o "$RUNNER_TEMP/response.json" \
+                        -w '%{http_code} %{time_total}' \
+                        -H "Authorization: Bearer $KEY" \
+                        -H 'content-type: application/json' \
+                        --data @"$RUNNER_TEMP/request.json" "$ENDPOINT"); then
+            echo '::warning title=The reviewer could not be reached::The endpoint did not answer. Check vars.REVIEW_ENDPOINT, and whether the runner can reach it.'
+            exit 0
+          fi
+
+          read -r status total <<<"$line"
+          echo "the endpoint answered $status in ${total}s"
+          if [ "$status" != "200" ]; then
+            reason=$(jq -r '.error.message // empty' "$RUNNER_TEMP/response.json" 2>/dev/null || true)
+            [ -n "$reason" ] || reason=$(head -c 300 "$RUNNER_TEMP/response.json" 2>/dev/null | tr '\n' ' ' || true)
+            echo "::warning title=The endpoint answered $status::${reason:-no body}"
+            exit 0
+          fi
+
+          answer="$(jq -r '.choices[0].message.content // empty' "$RUNNER_TEMP/response.json" 2>/dev/null || true)"
+          if [ -z "$answer" ]; then
+            # An expired key, a model the key cannot see, or a request the model refused looks like
+            # this. An annotation and not a failed job on purpose: a reviewer that turns a pull
+            # request red has become a gate, and this is not one.
+            echo "::warning title=The reviewer returned nothing::$(jq -c '.error // .' "$RUNNER_TEMP/response.json" 2>/dev/null | head -c 300)"
+            exit 0
+          fi
+          echo 'answered=true' >> "$GITHUB_OUTPUT"
+
+      # The model has an opinion; `triage.py` has the rules. It re-reads the facts it can check
+      # itself — the version and changelog moving together, the paths a maintainer decides, whether
+      # the base branch has required checks at all — and it is the only thing that decides a label.
+      - name: Decide
+        id: decide
+        if: steps.ask.outputs.answered == 'true'
+        env:
+          AUTO_MERGE: ${{ vars.AUTO_MERGE }}
+          AUTO_MERGE_AUTHORS: ${{ vars.AUTO_MERGE_AUTHORS }}
+          DECLARED_CHECKS: ${{ vars.REQUIRED_CHECKS }}
+        run: |
+          set -euo pipefail
+          allow=$(gh api "repos/$REPO" --jq .allow_auto_merge)
+
+          # Reading branch protection needs admin, which the default token does not have. When the
+          # API refuses, the number the maintainer declared in `vars.REQUIRED_CHECKS` is the answer;
+          # with neither, the count is 0 and `triage.py` refuses to merge — which is the safe way to
+          # be wrong, because `--auto` on an unprotected branch merges on the spot.
+          required=$(gh api "repos/$REPO/branches/$BASE/protection/required_status_checks" \
+                       --jq '(.contexts | length) + (.checks | length)' 2>/dev/null) \
+                     || required="${DECLARED_CHECKS:-0}"
+          [ -n "${required:-}" ] || required=0
+
+          ALLOW_AUTO_MERGE="$allow" REQUIRED_CHECKS="$required" \
+            python3 .github/agent/triage.py \
+              --response "$RUNNER_TEMP/response.json" \
+              --meta "$RUNNER_TEMP/meta.json" \
+              --out "$RUNNER_TEMP/comment.md" \
+              --plan "$RUNNER_TEMP/plan.json"
+
+          for key in label merge verdict; do
+            echo "$key=$(jq -r ".$key" "$RUNNER_TEMP/plan.json")" >> "$GITHUB_OUTPUT"
+          done
+
+      # `--auto`, never a bare merge: the reviewer runs when the pull request opens, when nothing has
+      # been built yet, so the merge has to wait for the checks rather than trust the reading. A
+      # declined arming is a warning with the reason, because the label is still useful on its own.
+      - name: Arm auto-merge
+        if: steps.decide.outputs.merge == 'true'
+        run: |
+          set -euo pipefail
+          already=$(gh pr view "$PR" --json autoMergeRequest --jq '.autoMergeRequest.requestedAt // empty')
+          if [ -n "$already" ]; then
+            echo 'Auto-merge is armed: GitHub merges this as soon as the required checks pass.' > "$RUNNER_TEMP/merge.md"
+            exit 0
+          fi
+          if out=$(gh pr merge "$PR" --auto --squash 2>&1); then
+            echo 'Auto-merge is armed: GitHub merges this as soon as the required checks pass.' >> "$RUNNER_TEMP/merge.md"
+          else
+            first=${out%%$'\n'*}
+            echo "::warning title=Auto-merge was not armed::$first"
+            printf 'Auto-merge could not be armed (%s), so the `ai:accepted` label is the signal that it can be merged by hand.\n' "$first" >> "$RUNNER_TEMP/merge.md"
+          fi
+
+      # One comment per pull request, edited in place on later pushes: a review that appends a fresh
+      # essay to every synchronise event is a review nobody reads. The marker is how this job finds
+      # the comment it wrote.
+      - name: Post the answer
+        if: steps.decide.outputs.verdict != ''
+        run: |
+          set -euo pipefail
+          note="$RUNNER_TEMP/comment.md"
+          if [ -s "$RUNNER_TEMP/merge.md" ]; then
+            { echo; echo '---'; echo; cat "$RUNNER_TEMP/merge.md"; } >> "$note"
+          fi
+
+          # Two steps rather than a pipe into `head`: under `set -o pipefail` a producer that is
+          # cut short fails the whole assignment.
+          ids=$(gh api --paginate "repos/$REPO/issues/$PR/comments" \
+                  --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | contains("<!-- ai-review -->"))) | .id')
+          id=${ids%%$'\n'*}
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/$REPO/issues/comments/$id" -F body=@"$note" >/dev/null
+          else
+            gh api -X POST "repos/$REPO/issues/$PR/comments" -F body=@"$note" >/dev/null
+          fi
+
+      # Exactly one of the four labels: a pull request that was fixed stops saying it needs changes.
+      # `!cancelled()` rather than plain success: the label is the part that survives a comment that
+      # could not be posted, so a posting failure must not swallow the verdict.
+      - name: Apply the label
+        if: steps.decide.outputs.label != '' && !cancelled()
+        env:
+          LABEL: ${{ steps.decide.outputs.label }}
+        run: |
+          set -euo pipefail
+          gh api -X POST "repos/$REPO/issues/$PR/labels" -f "labels[]=$LABEL" >/dev/null
+          for other in 'ai:accepted' 'ai:changes-requested' 'ai:out-of-scope' 'ai:needs-review'; do
+            if [ "$other" = "$LABEL" ]; then
+              continue
+            fi
+            gh api -X DELETE "repos/$REPO/issues/$PR/labels/$other" >/dev/null 2>&1 || true
+          done
