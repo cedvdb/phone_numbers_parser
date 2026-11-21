@@ -98,20 +98,22 @@ abstract class PhoneParser {
     }
 
     final containsCountryCode = national.length != withoutExitCode.length;
-    // normally a phone number should not contain a national prefix after the country
-    // code. However we let it slide to cover a wider range of incorrect input
-    var (_, nsn) = NationalNumberParser.extractNationalPrefix(
-      national,
-      destinationMetadata,
-    );
-    // if the phone number contained a country code, it should in its international form
-    // and we should not transform it
-    if (!containsCountryCode) {
-      nsn = NationalNumberParser.transformLocalNsnToInternationalUsingPatterns(
-        nsn,
-        destinationMetadata,
-      );
-    }
+    // if the phone number contained a country code, it should be in its
+    // international form and we should not transform it. Normally it should not
+    // contain a national prefix after the country code, however we let it slide
+    // to cover a wider range of incorrect input.
+    // A local number is only transformed: the transformation already removes
+    // the national prefix, removing it before would strip it twice
+    // (8 800 555-35-35 in RU).
+    final nsn = containsCountryCode
+        ? NationalNumberParser.extractNationalPrefix(
+            national,
+            destinationMetadata,
+          ).$2
+        : NationalNumberParser.transformLocalNsnToInternationalUsingPatterns(
+            national,
+            destinationMetadata,
+          );
 
     // at this point we have the phone number that has been processed, but
     // if it is invalid, we remove the processing of the nsn part
