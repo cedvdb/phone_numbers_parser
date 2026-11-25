@@ -71,14 +71,10 @@ class PhoneNumber {
   /// phone.format(format: PhoneNumberFormat.e164);     // +33611223344
   /// phone.format(format: PhoneNumberFormat.nsn);      // 6 11 22 33 44
   /// ```
-  ///
-  /// [isoCode] only selects the metadata used for the grouping: the dial code
-  /// stays the number's own country code.
   String format({
     PhoneNumberFormat format = PhoneNumberFormat.international,
-    IsoCode? isoCode,
   }) =>
-      PhoneNumberFormatter.format(nsn, isoCode ?? this.isoCode, format);
+      PhoneNumberFormatter.format(nsn, isoCode, format);
 
   /// formats the nsn, if no [isoCode] is provided the phone number region is used.
   @Deprecated('Use [format] with [PhoneNumberFormat.national] instead')
@@ -86,7 +82,11 @@ class PhoneNumber {
       PhoneNumberFormatter.formatNsn(nsn, isoCode ?? this.isoCode, format);
 
   @Deprecated('Use [format] instead')
-  String getFormattedNsn({IsoCode? isoCode}) => format(isoCode: isoCode);
+  String getFormattedNsn({IsoCode? isoCode}) => PhoneNumberFormatter.format(
+        nsn,
+        isoCode ?? this.isoCode,
+        PhoneNumberFormat.national,
+      );
 
   //
   //  Validation

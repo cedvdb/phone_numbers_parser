@@ -466,10 +466,13 @@ void main() {
     });
 
     test('should format with another country format', () {
-      String format(String phoneNumber) =>
-          PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.US).format(
-            format: PhoneNumberFormat.national,
-            isoCode: IsoCode.FR,
+      // the nsn is formatted with the rules of another country: the static
+      // formatter is the entry point for that, a phone number is always
+      // formatted as its own region.
+      String format(String phoneNumber) => PhoneNumberFormatter.format(
+            PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.US).nsn,
+            IsoCode.FR,
+            PhoneNumberFormat.national,
           );
 
       // the french national format starts with the national prefix
@@ -495,10 +498,8 @@ void main() {
 
     test('should format through a format reference', () {
       String format(String phoneNumber) =>
-          PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.CA).format(
-            format: PhoneNumberFormat.national,
-            isoCode: IsoCode.CA,
-          );
+          PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.CA)
+              .format(format: PhoneNumberFormat.national);
 
       var testNumber = '4185551212';
       expect(format(testNumber), equals('(418) 555-1212'));

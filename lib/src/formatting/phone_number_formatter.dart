@@ -44,9 +44,8 @@ enum NsnFormat {
 class PhoneNumberFormatter {
   /// Formats [nsn] as [format].
   ///
-  /// [isoCode] is the region whose metadata is used for the grouping. It is
-  /// the number's own region most of the time, another one can be given to
-  /// format the number with another country's rules.
+  /// [isoCode] is the region the number belongs to, it provides both the dial
+  /// code and the grouping rules.
   static String format(
     String nsn,
     IsoCode isoCode, [
