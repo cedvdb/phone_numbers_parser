@@ -92,6 +92,69 @@ void main() {
         );
       }
     });
+
+    test(
+        'should parse a prefixed local number when the nsn starts with the '
+        'national prefix', () {
+      // regression test for https://github.com/cedvdb/phone_numbers_parser/issues/123
+      // the national prefix used to be removed twice, which rejected numbers
+      // such as RU 8 800 ... where the nsn itself starts with 8.
+      var checked = 0;
+      for (final (isoCode, type, nsn, international) in cases) {
+        final nationalPrefix =
+            MetadataFinder.findMetadataForIsoCode(isoCode).nationalPrefix;
+        if (nationalPrefix == null || !nsn.startsWith(nationalPrefix)) {
+          continue;
+        }
+        checked++;
+        expect(
+          PhoneNumber.parse('$nationalPrefix$nsn', callerCountry: isoCode)
+              .international,
+          equals(international),
+          reason: '$isoCode $type "$nsn"',
+        );
+      }
+      expect(checked, greaterThan(0));
+    });
+
+    test('should parse a prefixed local number when the metadata transforms it',
+        () {
+      // countries with a nationalPrefixTransformRule (e.g. AR turns
+      // 0343 15 555 1212 into 9 343 555 1212) need the transform to receive
+      // the number including its national prefix.
+      var checked = 0;
+      for (final (isoCode, type, nsn, international) in cases) {
+        final metadata = MetadataFinder.findMetadataForIsoCode(isoCode);
+        final patterns = MetadataFinder.findMetadataPatternsForIsoCode(isoCode);
+        final nationalPrefix = metadata.nationalPrefix;
+        if (nationalPrefix == null ||
+            patterns.nationalPrefixTransformRule == null) {
+          continue;
+        }
+        checked++;
+        expect(
+          PhoneNumber.parse('$nationalPrefix$nsn', callerCountry: isoCode)
+              .international,
+          equals(international),
+          reason: '$isoCode $type "$nsn"',
+        );
+      }
+      expect(checked, greaterThan(0));
+    });
+
+    test('should parse the national format of every example number', () {
+      // a form field displays the national format and parses it back, so that
+      // round trip has to be lossless.
+      for (final (isoCode, type, nsn, _) in cases) {
+        final parsed = PhoneNumber.parse(nsn, destinationCountry: isoCode);
+        final national = parsed.formatNsn(format: NsnFormat.national);
+        expect(
+          PhoneNumber.parse(national, destinationCountry: isoCode).nsn,
+          equals(parsed.nsn),
+          reason: '$isoCode $type "$nsn" formatted as "$national"',
+        );
+      }
+    });
   });
 
   group('country calling codes', () {
