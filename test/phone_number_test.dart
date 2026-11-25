@@ -63,27 +63,90 @@ void main() {
 
       test('should remove the national prefix only once', () {
         // the national significant number itself starts with the digit of
-        // the national prefix
+        // the national prefix, removing it twice used to reject the number.
+        void expectParse(String input, IsoCode isoCode, String international) {
+          for (final parsed in [
+            PhoneNumber.parse(input, callerCountry: isoCode),
+            PhoneNumber.parse(input, destinationCountry: isoCode),
+          ]) {
+            expect(
+              parsed.international,
+              equals(international),
+              reason: '$isoCode "$input"',
+            );
+            expect(
+              parsed.isValid(),
+              isTrue,
+              reason: '$isoCode "$input"',
+            );
+          }
+        }
+
+        expectParse('8 800 555-35-35', IsoCode.RU, '+78005553535');
+        expectParse('8 (812) 123-45-67', IsoCode.RU, '+78121234567');
+        expectParse('8 801 234 5678', IsoCode.BY, '+3758012345678');
+        expectParse('0 800 12345', IsoCode.LT, '+37080012345');
+      });
+
+      test('should parse a local number that needs a transform rule', () {
+        // Argentina rewrites the national number: 0343 15 555 1212 (local) is
+        // +54 9 343 555 1212 (international). The transform expects the
+        // national prefix to be part of the number it is applied to.
+        for (final parsed in [
+          PhoneNumber.parse('0343 15 555 1212', callerCountry: IsoCode.AR),
+          PhoneNumber.parse('0343 15 555 1212', destinationCountry: IsoCode.AR),
+        ]) {
+          expect(parsed.international, equals('+5493435551212'));
+          expect(parsed.isValid(), isTrue);
+        }
+      });
+
+      test('should remove the national prefix after a country code', () {
+        // a number that contains a country code is already in its
+        // international form: only the national prefix is removed after it,
+        // the local transform is not applied.
         expect(
-            PhoneNumber.parse('8 800 555-35-35', callerCountry: IsoCode.RU)
-                .international,
-            equals('+78005553535'));
+          PhoneNumber.parse('+7 8 800 555 35 35').international,
+          equals('+78005553535'),
+        );
         expect(
-            PhoneNumber.parse('8 (812) 123-45-67', callerCountry: IsoCode.RU)
-                .international,
-            equals('+78121234567'));
+          PhoneNumber.parse('+375 8 801 234 5678').international,
+          equals('+3758012345678'),
+        );
         expect(
-            PhoneNumber.parse('8 801 234 5678', callerCountry: IsoCode.BY)
-                .international,
-            equals('+3758012345678'));
+          PhoneNumber.parse('+370 0 800 12345').international,
+          equals('+37080012345'),
+        );
         expect(
-            PhoneNumber.parse('0 800 12345', callerCountry: IsoCode.LT)
-                .international,
-            equals('+37080012345'));
+          PhoneNumber.parse('+33 0 6 86 57 90 14').international,
+          equals('+33686579014'),
+        );
+      });
+
+      test('should not strip the national prefix twice on malformed input', () {
+        // these only used to be valid because the prefix was removed twice.
+        // libphonenumber rejects them too, so the digits are kept as typed.
+        final doubled = PhoneNumber.parse(
+          '8 8 800 555 35 35',
+          callerCountry: IsoCode.RU,
+        );
+        expect(doubled.nsn, equals('888005553535'));
+        expect(doubled.isValid(), isFalse);
+
+        // in Colombia 0([3579]|4(?:[14]4|56))? is the national prefix for
+        // parsing: a leading 0 before a mobile is read as a carrier code, it
+        // is not a prefix that can simply be dropped.
+        final colombian = PhoneNumber.parse(
+          '03211234567',
+          callerCountry: IsoCode.CO,
+        );
+        expect(colombian.nsn, equals('03211234567'));
+        expect(colombian.isValid(), isFalse);
         expect(
-            PhoneNumber.parse('8 800 555-35-35', destinationCountry: IsoCode.RU)
-                .isValid(),
-            isTrue);
+          PhoneNumber.parse('3211234567', callerCountry: IsoCode.CO)
+              .international,
+          equals('+573211234567'),
+        );
       });
 
       test('should parse for destination', () {

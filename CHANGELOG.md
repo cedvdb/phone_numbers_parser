@@ -1,3 +1,15 @@
+## 9.0.30
+- Remove the national prefix only once when parsing a local number. A national
+  significant number starting with the national prefix digit was rejected
+  because the prefix was removed twice: once before the transformation and once
+  inside it. `8 800 555-35-35` in Russia now parses to `+78005553535` instead
+  of the invalid `+788005553535`; the same applies to `8 (812) ...` (RU),
+  `8 801 ...` (BY) and `0 800 ...` (LT). Numbers that contain a country code
+  are parsed as before.
+- Note: inputs that the double removal used to "repair" (a leading `0` before a
+  Colombian mobile, or a doubled national prefix such as `8 8 800 ...`) are now
+  invalid, matching libphonenumber.
+
 ## 9.0.29
 - Upgrade metadata
 

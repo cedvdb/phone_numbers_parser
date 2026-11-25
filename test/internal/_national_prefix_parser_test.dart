@@ -20,6 +20,28 @@ void main() {
       expect(tr('0343155551212', metadataAR), equals('93435551212'));
     });
 
+    test('should expect the national prefix to be part of the number', () {
+      // the transform removes the national prefix itself. Removing it before
+      // calling it strips a digit of the nsn when the nsn starts with the
+      // prefix digit, which is what used to reject RU 8 800 numbers.
+      final metadataRU = MetadataFinder.findMetadataForIsoCode(IsoCode.RU);
+      final tr =
+          NationalNumberParser.transformLocalNsnToInternationalUsingPatterns;
+      expect(tr('88005553535', metadataRU), equals('8005553535'));
+      expect(tr('8005553535', metadataRU), equals('005553535'));
+    });
+
+    test('should strip the national prefix and the carrier code in one pass',
+        () {
+      // Colombia's nationalPrefixForParsing is 0([3579]|4(?:[14]4|56))?: the
+      // digit after the 0 is a carrier code and is removed with the prefix.
+      final metadataCO = MetadataFinder.findMetadataForIsoCode(IsoCode.CO);
+      final tr =
+          NationalNumberParser.transformLocalNsnToInternationalUsingPatterns;
+      expect(tr('03211234567', metadataCO), equals('211234567'));
+      expect(tr('3211234567', metadataCO), equals('3211234567'));
+    });
+
     group('applyTransformRules', () {
       test('should return the input untouched when the pattern does not match',
           () {
