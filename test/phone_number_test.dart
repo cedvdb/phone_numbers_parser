@@ -61,6 +61,31 @@ void main() {
             equals('+49301234567'));
       });
 
+      test('should remove the national prefix only once', () {
+        // the national significant number itself starts with the digit of
+        // the national prefix
+        expect(
+            PhoneNumber.parse('8 800 555-35-35', callerCountry: IsoCode.RU)
+                .international,
+            equals('+78005553535'));
+        expect(
+            PhoneNumber.parse('8 (812) 123-45-67', callerCountry: IsoCode.RU)
+                .international,
+            equals('+78121234567'));
+        expect(
+            PhoneNumber.parse('8 801 234 5678', callerCountry: IsoCode.BY)
+                .international,
+            equals('+3758012345678'));
+        expect(
+            PhoneNumber.parse('0 800 12345', callerCountry: IsoCode.LT)
+                .international,
+            equals('+37080012345'));
+        expect(
+            PhoneNumber.parse('8 800 555-35-35', destinationCountry: IsoCode.RU)
+                .isValid(),
+            isTrue);
+      });
+
       test('should parse for destination', () {
         expect(
           PhoneNumber.parse(
