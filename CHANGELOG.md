@@ -1,3 +1,18 @@
+## 9.1.0
+- The national format now includes the national prefix, as libphonenumber does:
+  `030 1234567` (DE), `020 7946 0958` (GB), `06 11 22 33 44` (FR),
+  `012 34 56 78` (BE), `8 (800) 555-35-35` (RU) and `0261 15-532-5656` (AR).
+  The international format still omits it.
+- The national prefix rule is spliced in place of the first group used by the
+  number format, because some countries do not use the first group of the
+  pattern in their national format (Argentina).
+- Prefer the format that matches the number as it is over the format of a
+  number padded to a complete length, so short numbers such as the Dutch
+  `14020` keep their own grouping instead of gaining a national prefix.
+- Add `NsnFormat.nationalWithoutPrefix`, the national grouping without the
+  national prefix (`477 88 99 22`), for text fields that display the
+  country dial code next to the number.
+
 ## 9.0.30
 - Remove the national prefix only once when parsing a local number. A national
   significant number starting with the national prefix digit was rejected

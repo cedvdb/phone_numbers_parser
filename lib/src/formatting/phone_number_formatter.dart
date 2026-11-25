@@ -8,12 +8,23 @@ import '../metadata/models/phone_metadata_formats.dart';
 import '../iso_codes/iso_code.dart';
 
 enum NsnFormat {
+  /// The national format, with the national prefix: `0477 88 99 22`.
   national,
+
+  /// The format used for international dialing, without the national prefix.
   international,
+
+  /// The national format without the national prefix: `477 88 99 22`.
+  ///
+  /// Same grouping as [national], so it is what a text field shows when the
+  /// country dial code is displayed next to it: the two together read as a
+  /// valid international number.
+  nationalWithoutPrefix,
 }
 
 class PhoneNumberFormatter {
-  /// format national number for international use
+  /// formats [nsn] for display, either in its national form (with the
+  /// national prefix) or in its international form (without it).
   static String formatNsn(
     String nsn,
     IsoCode isoCode, [
@@ -28,10 +39,16 @@ class PhoneNumberFormatter {
     final completePhoneNumber = nsn + missingDigits;
     final formatingRules =
         MetadataFinder.findMetadataFormatsForIsoCode(isoCode);
+    // Prefer a format that matches the number as it is, the faked digits are
+    // only there to format an incomplete number.
     final formatingRule = _getMatchingFormatRules(
-      formatingRules: formatingRules,
-      nsn: completePhoneNumber,
-    );
+          formatingRules: formatingRules,
+          nsn: nsn,
+        ) ??
+        _getMatchingFormatRules(
+          formatingRules: formatingRules,
+          nsn: completePhoneNumber,
+        );
     // for incomplete phone number
 
     if (formatingRule == null) {
@@ -44,6 +61,13 @@ class PhoneNumberFormatter {
         intlFormat != null &&
         intlFormat != 'NA') {
       transformRule = intlFormat;
+    } else if (format == NsnFormat.national) {
+      transformRule = _withNationalPrefix(
+        formatRule: transformRule,
+        nationalPrefixRule: formatingRule.nationalPrefixFormattingRule,
+        nationalPrefix:
+            MetadataFinder.findMetadataForIsoCode(isoCode).nationalPrefix,
+      );
     }
 
     var formatted = NationalNumberParser.applyTransformRules(
@@ -53,6 +77,42 @@ class PhoneNumberFormatter {
     );
     formatted = _removeMissingDigits(formatted, missingDigits);
     return formatted;
+  }
+
+  /// Prepends the national prefix to [formatRule] using the metadata
+  /// [nationalPrefixRule], where `$NP` stands for the national prefix and `$FG`
+  /// for the first group reference of the format.
+  ///
+  /// The rule is spliced in place of the first group reference, the way
+  /// libphonenumber does it. Argentina's mobile format is `$2 15-$3-$4` with
+  /// the rule `$NP$FG`, which becomes `0$2 15-$3-$4`: `$FG` refers to the
+  /// first group used by the format, not to the first group of the pattern.
+  ///
+  /// A country without a national prefix keeps its format untouched.
+  static String _withNationalPrefix({
+    required String formatRule,
+    required String? nationalPrefixRule,
+    required String? nationalPrefix,
+  }) {
+    if (nationalPrefixRule == null ||
+        nationalPrefixRule.isEmpty ||
+        nationalPrefixRule == 'NA' ||
+        nationalPrefix == null ||
+        nationalPrefix.isEmpty) {
+      return formatRule;
+    }
+    final firstGroupReference = RegExp(r'\$\d').firstMatch(formatRule);
+    if (firstGroupReference == null) {
+      return formatRule;
+    }
+    final rule = nationalPrefixRule
+        .replaceAll(r'$NP', nationalPrefix)
+        .replaceAll(r'$FG', firstGroupReference.group(0)!);
+    return formatRule.replaceRange(
+      firstGroupReference.start,
+      firstGroupReference.end,
+      rule,
+    );
   }
 
   static String _removeMissingDigits(String formatted, String missingDigits) {
