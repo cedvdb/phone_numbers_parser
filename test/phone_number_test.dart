@@ -332,10 +332,24 @@ void main() {
   });
 
   group('format', () {
-    test('should format with the national format by default', () {
+    test('should format with the international format by default', () {
+      final us =
+          PhoneNumber.parse('2025550119', destinationCountry: IsoCode.US);
+      expect(us.format(), equals('+1 202-555-0119'));
+      expect(
+        us.format(format: PhoneNumberFormat.e164),
+        equals('+12025550119'),
+      );
+      expect(
+        us.format(format: PhoneNumberFormat.national),
+        equals('(202) 555-0119'),
+      );
+    });
+
+    test('should format with the national format when specified', () {
       String format(String phoneNumber) =>
           PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.US)
-              .format();
+              .format(format: PhoneNumberFormat.national);
 
       var testNumber = '';
       expect(format(testNumber), equals(''));
@@ -439,7 +453,10 @@ void main() {
     test('should keep the deprecated formatNsn working', () {
       final phone = PhoneNumber.parse('+33611223344');
       // ignore: deprecated_member_use_from_same_package
-      expect(phone.formatNsn(), equals(phone.format()));
+      expect(
+        phone.formatNsn(),
+        equals(phone.format(format: PhoneNumberFormat.national)),
+      );
       // ignore: deprecated_member_use_from_same_package
       expect(
         phone.formatNsn(format: NsnFormat.international),
@@ -450,8 +467,10 @@ void main() {
 
     test('should format with another country format', () {
       String format(String phoneNumber) =>
-          PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.US)
-              .format(isoCode: IsoCode.FR);
+          PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.US).format(
+            format: PhoneNumberFormat.national,
+            isoCode: IsoCode.FR,
+          );
 
       // the french national format starts with the national prefix
       var testNumber = '6';
@@ -476,8 +495,10 @@ void main() {
 
     test('should format through a format reference', () {
       String format(String phoneNumber) =>
-          PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.CA)
-              .format(isoCode: IsoCode.CA);
+          PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.CA).format(
+            format: PhoneNumberFormat.national,
+            isoCode: IsoCode.CA,
+          );
 
       var testNumber = '4185551212';
       expect(format(testNumber), equals('(418) 555-1212'));
@@ -486,8 +507,10 @@ void main() {
     test('should include the national prefix in the national format', () {
       // the national prefix is part of the national format, libphonenumber
       // formats these numbers the same way.
-      String national(String nsn, IsoCode isoCode) =>
-          PhoneNumber(isoCode: isoCode, nsn: nsn).format();
+      String national(String nsn, IsoCode isoCode) => PhoneNumber(
+            isoCode: isoCode,
+            nsn: nsn,
+          ).format(format: PhoneNumberFormat.national);
 
       expect(national('301234567', IsoCode.DE), equals('030 1234567'));
       expect(national('2079460958', IsoCode.GB), equals('020 7946 0958'));
@@ -531,7 +554,8 @@ void main() {
       // 14020 is a dutch short number: it matches the 14 rule and must not be
       // padded to a full number before being formatted.
       expect(
-        PhoneNumber(isoCode: IsoCode.NL, nsn: '14020').format(),
+        PhoneNumber(isoCode: IsoCode.NL, nsn: '14020')
+            .format(format: PhoneNumberFormat.national),
         equals('14 020'),
       );
     });
@@ -614,7 +638,7 @@ void main() {
     test('should format argentinian phone numbers', () {
       String format(String phoneNumber) =>
           PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.AR)
-              .format();
+              .format(format: PhoneNumberFormat.national);
       var testNumber = '';
       expect(format(testNumber), equals(''));
       testNumber = '5';

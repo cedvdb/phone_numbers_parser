@@ -4,6 +4,10 @@
   (`06 11 22 33 44`) and `nsn` (`6 11 22 33 44`). The dial code is only part
   of the international and e164 forms. `NsnFormat.international` used to be
   the grouped nsn, that is now `PhoneNumberFormat.nsn`.
+- The default format is `PhoneNumberFormat.international`
+  (`+33 6 11 22 33 44`), which stands on its own. Use `national` when
+  the country is displayed next to the number, and `e164` to store or
+  compare numbers.
 - Deprecate `PhoneNumber.formatNsn`, `PhoneNumberFormatter.formatNsn` and
   `PhoneNumber.getFormattedNsn` in favour of `format`. They keep their
   current output, `formatNsn(format: NsnFormat.international)` included.

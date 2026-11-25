@@ -50,7 +50,7 @@ class PhoneNumberFormatter {
   static String format(
     String nsn,
     IsoCode isoCode, [
-    PhoneNumberFormat format = PhoneNumberFormat.national,
+    PhoneNumberFormat format = PhoneNumberFormat.international,
   ]) {
     final countryCode =
         MetadataFinder.findMetadataForIsoCode(isoCode).countryCode;
