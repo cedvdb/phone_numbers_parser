@@ -352,7 +352,8 @@ void main() {
       testNumber = '202555';
       expect(format(testNumber), equals('(202) 555'));
       testNumber = '2025550';
-      expect(format(testNumber), equals('(202) 555-0'));
+      // 7 digits match the local format rule, as in libphonenumber
+      expect(format(testNumber), equals('202-5550'));
       testNumber = '20255501';
       expect(format(testNumber), equals('(202) 555-01'));
       testNumber = '202555011';
@@ -381,7 +382,7 @@ void main() {
       testNumber = '202555';
       expect(format(testNumber), equals('202-555'));
       testNumber = '2025550';
-      expect(format(testNumber), equals('202-555-0'));
+      expect(format(testNumber), equals('202-5550'));
       testNumber = '20255501';
       expect(format(testNumber), equals('202-555-01'));
       testNumber = '202555011';
@@ -395,23 +396,25 @@ void main() {
           PhoneNumber.parse(phoneNumber, destinationCountry: IsoCode.US)
               .formatNsn(isoCode: IsoCode.FR);
 
+      // the french national format starts with the national prefix
       var testNumber = '6';
-      expect(format(testNumber), equals('6'));
+      expect(format(testNumber), equals('06'));
       testNumber = '68';
-      expect(format(testNumber), equals('6 8'));
+      expect(format(testNumber), equals('06 8'));
       testNumber = '689';
-      expect(format(testNumber), equals('6 89'));
+      expect(format(testNumber), equals('06 89'));
       testNumber = '6895';
-      expect(format(testNumber), equals('6 89 5'));
+      expect(format(testNumber), equals('06 89 5'));
       testNumber = '68955';
-      expect(format(testNumber), equals('6 89 55'));
+      expect(format(testNumber), equals('06 89 55'));
       testNumber = '689555';
-      expect(format(testNumber), equals('6 89 55 5'));
+      expect(format(testNumber), equals('06 89 55 5'));
       testNumber = '6895555';
-      expect(format(testNumber), equals('6 89 55 55'));
+      expect(format(testNumber), equals('06 89 55 55'));
       testNumber = '68955555';
-      expect(format(testNumber), equals('6 89 55 55 5'));
+      expect(format(testNumber), equals('06 89 55 55 5'));
       testNumber = '689555555';
+      expect(format(testNumber), equals('06 89 55 55 55'));
     });
 
     test('should format through a format reference', () {
@@ -421,6 +424,43 @@ void main() {
 
       var testNumber = '4185551212';
       expect(format(testNumber), equals('(418) 555-1212'));
+    });
+
+    test('should include the national prefix in the national format', () {
+      // the national prefix is part of the national format, libphonenumber
+      // formats these numbers the same way.
+      String national(String nsn, IsoCode isoCode) =>
+          PhoneNumber(isoCode: isoCode, nsn: nsn).formatNsn();
+
+      expect(national('301234567', IsoCode.DE), equals('030 1234567'));
+      expect(national('2079460958', IsoCode.GB), equals('020 7946 0958'));
+      expect(national('611223344', IsoCode.FR), equals('06 11 22 33 44'));
+      expect(national('12345678', IsoCode.BE), equals('012 34 56 78'));
+      expect(national('8005553535', IsoCode.RU), equals('8 (800) 555-35-35'));
+    });
+
+    test('should not include the national prefix in the international format',
+        () {
+      String international(String nsn, IsoCode isoCode) => PhoneNumber(
+            isoCode: isoCode,
+            nsn: nsn,
+          ).formatNsn(format: NsnFormat.international);
+
+      expect(international('301234567', IsoCode.DE), equals('30 1234567'));
+      expect(international('2079460958', IsoCode.GB), equals('20 7946 0958'));
+      expect(
+        international('8005553535', IsoCode.RU),
+        equals('800 555-35-35'),
+      );
+    });
+
+    test('should prefer the format that matches the number as it is', () {
+      // 14020 is a dutch short number: it matches the 14 rule and must not be
+      // padded to a full number before being formatted.
+      expect(
+        PhoneNumber(isoCode: IsoCode.NL, nsn: '14020').formatNsn(),
+        equals('14 020'),
+      );
     });
   });
 
@@ -515,11 +555,12 @@ void main() {
       testNumber = '54926';
       expect(format(testNumber), equals('54926'));
       testNumber = '549261';
-      expect(format(testNumber), equals('549261'));
+      // 6 digits match the short format rule, as in libphonenumber
+      expect(format(testNumber), equals('54-9261'));
       testNumber = '5492615';
-      expect(format(testNumber), equals('5492615'));
+      expect(format(testNumber), equals('549-2615'));
       testNumber = '54926153';
-      expect(format(testNumber), equals('54926153'));
+      expect(format(testNumber), equals('5492-6153'));
       testNumber = '549261532';
       expect(format(testNumber), equals('549261532'));
       testNumber = '5492615325';
@@ -530,15 +571,17 @@ void main() {
       testNumber = '549261532565';
       expect(format(testNumber), equals('549261532565'));
       testNumber = '5492615325656';
-      expect(format(testNumber), equals('261 15-532-5656'));
+      // the national format is prefixed with the national prefix, which is
+      // spliced in place of the first group used by the format ($2 here).
+      expect(format(testNumber), equals('0261 15-532-5656'));
       testNumber = '+5492615325656';
-      expect(format(testNumber), equals('261 15-532-5656'));
+      expect(format(testNumber), equals('0261 15-532-5656'));
       testNumber = '54 9 261-5325 656';
-      expect(format(testNumber), equals('261 15-532-5656'));
+      expect(format(testNumber), equals('0261 15-532-5656'));
       testNumber = '54-9-261-5325-656';
-      expect(format(testNumber), equals('261 15-532-5656'));
+      expect(format(testNumber), equals('0261 15-532-5656'));
       testNumber = '54.9.261.5325.656';
-      expect(format(testNumber), equals('261 15-532-5656'));
+      expect(format(testNumber), equals('0261 15-532-5656'));
     });
   });
   test('Invalid phone number throws exception', () {
