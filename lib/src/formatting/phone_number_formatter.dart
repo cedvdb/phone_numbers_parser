@@ -8,8 +8,18 @@ import '../metadata/models/phone_metadata_formats.dart';
 import '../iso_codes/iso_code.dart';
 
 enum NsnFormat {
+  /// The national format, with the national prefix: `0477 88 99 22`.
   national,
+
+  /// The format used for international dialing, without the national prefix.
   international,
+
+  /// The national format without the national prefix: `477 88 99 22`.
+  ///
+  /// Same grouping as [national], so it is what a text field shows when the
+  /// country dial code is displayed next to it: the two together read as a
+  /// valid international number.
+  nationalWithoutPrefix,
 }
 
 class PhoneNumberFormatter {

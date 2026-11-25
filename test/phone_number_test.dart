@@ -454,6 +454,23 @@ void main() {
       );
     });
 
+    test('should format without the national prefix when asked', () {
+      // same grouping as the national format, without the prefix: this is what
+      // a text field shows when the dial code is displayed next to it.
+      String withoutPrefix(String nsn, IsoCode isoCode) => PhoneNumber(
+            isoCode: isoCode,
+            nsn: nsn,
+          ).formatNsn(format: NsnFormat.nationalWithoutPrefix);
+
+      expect(withoutPrefix('477889922', IsoCode.BE), equals('477 88 99 22'));
+      expect(withoutPrefix('611223344', IsoCode.FR), equals('6 11 22 33 44'));
+      expect(withoutPrefix('8005553535', IsoCode.RU), equals('800 555-35-35'));
+      expect(
+        withoutPrefix('92615325656', IsoCode.AR),
+        equals('261 15-532-5656'),
+      );
+    });
+
     test('should prefer the format that matches the number as it is', () {
       // 14020 is a dutch short number: it matches the 14 rule and must not be
       // padded to a full number before being formatted.

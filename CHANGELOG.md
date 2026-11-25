@@ -9,6 +9,9 @@
 - Prefer the format that matches the number as it is over the format of a
   number padded to a complete length, so short numbers such as the Dutch
   `14020` keep their own grouping instead of gaining a national prefix.
+- Add `NsnFormat.nationalWithoutPrefix`, the national grouping without the
+  national prefix (`477 88 99 22`), for text fields that display the
+  country dial code next to the number.
 
 ## 9.0.30
 - Remove the national prefix only once when parsing a local number. A national
