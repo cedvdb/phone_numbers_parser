@@ -65,14 +65,15 @@ class PhoneNumber {
 
   /// formats the phone number as [format].
   ///
-  /// [PhoneNumberFormat.international] is the default, it stands on its own:
-  /// `+33 6 11 22 33 44`. Use [PhoneNumberFormat.national] (`06 11 22 33 44`)
-  /// when the country is displayed next to the number, and
-  /// [PhoneNumberFormat.e164] (`+33611223344`) to store or compare numbers.
+  /// ```dart
+  /// phone.format();                                   // +33 6 11 22 33 44
+  /// phone.format(format: PhoneNumberFormat.national); // 06 11 22 33 44
+  /// phone.format(format: PhoneNumberFormat.e164);     // +33611223344
+  /// phone.format(format: PhoneNumberFormat.nsn);      // 6 11 22 33 44
+  /// ```
   ///
-  /// If no [isoCode] is provided the phone number region is used. [isoCode]
-  /// only selects the metadata used for the grouping: the dial code stays the
-  /// number's own country code.
+  /// [isoCode] only selects the metadata used for the grouping: the dial code
+  /// stays the number's own country code.
   String format({
     PhoneNumberFormat format = PhoneNumberFormat.international,
     IsoCode? isoCode,
