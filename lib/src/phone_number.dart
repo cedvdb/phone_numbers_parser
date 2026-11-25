@@ -65,6 +65,12 @@ class PhoneNumber {
 
   /// formats the phone number as [format].
   ///
+  /// [PhoneNumberFormat.national] is the default, it is how the number is
+  /// written where it belongs: `06 11 22 33 44`. It is only unambiguous when
+  /// the country is displayed next to it. Use [PhoneNumberFormat.international]
+  /// (`+33 6 11 22 33 44`) or [international] (e164, `+33611223344`) when the
+  /// number has to stand on its own, for storage or to be shared.
+  ///
   /// If no [isoCode] is provided the phone number region is used. [isoCode]
   /// only selects the metadata used for the grouping: the dial code stays the
   /// number's own country code.
@@ -75,11 +81,11 @@ class PhoneNumber {
       PhoneNumberFormatter.format(nsn, isoCode ?? this.isoCode, format);
 
   /// formats the nsn, if no [isoCode] is provided the phone number region is used.
-  @Deprecated('Use [format] with [PhoneNumberFormat] instead')
+  @Deprecated('Use [format] with [PhoneNumberFormat.national] instead')
   String formatNsn({IsoCode? isoCode, NsnFormat format = NsnFormat.national}) =>
       PhoneNumberFormatter.formatNsn(nsn, isoCode ?? this.isoCode, format);
 
-  @Deprecated('Use [format] with [PhoneNumberFormat] instead')
+  @Deprecated('Use [format] instead')
   String getFormattedNsn({IsoCode? isoCode}) => format(isoCode: isoCode);
 
   //

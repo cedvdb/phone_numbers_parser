@@ -76,7 +76,7 @@ class PhoneNumberFormatter {
 
   /// Formats [nsn] for display, either in its national form (with the
   /// national prefix) or in its international form (without it).
-  @Deprecated('Use [format] with [PhoneNumberFormat] instead')
+  @Deprecated('Use [format] with [PhoneNumberFormat.national] instead')
   static String formatNsn(
     String nsn,
     IsoCode isoCode, [
