@@ -58,8 +58,10 @@ void exampleUsage() {
   print('Formatting:');
   final phoneNumber =
       PhoneNumber.parse('2025550119', destinationCountry: IsoCode.US);
-  final formattedNsn = phoneNumber.formatNsn();
-  print('formatted: $formattedNsn'); // (202) 555-0119
+  final formatted = phoneNumber.format();
+  print('formatted: $formatted'); // +1 202-555-0119
+  print(
+      'national: ${phoneNumber.format(format: PhoneNumberFormat.national)}'); // (202) 555-0119
   print('international: ${phoneNumber.international}');
   // Ranges
   print('');

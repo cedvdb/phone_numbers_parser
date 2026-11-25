@@ -63,12 +63,30 @@ class PhoneNumber {
         destinationCountry: destinationCountry,
       );
 
+  /// formats the phone number as [format].
+  ///
+  /// ```dart
+  /// phone.format();                                   // +33 6 11 22 33 44
+  /// phone.format(format: PhoneNumberFormat.national); // 06 11 22 33 44
+  /// phone.format(format: PhoneNumberFormat.e164);     // +33611223344
+  /// phone.format(format: PhoneNumberFormat.nsn);      // 6 11 22 33 44
+  /// ```
+  String format({
+    PhoneNumberFormat format = PhoneNumberFormat.international,
+  }) =>
+      PhoneNumberFormatter.format(nsn, isoCode, format);
+
   /// formats the nsn, if no [isoCode] is provided the phone number region is used.
+  @Deprecated('Use [format] with [PhoneNumberFormat.national] instead')
   String formatNsn({IsoCode? isoCode, NsnFormat format = NsnFormat.national}) =>
       PhoneNumberFormatter.formatNsn(nsn, isoCode ?? this.isoCode, format);
 
-  @Deprecated('Use [formatNsn] instead')
-  String getFormattedNsn({IsoCode? isoCode}) => formatNsn(isoCode: isoCode);
+  @Deprecated('Use [format] instead')
+  String getFormattedNsn({IsoCode? isoCode}) => PhoneNumberFormatter.format(
+        nsn,
+        isoCode ?? this.isoCode,
+        PhoneNumberFormat.national,
+      );
 
   //
   //  Validation
