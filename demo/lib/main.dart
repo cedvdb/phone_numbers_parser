@@ -75,15 +75,15 @@ class _MyHomePageState extends State<MyHomePage> {
                         ListTile(
                           title: const Text('Formatted national'),
                           trailing: phoneNumber != null
-                              ? Text(phoneNumber.formatNsn(
-                                  format: NsnFormat.national))
+                              ? Text(phoneNumber.format(
+                                  format: PhoneNumberFormat.national))
                               : const Text('-'),
                         ),
                         ListTile(
                           title: const Text('Formatted international'),
                           trailing: phoneNumber != null
-                              ? Text(phoneNumber.formatNsn(
-                                  format: NsnFormat.international))
+                              ? Text(phoneNumber.format(
+                                  format: PhoneNumberFormat.international))
                               : const Text('-'),
                         ),
                         ListTile(

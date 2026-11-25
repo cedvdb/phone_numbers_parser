@@ -7,6 +7,25 @@ import 'package:phone_numbers_parser/src/regex/match_entirely_extension.dart';
 import '../metadata/models/phone_metadata_formats.dart';
 import '../iso_codes/iso_code.dart';
 
+/// The formats a phone number can be written in.
+enum PhoneNumberFormat {
+  /// The international form without separators: `+33611223344`.
+  e164,
+
+  /// The dial code followed by the international number: `+33 6 11 22 33 44`.
+  international,
+
+  /// How the number is written and dialed nationally: `06 11 22 33 44`.
+  national,
+
+  /// The national significant number, without the national prefix:
+  /// `6 11 22 33 44`. Use it when the dial code is displayed next to the
+  /// number, `+33611223344` and `6 11 22 33 44` together read correctly.
+  nsn,
+}
+
+/// The formats [PhoneNumberFormatter.formatNsn] can write, kept for the
+/// deprecated `formatNsn` methods. Prefer [PhoneNumberFormat].
 enum NsnFormat {
   /// The national format, with the national prefix: `0477 88 99 22`.
   national,
@@ -23,13 +42,53 @@ enum NsnFormat {
 }
 
 class PhoneNumberFormatter {
-  /// formats [nsn] for display, either in its national form (with the
+  /// Formats [nsn] as [format].
+  ///
+  /// [isoCode] is the region whose metadata is used for the grouping. It is
+  /// the number's own region most of the time, another one can be given to
+  /// format the number with another country's rules.
+  static String format(
+    String nsn,
+    IsoCode isoCode, [
+    PhoneNumberFormat format = PhoneNumberFormat.national,
+  ]) {
+    final countryCode =
+        MetadataFinder.findMetadataForIsoCode(isoCode).countryCode;
+    if (nsn.isEmpty) {
+      return switch (format) {
+        PhoneNumberFormat.e164 => '+$countryCode',
+        PhoneNumberFormat.international ||
+        PhoneNumberFormat.national ||
+        PhoneNumberFormat.nsn =>
+          '',
+      };
+    }
+    return switch (format) {
+      PhoneNumberFormat.e164 => '+$countryCode$nsn',
+      PhoneNumberFormat.international => '+$countryCode '
+          '${_formatNsn(nsn, isoCode, NsnFormat.international)}',
+      PhoneNumberFormat.national =>
+        _formatNsn(nsn, isoCode, NsnFormat.national),
+      PhoneNumberFormat.nsn =>
+        _formatNsn(nsn, isoCode, NsnFormat.nationalWithoutPrefix),
+    };
+  }
+
+  /// Formats [nsn] for display, either in its national form (with the
   /// national prefix) or in its international form (without it).
+  @Deprecated('Use [format] with [PhoneNumberFormat] instead')
   static String formatNsn(
     String nsn,
     IsoCode isoCode, [
     NsnFormat format = NsnFormat.national,
-  ]) {
+  ]) =>
+      _formatNsn(nsn, isoCode, format);
+
+  static String _formatNsn(
+    String nsn,
+    IsoCode isoCode,
+    NsnFormat format,
+  ) {
     if (nsn.isEmpty) {
       return nsn;
     }

@@ -63,12 +63,24 @@ class PhoneNumber {
         destinationCountry: destinationCountry,
       );
 
+  /// formats the phone number as [format].
+  ///
+  /// If no [isoCode] is provided the phone number region is used. [isoCode]
+  /// only selects the metadata used for the grouping: the dial code stays the
+  /// number's own country code.
+  String format({
+    PhoneNumberFormat format = PhoneNumberFormat.national,
+    IsoCode? isoCode,
+  }) =>
+      PhoneNumberFormatter.format(nsn, isoCode ?? this.isoCode, format);
+
   /// formats the nsn, if no [isoCode] is provided the phone number region is used.
+  @Deprecated('Use [format] with [PhoneNumberFormat] instead')
   String formatNsn({IsoCode? isoCode, NsnFormat format = NsnFormat.national}) =>
       PhoneNumberFormatter.formatNsn(nsn, isoCode ?? this.isoCode, format);
 
-  @Deprecated('Use [formatNsn] instead')
-  String getFormattedNsn({IsoCode? isoCode}) => formatNsn(isoCode: isoCode);
+  @Deprecated('Use [format] with [PhoneNumberFormat] instead')
+  String getFormattedNsn({IsoCode? isoCode}) => format(isoCode: isoCode);
 
   //
   //  Validation

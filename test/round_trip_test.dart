@@ -147,7 +147,7 @@ void main() {
       // round trip has to be lossless.
       for (final (isoCode, type, nsn, _) in cases) {
         final parsed = PhoneNumber.parse(nsn, destinationCountry: isoCode);
-        final national = parsed.formatNsn(format: NsnFormat.national);
+        final national = parsed.format();
         expect(
           PhoneNumber.parse(national, destinationCountry: isoCode).nsn,
           equals(parsed.nsn),

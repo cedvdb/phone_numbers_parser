@@ -1,3 +1,15 @@
+## 9.2.0
+- Add `PhoneNumber.format()` with `PhoneNumberFormat`: `e164`
+  (`+33611223344`), `international` (`+33 6 11 22 33 44`), `national`
+  (`06 11 22 33 44`) and `nsn` (`6 11 22 33 44`). The dial code is only part
+  of the international and e164 forms. `NsnFormat.international` used to be
+  the grouped nsn, that is now `PhoneNumberFormat.nsn`.
+- Deprecate `PhoneNumber.formatNsn`, `PhoneNumberFormatter.formatNsn` and
+  `PhoneNumber.getFormattedNsn` in favour of `format`. They keep their
+  current output, `formatNsn(format: NsnFormat.international)` included.
+- The `isoCode` parameter of `format` only selects the metadata used for the
+  grouping, the dial code stays the number's own country code.
+
 ## 9.1.0
 - The national format now includes the national prefix, as libphonenumber does:
   `030 1234567` (DE), `020 7946 0958` (GB), `06 11 22 33 44` (FR),

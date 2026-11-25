@@ -78,7 +78,7 @@ for local formats.
 ```dart
 final phoneNumber =
     PhoneNumber.parse('2025550119', destinationCountry: IsoCode.US);
-final formattedNsn = phoneNumber.formatNsn();
+final formattedNsn = phoneNumber.format();
 print('formatted: $formattedNsn'); // (202) 555-0119
 ```
 
