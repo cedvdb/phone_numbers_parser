@@ -54,6 +54,26 @@ void main() {
           equals(MetadataFinder.findMetadataFormatsForIsoCode(IsoCode.US)));
     });
 
+    test('should match leadingDigits as a pattern, not as a literal prefix',
+        () {
+      // Isle of Man shares +44 and its leadingDigits are a pattern
+      // (`74576|(?:16|7[56])24`), so a literal startsWith never matched it and
+      // a number that is invalid in every +44 territory fell back to GB.
+      expect(
+        MetadataFinder.findMetadataForCountryCode('44', '1624123456')?.isoCode,
+        equals(IsoCode.IM),
+      );
+      // the literal ones keep working
+      expect(
+        MetadataFinder.findMetadataForCountryCode('1', '6135550165')?.isoCode,
+        equals(IsoCode.CA),
+      );
+      expect(
+        MetadataFinder.findMetadataForCountryCode('7', '7051234567')?.isoCode,
+        equals(IsoCode.KZ),
+      );
+    });
+
     test('should get metadata for country calling code', () {
       expect(MetadataFinder.findMetadataForCountryCode('33', '123456')?.isoCode,
           equals(IsoCode.FR));

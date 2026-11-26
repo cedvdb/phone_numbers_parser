@@ -1,3 +1,10 @@
+## 9.2.3
+- Match `leadingDigits` as a pattern when the destination country is
+  resolved from a shared calling code, instead of comparing it as a literal
+  prefix. A number that is invalid in every territory of its code now falls
+  back to the right one: `+44 1624...` resolves to the Isle of Man instead of
+  the United Kingdom.
+
 ## 9.2.2
 - `IsoCode.fromJson` throws a `PhoneNumberException` with
   `Code.invalidIsoCode` for an unknown ISO code instead of a raw `String`,
