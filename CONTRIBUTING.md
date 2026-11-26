@@ -28,3 +28,9 @@ This is the final step to turn the Metadata into Dart Files.
 dart pub get
 dart resources/generate_files.dart && dart format lib/src && dart fix --apply
 ```
+
+## Line endings
+
+`.gitattributes` stores text files with LF endings, so an editor that saves CRLF
+does not turn a small change into a whole-file diff. Do not re-save a file only
+to change its line endings: a pull request should contain real changes.
