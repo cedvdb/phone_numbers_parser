@@ -1,1 +1,8 @@
 include: package:lints/recommended.yaml
+
+linter:
+  rules:
+    # this is what a `throw "some string"` looks like to the analyzer; the
+    # recommended set does not enable it, and a string cannot be caught as an
+    # Exception (see IsoCode.fromJson)
+    - only_throw_errors

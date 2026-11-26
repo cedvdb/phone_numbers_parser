@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:phone_numbers_parser/src/parsers/phone_number_exceptions.dart';
+
 enum IsoCode {
   AC,
   AD,
@@ -249,10 +251,17 @@ enum IsoCode {
 
   const IsoCode();
 
+  /// Returns the [IsoCode] for [isoCodeStr], the form written by [toJson].
+  ///
+  /// Throws a [PhoneNumberException] with [Code.invalidIsoCode] when
+  /// [isoCodeStr] is not an ISO code this library knows about.
   static IsoCode fromJson(String isoCodeStr) {
     final isoCode = isoCodeConversionMap[isoCodeStr];
     if (isoCode == null) {
-      throw 'Iso code not found $isoCodeStr ';
+      throw PhoneNumberException(
+        code: Code.invalidIsoCode,
+        description: "not a known ISO code, found '$isoCodeStr'",
+      );
     }
     return isoCode;
   }
