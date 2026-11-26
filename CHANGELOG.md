@@ -1,3 +1,8 @@
+## 9.2.2
+- `IsoCode.fromJson` throws a `PhoneNumberException` with
+  `Code.invalidIsoCode` for an unknown ISO code instead of a raw `String`,
+  which cannot be caught as an `Exception` and carries no code.
+
 ## 9.2.1
 - Do not pad a number with fake digits when a format already matches it as
   it is. The padding changed how the groups split for numbers shorter than
