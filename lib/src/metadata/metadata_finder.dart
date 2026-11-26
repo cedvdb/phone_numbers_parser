@@ -109,10 +109,15 @@ abstract class MetadataFinder {
         return fit;
       }
     }
-    // otherwise the phone number starts with leading digits of metadata
+    // otherwise the phone number starts with the leading digits of a metadata.
+    // leadingDigits is a pattern, not a literal prefix: `[3489]` for RU and
+    // `74576|(?:16|7[56])24` for IM, so comparing it with startsWith never
+    // matches those. It is anchored at the start of the national number, which
+    // is what matchAsPrefix does.
     for (var fit in potentialFits) {
       final leadingDigits = fit.leadingDigits;
-      if (leadingDigits != null && nationalNumber.startsWith(leadingDigits)) {
+      if (leadingDigits != null &&
+          RegExp(leadingDigits).matchAsPrefix(nationalNumber) != null) {
         return fit;
       }
     }
