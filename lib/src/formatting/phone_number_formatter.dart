@@ -91,22 +91,27 @@ class PhoneNumberFormatter {
     if (nsn.isEmpty) {
       return nsn;
     }
-    // since the phone number might be incomplete, fake digits
-    // are temporarily added to format a complete number.
-    final missingDigits = _getMissingDigits(nsn, isoCode);
-    final completePhoneNumber = nsn + missingDigits;
     final formatingRules =
         MetadataFinder.findMetadataFormatsForIsoCode(isoCode);
     // Prefer a format that matches the number as it is, the faked digits are
     // only there to format an incomplete number.
-    final formatingRule = _getMatchingFormatRules(
-          formatingRules: formatingRules,
-          nsn: nsn,
-        ) ??
-        _getMatchingFormatRules(
-          formatingRules: formatingRules,
-          nsn: completePhoneNumber,
-        );
+    var formatingRule = _getMatchingFormatRules(
+      formatingRules: formatingRules,
+      nsn: nsn,
+    );
+    // since the phone number might be incomplete, fake digits
+    // are temporarily added to format a complete number.
+    // A number the format matches as it is is not padded: the fake digits
+    // would change how the groups of the pattern split.
+    final missingDigits = formatingRule != null &&
+            formatingRule.pattern.matchEntirely(nsn) != null
+        ? ''
+        : _getMissingDigits(nsn, isoCode);
+    final completePhoneNumber = nsn + missingDigits;
+    formatingRule ??= _getMatchingFormatRules(
+      formatingRules: formatingRules,
+      nsn: completePhoneNumber,
+    );
     // for incomplete phone number
 
     if (formatingRule == null) {

@@ -560,6 +560,26 @@ void main() {
         equals('14 020'),
       );
     });
+
+    test('should not pad a number that matches a format as it is', () {
+      // these numbers are complete and match a format as they are, but they
+      // are shorter than the minimum mobile length of their country. Padding
+      // them changes how the groups of a `{2,3}` pattern split.
+      String national(String nsn, IsoCode isoCode) => PhoneNumber(
+            isoCode: isoCode,
+            nsn: nsn,
+          ).format(format: PhoneNumberFormat.national);
+      String international(String nsn, IsoCode isoCode) => PhoneNumber(
+            isoCode: isoCode,
+            nsn: nsn,
+          ).format(format: PhoneNumberFormat.international);
+
+      expect(national('8123456', IsoCode.SE), equals('08-12 34 56'));
+      expect(international('8123456', IsoCode.SE), equals('+46 8 12 34 56'));
+      expect(national('20123456', IsoCode.SE), equals('020-12 34 56'));
+      expect(national('22123456', IsoCode.KR), equals('02-212-3456'));
+      expect(national('800123456', IsoCode.BR), equals('0800 12 3456'));
+    });
   });
 
   group('range', () {

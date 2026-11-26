@@ -1,3 +1,10 @@
+## 9.2.1
+- Do not pad a number with fake digits when a format already matches it as
+  it is. The padding changed how the groups split for numbers shorter than
+  the country's mobile length: `08-12 34 56` (SE) was `08-123 45 6`,
+  `02-212-3456` (KR) was `02-2123-456` and `0800 12 3456` (BR) was
+  `0800 123 456`.
+
 ## 9.2.0
 - Add `PhoneNumber.format()` with `PhoneNumberFormat`: `e164`
   (`+33611223344`), `international` (`+33 6 11 22 33 44`), `national`
